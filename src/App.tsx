@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import MainMenu from "./components/MainMenu";
 import Home from "./pages/Home";
 import Test from "./pages/Test";
+import Agreement from "./pages/Agreement";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/test" component={Test} />
+              <Route path="/agreement" component={Agreement} />
             </Switch>
           </main>
         </div>

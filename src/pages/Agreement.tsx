@@ -13,18 +13,18 @@ const Agreement = () => {
 
       <ul>
         <li>
-          <Link to="/form/info">Info</Link>
+          <Link to="/agreement/info">Info</Link>
         </li>
         <li>
-          <Link to="/form/landlord">landlord</Link>
+          <Link to="/agreement/landlord">landlord</Link>
         </li>
       </ul>
 
       <Formik initialValues={{}} onSubmit={() => {}}>
         <Form>
           <Switch>
-            <Route path="/form/info" component={Info} />
-            <Route path="/form/landlord" component={Landlord} />
+            <Route path="/agreement/info" component={Info} />
+            <Route path="/agreement/landlord" component={Landlord} />
           </Switch>
         </Form>
       </Formik>

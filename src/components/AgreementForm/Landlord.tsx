@@ -2,7 +2,12 @@ import React from "react";
 import { Field } from "formik";
 
 const Landlord = () => {
-  return <Field type="text" name="address" placeholder="Address" />;
+  return (
+    <div>
+      <h1>Landlords!</h1>
+      <Field type="text" name="address" placeholder="Address" />
+    </div>
+  );
 };
 
 export default Landlord;

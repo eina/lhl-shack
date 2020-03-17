@@ -2,9 +2,19 @@ import React from "react";
 import { Formik, Form } from "formik";
 import { Switch, Route, Link } from "react-router-dom";
 
+import { FormValues } from "../interfaces";
+
 import Info from "../components/AgreementForm/Info";
 import Landlord from "../components/AgreementForm/Landlord";
 import Title from "../components/AgreementForm/Title";
+import Roommates from "../components/AgreementForm/Roommates";
+
+const initialValues: FormValues = {
+  roommates: [
+    { firstName: "", lastName: "", email: "", phone: "" },
+    { firstName: "", lastName: "", email: "", phone: "" }
+  ]
+};
 
 const Agreement = () => {
   return (
@@ -19,15 +29,21 @@ const Agreement = () => {
         <li>
           <Link to="/agreement/landlord">landlord</Link>
         </li>
+        <li>
+          <Link to="/agreement/roommates">Roommates</Link>
+        </li>
       </ul>
 
-      <Formik initialValues={{}} onSubmit={() => {}}>
-        <Form>
-          <Switch>
-            <Route path="/agreement/info" component={Info} />
-            <Route path="/agreement/landlord" component={Landlord} />
-          </Switch>
-        </Form>
+      <Formik initialValues={initialValues} onSubmit={() => {}}>
+        {props => (
+          <Form>
+            <Switch>
+              <Route path="/agreement/info" component={Info} />
+              <Route path="/agreement/landlord" component={Landlord} />
+              <Route path="/agreement/roommates" component={Roommates} />
+            </Switch>
+          </Form>
+        )}
       </Formik>
     </>
   );

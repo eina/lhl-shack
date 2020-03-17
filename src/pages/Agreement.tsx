@@ -4,6 +4,7 @@ import { Switch, Route, Link } from "react-router-dom";
 
 import Info from "../components/AgreementForm/Info";
 import Landlord from "../components/AgreementForm/Landlord";
+import Title from "../components/AgreementForm/Title"
 
 const Agreement = () => {
   return (
@@ -22,10 +23,14 @@ const Agreement = () => {
 
       <Formik initialValues={{}} onSubmit={() => {}}>
         <Form>
-          <Switch>
+        <Title />
+        <Info />
+        <Landlord />
+
+          {/* <Switch>
             <Route path="/form/info" component={Info} />
             <Route path="/form/landlord" component={Landlord} />
-          </Switch>
+          </Switch> */}
         </Form>
       </Formik>
     </>

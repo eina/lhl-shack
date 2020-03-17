@@ -1,5 +1,5 @@
 import React from "react";
-import { Formik, Form } from "formik";
+import { Formik, Form, FormikProps } from "formik";
 import { Switch, Route, Link } from "react-router-dom";
 
 import { FormValues } from "../interfaces";
@@ -35,7 +35,7 @@ const Agreement = () => {
       </ul>
 
       <Formik initialValues={initialValues} onSubmit={() => {}}>
-        {props => (
+        {(props: FormikProps<FormValues>) => (
           <Form>
             <Switch>
               <Route path="/agreement/info" component={Info} />

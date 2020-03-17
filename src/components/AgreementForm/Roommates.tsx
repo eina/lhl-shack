@@ -1,6 +1,10 @@
 import React from "react";
-import { Field, FieldArray, useFormikContext } from "formik";
+import { Field, FieldArray, ErrorMessage, useFormikContext, FieldProps } from "formik";
+import { FormControl, FormLabel, Input, FormErrorMessage } from "@chakra-ui/core";
+
 import { FormValues } from "../../interfaces";
+
+import FieldSet from "../FieldSet";
 
 const Roommates = (props: any) => {
   const { values }: { values: FormValues } = useFormikContext();
@@ -12,10 +16,11 @@ const Roommates = (props: any) => {
           <div>
             {values.roommates.map((roomie, index) => (
               <div key={index}>
-                <Field name={`roommates.${index}.firstName`} type="text" />
-                <Field name={`roommates.${index}.lastName`} type="text" />
-                <Field name={`roommates.${index}.email`} type="email" />
-                <Field name={`roommates.${index}.phone`} type="phone" />
+                <FieldSet type="text" name={`roommates.${index}.firstName`} label="First Name" />
+                <FieldSet type="text" name={`roommates.${index}.lastName`} label="Last Name" />
+                <FieldSet type="text" name={`roommates.${index}.email`} label="Email" />
+                <FieldSet type="text" name={`roommates.${index}.phone`} label="Phone" />
+                <p>======== temporary line break ============</p>
               </div>
             ))}
             <button

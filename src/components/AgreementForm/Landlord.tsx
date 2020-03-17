@@ -9,7 +9,7 @@ const Landlord = () => {
   <Field type="text" name="address" placeholder="Address" required/>;
   <Field type="text" name="email" placeholder="Email" required/>;
   <Field type="text" name="phone" placeholder="Phone Number" required/>;
-  <Field type="text" name="company" placeholder="Property Management Company (if applicable)" />;
+  <Field type="text" name="company" placeholder="Property Management Company" />;
   </div>
   )
 };

@@ -14,7 +14,7 @@ const RentAndDeposit = (props: any) => {
       <FieldSet name="rent-amt" label="Rent Amount" type="number" />
 
       <FormikSingleDatePicker
-        name="rent-due"
+        name="rent.dueDate"
         label="Rent Due Date"
         stateName="rent.dueDate"
         stateValue={values.rent.dueDate}

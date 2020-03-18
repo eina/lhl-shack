@@ -45,7 +45,7 @@ const Agreement = () => {
               <Route path="/agreement/info" component={Info} />
               <Route path="/agreement/landlord" component={Landlord} />
               <Route path="/agreement/roommates" component={Roommates} />
-              <Route path="agreement/housekeeping" component={Housekeeping} />
+              <Route path="/agreement/housekeeping" component={Housekeeping} />
             </Switch>
           </Form>
         )}

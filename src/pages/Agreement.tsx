@@ -10,7 +10,7 @@ import Info from "../components/AgreementForm/Info";
 import Landlord from "../components/AgreementForm/Landlord";
 import Title from "../components/AgreementForm/Title";
 import Roommates from "../components/AgreementForm/Roommates";
-import Housekeeping from "../components/AgreementForm/Housekeeping"
+import Housekeeping from "../components/AgreementForm/Housekeeping";
 import Bills from "../components/AgreementForm/Bills";
 import RentAndDeposit from "../components/AgreementForm/RentandDeposit";
 import TestDraft from "../components/AgreementForm/TestDraft";
@@ -24,9 +24,7 @@ const formikEnhancer = withFormik({
       { firstName: "", lastName: "", email: "", phone: "" },
       { firstName: "", lastName: "", email: "", phone: "" }
     ],
-    RentAndDeposit: [
-    { rent: 0, deposit: 0 }
-  ],
+    RentAndDeposit: [{ rent: 0, deposit: 0 }],
     textArea1: EditorState.createEmpty(),
     textArea2: EditorState.createEmpty(),
     status: [],
@@ -64,10 +62,9 @@ const Agreement = () => {
   return (
     <>
       <h1>Roommate Agreement Generator</h1>
-      <p>main component! something something something</p>
-​
+      <p>main component! something something something</p>​
       <ul>
-      <li>
+        <li>
           <Link to="/agreement/title">About the Agreement</Link>
         </li>
         <li>
@@ -80,7 +77,7 @@ const Agreement = () => {
           <Link to="/agreement/roommates">Roommates</Link>
         </li>
         <li>
-<<<<<<< HEAD
+          {" "}
           <Link to="/agreement/rentanddeposit">Rent and Deposit</Link>
         </li>
         <li>
@@ -89,30 +86,11 @@ const Agreement = () => {
         <li>
           <Link to="/agreement/housekeeping">Housekeeping</Link>
         </li>
-      </ul>
-
-      <Formik initialValues={initialValues} onSubmit={() => {}}>
-        {(props: FormikProps<FormValues>) => (
-          <Form>
-            <Switch>
-              <Route path="/agreement/title" component={Title} />
-              <Route path="/agreement/info" component={Info} />
-              <Route path="/agreement/landlord" component={Landlord} />
-              <Route path="/agreement/roommates" component={Roommates} />
-              <Route path="/agreement/housekeeping" component={Housekeeping} />
-              <Route path="/agreement/bills" component={Bills} />
-              <Route path="/agreement/rentanddeposit" component={RentAndDeposit} />
-            </Switch>
-          </Form>
-        )}
-      </Formik>
-=======
+        <li>
           <Link to="/agreement/testDraft">Draft.js example</Link>
         </li>
       </ul>
-
       <EnhancedAgreement />
->>>>>>> feature/custom-fields
     </>
   );
 };

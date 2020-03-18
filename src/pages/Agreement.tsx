@@ -1,30 +1,52 @@
 import React from "react";
 import moment from "moment";
-import { Formik, Form, FormikProps, withFormik } from "formik";
-import { Switch, Route, Link } from "react-router-dom";
-import { Editor, EditorState } from "draft-js";
+import { FormikProps, withFormik } from "formik";
+import { Switch, Route, Link, Redirect } from "react-router-dom";
+import { EditorState } from "draft-js";
 
 import { FormValues } from "../interfaces";
 
 import Info from "../components/AgreementForm/Info";
 import Landlord from "../components/AgreementForm/Landlord";
-import Title from "../components/AgreementForm/Title";
 import Roommates from "../components/AgreementForm/Roommates";
 import Housekeeping from "../components/AgreementForm/Housekeeping";
-import Bills from "../components/AgreementForm/Bills";
-import RentAndDeposit from "../components/AgreementForm/RentandDeposit";
+import BillsRent from "../components/AgreementForm/BillsRent";
 import TestDraft from "../components/AgreementForm/TestDraft";
 
 import "draft-js/dist/Draft.css";
-// import "react-select/dist/react-select.css";
+
+// function to flatten array for field array: https://github.com/jaredpalmer/formik/issues/11
+
+const billShape = {
+  name: null,
+  totalAmt: 0,
+  dueDate: moment(),
+  interval: [] // once, monthly, every 2 months, annually
+};
 
 const formikEnhancer = withFormik({
   mapPropsToValues: props => ({
     roommates: [
-      { firstName: "", lastName: "", email: "", phone: "" },
-      { firstName: "", lastName: "", email: "", phone: "" }
+      { firstName: "Roommate", lastName: "One", email: "roomie1@email.com", phone: "6041234567" },
+      {
+        firstName: "Roommate",
+        lastName: "Twwwooooo",
+        email: "bestestroommate@email.com",
+        phone: "7781234567"
+      }
     ],
+    rent: {
+      ...billShape,
+      portion: [
+        { roommate: [], roommate_amt: 0, amt_type: [] }, // roommate -> react-select?
+        { roommate: [], roommate_amt: 0, amt_type: [] }
+      ]
+    },
+    securityDeposit: {
+      ...billShape
+    },
     RentAndDeposit: [{ rent: 0, deposit: 0 }],
+    // test values for TestDraft.tsx
     textArea1: EditorState.createEmpty(),
     textArea2: EditorState.createEmpty(),
     status: [],
@@ -45,12 +67,14 @@ const AgreementForm = ({ values, setFieldValue, handleSubmit, handleBlur }: Form
         <Route path="/agreement/info" component={Info} />
         <Route path="/agreement/landlord" component={Landlord} />
         <Route path="/agreement/roommates" component={Roommates} />
-        <Route
-          path="/agreement/testDraft"
-          component={() => (
-            <TestDraft values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
-          )}
-        />
+        <Redirect from="/agreement/bills" to="/agreement/bills/rent" exact />
+        <Route path="/agreement/bills/rent">
+          <BillsRent values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
+        </Route>
+        <Route path="/agreement/housekeeping" component={Housekeeping} />
+        <Route path="/agreement/testDraft">
+          <TestDraft values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
+        </Route>
       </Switch>
     </form>
   );
@@ -77,11 +101,13 @@ const Agreement = () => {
           <Link to="/agreement/roommates">Roommates</Link>
         </li>
         <li>
-          {" "}
-          <Link to="/agreement/rentanddeposit">Rent and Deposit</Link>
-        </li>
-        <li>
-          <Link to="/agreement/bills">Bills</Link>
+          Bills
+          {/* <Link to="/agreement/bills">Bills</Link> */}
+          <ul>
+            <li>
+              <Link to="/agreement/bills/rent">Bills: Rent</Link>
+            </li>
+          </ul>
         </li>
         <li>
           <Link to="/agreement/housekeeping">Housekeeping</Link>

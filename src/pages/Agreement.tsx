@@ -9,11 +9,15 @@ import Landlord from "../components/AgreementForm/Landlord";
 import Title from "../components/AgreementForm/Title";
 import Roommates from "../components/AgreementForm/Roommates";
 import Housekeeping from "../components/AgreementForm/Housekeeping"
+import Bills from "../components/AgreementForm/Bills";
 
 const initialValues: FormValues = {
   roommates: [
     { firstName: "", lastName: "", email: "", phone: "" },
     { firstName: "", lastName: "", email: "", phone: "" }
+  ],
+  bills: [
+    { name: "", totalAmount: 0, dueDate: "", interval: "" }
   ]
 };
 
@@ -39,6 +43,9 @@ const Agreement = () => {
         <li>
           <Link to="/agreement/housekeeping">Housekeeping</Link>
         </li>
+        <li>
+          <Link to="/agreement/bills">Bills</Link>
+        </li>
       </ul>
 
       <Formik initialValues={initialValues} onSubmit={() => {}}>
@@ -50,6 +57,7 @@ const Agreement = () => {
               <Route path="/agreement/landlord" component={Landlord} />
               <Route path="/agreement/roommates" component={Roommates} />
               <Route path="/agreement/housekeeping" component={Housekeeping} />
+              <Route path="/agreement/bills" component={Bills} />
             </Switch>
           </Form>
         )}

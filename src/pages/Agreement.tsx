@@ -19,9 +19,9 @@ const formikEnhancer = withFormik({
       { firstName: "", lastName: "", email: "", phone: "" },
       { firstName: "", lastName: "", email: "", phone: "" }
     ],
-    editorState: EditorState.createEmpty(),
     textArea1: EditorState.createEmpty(),
-    textArea2: EditorState.createEmpty()
+    textArea2: EditorState.createEmpty(),
+    status: []
   }),
   handleSubmit: () => {},
   displayName: "Roommate Agreement Generator"

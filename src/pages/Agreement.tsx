@@ -10,6 +10,7 @@ import Title from "../components/AgreementForm/Title";
 import Roommates from "../components/AgreementForm/Roommates";
 import Housekeeping from "../components/AgreementForm/Housekeeping"
 import Bills from "../components/AgreementForm/Bills";
+import RentAndDeposit from "../components/AgreementForm/RentandDeposit";
 
 const initialValues: FormValues = {
   roommates: [
@@ -18,6 +19,9 @@ const initialValues: FormValues = {
   ],
   bills: [
     { name: "", totalAmount: 0, dueDate: "", interval: "" }
+  ],
+  RentAndDeposit: [
+    { rent: 0, deposit: 0 }
   ]
 };
 
@@ -41,10 +45,13 @@ const Agreement = () => {
           <Link to="/agreement/roommates">Roommates</Link>
         </li>
         <li>
-          <Link to="/agreement/housekeeping">Housekeeping</Link>
+          <Link to="/agreement/rentanddeposit">Rent and Deposit</Link>
         </li>
         <li>
           <Link to="/agreement/bills">Bills</Link>
+        </li>
+        <li>
+          <Link to="/agreement/housekeeping">Housekeeping</Link>
         </li>
       </ul>
 
@@ -58,6 +65,7 @@ const Agreement = () => {
               <Route path="/agreement/roommates" component={Roommates} />
               <Route path="/agreement/housekeeping" component={Housekeeping} />
               <Route path="/agreement/bills" component={Bills} />
+              <Route path="/agreement/rentanddeposit" component={RentAndDeposit} />
             </Switch>
           </Form>
         )}

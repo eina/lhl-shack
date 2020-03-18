@@ -24,11 +24,14 @@ const Agreement = () => {
       <p>main component! something something something</p>
 ​
       <ul>
-        <li>
-          <Link to="/agreement/info">Info</Link>
+      <li>
+          <Link to="/agreement/title">About the Agreement</Link>
         </li>
         <li>
-          <Link to="/agreement/landlord">landlord</Link>
+          <Link to="/agreement/info">Your Address</Link>
+        </li>
+        <li>
+          <Link to="/agreement/landlord">Landlord Information</Link>
         </li>
         <li>
           <Link to="/agreement/roommates">Roommates</Link>
@@ -42,6 +45,7 @@ const Agreement = () => {
         {(props: FormikProps<FormValues>) => (
           <Form>
             <Switch>
+              <Route path="/agreement/title" component={Title} />
               <Route path="/agreement/info" component={Info} />
               <Route path="/agreement/landlord" component={Landlord} />
               <Route path="/agreement/roommates" component={Roommates} />

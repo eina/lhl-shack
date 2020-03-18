@@ -21,9 +21,9 @@ export class RichEditor extends React.Component<RichEditorProps> {
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (newState) {
       this.onChange(newState);
-      return true;
+      // return true;
     }
-    return false;
+    // return false;
   };
 
   onTab = (e: any) => {
@@ -58,7 +58,7 @@ export class RichEditor extends React.Component<RichEditorProps> {
         <InlineStyleControls editorState={editorState} onToggle={this.toggleInlineStyle} />
         <div className={className}>
           <Editor
-            // blockStyleFn={getBlockStyle}
+            blockStyleFn={getBlockStyle}
             customStyleMap={styleMap}
             editorState={editorState}
             // handleKeyCommand={this.handleKeyCommand}
@@ -87,7 +87,7 @@ function getBlockStyle(block: any) {
     case "blockquote":
       return "RichEditor-blockquote";
     default:
-      return null;
+      return "";
   }
 }
 

@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import { Formik, Form, FormikProps, withFormik } from "formik";
 import { Switch, Route, Link } from "react-router-dom";
 import { Editor, EditorState } from "draft-js";
@@ -12,6 +13,7 @@ import Roommates from "../components/AgreementForm/Roommates";
 import TestDraft from "../components/AgreementForm/TestDraft";
 
 import "draft-js/dist/Draft.css";
+// import "react-select/dist/react-select.css";
 
 const formikEnhancer = withFormik({
   mapPropsToValues: props => ({
@@ -21,7 +23,12 @@ const formikEnhancer = withFormik({
     ],
     textArea1: EditorState.createEmpty(),
     textArea2: EditorState.createEmpty(),
-    status: []
+    status: [],
+    leaseDates: {
+      startDate: null,
+      endDate: null
+    },
+    billDate: moment()
   }),
   handleSubmit: () => {},
   displayName: "Roommate Agreement Generator"

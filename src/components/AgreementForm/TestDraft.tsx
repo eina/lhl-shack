@@ -1,11 +1,10 @@
 import React from "react";
-import { useFormikContext } from "formik";
-import { Editor } from "draft-js";
 
 import { FormValues } from "../../interfaces";
 
 import RichEditor from "../RichEditor/RichEditor";
 import FormikSelect from "../FormikSelect";
+import { FormikDateRange, FormikSingleDatePicker } from "../FormikDates";
 
 const TestDraft = (props: any) => {
   const { values, setFieldValue, handleBlur } = props;
@@ -45,6 +44,27 @@ const TestDraft = (props: any) => {
           { value: "pending", label: "Pending" },
           { value: "overdue", label: "Overdue" }
         ]}
+      />
+
+      <h2>React-Dates</h2>
+
+      <h3>Date Range Picker</h3>
+      <FormikDateRange
+        label="Lease Dates"
+        name="lease-dates"
+        stateName="leaseDates"
+        stateValue={values.leaseDates}
+        onChange={setFieldValue}
+      />
+
+      <h3>Day Input</h3>
+      <FormikSingleDatePicker
+        label="Bill Date"
+        name="bill-date"
+        stateName="billDate"
+        stateValue={values.billDate}
+        onChange={setFieldValue}
+        numberOfMonths={1}
       />
     </div>
   );

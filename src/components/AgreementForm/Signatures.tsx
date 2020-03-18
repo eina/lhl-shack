@@ -2,11 +2,12 @@ import React from 'react';
 import { FieldArray, useFormikContext } from 'formik';
 
 import { FormValues } from '../../interfaces';
+import { FormikSingleDatePicker } from '../FormikDates';
 
 import FieldSet from '../FieldSet';
 
-const Signatures = () => {
-  const { values }: { values: FormValues } = useFormikContext();
+const Signatures = (props: any) => {
+  const { values, setFieldValue, handleBlur } = props;
   return (
     <div>
       <h2>Signatures</h2>
@@ -14,17 +15,20 @@ const Signatures = () => {
         {arrayHelpers => (
           <div>
             <ol>
-              {values.signatures.map((signature, index) => (
+              {values.signatures.map((signature: any, index: any) => (
                 <li key={index}>
                   <FieldSet
                     type="text"
                     name={`signatures.${index}.fullName`}
                     label="Full Name"
                   />
-                  <FieldSet
-                    type="date"
+                  <FormikSingleDatePicker
+                    stateValue={values.signatures[index].date}
+                    stateName={`signatures.${index}.date`}
                     name={`signatures.${index}.date`}
-                    label="Today's Date"
+                    onChange={setFieldValue}
+                    numberOfMonths={1}
+                    label="Date Signed"
                   />
                   <p>======== temporary line break ============</p>
                   <FieldSet
@@ -32,10 +36,13 @@ const Signatures = () => {
                     name={`signatures.${index}.fullName`}
                     label="Full Name"
                   />
-                  <FieldSet
-                    type="date"
+                  <FormikSingleDatePicker
+                    stateValue={values.signatures[index].date}
+                    stateName={`signatures.${index}.date`}
                     name={`signatures.${index}.date`}
-                    label="Today's Date"
+                    onChange={setFieldValue}
+                    numberOfMonths={1}
+                    label="Date Signed"
                   />
                 </li>
               ))}

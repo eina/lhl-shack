@@ -1,12 +1,12 @@
 import React from 'react'
 import { FieldArray, useFormikContext } from "formik";
-
+import { FormikSingleDatePicker } from "../FormikDates"
 import { FormValues } from "../../interfaces";
 
 import FieldSet from "../FieldSet";
 
-const Bills = () => {
-  const { values }: { values: FormValues } = useFormikContext();
+const Bills = ( props: any ) => {
+  const { values, setFieldValue, handleBlur } = props;
   return (
     <div>
       <h2>Bills</h2>
@@ -14,11 +14,11 @@ const Bills = () => {
         {arrayHelpers => (
           <div>
             <ol>
-              {values.bills.map((bill, index) => (
+              {values.bills.map((bill: any, index: any) => (
                 <li key={index}>
                   <FieldSet type="text" name={`bills.${index}.name`} label="Bill Name" />
                   <FieldSet type="number" name={`bills.${index}.totalAmount`} label="Total Amount" />
-                  <FieldSet type="date" name={`bills.${index}.dueDate`} label="Due Date" />
+                  <FormikSingleDatePicker stateValue={values.bills[index].dueDate} stateName={`bills.${index}.dueDate`} name={`bills.${index}.dueDate`} onChange={setFieldValue} numberOfMonths={1} label="Due Date" />
                   <FieldSet type="text" name={`bills.${index}.interval`} label="Interval" />
                   <p>======== temporary line break ============</p>
                 </li>

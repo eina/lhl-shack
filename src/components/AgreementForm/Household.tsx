@@ -5,17 +5,23 @@ import FieldSet from "../FieldSet";
 import { FormikDateRange } from "../FormikDates";
 
 const Household = () => {
-  const { values, setFieldValue }: { values: any; setFieldValue: Function } = useFormikContext();
+  const { values, errors, touched, setFieldValue }: FormikProps<any> = useFormikContext();
+
+  const householdErrors = errors && errors.household ? errors.household : null;
+  const householdTouched = touched && touched.household ? touched.household : null;
+
   return (
     <div>
       <h2>Rent and Household Information</h2>
       <FieldSet type="text" name="household.address" label="House Address" />
       <FormikDateRange
         label="Lease Dates"
-        name="lease-dates"
+        name="leaseDates"
         stateName="household.leaseDates"
         stateValue={values.household.leaseDates}
         onChange={setFieldValue}
+        error={householdErrors}
+        touched={householdTouched}
       />
       <FieldSet type="checkbox" name="household.petFriendly" label="Pet Friendly?" />
       <FieldSet type="checkbox" name="household.smokingAllowed" label="Smoking Allowed?" />

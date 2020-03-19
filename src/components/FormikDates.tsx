@@ -32,8 +32,16 @@ export const FormikDateRange = (props: FormikDateProps) => {
 
   const [focusedSingleInput, setFocusedSingleInput] = useState(null);
 
+  const fieldError = props.error && props.error[name] ? props.error[name] : null;
+  const isTouched =
+    props.error && props.touched[name] && props.touched[name].startDate
+      ? props.touched[name].startDate
+      : null;
+  const isError = props.error && isTouched ? true : false;
+  console.log(isError, fieldError);
+
   return (
-    <FormControl>
+    <FormControl isInvalid={!!props.error && props.touched}>
       <FormLabel>
         {label}
         <DateRangePicker
@@ -46,7 +54,7 @@ export const FormikDateRange = (props: FormikDateProps) => {
           onFocusChange={(focusedInput: any) => setFocusedSingleInput(focusedInput)}
         />
       </FormLabel>
-      {!!props.error && props.touched && <FormErrorMessage>{props.error}</FormErrorMessage>}
+      {!!isError && fieldError && <FormErrorMessage>{fieldError.startDate}</FormErrorMessage>}
     </FormControl>
   );
 };

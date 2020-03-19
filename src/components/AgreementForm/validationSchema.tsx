@@ -1,5 +1,5 @@
-import { string, object, array, number, boolean } from "yup";
-
+import { string, object, array, number, boolean, date, lazy } from "yup";
+import moment from "moment";
 // regex pattern for canadian addresses, by checking postal code
 // valid: 401 W Georgia St, Vancouver, BC V6B 5A1 || V6B 5A1 || v6b5a1
 const postalRegex = /^.*[ABCEGHJKLMNPRSTVXY][0-9][A-Z]\s?[0-9][A-Z][0-9].*$/gim;
@@ -45,7 +45,11 @@ export default object().shape({
     bedroomsAmt: yupMin1.required(requiredMsg),
     bathroomsAmt: yupMin1.required(requiredMsg),
     rentAmt: yupMin1.required(requiredMsg),
-    securityDepositAmt: yupMin1.required(requiredMsg)
+    securityDepositAmt: yupMin1.required(requiredMsg),
+    leaseDates: object().shape({
+      startDate: date().required(requiredMsg),
+      endDate: date().required(requiredMsg)
+    })
   }),
   roommates: array()
     // .min(2, `You must have at least 2 two people in a household`)

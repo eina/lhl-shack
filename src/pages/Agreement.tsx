@@ -4,7 +4,7 @@ import { Switch, Route, Link, Redirect } from "react-router-dom";
 import { FormikProps, withFormik } from "formik";
 import { EditorState } from "draft-js";
 
-import { FormValues } from "../interfaces";
+// import { FormValues } from "../interfaces";
 import validationSchema from "../components/AgreementForm/validationSchema";
 
 import Household from "../components/AgreementForm/Household";
@@ -41,8 +41,8 @@ const formikEnhancer = withFormik({
     household: {
       address: "",
       leaseDates: {
-        startDate: null,
-        endDate: null
+        startDate: moment(),
+        endDate: moment()
       },
       smokingAllowed: false,
       petFriendly: true,

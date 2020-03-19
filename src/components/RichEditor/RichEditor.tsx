@@ -64,7 +64,7 @@ export class RichEditor extends React.Component<RichEditorProps> {
             // handleKeyCommand={this.handleKeyCommand}
             onChange={this.onChange}
             onTab={this.onTab}
-            placeholder="Tell a story..."
+            placeholder="Policy goes here..."
             ref="editor"
             spellCheck={true}
           />

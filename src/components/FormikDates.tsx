@@ -59,7 +59,6 @@ export const FormikSingleDatePicker = (props: FormikDateProps) => {
   };
 
   const [focusedInput, setFocusedInput] = useState(null);
-  console.log("what is this", focusedInput);
   return (
     <FormControl>
       <FormLabel>

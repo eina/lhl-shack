@@ -38,8 +38,8 @@ const formikEnhancer = withFormik({
     rent: {
       ...billShape,
       portion: [
-        { roommate: [], roommate_amt: 0, amt_type: [] }, // roommate -> react-select?
-        { roommate: [], roommate_amt: 0, amt_type: [] }
+        { roommate: [], roommate_amt: 0, amt_type: [] } // roommate -> react-select?
+        // { roommate: [], roommate_amt: 0, amt_type: [] }
       ]
     },
     securityDeposit: {

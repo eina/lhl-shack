@@ -5,6 +5,10 @@ import { Editor, EditorState } from 'draft-js';
 import { string } from 'yup';
 import FieldSet from '../FieldSet';
 
+import { Button } from '@chakra-ui/core';
+
+import { useHistory } from 'react-router-dom';
+
 export interface HousekeepingValues {
   guests: string,
   weekdayPM: number,
@@ -23,6 +27,7 @@ export interface HousekeepingValues {
 }
 
 const Housekeeping = () => {
+  const history = useHistory();
   return (
     <div>
       <h4>Guests Policy</h4>
@@ -135,6 +140,24 @@ const Housekeeping = () => {
           label="We agree to the following rules about pets:"
           name="pets"
         />
+      </div>
+      <div>
+      <Button
+          variantColor="orange"
+          onClick={() => {
+            history.push('/agreement/bills/utilities');
+          }}
+        >
+          Previous Section
+        </Button>
+        <Button
+          variantColor="pink"
+          onClick={() => {
+            history.push('/agreement/signatures');
+          }}
+        >
+          Next Section
+        </Button>
       </div>
     </div>
   );

@@ -62,6 +62,14 @@ const Roommates = () => {
         )}
       </FieldArray>
       <div>
+      <Button
+          variantColor="orange"
+          onClick={() => {
+            history.push('/agreement/landlord');
+          }}
+        >
+          Previous Section
+        </Button>
         <Button
           variantColor="pink"
           onClick={() => {

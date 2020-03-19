@@ -29,6 +29,14 @@ const Landlord = () => {
         label="Property Management Company"
       />
       <div>
+      <Button
+          variantColor="orange"
+          onClick={() => {
+            history.push('/agreement/info');
+          }}
+        >
+          Previous Section
+        </Button>
         <Button
           variantColor="pink"
           onClick={() => {

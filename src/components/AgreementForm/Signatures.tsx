@@ -6,7 +6,12 @@ import { FormikSingleDatePicker } from '../FormikDates';
 
 import FieldSet from '../FieldSet';
 
+import { Button } from '@chakra-ui/core';
+
+import { useHistory } from 'react-router-dom';
+
 const Signatures = (props: any) => {
+  const history = useHistory();
   const { values, setFieldValue, handleBlur } = props;
   return (
     <div>
@@ -58,6 +63,16 @@ const Signatures = (props: any) => {
           </div>
         )}
       </FieldArray>
+      <div>
+        <Button
+          variantColor="orange"
+          onClick={() => {
+            history.push('/agreement/bills/utilities');
+          }}
+        >
+          Previous Section
+        </Button>
+      </div>
     </div>
   );
 };

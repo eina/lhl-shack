@@ -30,7 +30,7 @@ export const FormikDateRange = (props: FormikDateProps) => {
     onChange(`${stateName}.endDate`, endDate);
   };
 
-  const [focusedInput, setFocusedInput] = useState(null);
+  const [focusedSingleInput, setFocusedSingleInput] = useState(null);
 
   return (
     <FormControl>
@@ -42,8 +42,8 @@ export const FormikDateRange = (props: FormikDateProps) => {
           endDate={stateValue.endDate}
           endDateId={`${name}-end`}
           onDatesChange={handleDatesChange}
-          focusedInput={focusedInput}
-          onFocusChange={(focusedInput: any) => setFocusedInput(focusedInput)}
+          focusedInput={focusedSingleInput}
+          onFocusChange={(focusedInput: any) => setFocusedSingleInput(focusedInput)}
         />
       </FormLabel>
       {!!props.error && props.touched && <FormErrorMessage>{props.error}</FormErrorMessage>}
@@ -58,8 +58,7 @@ export const FormikSingleDatePicker = (props: FormikDateProps) => {
     onChange(stateName, date);
   };
 
-  const [focusDatePicker, setFocusDatePicker] = useState(null);
-
+  const [focusedInput, setFocusedInput] = useState(null);
   return (
     <FormControl>
       <FormLabel>
@@ -68,8 +67,8 @@ export const FormikSingleDatePicker = (props: FormikDateProps) => {
           id={name}
           date={stateValue}
           onDateChange={handleDatesChange}
-          focused={focusDatePicker ? true : false}
-          onFocusChange={(focusDatePicker: any) => setFocusDatePicker(focusDatePicker)}
+          focused={focusedInput}
+          onFocusChange={(focusedInput: any) => setFocusedInput(focusedInput.focused)}
           numberOfMonths={numberOfMonths ? numberOfMonths : 2}
         />
       </FormLabel>

@@ -23,6 +23,7 @@ const yupCdnAddress = Yup.string()
 const yupCdnPhone = Yup.string()
   .matches(phoneRegex, "Please enter a valid phone number (eg. 604-111-1111)")
   .required(requiredMsg);
+const yupMin1 = Yup.number().min(1, "Please enter a value bigger than 0");
 
 export default Yup.object().shape({
   landlord: Yup.object().shape({
@@ -32,5 +33,14 @@ export default Yup.object().shape({
     address: yupCdnAddress,
     phone: yupCdnPhone,
     company: yupName
+  }),
+  household: Yup.object().shape({
+    address: yupCdnAddress,
+    petFriendly: Yup.boolean().required(requiredMsg),
+    smokingAllowed: Yup.boolean().required(requiredMsg),
+    bedroomsAmt: yupMin1.required(requiredMsg),
+    bathroomsAmt: yupMin1.required(requiredMsg),
+    rentAmt: yupMin1.required(requiredMsg),
+    securityDepositAmt: yupMin1.required(requiredMsg)
   })
 });

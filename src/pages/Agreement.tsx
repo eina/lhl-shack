@@ -10,7 +10,8 @@ import Info from "../components/AgreementForm/Info";
 import Landlord from "../components/AgreementForm/Landlord";
 import Roommates from "../components/AgreementForm/Roommates";
 import Housekeeping from "../components/AgreementForm/Housekeeping";
-import BillsRent from "../components/AgreementForm/BillsRent";
+import Rent from "../components/AgreementForm/RentAndDeposit/Rent";
+import SecurityDeposit from "../components/AgreementForm/RentAndDeposit/SecurityDeposit";
 import TestDraft from "../components/AgreementForm/TestDraft";
 
 import "draft-js/dist/Draft.css";
@@ -43,7 +44,11 @@ const formikEnhancer = withFormik({
       ]
     },
     securityDeposit: {
-      ...billShape
+      ...billShape,
+      portion: [
+        { roommate: [], roommate_amt: 0, amt_type: [] } // roommate -> react-select?
+        // { roommate: [], roommate_amt: 0, amt_type: [] }
+      ]
     },
     RentAndDeposit: [{ rent: 0, deposit: 0 }],
     // test values for TestDraft.tsx
@@ -69,7 +74,10 @@ const AgreementForm = ({ values, setFieldValue, handleSubmit, handleBlur }: Form
         <Route path="/agreement/roommates" component={Roommates} />
         <Redirect from="/agreement/bills" to="/agreement/bills/rent" exact />
         <Route path="/agreement/bills/rent">
-          <BillsRent values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
+          <Rent values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
+        </Route>
+        <Route path="/agreement/bills/deposit">
+          <SecurityDeposit values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
         </Route>
         <Route path="/agreement/housekeeping" component={Housekeeping} />
         <Route path="/agreement/testDraft">
@@ -106,6 +114,9 @@ const Agreement = () => {
           <ul>
             <li>
               <Link to="/agreement/bills/rent">Bills: Rent</Link>
+            </li>
+            <li>
+              <Link to="/agreement/bills/deposit">Bills: Security Deposit</Link>
             </li>
           </ul>
         </li>

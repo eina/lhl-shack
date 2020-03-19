@@ -15,13 +15,15 @@ const FieldSet = ({ label, value, ...props }: FieldSetConfig) => {
   const [field, meta, helpers] = useField(props);
   // const default
   return (
-    <FormControl>
+    <FormControl
+      isInvalid={meta.touched && meta.error ? true : false}
+      isDisabled={props.disabled !== undefined ? props.disabled : false}
+    >
       <FormLabel htmlFor={field.name}>{label}</FormLabel>
       <Input
         {...field}
         {...props}
         value={value ? value : field.value || ""}
-        isDisabled={props.disabled !== undefined ? props.disabled : false}
         isReadOnly={props.isReadOnly !== undefined ? props.isReadOnly : false}
       />
       {meta.touched && meta.error ? <FormErrorMessage>{meta.error}</FormErrorMessage> : null}

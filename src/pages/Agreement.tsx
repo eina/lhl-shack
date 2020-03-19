@@ -1,10 +1,11 @@
 import React from "react";
 import moment from "moment";
-import { FormikProps, withFormik } from "formik";
 import { Switch, Route, Link, Redirect } from "react-router-dom";
+import { FormikProps, withFormik } from "formik";
 import { EditorState } from "draft-js";
 
 import { FormValues } from "../interfaces";
+import validationSchema from "../components/AgreementForm/validationSchema";
 
 import Info from "../components/AgreementForm/Info";
 import Landlord from "../components/AgreementForm/Landlord";
@@ -28,6 +29,14 @@ const billShape = {
 
 const formikEnhancer = withFormik({
   mapPropsToValues: props => ({
+    landlord: {
+      firstName: "",
+      lastName: "",
+      address: "",
+      phone: "",
+      email: "",
+      company: ""
+    },
     roommates: [
       { firstName: "Roommate", lastName: "One", email: "roomie1@email.com", phone: "6041234567" },
       {
@@ -39,17 +48,11 @@ const formikEnhancer = withFormik({
     ],
     rent: {
       ...billShape,
-      portion: [
-        { roommate: [], roommate_amt: 0, amt_type: [] } // roommate -> react-select?
-        // { roommate: [], roommate_amt: 0, amt_type: [] }
-      ]
+      portion: [{ roommate: [], roommate_amt: 0, amt_type: [] }]
     },
     securityDeposit: {
       ...billShape,
-      portion: [
-        { roommate: [], roommate_amt: 0, amt_type: [] } // roommate -> react-select?
-        // { roommate: [], roommate_amt: 0, amt_type: [] }
-      ]
+      portion: [{ roommate: [], roommate_amt: 0, amt_type: [] }]
     },
     bills: [{ ...billShape }],
     // test values for TestDraft.tsx
@@ -62,8 +65,13 @@ const formikEnhancer = withFormik({
     },
     billDate: moment()
   }),
-  handleSubmit: () => {},
-  displayName: "Roommate Agreement Generator"
+  handleSubmit: (values, { setSubmitting }) => {
+    alert("it submitted! check console for values!");
+    console.log("form submission values", values);
+    setSubmitting(false);
+  },
+  validationSchema: validationSchema,
+  displayName: "RoommateAgreementGenerator"
 });
 
 const AgreementForm = ({ values, setFieldValue, handleSubmit, handleBlur }: FormikProps<any>) => {
@@ -72,7 +80,7 @@ const AgreementForm = ({ values, setFieldValue, handleSubmit, handleBlur }: Form
       <Switch>
         <Route path="/agreement/info" component={Info} />
         <Route path="/agreement/landlord" component={Landlord} />
-        <Route path="/agreement/roommates" component={Roommates} />
+        {/* <Route path="/agreement/roommates" component={Roommates} />
         <Redirect from="/agreement/bills" to="/agreement/bills/rent" exact />
         <Route path="/agreement/bills/rent">
           <Rent values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
@@ -86,8 +94,9 @@ const AgreementForm = ({ values, setFieldValue, handleSubmit, handleBlur }: Form
         <Route path="/agreement/housekeeping" component={Housekeeping} />
         <Route path="/agreement/testDraft">
           <TestDraft values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
-        </Route>
+        </Route> */}
       </Switch>
+      <button type="submit">Test Submit</button>
     </form>
   );
 };
@@ -109,12 +118,11 @@ const Agreement = () => {
         <li>
           <Link to="/agreement/landlord">Landlord Information</Link>
         </li>
-        <li>
+        {/* <li>
           <Link to="/agreement/roommates">Roommates</Link>
         </li>
         <li>
-          Bills
-          {/* <Link to="/agreement/bills">Bills</Link> */}
+          <Link to="/agreement/bills">Bills</Link>
           <ul>
             <li>
               <Link to="/agreement/bills/rent">Bills: Rent</Link>
@@ -134,9 +142,10 @@ const Agreement = () => {
           <Link to="/agreement/signatures">Signatures</Link>
         </li>
         <li>
-          <Link to="/agreement/testDraft">Draft.js example</Link>
-        </li>
+          <Link to="/agreement/testDraft">Third Party Examples</Link>
+        </li> */}
       </ul>
+      {/* enhanced agreement form */}
       <EnhancedAgreement />
     </ul>
   );

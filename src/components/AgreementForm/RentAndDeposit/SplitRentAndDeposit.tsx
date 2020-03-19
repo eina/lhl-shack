@@ -11,7 +11,7 @@ import { billInterval } from "../../../helpers/data";
 const displayFullName = (firstName: string, lastName: string) => `${firstName} ${lastName}`;
 
 const SplitRentAndDeposit = (props: any) => {
-  const { sectionName, values, setFieldValue, handleBlur } = props;
+  const { sectionName, values, setFieldValue, handleBlur, errors, touched } = props;
 
   const roommateOptions = values.roommates.map((roomie: any) => ({
     value: roomie,
@@ -39,7 +39,10 @@ const SplitRentAndDeposit = (props: any) => {
         options={billInterval}
         onChange={setFieldValue}
         onBlur={handleBlur}
+        touched={touched[sectionName] !== undefined ? touched[sectionName].interval : false}
+        error={errors[sectionName] ? errors[sectionName].interval : null}
       />
+
       <FieldArray name={`${sectionName}.portion`}>
         {arrayHelpers => (
           <div>
@@ -54,6 +57,12 @@ const SplitRentAndDeposit = (props: any) => {
                     options={roommateOptions}
                     onChange={setFieldValue}
                     onBlur={handleBlur}
+                    // touched={
+                    //   touched[sectionName].portion[index] !== undefined
+                    //     ? touched[sectionName].portion[index].roommate
+                    //     : false
+                    // }
+                    // error={errors[sectionName] ? errors[sectionName].interval : null}
                   />
                   <FieldSet
                     type="number"

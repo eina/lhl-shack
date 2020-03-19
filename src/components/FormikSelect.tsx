@@ -29,11 +29,13 @@ const FormikSelect = (props: FormikSelectProps) => {
     onBlur(stateName, true);
   };
 
+  console.log("what are you even", props);
+
   return (
-    <FormControl>
+    <FormControl isInvalid={!!props.error && props.touched}>
       <FormLabel htmlFor={name}>{label}</FormLabel>
       <Select options={options} onChange={handleChange} onBlur={handleBlur} value={stateValue} />
-      {!!props.error && props.touched && <FormErrorMessage>{props.error}</FormErrorMessage>}
+      {!!props.error && props.touched && <FormErrorMessage>{props.error.value}</FormErrorMessage>}
     </FormControl>
   );
 };

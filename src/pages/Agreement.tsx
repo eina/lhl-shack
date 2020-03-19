@@ -24,7 +24,7 @@ const billShape = {
   name: null,
   totalAmt: 0,
   dueDate: moment(),
-  interval: [] // once, monthly, every 2 months, annually
+  interval: "" // once, monthly, every 2 months, annually
 };
 
 const formikEnhancer = withFormik({
@@ -87,17 +87,30 @@ const formikEnhancer = withFormik({
   displayName: "RoommateAgreementGenerator"
 });
 
-const AgreementForm = ({ values, setFieldValue, handleSubmit, handleBlur }: FormikProps<any>) => {
+const AgreementForm = ({
+  values,
+  errors,
+  touched,
+  setFieldValue,
+  handleSubmit,
+  handleBlur
+}: FormikProps<any>) => {
   return (
     <form onSubmit={handleSubmit}>
       <Switch>
         <Route path="/agreement/household" component={Household} />
         <Route path="/agreement/landlord" component={Landlord} />
         <Route path="/agreement/roommates" component={Roommates} />
-        {/* <Redirect from="/agreement/bills" to="/agreement/bills/rent" exact /> */}
-        {/* <Route path="/agreement/bills/rent">
-          <Rent values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
-        </Route> */}
+        <Redirect from="/agreement/bills" to="/agreement/bills/rent" exact />
+        <Route path="/agreement/bills/rent">
+          <Rent
+            values={values}
+            setFieldValue={setFieldValue}
+            handleBlur={handleBlur}
+            errors={errors}
+            touched={touched}
+          />
+        </Route>
         {/* <Route path="/agreement/bills/deposit">
           <SecurityDeposit values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
         </Route> */}

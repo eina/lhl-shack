@@ -1,5 +1,8 @@
 import React from 'react';
 import { Field } from 'formik';
+import { Button } from '@chakra-ui/core';
+
+import { useHistory } from 'react-router-dom';
 
 import FieldSet from '../FieldSet';
 export interface LandlordValues {
@@ -11,6 +14,7 @@ export interface LandlordValues {
   company: string;
 }
 const Landlord = () => {
+  const history = useHistory();
   return (
     <div>
       <h2>Landlord Contact Information</h2>
@@ -24,6 +28,16 @@ const Landlord = () => {
         name="company"
         label="Property Management Company"
       />
+      <div>
+        <Button
+          variantColor="pink"
+          onClick={() => {
+            history.push('/agreement/roommates');
+          }}
+        >
+          Next Section
+        </Button>
+      </div>
     </div>
   );
 };

@@ -12,6 +12,7 @@ import Roommates from "../components/AgreementForm/Roommates";
 import Housekeeping from "../components/AgreementForm/Housekeeping";
 import Rent from "../components/AgreementForm/RentAndDeposit/Rent";
 import SecurityDeposit from "../components/AgreementForm/RentAndDeposit/SecurityDeposit";
+import BillsUtilities from "../components/AgreementForm/BillsUtilities";
 import TestDraft from "../components/AgreementForm/TestDraft";
 
 import "draft-js/dist/Draft.css";
@@ -50,7 +51,7 @@ const formikEnhancer = withFormik({
         // { roommate: [], roommate_amt: 0, amt_type: [] }
       ]
     },
-    RentAndDeposit: [{ rent: 0, deposit: 0 }],
+    bills: [{ ...billShape }],
     // test values for TestDraft.tsx
     textArea1: EditorState.createEmpty(),
     textArea2: EditorState.createEmpty(),
@@ -78,6 +79,9 @@ const AgreementForm = ({ values, setFieldValue, handleSubmit, handleBlur }: Form
         </Route>
         <Route path="/agreement/bills/deposit">
           <SecurityDeposit values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
+        </Route>
+        <Route path="/agreement/bills/utilities">
+          <BillsUtilities values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
         </Route>
         <Route path="/agreement/housekeeping" component={Housekeeping} />
         <Route path="/agreement/testDraft">
@@ -117,6 +121,9 @@ const Agreement = () => {
             </li>
             <li>
               <Link to="/agreement/bills/deposit">Bills: Security Deposit</Link>
+            </li>
+            <li>
+              <Link to="/agreement/bills/utilities">Bills: Utilities</Link>
             </li>
           </ul>
         </li>

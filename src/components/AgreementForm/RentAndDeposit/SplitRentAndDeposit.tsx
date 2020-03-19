@@ -6,15 +6,9 @@ import { FormValues } from "../../../interfaces";
 import FieldSet from "../../FieldSet";
 import FormikSelect from "../../FormikSelect";
 import { FormikSingleDatePicker } from "../../FormikDates";
+import { billInterval } from "../../../helpers/data";
 
 const displayFullName = (firstName: string, lastName: string) => `${firstName} ${lastName}`;
-
-const billInterval = [
-  { label: "Once", value: "once" },
-  { label: "Monthly", value: "monthly" },
-  { label: "Every 2 Months", value: "2monthly" },
-  { label: "Annually", value: "annually" }
-];
 
 const SplitRentAndDeposit = (props: any) => {
   const { sectionName, values, setFieldValue, handleBlur } = props;

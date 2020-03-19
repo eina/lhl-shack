@@ -1,5 +1,5 @@
 import React from "react";
-import { Field, useFormikContext, FormikProps } from "formik";
+import { useFormikContext, FormikProps } from "formik";
 import { useHistory } from "react-router-dom";
 import { Button } from "@chakra-ui/core";
 

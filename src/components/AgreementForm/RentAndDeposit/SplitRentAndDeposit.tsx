@@ -1,7 +1,7 @@
 import React from "react";
-import { FieldArray, useFormikContext } from "formik";
+import { FieldArray } from "formik";
 
-import { FormValues } from "../../../interfaces";
+// import { FormValues } from "../../../interfaces";
 import { displayFullName } from "../../../helpers/functions";
 
 import FieldSet from "../../FieldSet";
@@ -95,7 +95,6 @@ const SplitRentAndDeposit = (props: any) => {
           </div>
         )}
       </FieldArray>
-      
     </div>
   );
 };

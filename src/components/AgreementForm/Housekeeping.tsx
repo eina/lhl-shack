@@ -1,17 +1,12 @@
 import React from "react";
-import { Field } from "formik";
-import ReactDOM from "react-dom";
-import { Editor, EditorState } from "draft-js";
-import { string } from "yup";
 import FieldSet from "../FieldSet";
 
 import { Button } from "@chakra-ui/core";
 
 import { useHistory } from "react-router-dom";
-import { FormValues } from "../../interfaces";
+// import { FormValues } from "../../interfaces";
 
 import RichEditor from "../RichEditor/RichEditor";
-import FormikSelect from "../FormikSelect";
 
 export interface HousekeepingValues {
   guests: string;
@@ -32,9 +27,15 @@ export interface HousekeepingValues {
 
 const Housekeeping = (props: any) => {
   const history = useHistory();
-  const { values, setFieldValue, handleBlur, errors, touched } = props;
+  const {
+    values,
+    setFieldValue,
+    handleBlur
+    // errors,
+    // touched
+  } = props;
 
-  console.log({ errors: errors && errors.housekeeping, touched: touched && touched.housekeeping });
+  // console.log({ errors: errors && errors.housekeeping, touched: touched && touched.housekeeping });
   return (
     <div>
       <h4>Guests</h4>
@@ -75,27 +76,6 @@ const Housekeeping = (props: any) => {
         label="AM on weekends and holidays."
         name="housekeeping.weekendAM"
         inputGroup={{ right: { addOn: "AM" } }}
-      />
-
-      <h4>Private and Shared Spaces Policy</h4>
-      <p>
-        1. We agree that the following persons shall occupy the following bedrooms during our
-        tenancy
-      </p>
-      <RichEditor
-        editorState={values.housekeeping.roomsPolicy}
-        editorStateName="housekeeping.roomsPolicy"
-        onChange={setFieldValue}
-        onBlur={handleBlur}
-        focus={() => {}}
-      />
-      <p>We agree to the following about accessing each roommates' private spaces</p>
-      <RichEditor
-        editorState={values.housekeeping.spacesPolicy}
-        editorStateName="housekeeping.spacesPolicy"
-        onChange={setFieldValue}
-        onBlur={handleBlur}
-        focus={() => {}}
       />
       <h4>Private and Shared Spaces</h4>
       <h5>Room Occupancy Policy</h5>

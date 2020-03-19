@@ -1,5 +1,5 @@
-import { string, object, array, number, boolean, date, lazy } from "yup";
-import moment from "moment";
+import { string, object, array, number, boolean, date } from "yup";
+// import moment from "moment";
 // regex pattern for canadian addresses, by checking postal code
 // valid: 401 W Georgia St, Vancouver, BC V6B 5A1 || V6B 5A1 || v6b5a1
 const postalRegex = /^.*[ABCEGHJKLMNPRSTVXY][0-9][A-Z]\s?[0-9][A-Z][0-9].*$/gim;

@@ -1,4 +1,4 @@
-import * as Yup from "yup";
+import { string, object, array, number, boolean } from "yup";
 
 // regex pattern for canadian addresses, by checking postal code
 // valid: 401 W Georgia St, Vancouver, BC V6B 5A1 || V6B 5A1 || v6b5a1
@@ -13,24 +13,24 @@ const tooShort = "Please enter a value with more than 1 character";
 const email = "Please enter a valid email address";
 
 /* function helpers */
-const yupName = Yup.string().min(1, tooShort);
-const yupEmail = Yup.string()
+const yupName = string().min(1, tooShort);
+const yupEmail = string()
   .email(email)
   .required(requiredMsg);
-const yupCdnAddress = Yup.string()
+const yupCdnAddress = string()
   .matches(postalRegex, "Please enter a valid address (make sure to include your postal code)")
   .required(requiredMsg);
-const yupCdnPhone = Yup.string()
+const yupCdnPhone = string()
   .matches(phoneRegex, "Please enter a valid phone number (eg. 604-111-1111)")
   .required(requiredMsg);
-const yupMin1 = Yup.number().min(1, "Please enter a value bigger than 0");
-const yupReactSelect = Yup.object().shape({
-  label: Yup.string().required(),
-  value: Yup.string().required(requiredMsg)
+const yupMin1 = number().min(1, "Please enter a value bigger than 0");
+const yupReactSelect = object().shape({
+  label: string().required(),
+  value: string().required(requiredMsg)
 });
 
-export default Yup.object().shape({
-  landlord: Yup.object().shape({
+export default object().shape({
+  landlord: object().shape({
     firstName: yupName.required(requiredMsg),
     lastName: yupName.required(requiredMsg),
     email: yupEmail,
@@ -38,57 +38,63 @@ export default Yup.object().shape({
     phone: yupCdnPhone,
     company: yupName
   }),
-  household: Yup.object().shape({
+  household: object().shape({
     address: yupCdnAddress,
-    petFriendly: Yup.boolean().required(requiredMsg),
-    smokingAllowed: Yup.boolean().required(requiredMsg),
+    petFriendly: boolean().required(requiredMsg),
+    smokingAllowed: boolean().required(requiredMsg),
     bedroomsAmt: yupMin1.required(requiredMsg),
     bathroomsAmt: yupMin1.required(requiredMsg),
     rentAmt: yupMin1.required(requiredMsg),
     securityDepositAmt: yupMin1.required(requiredMsg)
   }),
-  roommates: Yup.array()
+  roommates: array()
     // .min(2, `You must have at least 2 two people in a household`)
     .of(
-      Yup.object().shape({
+      object().shape({
         firstName: yupName.required(requiredMsg),
         lastName: yupName.required(requiredMsg),
         email: yupEmail.required(requiredMsg),
         phone: yupCdnPhone.required(requiredMsg)
       })
     ),
-  rent: Yup.object().shape({
+  rent: object().shape({
     name: yupName.nullable().required(requiredMsg),
     totalAmt: yupMin1.required(requiredMsg),
-    dueDate: Yup.object().required(requiredMsg),
+    dueDate: object().required(requiredMsg),
     interval: yupReactSelect,
-    portion: Yup.array().of(
-      Yup.object().shape({
+    portion: array().of(
+      object().shape({
         roommate: yupReactSelect,
         roommate_amt: yupMin1,
         amt_type: yupReactSelect
       })
     )
   }),
-  securityDeposit: Yup.object().shape({
+  securityDeposit: object().shape({
     name: yupName.nullable().required(requiredMsg),
     totalAmt: yupMin1.required(requiredMsg),
-    dueDate: Yup.object().required(requiredMsg),
+    dueDate: object().required(requiredMsg),
     interval: yupReactSelect,
-    portion: Yup.array().of(
-      Yup.object().shape({
+    portion: array().of(
+      object().shape({
         roommate: yupReactSelect,
         roommate_amt: yupMin1,
         amt_type: yupReactSelect
       })
     )
   }),
-  bills: Yup.array().of(
-    Yup.object().shape({
+  bills: array().of(
+    object().shape({
       name: yupName.nullable().required(requiredMsg),
       totalAmt: yupMin1.required(requiredMsg),
-      dueDate: Yup.object().required(requiredMsg),
+      dueDate: object().required(requiredMsg),
       interval: yupReactSelect
+    })
+  ),
+  housekeeping: object().shape({}),
+  signatures: array().of(
+    object().shape({
+      fullName: yupName.required(requiredMsg)
     })
   )
 });

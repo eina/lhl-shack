@@ -1,6 +1,18 @@
 import React, { Key } from "react";
 import { useField } from "formik";
-import { FormControl, FormLabel, Input, Checkbox, FormErrorMessage } from "@chakra-ui/core";
+import {
+  FormControl,
+  FormLabel,
+  InputGroup,
+  Input,
+  InputRightAddon,
+  InputRightElement,
+  InputLeftAddon,
+  InputLeftElement,
+  Checkbox,
+  FormHelperText,
+  FormErrorMessage
+} from "@chakra-ui/core";
 
 type FieldSetConfig = {
   name: string;
@@ -9,13 +21,37 @@ type FieldSetConfig = {
   isReadOnly?: any;
   disabled?: any;
   value?: any;
+  formHelper?: string;
+  inputGroup?: any;
 };
 
 const FieldSet = ({ label, type, value, ...props }: FieldSetConfig) => {
   const [field, meta, helpers] = useField(props);
-  // const default
 
-  // console.log("field?", field);
+  const InputContainer = () => (
+    <Input
+      {...field}
+      {...props}
+      value={value ? value : field.value || ""}
+      isReadOnly={props.isReadOnly !== undefined ? props.isReadOnly : false}
+    />
+  );
+
+  const InputRight = () => {
+    if (props.inputGroup.right.addOn) {
+      return <InputRightAddon>{props.inputGroup.right.addOn}</InputRightAddon>;
+    } else {
+      return <InputRightElement>{props.inputGroup.right.element}</InputRightElement>;
+    }
+  };
+
+  const InputLeft = () => {
+    if (props.inputGroup.left.addOn) {
+      return <InputLeftAddon>{props.inputGroup.right.addOn}</InputLeftAddon>;
+    } else {
+      return <InputLeftElement>{props.inputGroup.right.element}</InputLeftElement>;
+    }
+  };
 
   return (
     <FormControl
@@ -35,14 +71,14 @@ const FieldSet = ({ label, type, value, ...props }: FieldSetConfig) => {
       ) : (
         <>
           <FormLabel htmlFor={field.name}>{label}</FormLabel>
-          <Input
-            {...field}
-            {...props}
-            value={value ? value : field.value || ""}
-            isReadOnly={props.isReadOnly !== undefined ? props.isReadOnly : false}
-          />
+          <InputGroup>
+            {props.inputGroup && props.inputGroup.left ? <InputLeft /> : null}
+            <InputContainer />
+            {props.inputGroup && props.inputGroup.right ? <InputRight /> : null}
+          </InputGroup>
         </>
       )}
+      {props.formHelper ? <FormHelperText>{props.formHelper}</FormHelperText> : null}
       {meta.touched && meta.error ? <FormErrorMessage>{meta.error}</FormErrorMessage> : null}
     </FormControl>
   );

@@ -2,13 +2,12 @@ import React from "react";
 import { FieldArray, useFormikContext } from "formik";
 
 import { FormValues } from "../../../interfaces";
+import { displayFullName } from "../../../helpers/functions";
 
 import FieldSet from "../../FieldSet";
 import FormikSelect from "../../FormikSelect";
 import { FormikSingleDatePicker } from "../../FormikDates";
 import { billInterval } from "../../../helpers/data";
-
-const displayFullName = (firstName: string, lastName: string) => `${firstName} ${lastName}`;
 
 const SplitRentAndDeposit = (props: any) => {
   const { sectionName, values, setFieldValue, handleBlur, errors, touched } = props;

@@ -14,6 +14,7 @@ import Housekeeping from "../components/AgreementForm/Housekeeping";
 import Rent from "../components/AgreementForm/RentAndDeposit/Rent";
 import SecurityDeposit from "../components/AgreementForm/RentAndDeposit/SecurityDeposit";
 import BillsUtilities from "../components/AgreementForm/BillsUtilities";
+import Signatures from "../components/AgreementForm/Signatures";
 import TestDraft from "../components/AgreementForm/TestDraft";
 
 import "draft-js/dist/Draft.css";
@@ -69,6 +70,23 @@ const formikEnhancer = withFormik({
       portion: [{ roommate: [], roommate_amt: 0, amt_type: [] }]
     },
     bills: [{ ...billShape }],
+    housekeeping: {
+      guests: "",
+      weekdayPM: "",
+      weekdayAM: "",
+      weekendPM: "",
+      weekendAM: "",
+      rooms: "",
+      privateSpaces: "",
+      vacations: "",
+      personalItems: "",
+      smoking: "",
+      chores: "",
+      choresResolve: "",
+      messages: "",
+      pets: ""
+    },
+    signatures: [{ fullName: "", agreed: false, date: moment() }],
     // test values for TestDraft.tsx
     textArea1: EditorState.createEmpty(),
     textArea2: EditorState.createEmpty(),
@@ -124,7 +142,16 @@ const AgreementForm = ({
         <Route path="/agreement/bills/utilities">
           <BillsUtilities values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
         </Route>
-        {/* <Route path="/agreement/housekeeping" component={Housekeeping} /> */}
+        <Route path="/agreement/housekeeping" component={Housekeeping} />
+        <Route path="/agreement/signatures">
+          <Signatures
+            values={values}
+            setFieldValue={setFieldValue}
+            handleBlur={handleBlur}
+            errors={errors}
+            touched={touched}
+          />
+        </Route>
         {/* <Route path="/agreement/testDraft">
           <TestDraft values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
         </Route> */}

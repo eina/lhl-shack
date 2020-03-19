@@ -94,7 +94,21 @@ export default object().shape({
       interval: yupReactSelect
     })
   ),
-  housekeeping: object().shape({}),
+  housekeeping: object().shape({
+    weekdayPM: yupName.required(requiredMsg),
+    weekdayAM: yupName.required(requiredMsg),
+    weekendPM: yupName.required(requiredMsg),
+    weekendAM: yupName.required(requiredMsg),
+    guestPolicy: object().required(requiredMsg),
+    spacesPolicy: object().required(requiredMsg),
+    roomsPolicy: object().required(requiredMsg),
+    choresPolicy: object().required(requiredMsg),
+    vacationPolicy: object().required(requiredMsg),
+    personalItemsPolicy: object().required(requiredMsg),
+    smokingPolicy: object().required(requiredMsg),
+    messagesPolicy: object().required(requiredMsg),
+    petsPolicy: object().required(requiredMsg)
+  }),
   signatures: array().of(
     object().shape({
       fullName: yupName.required(requiredMsg),

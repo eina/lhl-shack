@@ -32,7 +32,9 @@ export interface HousekeepingValues {
 
 const Housekeeping = (props: any) => {
   const history = useHistory();
-  const { values, setFieldValue, handleBlur } = props;
+  const { values, setFieldValue, handleBlur, errors, touched } = props;
+
+  console.log({ errors: errors && errors.housekeeping, touched: touched && touched.housekeeping });
   return (
     <div>
       <h4>Guests</h4>
@@ -42,16 +44,14 @@ const Housekeeping = (props: any) => {
         roommates can have guests over, whether there should be special rules for overnight guests,
         if there should be rules about guests' conduct when they are visiting, and similar issues.
       </p>
-      <div>
-        <p>We agree that the following applies to guests:</p>
-        {/* <RichEditor
-          editorState={values.housekeeping.guestPolicy}
-          editorStateName="housekeeping.guestPolicy"
-          onChange={setFieldValue}
-          onBlur={handleBlur}
-          focus={() => {}}
-        /> */}
-      </div>
+      <p>We agree that the following applies to guests:</p>
+      <RichEditor
+        editorState={values.housekeeping.guestPolicy}
+        editorStateName="housekeeping.guestPolicy"
+        onChange={setFieldValue}
+        onBlur={handleBlur}
+        focus={() => {}}
+      />
       <FieldSet
         type="number"
         label="We agree that quiet time will be from (PM)"
@@ -149,8 +149,9 @@ const Housekeeping = (props: any) => {
         You should think about what rules should be in place regarding roommates' personal
         belongings, both within their own private spaces and in shared common spaces in the rental
         unit.
-        <p>Regarding furniture and belongings in common and private areas, we agree that:</p>
       </p>
+
+      <p>Regarding furniture and belongings in common and private areas, we agree that:</p>
       <h5>Personal Items Policy</h5>
       <RichEditor
         editorState={values.housekeeping.personalItemsPolicy}
@@ -178,9 +179,9 @@ const Housekeeping = (props: any) => {
       />
       <h4>Messages</h4>
       <p>
-        It is always important to have good communicatin between roommates. Designate an area to
-        leave messages for each other, and to leave messges
-        <p>from the landlord. We agree that any messages for other roommates will:</p>
+        It is always important to have good communication between roommates. Designate an area to
+        leave messages for each other, and to leave messges from the landlord. We agree that any
+        messages for other roommates will:
       </p>
       <h5>Messages Policy</h5>
       <RichEditor

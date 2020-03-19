@@ -72,7 +72,6 @@ const formikEnhancer = withFormik({
     },
     bills: [{ ...billShape }],
     housekeeping: {
-      guests: "",
       weekdayPM: "",
       weekdayAM: "",
       weekendPM: "",
@@ -151,7 +150,13 @@ const AgreementForm = ({
           />
         </Route>
         <Route path="/agreement/housekeeping">
-          <Housekeeping values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
+          <Housekeeping
+            values={values}
+            setFieldValue={setFieldValue}
+            handleBlur={handleBlur}
+            errors={errors}
+            touched={touched}
+          />
         </Route>
         <Route path="/agreement/signatures">
           <Signatures

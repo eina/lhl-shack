@@ -3,7 +3,7 @@ import { Field } from 'formik';
 import { Button } from "@chakra-ui/core";
 import Agreement from '../../pages/Agreement';
 
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 
 

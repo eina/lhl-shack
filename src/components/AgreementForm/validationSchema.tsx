@@ -7,10 +7,12 @@ const postalRegex = /^.*[ABCEGHJKLMNPRSTVXY][0-9][A-Z]\s?[0-9][A-Z][0-9].*$/gim;
 // https://www.oreilly.com/library/view/regular-expressions-cookbook/9781449327453/ch04s02.html
 const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
+/* string/message helpers */
 const requiredMsg = "This field is required";
 const tooShort = "Please enter a value with more than 1 character";
 const email = "Please enter a valid email address";
 
+/* function helpers */
 const yupName = Yup.string().min(1, tooShort);
 const yupEmail = Yup.string()
   .email(email)

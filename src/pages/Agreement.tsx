@@ -7,7 +7,7 @@ import { EditorState } from "draft-js";
 import { FormValues } from "../interfaces";
 import validationSchema from "../components/AgreementForm/validationSchema";
 
-import Info from "../components/AgreementForm/Info";
+import Household from "../components/AgreementForm/Household";
 import Landlord from "../components/AgreementForm/Landlord";
 import Roommates from "../components/AgreementForm/Roommates";
 import Housekeeping from "../components/AgreementForm/Housekeeping";
@@ -36,6 +36,19 @@ const formikEnhancer = withFormik({
       phone: "",
       email: "",
       company: ""
+    },
+    household: {
+      address: "",
+      leaseDates: {
+        startDate: null,
+        endDate: null
+      },
+      smokingAllowed: false,
+      petFriendly: true,
+      bedroomsAmt: 2,
+      bathroomsAmt: 1,
+      rentAmt: "",
+      securityDepositAmt: ""
     },
     roommates: [
       { firstName: "Roommate", lastName: "One", email: "roomie1@email.com", phone: "6041234567" },
@@ -78,21 +91,21 @@ const AgreementForm = ({ values, setFieldValue, handleSubmit, handleBlur }: Form
   return (
     <form onSubmit={handleSubmit}>
       <Switch>
-        <Route path="/agreement/info" component={Info} />
+        <Route path="/agreement/household" component={Household} />
         <Route path="/agreement/landlord" component={Landlord} />
-        {/* <Route path="/agreement/roommates" component={Roommates} />
-        <Redirect from="/agreement/bills" to="/agreement/bills/rent" exact />
-        <Route path="/agreement/bills/rent">
+        <Route path="/agreement/roommates" component={Roommates} />
+        {/* <Redirect from="/agreement/bills" to="/agreement/bills/rent" exact /> */}
+        {/* <Route path="/agreement/bills/rent">
           <Rent values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
-        </Route>
-        <Route path="/agreement/bills/deposit">
+        </Route> */}
+        {/* <Route path="/agreement/bills/deposit">
           <SecurityDeposit values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
-        </Route>
-        <Route path="/agreement/bills/utilities">
+        </Route> */}
+        {/* <Route path="/agreement/bills/utilities">
           <BillsUtilities values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
-        </Route>
-        <Route path="/agreement/housekeeping" component={Housekeeping} />
-        <Route path="/agreement/testDraft">
+        </Route> */}
+        {/* <Route path="/agreement/housekeeping" component={Housekeeping} /> */}
+        {/* <Route path="/agreement/testDraft">
           <TestDraft values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
         </Route> */}
       </Switch>
@@ -113,12 +126,12 @@ const Agreement = () => {
           <Link to="/agreement/title">About the Agreement</Link>
         </li>
         <li>
-          <Link to="/agreement/info">Your Address</Link>
+          <Link to="/agreement/household">House Information</Link>
         </li>
         <li>
           <Link to="/agreement/landlord">Landlord Information</Link>
         </li>
-        {/* <li>
+        <li>
           <Link to="/agreement/roommates">Roommates</Link>
         </li>
         <li>
@@ -143,7 +156,7 @@ const Agreement = () => {
         </li>
         <li>
           <Link to="/agreement/testDraft">Third Party Examples</Link>
-        </li> */}
+        </li>
       </ul>
       {/* enhanced agreement form */}
       <EnhancedAgreement />

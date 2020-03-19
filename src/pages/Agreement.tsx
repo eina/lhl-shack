@@ -6,6 +6,7 @@ import { EditorState } from "draft-js";
 
 import { FormValues } from "../interfaces";
 
+import Title from "../components/AgreementForm/Title";
 import Info from "../components/AgreementForm/Info";
 import Landlord from "../components/AgreementForm/Landlord";
 import Roommates from "../components/AgreementForm/Roommates";
@@ -70,6 +71,7 @@ const AgreementForm = ({ values, setFieldValue, handleSubmit, handleBlur }: Form
   return (
     <form onSubmit={handleSubmit}>
       <Switch>
+      <Route path="/agreement/title" component={Title} />
         <Route path="/agreement/info" component={Info} />
         <Route path="/agreement/landlord" component={Landlord} />
         <Route path="/agreement/roommates" component={Roommates} />

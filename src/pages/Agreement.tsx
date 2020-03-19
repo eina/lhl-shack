@@ -51,7 +51,8 @@ const formikEnhancer = withFormik({
       securityDepositAmt: ""
     },
     roommates: [
-      { firstName: "Roommate", lastName: "One", email: "roomie1@email.com", phone: "6041234567" }
+      { firstName: "Roommate", lastName: "One", email: "roomie1@email.com", phone: "6041234567" },
+      { firstName: "", lastName: "", email: "", phone: "" }
       // {
       //   firstName: "Roommate",
       //   lastName: "Twwwooooo",
@@ -111,9 +112,15 @@ const AgreementForm = ({
             touched={touched}
           />
         </Route>
-        {/* <Route path="/agreement/bills/deposit">
-          <SecurityDeposit values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
-        </Route> */}
+        <Route path="/agreement/bills/deposit">
+          <SecurityDeposit
+            values={values}
+            setFieldValue={setFieldValue}
+            handleBlur={handleBlur}
+            errors={errors}
+            touched={touched}
+          />
+        </Route>
         {/* <Route path="/agreement/bills/utilities">
           <BillsUtilities values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
         </Route> */}

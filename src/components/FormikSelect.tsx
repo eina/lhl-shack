@@ -29,8 +29,6 @@ const FormikSelect = (props: FormikSelectProps) => {
     onBlur(stateName, true);
   };
 
-  console.log("what are you even", props);
-
   return (
     <FormControl isInvalid={!!props.error && props.touched}>
       <FormLabel htmlFor={name}>{label}</FormLabel>

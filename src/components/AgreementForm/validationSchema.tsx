@@ -47,15 +47,30 @@ export default Yup.object().shape({
     rentAmt: yupMin1.required(requiredMsg),
     securityDepositAmt: yupMin1.required(requiredMsg)
   }),
-  roommates: Yup.array().of(
-    Yup.object().shape({
-      firstName: yupName.required(requiredMsg),
-      lastName: yupName.required(requiredMsg),
-      email: yupEmail.required(requiredMsg),
-      phone: yupCdnPhone.required(requiredMsg)
-    })
-  ),
+  roommates: Yup.array()
+    // .min(2, `You must have at least 2 two people in a household`)
+    .of(
+      Yup.object().shape({
+        firstName: yupName.required(requiredMsg),
+        lastName: yupName.required(requiredMsg),
+        email: yupEmail.required(requiredMsg),
+        phone: yupCdnPhone.required(requiredMsg)
+      })
+    ),
   rent: Yup.object().shape({
+    name: yupName.required(requiredMsg),
+    totalAmt: yupMin1.required(requiredMsg),
+    dueDate: Yup.object().required(requiredMsg),
+    interval: yupReactSelect,
+    portion: Yup.array().of(
+      Yup.object().shape({
+        roommate: yupReactSelect,
+        roommate_amt: yupMin1,
+        amt_type: yupReactSelect
+      })
+    )
+  }),
+  securityDeposit: Yup.object().shape({
     name: yupName.required(requiredMsg),
     totalAmt: yupMin1.required(requiredMsg),
     dueDate: Yup.object().required(requiredMsg),

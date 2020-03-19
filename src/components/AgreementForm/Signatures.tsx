@@ -8,7 +8,7 @@ import { displayFullName } from "../../helpers/functions";
 import FieldSet from "../FieldSet";
 
 const Signatures = (props: any) => {
-  const { values, setFieldValue, handleBlur } = props;
+  const { values, setFieldValue, errors, touched } = props;
 
   const roommateName = values.roommates.map((roomie: any) =>
     displayFullName(roomie.firstName, roomie.lastName)
@@ -42,6 +42,18 @@ const Signatures = (props: any) => {
                     onChange={setFieldValue}
                     numberOfMonths={1}
                     label="Date Signed"
+                    error={
+                      errors &&
+                      errors.signatures &&
+                      errors.signatures[index] &&
+                      errors.signatures[index].date
+                    }
+                    touched={
+                      touched &&
+                      touched.signatures &&
+                      touched.signatures[index] &&
+                      touched.signatures[index].date
+                    }
                   />
                 </li>
               ))}

@@ -34,14 +34,13 @@ export const FormikDateRange = (props: FormikDateProps) => {
 
   const fieldError = props.error && props.error[name] ? props.error[name] : null;
   const isTouched =
-    props.error && props.touched[name] && props.touched[name].startDate
+    props.touched && props.touched[name] && props.touched[name].startDate
       ? props.touched[name].startDate
       : null;
   const isError = props.error && isTouched ? true : false;
-  console.log(isError, fieldError);
 
   return (
-    <FormControl isInvalid={!!props.error && props.touched}>
+    <FormControl isInvalid={!!isError && fieldError}>
       <FormLabel>
         {label}
         <DateRangePicker
@@ -61,14 +60,26 @@ export const FormikDateRange = (props: FormikDateProps) => {
 
 export const FormikSingleDatePicker = (props: FormikDateProps) => {
   const { stateName, stateValue, onChange, label, name, numberOfMonths } = props;
+  const [focusedInput, setFocusedInput] = useState(null);
 
   const handleDatesChange = (date: any) => {
     onChange(stateName, date);
   };
 
-  const [focusedInput, setFocusedInput] = useState(null);
+  const checkFieldError = stateName.split(".").reduce((prev, curr, index) => {
+    return `${prev}[${curr}]`;
+  });
+
+  const fieldError =
+    props.error && props.error[checkFieldError] ? props.error[checkFieldError] : null;
+  const isTouched = props.touched && props.touched[name] ? props.touched[name] : null;
+  const isError = props.error && isTouched ? true : false;
+
+  // console.log({ stateName, checkFieldError, fieldError, isTouched });
+  // console.log(props.error);
+
   return (
-    <FormControl>
+    <FormControl isInvalid={!!isError && fieldError}>
       <FormLabel>
         {label}
         <SingleDatePicker
@@ -80,7 +91,7 @@ export const FormikSingleDatePicker = (props: FormikDateProps) => {
           numberOfMonths={numberOfMonths ? numberOfMonths : 2}
         />
       </FormLabel>
-      {!!props.error && props.touched && <FormErrorMessage>{props.error}</FormErrorMessage>}
+      {!!isError && fieldError && <FormErrorMessage>{fieldError}</FormErrorMessage>}
     </FormControl>
   );
 };

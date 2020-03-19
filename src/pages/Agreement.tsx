@@ -140,7 +140,13 @@ const AgreementForm = ({
           />
         </Route>
         <Route path="/agreement/bills/utilities">
-          <BillsUtilities values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
+          <BillsUtilities
+            values={values}
+            setFieldValue={setFieldValue}
+            handleBlur={handleBlur}
+            errors={errors}
+            touched={touched}
+          />
         </Route>
         <Route path="/agreement/housekeeping" component={Housekeeping} />
         <Route path="/agreement/signatures">

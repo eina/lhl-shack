@@ -11,14 +11,10 @@ import FormikSelect from "../FormikSelect";
 import { billInterval } from "../../helpers/data";
 
 const Bills = (props: any) => {
-  const { values, setFieldValue, handleBlur } = props;
+  const { values, setFieldValue, handleBlur, errors, touched } = props;
   const numRoommates = values.roommates.length;
-  // const billPerRoommate = (totalAmount: number) => {
 
-  //   console.log(totalAmount, numRoommates);
-  //   return totalAmount ? totalAmount / numRoommates : "";
-  // };
-
+  // console.log({ errors: errors && errors.bills, touched: touched && touched.bills });
   return (
     <div>
       <h2>Bills: Utilities</h2>
@@ -37,8 +33,16 @@ const Bills = (props: any) => {
                     stateValue={values.bills[index].dueDate}
                     onChange={setFieldValue}
                     numberOfMonths={1}
+                    error={
+                      errors && errors.bills && errors.bills[index] && errors.bills[index].dueDate
+                    }
+                    touched={
+                      touched &&
+                      touched.bills &&
+                      touched.bills[index] &&
+                      touched.bills[index].dueDate
+                    }
                   />
-                  {/* <FieldSet type="date" name={`bills.${index}.dueDate`} label="Due Date" /> */}
                   <FormikSelect
                     label="Billing Cycle"
                     name={`bills.${index}.interval`}
@@ -47,10 +51,16 @@ const Bills = (props: any) => {
                     options={billInterval}
                     onChange={setFieldValue}
                     onBlur={handleBlur}
+                    error={
+                      errors && errors.bills && errors.bills[index] && errors.bills[index].interval
+                    }
+                    touched={
+                      touched &&
+                      touched.bills &&
+                      touched.bills[index] &&
+                      touched.bills[index].interval
+                    }
                   />
-                  {/* {values.bills[index].totalAmount ? (
-                    <p>total per roommate: ${values.bills[index].totalAmount / numRoommates}</p>
-                  ) : null} */}
                   {values.bills[index].totalAmount ? (
                     <FieldSet
                       type="number"

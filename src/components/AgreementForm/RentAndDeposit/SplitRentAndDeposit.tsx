@@ -17,6 +17,9 @@ const SplitRentAndDeposit = (props: any) => {
     label: displayFullName(roomie.firstName, roomie.lastName)
   }));
 
+  const errorObj = errors && errors[sectionName];
+  const touchedObj = touched && touched[sectionName];
+
   return (
     <div>
       <FieldSet name={`${sectionName}.totalAmt`} label="Total Amount to Pay" type="number" />
@@ -28,6 +31,8 @@ const SplitRentAndDeposit = (props: any) => {
         stateValue={values[sectionName].dueDate}
         onChange={setFieldValue}
         numberOfMonths={1}
+        error={errorObj}
+        touched={touchedObj}
       />
 
       <FormikSelect
@@ -56,12 +61,6 @@ const SplitRentAndDeposit = (props: any) => {
                     options={roommateOptions}
                     onChange={setFieldValue}
                     onBlur={handleBlur}
-                    // touched={
-                    //   touched[sectionName].portion[index] !== undefined
-                    //     ? touched[sectionName].portion[index].roommate
-                    //     : false
-                    // }
-                    // error={errors[sectionName] ? errors[sectionName].interval : null}
                   />
                   <FieldSet
                     type="number"

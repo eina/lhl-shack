@@ -28,6 +28,7 @@ const yupReactSelect = object().shape({
   label: string().required(),
   value: string().required(requiredMsg)
 });
+const yupCheckbox = boolean().oneOf([true], "Field must be checked");
 
 export default object().shape({
   landlord: object().shape({
@@ -40,8 +41,6 @@ export default object().shape({
   }),
   household: object().shape({
     address: yupCdnAddress,
-    petFriendly: boolean().required(requiredMsg),
-    smokingAllowed: boolean().required(requiredMsg),
     bedroomsAmt: yupMin1.required(requiredMsg),
     bathroomsAmt: yupMin1.required(requiredMsg),
     rentAmt: yupMin1.required(requiredMsg),
@@ -64,7 +63,7 @@ export default object().shape({
   rent: object().shape({
     name: yupName.nullable().required(requiredMsg),
     totalAmt: yupMin1.required(requiredMsg),
-    dueDate: object().required(requiredMsg),
+    dueDate: date().required(requiredMsg),
     interval: yupReactSelect,
     portion: array().of(
       object().shape({
@@ -91,14 +90,16 @@ export default object().shape({
     object().shape({
       name: yupName.nullable().required(requiredMsg),
       totalAmt: yupMin1.required(requiredMsg),
-      dueDate: object().required(requiredMsg),
+      dueDate: date().required(requiredMsg),
       interval: yupReactSelect
     })
   ),
   housekeeping: object().shape({}),
   signatures: array().of(
     object().shape({
-      fullName: yupName.required(requiredMsg)
+      fullName: yupName.required(requiredMsg),
+      agreed: yupCheckbox,
+      date: date().required(requiredMsg)
     })
   )
 });

@@ -47,6 +47,14 @@ export default Yup.object().shape({
     rentAmt: yupMin1.required(requiredMsg),
     securityDepositAmt: yupMin1.required(requiredMsg)
   }),
+  roommates: Yup.array().of(
+    Yup.object().shape({
+      firstName: yupName.required(requiredMsg),
+      lastName: yupName.required(requiredMsg),
+      email: yupEmail.required(requiredMsg),
+      phone: yupCdnPhone.required(requiredMsg)
+    })
+  ),
   rent: Yup.object().shape({
     name: yupName.required(requiredMsg),
     totalAmt: yupMin1.required(requiredMsg),

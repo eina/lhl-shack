@@ -51,13 +51,13 @@ const formikEnhancer = withFormik({
       securityDepositAmt: ""
     },
     roommates: [
-      { firstName: "Roommate", lastName: "One", email: "roomie1@email.com", phone: "6041234567" },
-      {
-        firstName: "Roommate",
-        lastName: "Twwwooooo",
-        email: "bestestroommate@email.com",
-        phone: "7781234567"
-      }
+      { firstName: "Roommate", lastName: "One", email: "roomie1@email.com", phone: "6041234567" }
+      // {
+      //   firstName: "Roommate",
+      //   lastName: "Twwwooooo",
+      //   email: "bestestroommate@email.com",
+      //   phone: "7781234567"
+      // }
     ],
     rent: {
       ...billShape,

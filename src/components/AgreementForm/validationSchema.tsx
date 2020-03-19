@@ -58,7 +58,7 @@ export default Yup.object().shape({
       })
     ),
   rent: Yup.object().shape({
-    name: yupName.required(requiredMsg),
+    name: yupName.nullable().required(requiredMsg),
     totalAmt: yupMin1.required(requiredMsg),
     dueDate: Yup.object().required(requiredMsg),
     interval: yupReactSelect,
@@ -71,7 +71,7 @@ export default Yup.object().shape({
     )
   }),
   securityDeposit: Yup.object().shape({
-    name: yupName.required(requiredMsg),
+    name: yupName.nullable().required(requiredMsg),
     totalAmt: yupMin1.required(requiredMsg),
     dueDate: Yup.object().required(requiredMsg),
     interval: yupReactSelect,
@@ -82,5 +82,13 @@ export default Yup.object().shape({
         amt_type: yupReactSelect
       })
     )
-  })
+  }),
+  bills: Yup.array().of(
+    Yup.object().shape({
+      name: yupName.nullable().required(requiredMsg),
+      totalAmt: yupMin1.required(requiredMsg),
+      dueDate: Yup.object().required(requiredMsg),
+      interval: yupReactSelect
+    })
+  )
 });

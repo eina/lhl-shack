@@ -29,11 +29,7 @@ const Bills = (props: any) => {
               {values.bills.map((bill: any, index: number) => (
                 <li key={index}>
                   <FieldSet type="text" name={`bills.${index}.name`} label="Bill Name" />
-                  <FieldSet
-                    type="number"
-                    name={`bills.${index}.totalAmount`}
-                    label="Total Amount"
-                  />
+                  <FieldSet type="number" name={`bills.${index}.totalAmt`} label="Total Amount" />
                   <FormikSingleDatePicker
                     name={`bills.${index}.dueDate`}
                     label="Due Date"

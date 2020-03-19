@@ -121,9 +121,9 @@ const AgreementForm = ({
             touched={touched}
           />
         </Route>
-        {/* <Route path="/agreement/bills/utilities">
+        <Route path="/agreement/bills/utilities">
           <BillsUtilities values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
-        </Route> */}
+        </Route>
         {/* <Route path="/agreement/housekeeping" component={Housekeeping} /> */}
         {/* <Route path="/agreement/testDraft">
           <TestDraft values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />

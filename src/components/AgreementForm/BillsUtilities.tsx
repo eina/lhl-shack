@@ -10,9 +10,20 @@ import FormikSelect from "../FormikSelect";
 
 import { billInterval } from "../../helpers/data";
 
+import { Button } from "@chakra-ui/core";
+
+import { useHistory } from "react-router-dom";
+
 const Bills = (props: any) => {
   const { values, setFieldValue, handleBlur, errors, touched } = props;
   const numRoommates = values.roommates.length;
+  const history = useHistory(); //for nav buttons
+
+  // const billPerRoommate = (totalAmount: number) => {
+
+  //   console.log(totalAmount, numRoommates);
+  //   return totalAmount ? totalAmount / numRoommates : "";
+  // };
 
   // console.log({ errors: errors && errors.bills, touched: touched && touched.bills });
   return (
@@ -85,6 +96,24 @@ const Bills = (props: any) => {
           </div>
         )}
       </FieldArray>
+      <div>
+        <Button
+          variantColor="orange"
+          onClick={() => {
+            history.push("/agreement/bills/deposit");
+          }}
+        >
+          Previous Section
+        </Button>
+        <Button
+          variantColor="pink"
+          onClick={() => {
+            history.push("/agreement/housekeeping");
+          }}
+        >
+          Next Section
+        </Button>
+      </div>
     </div>
   );
 };

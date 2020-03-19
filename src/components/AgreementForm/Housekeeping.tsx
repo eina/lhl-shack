@@ -5,6 +5,14 @@ import { Editor, EditorState } from "draft-js";
 import { string } from "yup";
 import FieldSet from "../FieldSet";
 
+import { Button } from "@chakra-ui/core";
+
+import { useHistory } from "react-router-dom";
+import { FormValues } from "../../interfaces";
+
+import RichEditor from "../RichEditor/RichEditor";
+import FormikSelect from "../FormikSelect";
+
 export interface HousekeepingValues {
   guests: string;
   weekdayPM: any;
@@ -22,10 +30,12 @@ export interface HousekeepingValues {
   pets: string;
 }
 
-const Housekeeping = () => {
+const Housekeeping = (props: any) => {
+  const history = useHistory();
+  const { values, setFieldValue, handleBlur } = props;
   return (
     <div>
-      <h4>Guests Policy</h4>
+      <h4>Guests</h4>
       <p>
         Guests can include mutual friends, visitors, overnight guests, partners, and even parents.
         You should think about whether there should be any reasonable restrictions on how often
@@ -33,11 +43,14 @@ const Housekeeping = () => {
         if there should be rules about guests' conduct when they are visiting, and similar issues.
       </p>
       <div>
-        <FieldSet
-          type="text"
-          label="We agree that the following applies to guests:"
-          name="housekeeping.guests"
-        />
+        <p>We agree that the following applies to guests:</p>
+        {/* <RichEditor
+          editorState={values.housekeeping.guestPolicy}
+          editorStateName="housekeeping.guestPolicy"
+          onChange={setFieldValue}
+          onBlur={handleBlur}
+          focus={() => {}}
+        /> */}
       </div>
       <FieldSet
         type="number"
@@ -66,80 +79,149 @@ const Housekeeping = () => {
 
       <h4>Private and Shared Spaces Policy</h4>
       <p>
-        We agree that the following persons shall occupy the following bedrooms during our tenancy:
+        1. We agree that the following persons shall occupy the following bedrooms during our
+        tenancy
       </p>
-      <div>
-        <FieldSet type="text" label="Bedroom Occupancy" name="housekeeping.rooms" />
-      </div>
+      <RichEditor
+        editorState={values.housekeeping.roomsPolicy}
+        editorStateName="housekeeping.roomsPolicy"
+        onChange={setFieldValue}
+        onBlur={handleBlur}
+        focus={() => {}}
+      />
       <p>We agree to the following about accessing each roommates' private spaces</p>
-      <div>
-        <FieldSet type="text" label="Private Spaces Policy" name="housekeeping.privateSpaces" />
-      </div>
+      <RichEditor
+        editorState={values.housekeeping.spacesPolicy}
+        editorStateName="housekeeping.spacesPolicy"
+        onChange={setFieldValue}
+        onBlur={handleBlur}
+        focus={() => {}}
+      />
+      <h4>Private and Shared Spaces</h4>
+      <h5>Room Occupancy Policy</h5>
+      <p>
+        1. We agree that the following persons shall occupy the following bedrooms during our
+        tenancy
+      </p>
+      <RichEditor
+        editorState={values.housekeeping.roomsPolicy}
+        editorStateName="housekeeping.roomsPolicy"
+        onChange={setFieldValue}
+        onBlur={handleBlur}
+        focus={() => {}}
+      />
+      <h5>Shared Spaces Policy</h5>
+      <p>
+        2. We agree to the following about accessing each roommates' private spaces and rules around
+        shared spaces:
+      </p>
+      <RichEditor
+        editorState={values.housekeeping.spacesPolicy}
+        editorStateName="housekeeping.spacesPolicy"
+        onChange={setFieldValue}
+        onBlur={handleBlur}
+        focus={() => {}}
+      />
       <h4>Chores</h4>
       <p>We agree to share the following household responsibilities in the following manner:</p>
-      <div>
-        <FieldSet type="text" label="Household Obligations" name="housekeeping.chores" />
-        <FieldSet
-          type="text"
-          label="If any disputes arise about these household responsibilities, they will
-        be resolved in the following way:"
-          name="housekeeping.choresResolve"
-        />
-      </div>
-      <h4>Vacations Policy</h4>
+      <RichEditor
+        editorState={values.housekeeping.choresPolicy}
+        editorStateName="housekeeping.choresPolicy"
+        onChange={setFieldValue}
+        onBlur={handleBlur}
+        focus={() => {}}
+      />
+      <h4>Vacations</h4>
       <p>
         We agree to the following rules regarding times some or all roommates will be living away
         from the shared property:
       </p>
-      <div>
-        <FieldSet type="text" label="Vacation Rules" name="housekeeping.vacations" />
-      </div>
-      <h4>Personal Items Policy</h4>
+      <h5>Vacations Policy</h5>
+      <RichEditor
+        editorState={values.housekeeping.vacationPolicy}
+        editorStateName="housekeeping.vacationPolicy"
+        onChange={setFieldValue}
+        onBlur={handleBlur}
+        focus={() => {}}
+      />
+      <h4>Personal Items</h4>
       <p>
         You should think about what rules should be in place regarding roommates' personal
         belongings, both within their own private spaces and in shared common spaces in the rental
         unit.
+        <p>Regarding furniture and belongings in common and private areas, we agree that:</p>
       </p>
-      <p>Regarding furniture and belongings in common and private areas, we agree that:</p>
-      <div>
-        <FieldSet type="text" label="Personal Items Policy" name="housekeeping.personalItems" />
-      </div>
-      <h4>Smoking Policy</h4>
+      <h5>Personal Items Policy</h5>
+      <RichEditor
+        editorState={values.housekeeping.personalItemsPolicy}
+        editorStateName="housekeeping.personalItemsPolicy"
+        onChange={setFieldValue}
+        onBlur={handleBlur}
+        focus={() => {}}
+      />
+      <h4>Smoking</h4>
       <p>
         If smoking is permitted, decide if roommates can smoke and if so, where. Also consider vapes
         and marijuana.
       </p>
-      <div>
-        <p>
-          We agree to the following rules regarding the smoking of different substances on and
-          around the premises:
-        </p>
-      </div>
-      <div>
-        <FieldSet type="text" label="Smoking Rules:" name="housekeeping.smoking" />
-      </div>
-      <h4>Messages Policy</h4>
+      <p>
+        We agree to the following rules regarding the smoking of different substances on and around
+        the premises:
+      </p>
+      <h5>Smoking Policy</h5>
+      <RichEditor
+        editorState={values.housekeeping.smokingPolicy}
+        editorStateName="housekeeping.smokingPolicy"
+        onChange={setFieldValue}
+        onBlur={handleBlur}
+        focus={() => {}}
+      />
+      <h4>Messages</h4>
       <p>
         It is always important to have good communicatin between roommates. Designate an area to
-        leave messages for each other, and to leave messges from the landlord. We agree that any
-        messages for other roommates will:
+        leave messages for each other, and to leave messges
+        <p>from the landlord. We agree that any messages for other roommates will:</p>
       </p>
-      <div>
-        <FieldSet type="text" label="Messaging Protocol" name="housekeeping.messages" />
-      </div>
-      <h4>Pets Policy</h4>
+      <h5>Messages Policy</h5>
+      <RichEditor
+        editorState={values.housekeeping.messagesPolicy}
+        editorStateName="housekeeping.messagesPolicy"
+        onChange={setFieldValue}
+        onBlur={handleBlur}
+        focus={() => {}}
+      />
+      <h4>Pets</h4>
       <p>
         If pets are allowed, decide whether visitors can bring pets in. Tenants, under the
         Residential Tenancy Act, have the right to determine the rules in the rental unit about
         pets, within what is allowed by the tenancy agreement. Be sure to determine in advance if
         any roommates have allergies to animals.
       </p>
+      <h5>Pets Policy</h5>
+      <RichEditor
+        editorState={values.housekeeping.petsPolicy}
+        editorStateName="housekeeping.petsPolicy"
+        onChange={setFieldValue}
+        onBlur={handleBlur}
+        focus={() => {}}
+      />
       <div>
-        <FieldSet
-          type="text"
-          label="We agree to the following rules about pets:"
-          name="housekeeping.pets"
-        />
+        <Button
+          variantColor="orange"
+          onClick={() => {
+            history.push("/agreement/bills/utilities");
+          }}
+        >
+          Previous Section
+        </Button>
+        <Button
+          variantColor="pink"
+          onClick={() => {
+            history.push("/agreement/signatures");
+          }}
+        >
+          Next Section
+        </Button>
       </div>
     </div>
   );

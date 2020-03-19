@@ -7,12 +7,18 @@ import { FormikSingleDatePicker } from "../FormikDates";
 import { displayFullName } from "../../helpers/functions";
 import FieldSet from "../FieldSet";
 
+import { Button } from "@chakra-ui/core";
+
+import { useHistory } from "react-router-dom";
+
 const Signatures = (props: any) => {
   const { values, setFieldValue, errors, touched } = props;
+  const history = useHistory();
 
   const roommateName = values.roommates.map((roomie: any) =>
     displayFullName(roomie.firstName, roomie.lastName)
   );
+
   return (
     <div>
       <h2>Signatures</h2>
@@ -67,6 +73,16 @@ const Signatures = (props: any) => {
           </div>
         )}
       </FieldArray>
+      <div>
+        <Button
+          variantColor="orange"
+          onClick={() => {
+            history.push("/agreement/bills/utilities");
+          }}
+        >
+          Previous Section
+        </Button>
+      </div>
     </div>
   );
 };

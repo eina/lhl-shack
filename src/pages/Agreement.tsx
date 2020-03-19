@@ -7,6 +7,7 @@ import { EditorState } from "draft-js";
 // import { FormValues } from "../interfaces";
 import validationSchema from "../components/AgreementForm/validationSchema";
 
+import Title from "../components/AgreementForm/Title";
 import Household from "../components/AgreementForm/Household";
 import Landlord from "../components/AgreementForm/Landlord";
 import Roommates from "../components/AgreementForm/Roommates";
@@ -25,7 +26,7 @@ const billShape = {
   name: null,
   totalAmt: 0,
   dueDate: moment(),
-  interval: "" // once, monthly, every 2 months, annually
+  interval: [] // once, monthly, every 2 months, annually
 };
 
 const formikEnhancer = withFormik({
@@ -76,15 +77,15 @@ const formikEnhancer = withFormik({
       weekdayAM: "",
       weekendPM: "",
       weekendAM: "",
-      rooms: "",
-      privateSpaces: "",
-      vacations: "",
-      personalItems: "",
-      smoking: "",
-      chores: "",
-      choresResolve: "",
-      messages: "",
-      pets: ""
+      guestPolicy: EditorState.createEmpty(),
+      spacesPolicy: EditorState.createEmpty(),
+      roomsPolicy: EditorState.createEmpty(),
+      choresPolicy: EditorState.createEmpty(),
+      vacationPolicy: EditorState.createEmpty(),
+      personalItemsPolicy: EditorState.createEmpty(),
+      smokingPolicy: EditorState.createEmpty(),
+      messagesPolicy: EditorState.createEmpty(),
+      petsPolicy: EditorState.createEmpty()
     },
     signatures: [{ fullName: "", agreed: false, date: moment() }],
     // test values for TestDraft.tsx
@@ -117,6 +118,7 @@ const AgreementForm = ({
   return (
     <form onSubmit={handleSubmit}>
       <Switch>
+        <Route path="/agreement/title" component={Title} />
         <Route path="/agreement/household" component={Household} />
         <Route path="/agreement/landlord" component={Landlord} />
         <Route path="/agreement/roommates" component={Roommates} />
@@ -148,7 +150,9 @@ const AgreementForm = ({
             touched={touched}
           />
         </Route>
-        <Route path="/agreement/housekeeping" component={Housekeeping} />
+        <Route path="/agreement/housekeeping">
+          <Housekeeping values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
+        </Route>
         <Route path="/agreement/signatures">
           <Signatures
             values={values}

@@ -5,6 +5,10 @@ import { FormValues } from "../../interfaces";
 
 import FieldSet from "../FieldSet";
 
+import { Button } from "@chakra-ui/core";
+
+import { useHistory } from "react-router-dom";
+
 const ErrorMessage = ({ name }: { name: any }) => (
   <Field
     name={name}
@@ -17,6 +21,7 @@ const ErrorMessage = ({ name }: { name: any }) => (
 );
 
 const Roommates = () => {
+  const history = useHistory();
   const { values }: { values: FormValues } = useFormikContext();
   return (
     <div>
@@ -28,7 +33,6 @@ const Roommates = () => {
               {values.roommates.map((roomie, index) => (
                 <li key={index}>
                   <FieldSet type="text" name={`roommates.${index}.firstName`} label="First Name" />
-                  <ErrorMessage name={`roommates.${index}.firstName`} />
                   <FieldSet type="text" name={`roommates.${index}.lastName`} label="Last Name" />
                   <FieldSet type="text" name={`roommates.${index}.email`} label="Email" />
                   <FieldSet type="text" name={`roommates.${index}.phone`} label="Phone" />
@@ -39,7 +43,12 @@ const Roommates = () => {
             <button
               type="button"
               onClick={() =>
-                arrayHelpers.push({ firstName: "", lastName: "", email: "", phone: "" })
+                arrayHelpers.push({
+                  firstName: "",
+                  lastName: "",
+                  email: "",
+                  phone: ""
+                })
               }
             >
               Add Roommate
@@ -47,6 +56,24 @@ const Roommates = () => {
           </div>
         )}
       </FieldArray>
+      <div>
+        <Button
+          variantColor="orange"
+          onClick={() => {
+            history.push("/agreement/landlord");
+          }}
+        >
+          Previous Section
+        </Button>
+        <Button
+          variantColor="pink"
+          onClick={() => {
+            history.push("/agreement/bills/rent");
+          }}
+        >
+          Next Section
+        </Button>
+      </div>
     </div>
   );
 };

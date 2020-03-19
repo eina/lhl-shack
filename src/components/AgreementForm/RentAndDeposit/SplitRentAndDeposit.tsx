@@ -95,6 +95,7 @@ const SplitRentAndDeposit = (props: any) => {
           </div>
         )}
       </FieldArray>
+      
     </div>
   );
 };

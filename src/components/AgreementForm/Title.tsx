@@ -1,7 +1,14 @@
 import React from 'react';
 import { Field } from 'formik';
+import { Button } from "@chakra-ui/core";
+import Agreement from '../../pages/Agreement';
+
+import { useHistory, Link } from "react-router-dom";
+
+
 
 const Title = () => {
+  const history = useHistory();
   return (
     <div>
       <h1>Roommate Agreement</h1>
@@ -29,6 +36,7 @@ const Title = () => {
         to inform yourself about tenants' rights and obligations in Britsh
         Columbia before discussing and agreeing to terms with any roommates.
       </p>
+      <Button variantColor="pink" onClick={() => { history.push('/agreement/info') }}>Next Section</Button>
     </div>
   );
 };

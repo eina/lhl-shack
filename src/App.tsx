@@ -1,10 +1,11 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import MainMenu from "./components/MainMenu";
-import Home from "./pages/Home";
-import Test from "./pages/Test";
-import Agreement from "./pages/Agreement";
+import MainMenu from './components/MainMenu';
+import Home from './pages/Home';
+import Test from './pages/Test';
+import Agreement from './pages/Agreement';
+import Account from './pages/Account';
 
 const App = () => {
   return (

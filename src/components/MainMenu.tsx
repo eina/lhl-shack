@@ -12,6 +12,9 @@ const MainMenu = () => {
           <Link to="/test">Test</Link>
         </li>
         <li>
+          <Link to="/account">Account</Link>
+        </li>
+        <li>
           <Link to="/agreement">Roommate Agreement Generator</Link>
         </li>
       </ul>

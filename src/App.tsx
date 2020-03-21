@@ -1,9 +1,19 @@
 import React, { useContext, useEffect } from "react";
-import { Switch, Route, useLocation } from "react-router-dom";
-import { Grid, Flex, Box, Heading, Text, Icon } from "@chakra-ui/core";
+import { BrowserRouter, Switch, Route, Redirect, useLocation } from "react-router-dom";
+import {
+  ThemeProvider,
+  CSSReset,
+  theme,
+  Grid,
+  Flex,
+  Box,
+  Heading,
+  Text,
+  Icon
+} from "@chakra-ui/core";
 
 import { displayFullName } from "./helpers/functions";
-import { AppContext } from "./Store";
+import { AppContext, AppProvider } from "./Store";
 
 import MainMenu from "./components/MainMenu";
 import Home from "./pages/Home";
@@ -23,7 +33,7 @@ const currUser = {
   household: "951bfa7e-d0e1-414d-9327-5e8c4bc8c56b"
 };
 
-const App = () => {
+const AppContent = () => {
   const { state, updateState }: { state: any; updateState: Function } = useContext(AppContext);
   const location = useLocation();
   const { pathname: currentPath } = location;
@@ -34,8 +44,6 @@ const App = () => {
       fullName: displayFullName(currUser.first_name, currUser.last_name)
     });
   }, []);
-
-  const agreementPathCheck = /\/agreement.*/.test(currentPath);
 
   return (
     <Box className="App" w="100%">
@@ -51,12 +59,13 @@ const App = () => {
         ) : null}
       </Flex>
 
-      {agreementPathCheck ? (
+      {currentPath.startsWith("/agreement") ? (
         <Grid templateColumns="1fr 4fr" gap={1} p={5} className="container">
           <AgreementMenu />
 
           <Box as="main" bg="gray.50" pr={10} pl={10} rounded={10}>
             <Switch>
+              <Redirect from="/agrement" to="/agreement/title" exact />
               <Route path="/agreement" component={Agreement} />
             </Switch>
           </Box>
@@ -74,6 +83,20 @@ const App = () => {
         </Grid>
       )}
     </Box>
+  );
+};
+
+// what renders on index
+const App = () => {
+  return (
+    <AppProvider>
+      <ThemeProvider theme={theme}>
+        <CSSReset />
+        <BrowserRouter>
+          <AppContent />
+        </BrowserRouter>
+      </ThemeProvider>
+    </AppProvider>
   );
 };
 

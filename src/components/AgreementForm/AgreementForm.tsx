@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Switch, Route, Link, Redirect } from "react-router-dom";
+import { Switch, Route, Prompt, Redirect, matchPath } from "react-router-dom";
 import { FormikProps, Formik, FormikValues } from "formik";
 import { Button } from "@chakra-ui/core";
 
@@ -51,8 +51,16 @@ const AgreementForm = () => {
     >
       {({ values, errors, touched, setFieldValue, handleSubmit, handleBlur }: FormikProps<any>) => (
         <form onSubmit={handleSubmit}>
+          <Prompt
+            when={true}
+            message={({ pathname }) => {
+              return matchPath(pathname, { path: "/agreement" })
+                ? true
+                : "Are you sure you want to navigate away?";
+            }}
+          />
+
           <Switch>
-            <Route path="/agreement/title" component={Title} />
             <Route path="/agreement/household" component={Household} />
             <Route path="/agreement/landlord" component={Landlord} />
             <Route path="/agreement/roommates" component={Roommates} />

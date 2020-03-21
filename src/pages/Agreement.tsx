@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Switch, Route, Link, Redirect } from "react-router-dom";
-import { FormikProps, withFormik } from "formik";
+import { FormikProps, withFormik, Formik, FormikValues, FormikBag } from "formik";
 
 // import { FormValues } from "../interfaces";
 import { AppContext } from "../Store";
@@ -20,88 +20,79 @@ import Signatures from "../components/AgreementForm/Signatures";
 
 import "draft-js/dist/Draft.css";
 
-const formikEnhancer = withFormik({
-  mapPropsToValues: props => initialValues,
-  handleSubmit: (values, { setSubmitting }) => {
-    alert("it submitted! check console for values!");
-    console.log("form submission values", values);
-    setSubmitting(false);
-  },
-  validationSchema: validationSchema,
-  displayName: "RoommateAgreementGenerator"
-});
-
-const AgreementForm = ({
-  values,
-  errors,
-  touched,
-  setFieldValue,
-  handleSubmit,
-  handleBlur
-}: FormikProps<any>) => {
-  return (
-    <form onSubmit={handleSubmit}>
-      <Switch>
-        <Route path="/agreement/title" component={Title} />
-        <Route path="/agreement/household" component={Household} />
-        {/* <Route path="/agreement/landlord" component={Landlord} />
-        <Route path="/agreement/roommates" component={Roommates} />
-        <Redirect from="/agreement/bills" to="/agreement/bills/rent" exact />
-        <Route path="/agreement/bills/rent">
-          <Rent
-            values={values}
-            setFieldValue={setFieldValue}
-            handleBlur={handleBlur}
-            errors={errors}
-            touched={touched}
-          />
-        </Route>
-        <Route path="/agreement/bills/deposit">
-          <SecurityDeposit
-            values={values}
-            setFieldValue={setFieldValue}
-            handleBlur={handleBlur}
-            errors={errors}
-            touched={touched}
-          />
-        </Route>
-        <Route path="/agreement/bills/utilities">
-          <BillsUtilities
-            values={values}
-            setFieldValue={setFieldValue}
-            handleBlur={handleBlur}
-            errors={errors}
-            touched={touched}
-          />
-        </Route>
-        <Route path="/agreement/housekeeping">
-          <Housekeeping
-            values={values}
-            setFieldValue={setFieldValue}
-            handleBlur={handleBlur}
-            errors={errors}
-            touched={touched}
-          />
-        </Route>
-        <Route path="/agreement/signatures">
-          <Signatures
-            values={values}
-            setFieldValue={setFieldValue}
-            handleBlur={handleBlur}
-            errors={errors}
-            touched={touched}
-          />
-        </Route> */}
-        {/* <Route path="/agreement/testDraft">
-          <TestDraft values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
-        </Route> */}
-      </Switch>
-      <button type="submit">Test Submit</button>
-    </form>
-  );
+const submitForm = (values: FormikValues, actions: any) => {
+  setTimeout(() => {
+    alert(JSON.stringify(values, null, 2));
+    actions.setSubmitting(false);
+  }, 1000);
 };
 
-const EnhancedAgreement = formikEnhancer(AgreementForm);
+const AgreementForm = () => {
+  return (
+    <Formik
+      initialValues={{ ...initialValues }}
+      onSubmit={submitForm}
+      validationSchema={validationSchema}
+    >
+      {({ values, errors, touched, setFieldValue, handleSubmit, handleBlur }: FormikProps<any>) => (
+        <form onSubmit={handleSubmit}>
+          <Switch>
+            <Route path="/agreement/household" component={Household} />
+            <Route path="/agreement/landlord" component={Landlord} />
+            <Route path="/agreement/roommates" component={Roommates} />
+            <Redirect from="/agreement/bills" to="/agreement/bills/rent" exact />
+            <Route path="/agreement/bills/rent">
+              <Rent
+                values={values}
+                setFieldValue={setFieldValue}
+                handleBlur={handleBlur}
+                errors={errors}
+                touched={touched}
+              />
+            </Route>
+            <Route path="/agreement/bills/deposit">
+              <SecurityDeposit
+                values={values}
+                setFieldValue={setFieldValue}
+                handleBlur={handleBlur}
+                errors={errors}
+                touched={touched}
+              />
+            </Route>
+            <Route path="/agreement/bills/utilities">
+              <BillsUtilities
+                values={values}
+                setFieldValue={setFieldValue}
+                handleBlur={handleBlur}
+                errors={errors}
+                touched={touched}
+              />
+            </Route>
+            <Route path="/agreement/housekeeping">
+              <Housekeeping
+                values={values}
+                setFieldValue={setFieldValue}
+                handleBlur={handleBlur}
+                errors={errors}
+                touched={touched}
+              />
+            </Route>
+            <Route path="/agreement/signatures">
+              <Signatures
+                values={values}
+                setFieldValue={setFieldValue}
+                handleBlur={handleBlur}
+                errors={errors}
+                touched={touched}
+              />
+            </Route>
+          </Switch>
+          <button type="submit">Test Submit</button>
+        </form>
+      )}
+    </Formik>
+  );
+};
 
 const Agreement = () => {
   // const { state } = useContext(AppContext);
@@ -146,8 +137,8 @@ const Agreement = () => {
           <Link to="/agreement/signatures">Signatures</Link>
         </li>
       </ul>
-      {/* enhanced agreement form */}
-      <EnhancedAgreement />
+      {/* Fooooorm */}
+      <AgreementForm />
     </ul>
   );
 };

@@ -43,7 +43,9 @@ const AgreementForm = ({
     <form onSubmit={handleSubmit}>
       <Switch>
         <Route path="/agreement/title" component={Title} />
-        <Route path="/agreement/household" component={Household} />
+        <Route path="/agreement/household">
+          <Household />
+        </Route>
         <Route path="/agreement/landlord" component={Landlord} />
         <Route path="/agreement/roommates" component={Roommates} />
         <Redirect from="/agreement/bills" to="/agreement/bills/rent" exact />
@@ -104,9 +106,9 @@ const AgreementForm = ({
 const EnhancedAgreement = formikEnhancer(AgreementForm);
 
 const Agreement = () => {
-  const { state } = useContext(AppContext);
+  // const { state } = useContext(AppContext);
 
-  console.log("hello state", state);
+  // console.log("hello state", state);
 
   return (
     <ul>

@@ -31,7 +31,7 @@ const Title = () => {
       <Button
         variantColor="pink"
         onClick={() => {
-          history.push("/agreement/info");
+          history.push("/agreement/household");
         }}
       >
         Next Section

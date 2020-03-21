@@ -19,17 +19,14 @@ const currUser = {
   household: "951bfa7e-d0e1-414d-9327-5e8c4bc8c56b"
 };
 
-// const [ctx, AppProvider] = createCtx({ currUser });
-// export const AppContext = ctx;
-// set state here to pass the details
 const App = () => {
-  const { state, updateState } = useContext(AppContext);
+  // const { state, updateState } = useContext(AppContext);
   // fake an axios request lol
-  useEffect(() => {
-    updateState({ currUser });
-  }, []);
+  // useEffect(() => {
+  //   updateState({ currUser });
+  // }, []);
 
-  console.log("did this work?", state);
+  // console.log("did this work?", state);
 
   return (
     <Router>

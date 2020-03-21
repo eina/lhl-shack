@@ -3,7 +3,15 @@ import axios from 'axios';
 
 import { Formik } from 'formik';
 
-import { Heading, Input } from '@chakra-ui/core';
+import {
+  Heading,
+  Input,
+  Button,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from '@chakra-ui/core';
 
 import initialValues from '../components/AgreementForm/initialValues';
 import AxiosHelper from '../utils/AxiosHelper';
@@ -15,7 +23,7 @@ interface User {
   last_name: string;
   phone_number: string;
   email: string;
-  password: string
+  password: string;
 }
 
 const defaultValues = {
@@ -37,9 +45,9 @@ const accountValues = {
 
 const Account = () => {
   const [account, setAccount] = useState<User>(defaultValues);
+  const [formAlert, setFormAlert] = useState(false);
   useEffect(() => {
     axios.get('/api/users/1').then(vals => {
-      // console.log(vals.data.first_name)
       setAccount(vals.data);
     });
   }, []);
@@ -49,74 +57,57 @@ const Account = () => {
     account && (
       <div>
         <h1>My Account</h1>
+        {setFormAlert && (
+          <Alert status="success">
+            <AlertIcon />
+            Account info saved!
+          </Alert>
+        )}
         <Formik
-          initialValues={{...account}}
+          enableReinitialize
+          initialValues={{ ...account }}
           onSubmit={(values, actions) => {
             let { id: _, ...result } = values;
-            // AxiosHelper();
             console.log('here is values: ', result);
             return axios
               .patch('/api/users/1', {
-                user: {
-                  first_name: values.first_name,
-                  last_name: values.last_name,
-                  phone_number: values.phone_number,
-                  email: values.email,
-                  password: values.password,
-                },
+                user: { ...result },
               })
               .then((vals: any) => {
-                console.log(vals.data);
                 setAccount(vals.data);
+                setFormAlert(true);
+              })
+              .catch(error => {
+                console.error('Could not update info: ', error);
               });
           }}
         >
           {(props: any) => (
             <form onSubmit={props.handleSubmit}>
               <Heading as="h3" size="lg">
-                Name
+                Account Info
               </Heading>
-              <div>
+              <Heading as="h2" size="md">
                 {account.first_name} {account.last_name}
-              </div>
-              <div>Update Name</div>
-              <FieldSet
-                type="text"
-                name="first_name"
-                label="first name"
-              />
-              <FieldSet
-                type="text"
-                label="last name"
-                name="last_name"
-              />
+              </Heading>
+              <Heading as="h4" size="md">
+                Update Account Info:
+              </Heading>
+              <FieldSet type="text" name="first_name" label="first name" />
+              <FieldSet type="text" label="last name" name="last_name" />
+              <FieldSet type="text" label="phone number" name="phone_number" />
+              <FieldSet type="text" label="email" name="email" />
+              <FieldSet type="text" label="password" name="password" />
               {props.errors.last_name && (
                 <div id="feedback">{props.errors.last_name}</div>
               )}
-              <button type="submit">Submit</button>
+              <Button type="submit" variantColor="pink">
+                Save
+              </Button>
             </form>
           )}
         </Formik>
       </div>
-      // <form>
-      //   <Heading>Account Details</Heading>
-      //   <div>
-      //     <Heading as="h3" size="lg">
-      //       Name
-      //     </Heading>
-      //
-      //   </div>
-      //   <div>
-      //   <Heading as="h3" size="lg">
-      //       Email
-      //     </Heading>
-      //     {account.email}
-      //   </div>
-      //   <Heading as="h3" size="lg">
-      //       Phone Number
-      //     </Heading>
-      //     {account.phone_number}
-      // </form>
     )
   );
 };

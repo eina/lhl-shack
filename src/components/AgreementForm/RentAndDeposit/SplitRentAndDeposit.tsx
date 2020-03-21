@@ -22,7 +22,12 @@ const SplitRentAndDeposit = (props: any) => {
 
   return (
     <div>
-      <FieldSet name={`${sectionName}.totalAmt`} label="Total Amount to Pay" type="number" />
+      <FieldSet
+        name={`${sectionName}.totalAmt`}
+        label="Total Amount to Pay"
+        type="number"
+        value={values.household[`${sectionName}Amt`]}
+      />
 
       <FormikSingleDatePicker
         name={`${sectionName}.dueDate`}

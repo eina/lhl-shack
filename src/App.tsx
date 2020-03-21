@@ -1,6 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Grid, Flex, Box, Heading, Text, Icon } from "@chakra-ui/core";
 
+import { displayFullName } from "./helpers/functions";
 import { AppContext } from "./Store";
 
 import MainMenu from "./components/MainMenu";
@@ -20,34 +22,45 @@ const currUser = {
 };
 
 const App = () => {
-  const { state, updateState } = useContext(AppContext);
+  const { state, updateState }: { state: any; updateState: Function } = useContext(AppContext);
   // fake an axios request lol
   useEffect(() => {
-    updateState({ currUser });
+    updateState({
+      currUser,
+      fullName: displayFullName(currUser.first_name, currUser.last_name)
+    });
   }, []);
 
-  // console.log("did this work?", state);
+  console.log("hello?", state);
 
   return (
     <Router>
-      <div className="App">
-        <header className="App-header">
-          <p>shack</p>
-        </header>
+      <Box className="App" w="100%">
+        <Flex as="header" align="center" p={10} bg="teal.500" color="white" justify="space-between">
+          <Heading as="h1" size="lg">
+            shack
+          </Heading>
+          {state && state.currUser && state.fullName ? (
+            <Flex as="nav" align="center">
+              <Icon name="bell" />
+              <Text>{state.fullName}</Text>
+            </Flex>
+          ) : null}
+        </Flex>
 
-        <div className="container">
+        <Grid templateColumns="1fr 4fr" gap={1} p={5} className="container">
           {/* side nav bar and links */}
           <MainMenu />
 
-          <main>
+          <Box as="main" bg="gray.50" pr={10} pl={10} rounded={10}>
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/test" component={Test} />
               <Route path="/agreement" component={Agreement} />
             </Switch>
-          </main>
-        </div>
-      </div>
+          </Box>
+        </Grid>
+      </Box>
     </Router>
   );
 };

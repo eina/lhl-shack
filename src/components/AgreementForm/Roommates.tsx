@@ -40,7 +40,6 @@ const Roommates = () => {
                 })
               }
             >
-              {" "}
               Add Roommate
             </Button>
           </div>

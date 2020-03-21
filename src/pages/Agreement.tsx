@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Switch, Route, Link, Redirect } from "react-router-dom";
 import { FormikProps, Formik, FormikValues } from "formik";
-import { Button } from "@chakra-ui/core";
+import { Button, List, ListItem, Box } from "@chakra-ui/core";
 // import { FormValues } from "../interfaces";
 import { AppContext } from "../Store";
 import initialValues from "../components/AgreementForm/initialValues";
@@ -106,7 +106,6 @@ const AgreementForm = () => {
               />
             </Route>
           </Switch>
-          {/* <button type="submit">Test Submit</button> */}
           <Button type="submit">Test Submit</Button>
         </form>
       )}
@@ -116,46 +115,48 @@ const AgreementForm = () => {
 
 const Agreement = () => {
   return (
-    <ul>
+    <div>
       <h1>Roommate Agreement Generator</h1>
       <p>main component! something something something</p>​
-      <ul>
-        <li>
+      <List as="ol" styleType="decimal">
+        <ListItem>
           <Link to="/agreement/title">About the Agreement</Link>
-        </li>
-        <li>
+        </ListItem>
+        <ListItem>
           <Link to="/agreement/household">House Information</Link>
-        </li>
-        <li>
+        </ListItem>
+        <ListItem>
           <Link to="/agreement/landlord">Landlord Information</Link>
-        </li>
-        <li>
+        </ListItem>
+        <ListItem>
           <Link to="/agreement/roommates">Roommates</Link>
-        </li>
-        <li>
+        </ListItem>
+        <ListItem>
           <Link to="/agreement/bills">Bills</Link>
-          <ul>
-            <li>
+          <List ml={4} styleType="disc">
+            <ListItem>
               <Link to="/agreement/bills/rent">Bills: Rent</Link>
-            </li>
-            <li>
+            </ListItem>
+            <ListItem>
               <Link to="/agreement/bills/deposit">Bills: Security Deposit</Link>
-            </li>
-            <li>
+            </ListItem>
+            <ListItem>
               <Link to="/agreement/bills/utilities">Bills: Utilities</Link>
-            </li>
-          </ul>
-        </li>
-        <li>
+            </ListItem>
+          </List>
+        </ListItem>
+        <ListItem>
           <Link to="/agreement/housekeeping">Housekeeping</Link>
-        </li>
-        <li>
+        </ListItem>
+        <ListItem>
           <Link to="/agreement/signatures">Signatures</Link>
-        </li>
-      </ul>
+        </ListItem>
+      </List>
       {/* Fooooorm */}
-      <AgreementForm />
-    </ul>
+      <Box mt={10}>
+        <AgreementForm />
+      </Box>
+    </div>
   );
 };
 export default Agreement;

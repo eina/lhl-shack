@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { Heading } from "@chakra-ui/core";
 
 // import { AppContext } from "../context/appContext";
 // import axios from "axios";
@@ -14,7 +15,7 @@ const Home = () => {
 
   return (
     <>
-      <h1>Home</h1>
+      <Heading as="h1">Home</Heading>
       <p>Dashboard components here</p>
       <h2>Connect to API</h2>
       {/* This is connected to <code>api/landlords/1</code>. Make sure to run the Rails server on

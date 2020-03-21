@@ -7,7 +7,7 @@ import { FormikSingleDatePicker } from "../FormikDates";
 import { displayFullName } from "../../helpers/functions";
 import FieldSet from "../FieldSet";
 
-import { Button } from "@chakra-ui/core";
+import { Button, List, ListItem } from "@chakra-ui/core";
 
 import { useHistory } from "react-router-dom";
 
@@ -25,9 +25,9 @@ const Signatures = (props: any) => {
       <FieldArray name="signatures">
         {arrayHelpers => (
           <div>
-            <ol>
+            <List as="ol" styleType="decimal">
               {values.signatures.map((signature: any, index: any) => (
-                <li key={index}>
+                <ListItem key={index}>
                   <FieldSet
                     type="text"
                     name={`signatures.${index}.fullName`}
@@ -61,15 +61,15 @@ const Signatures = (props: any) => {
                       touched.signatures[index].date
                     }
                   />
-                </li>
+                </ListItem>
               ))}
-            </ol>
-            <button
+            </List>
+            <Button
               type="button"
               onClick={() => arrayHelpers.push({ fullName: "", agreed: false, date: moment() })}
             >
               Add Signature
-            </button>
+            </Button>
           </div>
         )}
       </FieldArray>

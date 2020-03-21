@@ -1,22 +1,22 @@
-import React from 'react';
+import React from "react";
 
-import SplitRentAndDeposit from './SplitRentAndDeposit';
+import SplitRentAndDeposit from "./SplitRentAndDeposit";
 
-import { Button } from '@chakra-ui/core';
+import { Button, Heading } from "@chakra-ui/core";
 
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 const SecurityDeposit = (props: any) => {
   const history = useHistory();
   return (
     <>
-      <h2>Security Deposit</h2>
+      <Heading as="h2">Security Deposit</Heading>
       <SplitRentAndDeposit sectionName="securityDeposit" {...props} />
       <div>
         <Button
           variantColor="pink"
           onClick={() => {
-            history.push('/agreement/bills/utilities');
+            history.push("/agreement/bills/utilities");
           }}
         >
           Next Section

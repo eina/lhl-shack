@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@chakra-ui/core";
+import { Button, Heading } from "@chakra-ui/core";
 
 import { useHistory } from "react-router-dom";
 
@@ -16,7 +16,7 @@ const Landlord = () => {
   const history = useHistory();
   return (
     <div>
-      <h2>Landlord Contact Information</h2>
+      <Heading as="h2">Landlord Contact Information</Heading>
       <FieldSet type="text" name="landlord.firstName" label="First Name" />
       <FieldSet type="text" name="landlord.lastName" label="Last Name" />
       <FieldSet type="text" name="landlord.address" label="Address" />

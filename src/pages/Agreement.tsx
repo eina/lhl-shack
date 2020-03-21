@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Switch, Route, Link, Redirect } from "react-router-dom";
 import { FormikProps, Formik, FormikValues } from "formik";
-
+import { Button } from "@chakra-ui/core";
 // import { FormValues } from "../interfaces";
 import { AppContext } from "../Store";
 import initialValues from "../components/AgreementForm/initialValues";
@@ -55,6 +55,7 @@ const AgreementForm = () => {
       {({ values, errors, touched, setFieldValue, handleSubmit, handleBlur }: FormikProps<any>) => (
         <form onSubmit={handleSubmit}>
           <Switch>
+            <Route path="/agreement/title" component={Title} />
             <Route path="/agreement/household" component={Household} />
             <Route path="/agreement/landlord" component={Landlord} />
             <Route path="/agreement/roommates" component={Roommates} />
@@ -105,7 +106,8 @@ const AgreementForm = () => {
               />
             </Route>
           </Switch>
-          <button type="submit">Test Submit</button>
+          {/* <button type="submit">Test Submit</button> */}
+          <Button type="submit">Test Submit</Button>
         </form>
       )}
     </Formik>

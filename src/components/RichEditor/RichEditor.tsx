@@ -1,6 +1,8 @@
 import React from "react";
 import { Editor, RichUtils } from "draft-js";
 
+import "./RichEditor.css";
+
 interface RichEditorProps {
   onChange: Function;
   focus: Function;

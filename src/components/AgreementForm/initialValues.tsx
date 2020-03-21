@@ -30,6 +30,12 @@ const initialValues = {
     rentAmt: "",
     securityDepositAmt: ""
   },
+  account: {
+    first_name: '',
+    last_name: '',
+    phone_number: '',
+    email: ''
+  },
   roommates: [
     { firstName: "Roommate", lastName: "One", email: "roomie1@email.com", phone: "6041234567" },
     { firstName: "", lastName: "", email: "", phone: "" }

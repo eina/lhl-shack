@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Test from './pages/Test';
 import Agreement from './pages/Agreement';
 import Account from './pages/Account';
+import Household from './pages/Household';
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
               <Route path="/test" component={Test} />
               <Route path="/agreement" component={Agreement} />
               <Route path="/account" component={Account} />
+              <Route path="/household" component={Household} />
             </Switch>
           </main>
         </div>

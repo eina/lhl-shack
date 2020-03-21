@@ -51,8 +51,6 @@ const Account = () => {
       setAccount(vals.data);
     });
   }, []);
-  console.log('Here is account: ', account);
-
   return (
     account && (
       <div>
@@ -68,7 +66,6 @@ const Account = () => {
           initialValues={{ ...account }}
           onSubmit={(values, actions) => {
             let { id: _, ...result } = values;
-            console.log('here is values: ', result);
             return axios
               .patch('/api/users/1', {
                 user: { ...result },

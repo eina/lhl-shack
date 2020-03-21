@@ -28,6 +28,11 @@ const Signatures = (props: any) => {
             <List as="ol" styleType="decimal">
               {values.signatures.map((signature: any, index: any) => (
                 <ListItem key={index}>
+                  {index > 0 && (
+                    <Button type="button" onClick={() => arrayHelpers.remove(index)}>
+                      Remove
+                    </Button>
+                  )}
                   <FieldSet
                     type="text"
                     name={`signatures.${index}.fullName`}

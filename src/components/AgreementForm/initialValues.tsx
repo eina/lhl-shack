@@ -32,6 +32,7 @@ const initialValues = {
   },
   roommates: [
     // { firstName: "Roommate", lastName: "One", email: "roomie1@email.com", phone: "6041234567" }
+    { firstName: "", lastName: "", email: "", phone: "" },
     { firstName: "", lastName: "", email: "", phone: "" }
   ],
   rent: {

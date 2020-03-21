@@ -21,6 +21,11 @@ const Roommates = () => {
             <List as="ol" styleType="decimal">
               {values.roommates.map((_, index) => (
                 <ListItem key={index}>
+                  {index > 0 && (
+                    <Button type="button" onClick={() => arrayHelpers.remove(index)}>
+                      Remove
+                    </Button>
+                  )}
                   <FieldSet type="text" name={`roommates.${index}.firstName`} label="First Name" />
                   <FieldSet type="text" name={`roommates.${index}.lastName`} label="Last Name" />
                   <FieldSet type="text" name={`roommates.${index}.email`} label="Email" />

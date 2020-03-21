@@ -37,9 +37,10 @@ const AgreementForm = () => {
               lastName: state.currUser.last_name,
               email: state.currUser.email,
               phone: state.currUser.phone_number
-            }
+            },
+            { firstName: "", lastName: "", email: "", phone: "" }
           ]
-        : [{ firstName: "", lastName: "", email: "", phone: "" }]
+        : initialValues.roommates
   };
 
   return (

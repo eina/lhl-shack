@@ -28,6 +28,11 @@ const Bills = (props: any) => {
             <List as="ol" styleType="decimal">
               {values.bills.map((bill: any, index: number) => (
                 <ListItem key={index}>
+                  {index > 0 && (
+                    <Button type="button" onClick={() => arrayHelpers.remove(index)}>
+                      Remove
+                    </Button>
+                  )}
                   <FieldSet type="text" name={`bills.${index}.name`} label="Bill Name" />
                   <FieldSet type="number" name={`bills.${index}.totalAmt`} label="Total Amount" />
                   <FormikSingleDatePicker

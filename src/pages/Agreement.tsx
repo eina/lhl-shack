@@ -20,17 +20,6 @@ import Signatures from "../components/AgreementForm/Signatures";
 
 import "draft-js/dist/Draft.css";
 
-const formikEnhancer = withFormik({
-  mapPropsToValues: props => initialValues,
-  handleSubmit: (values, { setSubmitting }) => {
-    alert("it submitted! check console for values!");
-    console.log("form submission values", values);
-    setSubmitting(false);
-  },
-  validationSchema: validationSchema,
-  displayName: "RoommateAgreementGenerator"
-});
-
 const AgreementForm = ({
   values,
   errors,
@@ -44,7 +33,7 @@ const AgreementForm = ({
       <Switch>
         <Route path="/agreement/title" component={Title} />
         <Route path="/agreement/household" component={Household} />
-        {/* <Route path="/agreement/landlord" component={Landlord} />
+        <Route path="/agreement/landlord" component={Landlord} />
         <Route path="/agreement/roommates" component={Roommates} />
         <Redirect from="/agreement/bills" to="/agreement/bills/rent" exact />
         <Route path="/agreement/bills/rent">
@@ -91,7 +80,7 @@ const AgreementForm = ({
             errors={errors}
             touched={touched}
           />
-        </Route> */}
+        </Route>
         {/* <Route path="/agreement/testDraft">
           <TestDraft values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
         </Route> */}
@@ -101,13 +90,18 @@ const AgreementForm = ({
   );
 };
 
-const EnhancedAgreement = formikEnhancer(AgreementForm);
+const EnhancedAgreementForm = withFormik({
+  mapPropsToValues: props => ({ initialValues }),
+  handleSubmit: (values, { setSubmitting }) => {
+    alert("it submitted! check console for values!");
+    console.log("form submission values", values);
+    setSubmitting(false);
+  },
+  validationSchema: validationSchema,
+  displayName: "RoommateAgreementGenerator"
+})(AgreementForm);
 
 const Agreement = () => {
-  // const { state } = useContext(AppContext);
-
-  // console.log("hello state", state);
-
   return (
     <ul>
       <h1>Roommate Agreement Generator</h1>
@@ -147,7 +141,7 @@ const Agreement = () => {
         </li>
       </ul>
       {/* enhanced agreement form */}
-      <EnhancedAgreement />
+      <EnhancedAgreementForm />
     </ul>
   );
 };

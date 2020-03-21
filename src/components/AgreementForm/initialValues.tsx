@@ -31,14 +31,8 @@ const initialValues = {
     securityDepositAmt: ""
   },
   roommates: [
-    { firstName: "Roommate", lastName: "One", email: "roomie1@email.com", phone: "6041234567" },
+    // { firstName: "Roommate", lastName: "One", email: "roomie1@email.com", phone: "6041234567" }
     { firstName: "", lastName: "", email: "", phone: "" }
-    // {
-    //   firstName: "Roommate",
-    //   lastName: "Twwwooooo",
-    //   email: "bestestroommate@email.com",
-    //   phone: "7781234567"
-    // }
   ],
   rent: {
     ...billShape,
@@ -64,16 +58,16 @@ const initialValues = {
     messagesPolicy: EditorState.createEmpty(),
     petsPolicy: EditorState.createEmpty()
   },
-  signatures: [{ fullName: "", agreed: false, date: moment() }],
+  signatures: [{ fullName: "", agreed: false, date: moment() }]
   // test values for TestDraft.tsx
-  textArea1: EditorState.createEmpty(),
-  textArea2: EditorState.createEmpty(),
-  status: [],
-  leaseDates: {
-    startDate: null,
-    endDate: null
-  },
-  billDate: moment()
+  // textArea1: EditorState.createEmpty(),
+  // textArea2: EditorState.createEmpty(),
+  // status: [],
+  // leaseDates: {
+  //   startDate: null,
+  //   endDate: null
+  // },
+  // billDate: moment()
 };
 
 export default initialValues;

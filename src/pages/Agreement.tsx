@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Switch, Route, Link, Redirect } from "react-router-dom";
-import { FormikProps, withFormik, Formik, FormikValues, FormikBag } from "formik";
+import { FormikProps, Formik, FormikValues } from "formik";
 
 // import { FormValues } from "../interfaces";
 import { AppContext } from "../Store";
@@ -28,9 +28,27 @@ const submitForm = (values: FormikValues, actions: any) => {
 };
 
 const AgreementForm = () => {
+  const { state }: { state: any } = useContext(AppContext);
+
+  const initialVals = {
+    ...initialValues,
+    roommates:
+      state && state.currUser
+        ? [
+            {
+              firstName: state.currUser.first_name,
+              lastName: state.currUser.last_name,
+              email: state.currUser.email,
+              phone: state.currUser.phone_number
+            }
+          ]
+        : [{ firstName: "", lastName: "", email: "", phone: "" }]
+  };
+
   return (
     <Formik
-      initialValues={{ ...initialValues }}
+      initialValues={initialVals}
+      enableReinitialize={true}
       onSubmit={submitForm}
       validationSchema={validationSchema}
     >
@@ -95,10 +113,6 @@ const AgreementForm = () => {
 };
 
 const Agreement = () => {
-  // const { state } = useContext(AppContext);
-
-  // console.log("hello state", state);
-
   return (
     <ul>
       <h1>Roommate Agreement Generator</h1>

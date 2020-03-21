@@ -20,11 +20,11 @@ const currUser = {
 };
 
 const App = () => {
-  // const { state, updateState } = useContext(AppContext);
+  const { state, updateState } = useContext(AppContext);
   // fake an axios request lol
-  // useEffect(() => {
-  //   updateState({ currUser });
-  // }, []);
+  useEffect(() => {
+    updateState({ currUser });
+  }, []);
 
   // console.log("did this work?", state);
 

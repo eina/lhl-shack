@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Switch, Route, Link, Redirect } from "react-router-dom";
 import { FormikProps, withFormik } from "formik";
 
 // import { FormValues } from "../interfaces";
+import { AppContext } from "../Store";
 import initialValues from "../components/AgreementForm/initialValues";
 import validationSchema from "../components/AgreementForm/validationSchema";
 
@@ -103,6 +104,10 @@ const AgreementForm = ({
 const EnhancedAgreement = formikEnhancer(AgreementForm);
 
 const Agreement = () => {
+  const { state } = useContext(AppContext);
+
+  console.log("hello state", state);
+
   return (
     <ul>
       <h1>Roommate Agreement Generator</h1>

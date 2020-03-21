@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+
+// import { AppContext } from "../context/appContext";
 // import axios from "axios";
 
 const Home = () => {
+  // const [state, setState] = useContext(AppContext);
   // const [testData, setTestData] = useState({});
   // useEffect(() => {
   //   axios.get("/api/landlords/1").then(vals => setTestData(vals.data));
   // }, []);
+
+  // console.log(state);
 
   return (
     <>

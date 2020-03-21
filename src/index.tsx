@@ -4,12 +4,15 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 import { ThemeProvider, CSSReset, theme } from "@chakra-ui/core";
+import { AppProvider } from "./Store";
 
 ReactDOM.render(
-  <ThemeProvider theme={theme}>
-    <CSSReset />
-    <App />
-  </ThemeProvider>,
+  <AppProvider>
+    <ThemeProvider theme={theme}>
+      <CSSReset />
+      <App />
+    </ThemeProvider>
+  </AppProvider>,
   document.getElementById("root")
 );
 

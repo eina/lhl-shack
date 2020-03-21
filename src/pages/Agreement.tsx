@@ -43,10 +43,8 @@ const AgreementForm = ({
     <form onSubmit={handleSubmit}>
       <Switch>
         <Route path="/agreement/title" component={Title} />
-        <Route path="/agreement/household">
-          <Household />
-        </Route>
-        <Route path="/agreement/landlord" component={Landlord} />
+        <Route path="/agreement/household" component={Household} />
+        {/* <Route path="/agreement/landlord" component={Landlord} />
         <Route path="/agreement/roommates" component={Roommates} />
         <Redirect from="/agreement/bills" to="/agreement/bills/rent" exact />
         <Route path="/agreement/bills/rent">
@@ -93,7 +91,7 @@ const AgreementForm = ({
             errors={errors}
             touched={touched}
           />
-        </Route>
+        </Route> */}
         {/* <Route path="/agreement/testDraft">
           <TestDraft values={values} setFieldValue={setFieldValue} handleBlur={handleBlur} />
         </Route> */}
@@ -147,9 +145,6 @@ const Agreement = () => {
         <li>
           <Link to="/agreement/signatures">Signatures</Link>
         </li>
-        {/* <li>
-          <Link to="/agreement/testDraft">Third Party Examples</Link>
-        </li> */}
       </ul>
       {/* enhanced agreement form */}
       <EnhancedAgreement />

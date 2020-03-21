@@ -16,7 +16,7 @@ const Household = () => {
     <div>
       <h2>Rent and Household Information</h2>
       <FieldSet type="text" name="household.address" label="House Address" />
-      <FormikDateRange
+      {/* <FormikDateRange
         label="Lease Dates"
         name="leaseDates"
         stateName="household.leaseDates"
@@ -24,13 +24,13 @@ const Household = () => {
         onChange={setFieldValue}
         error={householdErrors}
         touched={householdTouched}
-      />
-      <FieldSet type="checkbox" name="household.petFriendly" label="Pet Friendly?" />
+      /> */}
+      {/* <FieldSet type="checkbox" name="household.petFriendly" label="Pet Friendly?" />
       <FieldSet type="checkbox" name="household.smokingAllowed" label="Smoking Allowed?" />
       <FieldSet type="number" name="household.bedroomsAmt" label="No. of Bedrooms" />
-      <FieldSet type="number" name="household.bathroomsAmt" label="No. of BAthrooms" />
+      <FieldSet type="number" name="household.bathroomsAmt" label="No. of Bathrooms" />
       <FieldSet type="number" name="household.rentAmt" label="Monthly Rent" />
-      <FieldSet type="number" name="household.securityDepositAmt" label="Security Deposit" />
+      <FieldSet type="number" name="household.securityDepositAmt" label="Security Deposit" /> */}
 
       <div>
         <Button

@@ -28,15 +28,6 @@ type FieldSetConfig = {
 const FieldSet = ({ label, type, value, ...props }: FieldSetConfig) => {
   const [field, meta, helpers] = useField(props);
 
-  const InputContainer = () => (
-    <Input
-      {...field}
-      {...props}
-      value={value ? value : field.value || ""}
-      isReadOnly={props.isReadOnly !== undefined ? props.isReadOnly : false}
-    />
-  );
-
   const InputRight = () => {
     if (props.inputGroup.right.addOn) {
       return <InputRightAddon>{props.inputGroup.right.addOn}</InputRightAddon>;
@@ -73,7 +64,12 @@ const FieldSet = ({ label, type, value, ...props }: FieldSetConfig) => {
           <FormLabel htmlFor={field.name}>{label}</FormLabel>
           <InputGroup>
             {props.inputGroup && props.inputGroup.left ? <InputLeft /> : null}
-            <InputContainer />
+            <Input
+              {...field}
+              {...props}
+              value={value ? value : field.value || ""}
+              isReadOnly={props.isReadOnly !== undefined ? props.isReadOnly : false}
+            />
             {props.inputGroup && props.inputGroup.right ? <InputRight /> : null}
           </InputGroup>
         </>

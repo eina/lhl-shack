@@ -57,7 +57,7 @@ const Housekeeping = (props: any) => {
         focus={() => {}}
       />
 
-      <Heading as="h3">Quiet Times</Heading>
+      {/* <Heading as="h3">Quiet Times</Heading>
       <FieldSet
         type="number"
         label="We agree that quiet time will be from (PM)"
@@ -184,7 +184,7 @@ const Housekeeping = (props: any) => {
         onChange={setFieldValue}
         onBlur={handleBlur}
         focus={() => {}}
-      />
+      /> */}
       <div>
         <Button
           variantColor="orange"

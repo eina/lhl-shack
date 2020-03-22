@@ -4,6 +4,7 @@ import FieldSet from "../FieldSet";
 import { Button, Heading } from "@chakra-ui/core";
 
 import { useHistory } from "react-router-dom";
+import { stringEditorStateToContent } from "../../helpers/functions";
 // import { FormValues } from "../../interfaces";
 
 import RichEditor from "../RichEditor/RichEditor";
@@ -43,7 +44,7 @@ const Housekeeping = (props: any) => {
       </p>
       <p>We agree that the following applies to guests:</p>
       <RichEditor
-        editorState={values.housekeeping.guestPolicy}
+        editorState={stringEditorStateToContent(values.housekeeping.guestPolicy)}
         editorStateName="housekeeping.guestPolicy"
         onChange={setFieldValue}
         onBlur={handleBlur}
@@ -82,7 +83,7 @@ const Housekeeping = (props: any) => {
         We agree that the following persons shall occupy the following bedrooms during our tenancy
       </p>
       <RichEditor
-        editorState={values.housekeeping.roomsPolicy}
+        editorState={stringEditorStateToContent(values.housekeeping.roomsPolicy)}
         editorStateName="housekeeping.roomsPolicy"
         onChange={setFieldValue}
         onBlur={handleBlur}
@@ -94,7 +95,7 @@ const Housekeeping = (props: any) => {
         shared spaces:
       </p>
       <RichEditor
-        editorState={values.housekeeping.spacesPolicy}
+        editorState={stringEditorStateToContent(values.housekeeping.spacesPolicy)}
         editorStateName="housekeeping.spacesPolicy"
         onChange={setFieldValue}
         onBlur={handleBlur}
@@ -103,7 +104,7 @@ const Housekeeping = (props: any) => {
       <Heading as="h3">Chores</Heading>
       <p>We agree to share the following household responsibilities in the following manner:</p>
       <RichEditor
-        editorState={values.housekeeping.choresPolicy}
+        editorState={stringEditorStateToContent(values.housekeeping.choresPolicy)}
         editorStateName="housekeeping.choresPolicy"
         onChange={setFieldValue}
         onBlur={handleBlur}
@@ -115,7 +116,7 @@ const Housekeeping = (props: any) => {
         from the shared property:
       </p>
       <RichEditor
-        editorState={values.housekeeping.vacationPolicy}
+        editorState={stringEditorStateToContent(values.housekeeping.vacationPolicy)}
         editorStateName="housekeeping.vacationPolicy"
         onChange={setFieldValue}
         onBlur={handleBlur}
@@ -132,7 +133,7 @@ const Housekeeping = (props: any) => {
       <Heading as="h4">Personal Items Policy</Heading>
       <h5>Personal Items Policy</h5>
       <RichEditor
-        editorState={values.housekeeping.personalItemsPolicy}
+        editorState={stringEditorStateToContent(values.housekeeping.personalItemsPolicy)}
         editorStateName="housekeeping.personalItemsPolicy"
         onChange={setFieldValue}
         onBlur={handleBlur}
@@ -145,7 +146,7 @@ const Housekeeping = (props: any) => {
         on and around the premises:
       </p>
       <RichEditor
-        editorState={values.housekeeping.smokingPolicy}
+        editorState={stringEditorStateToContent(values.housekeeping.smokingPolicy)}
         editorStateName="housekeeping.smokingPolicy"
         onChange={setFieldValue}
         onBlur={handleBlur}
@@ -158,7 +159,7 @@ const Housekeeping = (props: any) => {
         messages for other roommates will:
       </p>
       <RichEditor
-        editorState={values.housekeeping.messagesPolicy}
+        editorState={stringEditorStateToContent(values.housekeeping.messagesPolicy)}
         editorStateName="housekeeping.messagesPolicy"
         onChange={setFieldValue}
         onBlur={handleBlur}
@@ -172,7 +173,7 @@ const Housekeeping = (props: any) => {
         any roommates have allergies to animals.
       </p>
       <RichEditor
-        editorState={values.housekeeping.petsPolicy}
+        editorState={stringEditorStateToContent(values.housekeeping.petsPolicy)}
         editorStateName="housekeeping.petsPolicy"
         onChange={setFieldValue}
         onBlur={handleBlur}

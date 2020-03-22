@@ -6,7 +6,6 @@ import { Button } from "@chakra-ui/core";
 
 import { AppContext } from "../../Store";
 import { stringDraftJS } from "../../helpers/data";
-import { stringEditorStateToContent } from "../../helpers/functions";
 import initialValues from "../../components/AgreementForm/initialValues";
 import validationSchema from "../../components/AgreementForm/validationSchema";
 
@@ -47,7 +46,7 @@ const AgreementForm = () => {
         : initialValues.roommates,
     housekeeping: {
       ...initialValues.housekeeping,
-      guestPolicy: stringEditorStateToContent(stringDraftJS)
+      guestPolicy: stringDraftJS
     }
   };
 
@@ -75,14 +74,6 @@ const AgreementForm = () => {
               />
             )}
           </NavigationPrompt>
-          {/* <Prompt
-            when={true}
-            message={({ pathname }) => {
-              return matchPath(pathname, { path: "/agreement" })
-                ? true
-                : "Are you sure you want to navigate away?";
-            }}
-          /> */}
           <Switch>
             <Route path="/agreement/household" component={Household} />
             <Route path="/agreement/landlord" component={Landlord} />

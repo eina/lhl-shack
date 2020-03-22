@@ -3,6 +3,7 @@ import { Formik } from "formik";
 import { Button } from "@chakra-ui/core";
 
 import { stringEditorStateToContent, formatDraftJSForDB } from "../helpers/functions";
+// import { stringDraftJS } from "../helpers/data";
 import RichEditor from "../components/RichEditor/RichEditor";
 
 const Test = () => {
@@ -14,7 +15,7 @@ const Test = () => {
     // convertFromRaw it
     // createWithContent from it
     // testDraft: testContent ? stringEditorStateToContent("") : EditorState.createEmpty()
-    testDraft: stringEditorStateToContent("")
+    testDraft: ""
   };
 
   return (
@@ -34,7 +35,7 @@ const Test = () => {
         {({ handleSubmit, handleBlur, setFieldValue, values }) => (
           <form onSubmit={handleSubmit}>
             <RichEditor
-              editorState={values.testDraft}
+              editorState={stringEditorStateToContent(values.testDraft)}
               editorStateName="testDraft"
               onChange={setFieldValue}
               onBlur={handleBlur}

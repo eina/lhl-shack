@@ -10,12 +10,7 @@ const Test = () => {
   const [jsonVal, setJsonVal] = useState("");
 
   const initialVals = {
-    // if testContent exists -> must not be an empty string?
-    // JSON.parse the string
-    // convertFromRaw it
-    // createWithContent from it
-    // testDraft: testContent ? stringEditorStateToContent("") : EditorState.createEmpty()
-    testDraft: ""
+    testDraft: stringEditorStateToContent("")
   };
 
   return (
@@ -35,7 +30,7 @@ const Test = () => {
         {({ handleSubmit, handleBlur, setFieldValue, values }) => (
           <form onSubmit={handleSubmit}>
             <RichEditor
-              editorState={stringEditorStateToContent(values.testDraft)}
+              editorState={values.testDraft}
               editorStateName="testDraft"
               onChange={setFieldValue}
               onBlur={handleBlur}

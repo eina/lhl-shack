@@ -54,24 +54,24 @@ const FormLeavePrompt = (props: any) => {
 
     const formattedValues = { ...formVals, housekeeping: updatedHousekeeping };
 
-    // console.log("pls save properly", formattedValues);
+    console.log("pls save properly", formattedValues);
     /* 
       1. get the most recent agreement that matches the household 
       2. check if it's expired
       3. if it's not expired, set that as expired
       4. save the new values with is_complete: false, is_expired: false
      */
-    axios
-      .post("/api/agreements", {
-        household_id: household,
-        form_values: JSON.stringify(formattedValues),
-        is_complete: false,
-        is_expired: false
-      })
-      .then(() => {
-        console.log("wow i sent it to the server!");
-        onConfirm();
-      });
+    // axios
+    //   .post("/api/agreements", {
+    //     household_id: household,
+    //     form_values: JSON.stringify(formattedValues),
+    //     is_complete: false,
+    //     is_expired: false
+    //   })
+    //   .then(() => {
+    //     console.log("wow i sent it to the server!");
+    //     onConfirm();
+    //   });
     onConfirm();
   };
 

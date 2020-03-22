@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Formik } from "formik";
-import { convertToRaw } from "draft-js";
 import { Button } from "@chakra-ui/core";
 
-import { stringEditorStateToContent } from "../helpers/functions";
+import { stringEditorStateToContent, formatDraftJSForDB } from "../helpers/functions";
 import RichEditor from "../components/RichEditor/RichEditor";
 
 const Test = () => {
@@ -29,11 +28,7 @@ const Test = () => {
         initialValues={initialVals}
         onSubmit={values => {
           // convert to raw when saving
-          const toRaw = convertToRaw(values.testDraft.getCurrentContent());
-          const toString = JSON.stringify(toRaw);
-          setJsonVal(toString);
-          // console.log(toRaw);
-          // alert(JSON.stringify(values, null, 2));
+          setJsonVal(formatDraftJSForDB(values.testDraft));
         }}
       >
         {({ handleSubmit, handleBlur, setFieldValue, values }) => (

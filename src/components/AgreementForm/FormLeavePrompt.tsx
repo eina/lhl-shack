@@ -12,6 +12,8 @@ import {
   useDisclosure
 } from "@chakra-ui/core";
 
+import { formatDraftJSForDB } from "../../helpers/functions";
+
 const FormLeavePrompt = (props: any) => {
   const { onCancel, onConfirm } = props;
 
@@ -22,12 +24,38 @@ const FormLeavePrompt = (props: any) => {
 
   const confirmLeave = () => {
     console.log("aaaa leave", props.currUser);
+    const draftJSKeys = [
+      "guestPolicy",
+      "spacesPolicy",
+      "roomsPolicy",
+      "choresPolicy",
+      "vacationPolicy",
+      "personalItemsPolicy",
+      "smokingPolicy",
+      "messagesPolicy",
+      "petsPolicy"
+    ];
     const {
       currUser: { household },
+      formVals: { housekeeping },
       formVals
     } = props;
+    let updatedHousekeeping = { ...housekeeping };
 
-    console.log("what is here tho", formVals);
+    // update housekeeping draft js to better saveable values
+    for (const housekeepingKey in housekeeping) {
+      if (draftJSKeys.includes(housekeepingKey)) {
+        const draftJSValue = housekeeping[housekeepingKey];
+        updatedHousekeeping = {
+          ...updatedHousekeeping,
+          [housekeepingKey]: formatDraftJSForDB(draftJSValue)
+        };
+      }
+    }
+
+    const formattedValues = { ...formVals, housekeeping: updatedHousekeeping };
+
+    // console.log("pls save properly", formattedValues);
     /* 
       1. get the most recent agreement that matches the household 
       2. check if it's expired
@@ -37,7 +65,7 @@ const FormLeavePrompt = (props: any) => {
     axios
       .post("/api/agreements", {
         household_id: household,
-        form_values: JSON.stringify(formVals),
+        form_values: JSON.stringify(formattedValues),
         is_complete: false,
         is_expired: false
       })
@@ -45,6 +73,7 @@ const FormLeavePrompt = (props: any) => {
         console.log("wow i sent it to the server!");
         onConfirm();
       });
+    onConfirm();
   };
 
   return (

@@ -1,4 +1,4 @@
-import { EditorState, convertFromRaw } from "draft-js";
+import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
 
 export const displayFullName = (firstName: string, lastName: string) => {
   return `${firstName} ${lastName}`;
@@ -36,4 +36,14 @@ export const stringEditorStateToContent = (editorState: string) => {
     return EditorState.createWithContent(stringContent);
   }
   return EditorState.createEmpty();
+};
+
+/**
+ * Returns a stringified JSON of Draft JS's raw elements
+ * @param toSaveDraftJS Draft JS state content
+ */
+export const formatDraftJSForDB = (toSaveDraftJS: any) => {
+  const toRaw = convertToRaw(toSaveDraftJS.getCurrentContent());
+  const toString = JSON.stringify(toRaw);
+  return toString;
 };

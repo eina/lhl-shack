@@ -7,6 +7,7 @@ import MainMenu from "./components/MainMenu";
 import Home from "./pages/Home";
 import Test from "./pages/Test";
 import Agreement from "./pages/Agreement";
+import Account from "./pages/Account";
 
 // test data
 const currUser = {
@@ -44,6 +45,7 @@ const App = () => {
               <Route path="/" exact component={Home} />
               <Route path="/test" component={Test} />
               <Route path="/agreement" component={Agreement} />
+              <Route path="/account" component={Account} />
             </Switch>
           </main>
         </div>

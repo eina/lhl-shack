@@ -22,13 +22,6 @@ import SecurityDeposit from "../../components/AgreementForm/RentAndDeposit/Secur
 import BillsUtilities from "../../components/AgreementForm/BillsUtilities";
 import Signatures from "../../components/AgreementForm/Signatures";
 
-const submitForm = (values: FormikValues, actions: any) => {
-  setTimeout(() => {
-    alert(JSON.stringify(values, null, 2));
-    actions.setSubmitting(false);
-  }, 1000);
-};
-
 const AgreementForm = () => {
   const { state }: { state: any } = useContext(AppContext);
 
@@ -59,6 +52,13 @@ const AgreementForm = () => {
     }
   };
 
+  const submitForm = (values: FormikValues, actions: any) => {
+    setTimeout(() => {
+      alert(JSON.stringify(values, null, 2));
+      actions.setSubmitting(false);
+    }, 1000);
+  };
+
   return (
     <Formik
       initialValues={initialVals}
@@ -66,11 +66,23 @@ const AgreementForm = () => {
       onSubmit={submitForm}
       validationSchema={validationSchema}
     >
-      {({ values, errors, touched, setFieldValue, handleSubmit, handleBlur }: FormikProps<any>) => (
+      {({
+        values,
+        errors,
+        touched,
+        setFieldValue,
+        handleSubmit,
+        handleBlur,
+        initialValues
+      }: FormikProps<any>) => (
         <form onSubmit={handleSubmit}>
           <NavigationPrompt
             when={(current, next) => {
-              return !next || !next.pathname.startsWith("/agreement");
+              // if initialValues === values --> you can navigate away cause nothing changed
+              return (
+                JSON.stringify(values) !== JSON.stringify(initialValues) &&
+                (!next || !next.pathname.startsWith("/agreement"))
+              );
             }}
           >
             {({ onConfirm, onCancel }) => (

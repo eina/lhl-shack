@@ -53,7 +53,6 @@ const FormLeavePrompt = (props: any) => {
     }
 
     const formattedValues = { ...formVals, housekeeping: updatedHousekeeping };
-
     console.log("pls save properly", formattedValues);
     /* 
       1. get the most recent agreement that matches the household 

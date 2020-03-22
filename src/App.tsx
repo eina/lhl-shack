@@ -64,8 +64,8 @@ const AppContent = () => {
             {isAgreementForm ? (
               // Agreement Form
               <Switch>
-                <Redirect from="/agrement" to="/agreement/title" exact />
                 <Route path="/agreement" component={Agreement} />
+                <Redirect from="/agrement" to="/agreement/title" exact />
               </Switch>
             ) : (
               // Main App Contents

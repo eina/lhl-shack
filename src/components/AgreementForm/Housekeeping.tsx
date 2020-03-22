@@ -27,15 +27,8 @@ export interface HousekeepingValues {
 
 const Housekeeping = (props: any) => {
   const history = useHistory();
-  const {
-    values,
-    setFieldValue,
-    handleBlur
-    // errors,
-    // touched
-  } = props;
+  const { values, setFieldValue, handleBlur } = props;
 
-  // console.log({ errors: errors && errors.housekeeping, touched: touched && touched.housekeeping });
   return (
     <div>
       <Heading as="h2">Housekeeping Rules</Heading>
@@ -57,7 +50,7 @@ const Housekeeping = (props: any) => {
         focus={() => {}}
       />
 
-      {/* <Heading as="h3">Quiet Times</Heading>
+      <Heading as="h3">Quiet Times</Heading>
       <FieldSet
         type="number"
         label="We agree that quiet time will be from (PM)"
@@ -184,7 +177,7 @@ const Housekeeping = (props: any) => {
         onChange={setFieldValue}
         onBlur={handleBlur}
         focus={() => {}}
-      /> */}
+      />
       <div>
         <Button
           variantColor="orange"

@@ -1,5 +1,6 @@
 import moment from "moment";
 import { EditorState } from "draft-js";
+import { stringEditorStateToContent } from "../../helpers/functions";
 
 const billShape = {
   name: null,
@@ -31,10 +32,10 @@ const initialValues = {
     securityDepositAmt: ""
   },
   account: {
-    first_name: '',
-    last_name: '',
-    phone_number: '',
-    email: ''
+    first_name: "",
+    last_name: "",
+    phone_number: "",
+    email: ""
   },
   roommates: [
     // { firstName: "Roommate", lastName: "One", email: "roomie1@email.com", phone: "6041234567" }
@@ -55,15 +56,15 @@ const initialValues = {
     weekdayAM: "",
     weekendPM: "",
     weekendAM: "",
-    guestPolicy: EditorState.createEmpty(),
-    spacesPolicy: EditorState.createEmpty(),
-    roomsPolicy: EditorState.createEmpty(),
-    choresPolicy: EditorState.createEmpty(),
-    vacationPolicy: EditorState.createEmpty(),
-    personalItemsPolicy: EditorState.createEmpty(),
-    smokingPolicy: EditorState.createEmpty(),
-    messagesPolicy: EditorState.createEmpty(),
-    petsPolicy: EditorState.createEmpty()
+    guestPolicy: stringEditorStateToContent(""),
+    spacesPolicy: stringEditorStateToContent(""),
+    roomsPolicy: stringEditorStateToContent(""),
+    choresPolicy: stringEditorStateToContent(""),
+    vacationPolicy: stringEditorStateToContent(""),
+    personalItemsPolicy: stringEditorStateToContent(""),
+    smokingPolicy: stringEditorStateToContent(""),
+    messagesPolicy: stringEditorStateToContent(""),
+    petsPolicy: stringEditorStateToContent("")
   },
   signatures: [{ fullName: "", agreed: false, date: moment() }]
   // test values for TestDraft.tsx

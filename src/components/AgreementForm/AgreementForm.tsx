@@ -4,6 +4,8 @@ import { FormikProps, Formik, FormikValues } from "formik";
 import { Button } from "@chakra-ui/core";
 
 import { AppContext } from "../../Store";
+import { stringDraftJS } from "../../helpers/data";
+import { stringEditorStateToContent } from "../../helpers/functions";
 import initialValues from "../../components/AgreementForm/initialValues";
 import validationSchema from "../../components/AgreementForm/validationSchema";
 
@@ -39,7 +41,11 @@ const AgreementForm = () => {
             },
             { firstName: "", lastName: "", email: "", phone: "" }
           ]
-        : initialValues.roommates
+        : initialValues.roommates,
+    housekeeping: {
+      ...initialValues.housekeeping,
+      guestPolicy: stringEditorStateToContent(stringDraftJS)
+    }
   };
 
   return (

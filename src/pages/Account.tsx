@@ -58,7 +58,7 @@ const Account = () => {
   return (
     account && (
       <div>
-        <h1>My Account</h1>
+        <Heading as="h1">My Account</Heading>
         {formAlert.visible && (
           <Alert status={formAlert.success ? "success" : "error"} variant="left-accent">
             <AlertIcon />
@@ -78,7 +78,6 @@ const Account = () => {
         >
           {(props: any) => (
             <form onSubmit={props.handleSubmit}>
-              <Heading as="h1">Account Info</Heading>
               <FieldSet type="text" label="First Name" name="first_name" />
               <FieldSet type="text" label="Last Name" name="last_name" />
               <FieldSet type="text" label="Phone Number" name="phone_number" />

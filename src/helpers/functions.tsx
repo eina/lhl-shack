@@ -1,1 +1,3 @@
-export const displayFullName = (firstName: string, lastName: string) => `${firstName} ${lastName}`;
+export const displayFullName = (firstName: string, lastName: string) => {
+  return `${firstName} ${lastName}`;
+};

@@ -1,6 +1,6 @@
 import React from "react";
 import { FieldArray } from "formik";
-
+import { Button } from "@chakra-ui/core";
 // import { FormValues } from "../../../interfaces";
 import { displayFullName } from "../../../helpers/functions";
 
@@ -22,7 +22,12 @@ const SplitRentAndDeposit = (props: any) => {
 
   return (
     <div>
-      <FieldSet name={`${sectionName}.totalAmt`} label="Total Amount to Pay" type="number" />
+      <FieldSet
+        name={`${sectionName}.totalAmt`}
+        label="Total Amount to Pay"
+        type="number"
+        value={values.household[`${sectionName}Amt`]}
+      />
 
       <FormikSingleDatePicker
         name={`${sectionName}.dueDate`}
@@ -51,8 +56,13 @@ const SplitRentAndDeposit = (props: any) => {
         {arrayHelpers => (
           <div>
             <ol>
-              {values.rent.portion.map((person: object, index: number) => (
+              {values.rent.portion.map((person: object, index: number, arr: any) => (
                 <li key={index}>
+                  {(index > 0 || arr.length > 1) && (
+                    <Button type="button" onClick={() => arrayHelpers.remove(index)}>
+                      Remove
+                    </Button>
+                  )}
                   <FormikSelect
                     label="Roommate"
                     name={`${sectionName}.portion.${index}.roommate`}
@@ -85,12 +95,12 @@ const SplitRentAndDeposit = (props: any) => {
 
             {/* add more roommates if  # of roommates =/= length of FieldArray */}
             {values.roommates.length > values.rent.portion.length && (
-              <button
+              <Button
                 type="button"
                 onClick={() => arrayHelpers.push({ roommate: [], roommate_amt: 0, amt_type: [] })}
               >
                 Add Roommate
-              </button>
+              </Button>
             )}
           </div>
         )}

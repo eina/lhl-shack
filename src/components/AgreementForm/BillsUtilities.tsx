@@ -10,7 +10,7 @@ import FormikSelect from "../FormikSelect";
 
 import { billInterval } from "../../helpers/data";
 
-import { Button } from "@chakra-ui/core";
+import { Button, Heading, List, ListItem, Divider, Box } from "@chakra-ui/core";
 
 import { useHistory } from "react-router-dom";
 
@@ -19,22 +19,20 @@ const Bills = (props: any) => {
   const numRoommates = values.roommates.length;
   const history = useHistory(); //for nav buttons
 
-  // const billPerRoommate = (totalAmount: number) => {
-
-  //   console.log(totalAmount, numRoommates);
-  //   return totalAmount ? totalAmount / numRoommates : "";
-  // };
-
-  // console.log({ errors: errors && errors.bills, touched: touched && touched.bills });
   return (
     <div>
-      <h2>Bills: Utilities</h2>
+      <Heading as="h2">Bills: Utilities</Heading>
       <FieldArray name="bills">
         {arrayHelpers => (
           <div>
-            <ol>
+            <List as="ol" styleType="decimal">
               {values.bills.map((bill: any, index: number) => (
-                <li key={index}>
+                <ListItem key={index}>
+                  {index > 0 && (
+                    <Button type="button" onClick={() => arrayHelpers.remove(index)}>
+                      Remove
+                    </Button>
+                  )}
                   <FieldSet type="text" name={`bills.${index}.name`} label="Bill Name" />
                   <FieldSet type="number" name={`bills.${index}.totalAmt`} label="Total Amount" />
                   <FormikSingleDatePicker
@@ -81,18 +79,18 @@ const Bills = (props: any) => {
                       value={values.bills[index].totalAmount / numRoommates}
                     />
                   ) : null}
-                  <p>======== temporary line break ============</p>
-                </li>
+                  <Divider />
+                </ListItem>
               ))}
-            </ol>
-            <button
+            </List>
+            <Button
               type="button"
               onClick={() =>
                 arrayHelpers.push({ name: "", totalAmount: 0, dueDate: moment(), interval: [] })
               }
             >
               Add New Bill
-            </button>
+            </Button>
           </div>
         )}
       </FieldArray>

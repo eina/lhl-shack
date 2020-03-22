@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormikContext, FormikProps } from "formik";
 import { useHistory } from "react-router-dom";
-import { Button } from "@chakra-ui/core";
+import { Button, Heading } from "@chakra-ui/core";
 
 import FieldSet from "../FieldSet";
 import { FormikDateRange } from "../FormikDates";
@@ -14,9 +14,9 @@ const Household = () => {
 
   return (
     <div>
-      <h2>Rent and Household Information</h2>
+      <Heading as="h2">Rent and Household Information</Heading>
       <FieldSet type="text" name="household.address" label="House Address" />
-      {/* <FormikDateRange
+      <FormikDateRange
         label="Lease Dates"
         name="leaseDates"
         stateName="household.leaseDates"
@@ -24,13 +24,13 @@ const Household = () => {
         onChange={setFieldValue}
         error={householdErrors}
         touched={householdTouched}
-      /> */}
-      {/* <FieldSet type="checkbox" name="household.petFriendly" label="Pet Friendly?" />
+      />
+      <FieldSet type="checkbox" name="household.petFriendly" label="Pet Friendly?" />
       <FieldSet type="checkbox" name="household.smokingAllowed" label="Smoking Allowed?" />
       <FieldSet type="number" name="household.bedroomsAmt" label="No. of Bedrooms" />
       <FieldSet type="number" name="household.bathroomsAmt" label="No. of Bathrooms" />
       <FieldSet type="number" name="household.rentAmt" label="Monthly Rent" />
-      <FieldSet type="number" name="household.securityDepositAmt" label="Security Deposit" /> */}
+      <FieldSet type="number" name="household.securityDepositAmt" label="Security Deposit" />
 
       <div>
         <Button

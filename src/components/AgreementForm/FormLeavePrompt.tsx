@@ -61,7 +61,7 @@ const FormLeavePrompt = (props: any) => {
       4. save the new values with is_complete: false, is_expired: false
      */
     // axios
-    //   .post("/api/agreements", {
+    //   .patch("/api/agreements", {
     //     household_id: household,
     //     form_values: JSON.stringify(formattedValues),
     //     is_complete: false,

@@ -1,9 +1,10 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import axios from "axios";
 import { Switch, Route, Prompt, Redirect } from "react-router-dom";
 import NavigationPrompt from "react-router-navigation-prompt";
 import { FormikProps, Formik, FormikValues } from "formik";
 import { Button } from "@chakra-ui/core";
+import moment from "moment";
 
 import { AppContext } from "../../Store";
 import { stringDraftJS } from "../../helpers/data";
@@ -24,33 +25,51 @@ import Signatures from "../../components/AgreementForm/Signatures";
 
 const AgreementForm = () => {
   const { state }: { state: any } = useContext(AppContext);
+  const [initialVals, setInitialVals] = useState(initialValues);
 
-  // check to see if there are agreements here
   useEffect(() => {
     axios.get(`api/agreements?household=${state.currUser.household}`).then(agreement => {
-      console.log(agreement.data);
+      // use agreement values as initial values if they exist
+      const formValues =
+        agreement.data && agreement.data[0] && agreement.data[0].form_values
+          ? agreement.data[0].form_values
+          : null;
+      if (formValues) {
+        setInitialVals(prev => ({
+          ...formValues,
+          household: {
+            ...formValues.household,
+            leaseDates: {
+              startDate: moment(formValues.household.leaseDates.startDate),
+              endDate: moment(formValues.household.leaseDates.endDate)
+            }
+          },
+          rent: {
+            ...formValues.rent,
+            dueDate: moment(formValues.rent.dueDate)
+          },
+          securityDeposit: {
+            ...formValues.securityDeposit,
+            dueDate: moment(formValues.securityDeposit.dueDate)
+          },
+          bills: formValues.bills.map((bill: any) => ({ ...bill, dueDate: moment(bill.dueDate) })),
+          signatures: formValues.signatures.map((sig: any) => ({
+            ...sig,
+            dueDate: moment(sig.dueDate)
+          }))
+        }));
+        console.log("are you formatted", initialVals);
+      } else {
+        const {
+          currUser: { first_name: firstName, last_name: lastName, phone_number: phone, email }
+        } = state;
+        setInitialVals((prev: any) => ({
+          ...prev,
+          roommates: [{ firstName, lastName, phone, email }]
+        }));
+      }
     });
-  }, []);
-
-  const initialVals = {
-    ...initialValues,
-    roommates:
-      state && state.currUser
-        ? [
-            {
-              firstName: state.currUser.first_name,
-              lastName: state.currUser.last_name,
-              email: state.currUser.email,
-              phone: state.currUser.phone_number
-            },
-            { firstName: "", lastName: "", email: "", phone: "" }
-          ]
-        : initialValues.roommates,
-    housekeeping: {
-      ...initialValues.housekeeping,
-      guestPolicy: stringEditorStateToContent(stringDraftJS)
-    }
-  };
+  }, [state]);
 
   const submitForm = (values: FormikValues, actions: any) => {
     setTimeout(() => {

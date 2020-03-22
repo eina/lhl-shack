@@ -1,4 +1,5 @@
 import React, { useEffect, useContext } from "react";
+import axios from "axios";
 import { Switch, Route, Prompt, Redirect } from "react-router-dom";
 import NavigationPrompt from "react-router-navigation-prompt";
 import { FormikProps, Formik, FormikValues } from "formik";
@@ -6,6 +7,7 @@ import { Button } from "@chakra-ui/core";
 
 import { AppContext } from "../../Store";
 import { stringDraftJS } from "../../helpers/data";
+import { stringEditorStateToContent } from "../../helpers/functions";
 import initialValues from "../../components/AgreementForm/initialValues";
 import validationSchema from "../../components/AgreementForm/validationSchema";
 
@@ -30,6 +32,13 @@ const submitForm = (values: FormikValues, actions: any) => {
 const AgreementForm = () => {
   const { state }: { state: any } = useContext(AppContext);
 
+  // check to see if there are agreements here
+  useEffect(() => {
+    axios.get(`api/agreements?household=${state.currUser.household}`).then(agreement => {
+      console.log(agreement.data);
+    });
+  }, []);
+
   const initialVals = {
     ...initialValues,
     roommates:
@@ -46,7 +55,7 @@ const AgreementForm = () => {
         : initialValues.roommates,
     housekeeping: {
       ...initialValues.housekeeping,
-      guestPolicy: stringDraftJS
+      guestPolicy: stringEditorStateToContent(stringDraftJS)
     }
   };
 

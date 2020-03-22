@@ -10,13 +10,17 @@ import {
   Box,
   Heading,
   Text,
-  Icon
+  Icon,
+  Spinner
 } from "@chakra-ui/core";
 
 import { displayFullName } from "./helpers/functions";
 import { AppContext, AppProvider } from "./Store";
 
+import AppLoading from "./components/AppLoading";
+import AppHeader from "./components/AppHeader";
 import MainMenu from "./components/MainMenu";
+
 import Home from "./pages/Home";
 import Test from "./pages/Test";
 import Agreement from "./pages/Agreement";
@@ -37,6 +41,7 @@ const currUser = {
 const AppContent = () => {
   const { state, updateState }: { state: any; updateState: Function } = useContext(AppContext);
   const { pathname: currentPath } = useLocation();
+  const isAgreementForm = currentPath.startsWith("/agreement");
   // fake an axios request lol
   useEffect(() => {
     axios.get("/api/users/1").then(user => {
@@ -47,46 +52,36 @@ const AppContent = () => {
     });
   }, [updateState]);
 
-  return (
-    <Box className="App" w="100%">
-      <Flex as="header" align="center" p={10} bg="teal.500" color="white" justify="space-between">
-        <Heading as="h1" size="lg">
-          shack
-        </Heading>
-        {state && state.currUser && state.fullName ? (
-          <Flex as="nav" align="center">
-            <Icon name="bell" />
-            <Text>{state.fullName}</Text>
-          </Flex>
-        ) : null}
-      </Flex>
+  if (state && state.currUser) {
+    return (
+      <Box className="App" w="100%">
+        <AppHeader {...state} />
 
-      {currentPath.startsWith("/agreement") ? (
         <Grid templateColumns="1fr 4fr" gap={1} p={5} className="container">
-          <AgreementMenu />
+          {isAgreementForm ? <AgreementMenu /> : <MainMenu />}
 
           <Box as="main" bg="gray.50" pr={10} pl={10} rounded={10}>
-            <Switch>
-              <Redirect from="/agrement" to="/agreement/title" exact />
-              <Route path="/agreement" component={Agreement} />
-            </Switch>
+            {isAgreementForm ? (
+              // Agreement Form
+              <Switch>
+                <Redirect from="/agrement" to="/agreement/title" exact />
+                <Route path="/agreement" component={Agreement} />
+              </Switch>
+            ) : (
+              // Main App Contents
+              <Switch>
+                <Route path="/" exact component={Home} />
+                <Route path="/test" component={Test} />
+                <Route path="/account" component={Account} />
+              </Switch>
+            )}
           </Box>
         </Grid>
-      ) : (
-        <Grid templateColumns="1fr 4fr" gap={1} p={5} className="container">
-          <MainMenu />
-
-          <Box as="main" bg="gray.50" pr={10} pl={10} rounded={10}>
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <Route path="/test" component={Test} />
-              <Route path="/account" component={Account} />
-            </Switch>
-          </Box>
-        </Grid>
-      )}
-    </Box>
-  );
+      </Box>
+    );
+  } else {
+    return <AppLoading />;
+  }
 };
 
 // what renders on index

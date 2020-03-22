@@ -2,14 +2,13 @@ import React from "react";
 import axios from "axios";
 import {
   Button,
+  Icon,
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalCloseButton,
   ModalBody,
-  ModalFooter,
-  useDisclosure
+  ModalFooter
 } from "@chakra-ui/core";
 
 import { formatDraftJSForDB } from "../../helpers/functions";
@@ -80,16 +79,15 @@ const FormLeavePrompt = (props: any) => {
     <Modal isOpen={true} onClose={confirmStay}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Modal Title</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>{/* <Lorem count={2} /> */}</ModalBody>
+        <ModalHeader>Leave Roommate Agreement Generator?</ModalHeader>
+        <ModalBody>Your form values will be saved when you navigate away.</ModalBody>
 
         <ModalFooter>
-          <Button variantColor="blue" mr={3} onClick={confirmStay}>
+          <Button size="sm" mr={3} onClick={confirmStay}>
             Stay on Page
           </Button>
-          <Button variantColor="blue" mr={3} onClick={confirmLeave}>
-            Leave Page
+          <Button size="sm" variantColor="red" onClick={confirmLeave}>
+            <Icon name="warning" mr={2} /> Leave Page
           </Button>
         </ModalFooter>
       </ModalContent>

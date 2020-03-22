@@ -10,8 +10,24 @@ export const displayFullName = (firstName: string, lastName: string) => {
  * @param editorState string
  */
 export const stringEditorStateToContent = (editorState: string) => {
-  // console.log("whaaaat", editorState);
-  if (typeof editorState === "string" && editorState !== "") {
+  // https://stackoverflow.com/a/32278428
+  // check first if input is a valid JSON string
+  const isValidJSONString = (checkString: string) => {
+    try {
+      return JSON.parse(checkString) && !!checkString;
+    } catch (e) {
+      return false;
+    }
+  };
+
+  // make sure that the parsed object returns an object
+  // "[]" is not valid for this use case
+  const isObj = (toTest: any) => {
+    const testJSON = JSON.parse(toTest);
+    return !Array.isArray(testJSON) && testJSON instanceof Object ? true : false;
+  };
+
+  if (isValidJSONString(editorState) && isObj(editorState)) {
     // 1. convert editor state to JSON
     const stringState = JSON.parse(editorState);
     // 2. make state to raw content

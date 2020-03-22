@@ -64,7 +64,7 @@ const Test = () => {
     // convertFromRaw it
     // createWithContent from it
     // testDraft: testContent ? stringEditorStateToContent("") : EditorState.createEmpty()
-    testDraft: stringEditorStateToContent(stringified)
+    testDraft: stringEditorStateToContent("[]")
   };
 
   return (

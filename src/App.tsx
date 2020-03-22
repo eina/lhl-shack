@@ -43,7 +43,7 @@ const AppContent = () => {
       currUser,
       fullName: displayFullName(currUser.first_name, currUser.last_name)
     });
-  }, []);
+  }, [updateState]);
 
   return (
     <Box className="App" w="100%">

@@ -10,7 +10,7 @@ import FormikSelect from "../FormikSelect";
 
 import { billInterval } from "../../helpers/data";
 
-import { Button, Heading, List, ListItem, Divider, Box } from "@chakra-ui/core";
+import { Button, Heading, List, ListItem, Divider } from "@chakra-ui/core";
 
 import { useHistory } from "react-router-dom";
 

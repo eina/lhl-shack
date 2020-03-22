@@ -7,7 +7,6 @@ import { AppContext } from "../../Store";
 import initialValues from "../../components/AgreementForm/initialValues";
 import validationSchema from "../../components/AgreementForm/validationSchema";
 
-import Title from "../../components/AgreementForm/Title";
 import Household from "../../components/AgreementForm/Household";
 import Landlord from "../../components/AgreementForm/Landlord";
 import Roommates from "../../components/AgreementForm/Roommates";

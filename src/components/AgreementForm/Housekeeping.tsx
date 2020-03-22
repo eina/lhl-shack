@@ -1,7 +1,7 @@
 import React from "react";
 import FieldSet from "../FieldSet";
 
-import { Button, Heading, List, ListItem } from "@chakra-ui/core";
+import { Button, Heading } from "@chakra-ui/core";
 
 import { useHistory } from "react-router-dom";
 // import { FormValues } from "../../interfaces";

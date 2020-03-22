@@ -1,11 +1,8 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ListItem, List, Heading } from "@chakra-ui/core";
 
 const AgreementMenu = () => {
-  const location = useLocation();
-  const { pathname: currentPath } = location;
-
   return (
     <div>
       <Heading as="h1" mb={3}>

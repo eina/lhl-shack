@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { createCtx } from "./helpers/typescript";
 
 const [ctx, Provider] = createCtx({});

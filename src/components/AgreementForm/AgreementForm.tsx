@@ -9,10 +9,11 @@ import moment from "moment";
 import { AppContext } from "../../Store";
 import { stringDraftJS } from "../../helpers/data";
 import { stringEditorStateToContent } from "../../helpers/functions";
-import initialValues from "../../components/AgreementForm/initialValues";
+import initialValues, { formatDBInitialValues } from "../../components/AgreementForm/initialValues";
 import validationSchema from "../../components/AgreementForm/validationSchema";
 
 import FormLeavePrompt from "./FormLeavePrompt";
+import AppLoading from "../AppLoading";
 
 import Household from "../../components/AgreementForm/Household";
 import Landlord from "../../components/AgreementForm/Landlord";
@@ -35,44 +36,7 @@ const AgreementForm = () => {
           ? agreement.data[0].form_values
           : null;
       if (formValues) {
-        setInitialVals(prev => ({
-          ...formValues,
-          household: {
-            ...formValues.household,
-            leaseDates: {
-              startDate: moment(formValues.household.leaseDates.startDate),
-              endDate: moment(formValues.household.leaseDates.endDate)
-            }
-          },
-          rent: {
-            ...formValues.rent,
-            dueDate: moment(formValues.rent.dueDate)
-          },
-          securityDeposit: {
-            ...formValues.securityDeposit,
-            dueDate: moment(formValues.securityDeposit.dueDate)
-          },
-          bills: formValues.bills.map((bill: any) => ({ ...bill, dueDate: moment(bill.dueDate) })),
-          housekeeping: {
-            ...formValues.housekeeping,
-            guestPolicy: stringEditorStateToContent(formValues.housekeeping.guestPolicy),
-            spacesPolicy: stringEditorStateToContent(formValues.housekeeping.spacesPolicy),
-            roomsPolicy: stringEditorStateToContent(formValues.housekeeping.roomsPolicy),
-            choresPolicy: stringEditorStateToContent(formValues.housekeeping.choresPolicy),
-            vacationPolicy: stringEditorStateToContent(formValues.housekeeping.vacationPolicy),
-            personalItemsPolicy: stringEditorStateToContent(
-              formValues.housekeeping.personalItemsPolicy
-            ),
-            smokingPolicy: stringEditorStateToContent(formValues.housekeeping.smokingPolicy),
-            messagesPolicy: stringEditorStateToContent(formValues.housekeeping.messagesPolicy),
-            petsPolicy: stringEditorStateToContent(formValues.housekeeping.petsPolicy)
-          },
-          signatures: formValues.signatures.map((sig: any) => ({
-            ...sig,
-            dueDate: moment(sig.dueDate)
-          }))
-        }));
-        console.log("are you formatted", initialVals);
+        setInitialVals(() => formatDBInitialValues(formValues));
       } else {
         const {
           currUser: { first_name: firstName, last_name: lastName, phone_number: phone, email }
@@ -91,6 +55,10 @@ const AgreementForm = () => {
       actions.setSubmitting(false);
     }, 1000);
   };
+
+  if (!state) {
+    return <AppLoading />;
+  }
 
   return (
     <Formik

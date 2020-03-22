@@ -53,6 +53,20 @@ const AgreementForm = () => {
             dueDate: moment(formValues.securityDeposit.dueDate)
           },
           bills: formValues.bills.map((bill: any) => ({ ...bill, dueDate: moment(bill.dueDate) })),
+          housekeeping: {
+            ...formValues.housekeeping,
+            guestPolicy: stringEditorStateToContent(formValues.housekeeping.guestPolicy),
+            spacesPolicy: stringEditorStateToContent(formValues.housekeeping.spacesPolicy),
+            roomsPolicy: stringEditorStateToContent(formValues.housekeeping.roomsPolicy),
+            choresPolicy: stringEditorStateToContent(formValues.housekeeping.choresPolicy),
+            vacationPolicy: stringEditorStateToContent(formValues.housekeeping.vacationPolicy),
+            personalItemsPolicy: stringEditorStateToContent(
+              formValues.housekeeping.personalItemsPolicy
+            ),
+            smokingPolicy: stringEditorStateToContent(formValues.housekeeping.smokingPolicy),
+            messagesPolicy: stringEditorStateToContent(formValues.housekeeping.messagesPolicy),
+            petsPolicy: stringEditorStateToContent(formValues.housekeeping.petsPolicy)
+          },
           signatures: formValues.signatures.map((sig: any) => ({
             ...sig,
             dueDate: moment(sig.dueDate)

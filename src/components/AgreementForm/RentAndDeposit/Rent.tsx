@@ -14,7 +14,7 @@ const Rent = (props: any) => {
       <SplitRentAndDeposit sectionName="rent" {...props} />
       <div>
         <Button
-          variantColor="orange"
+          // variantColor="orange"
           onClick={() => {
             history.push("/agreement/roommates");
           }}
@@ -22,7 +22,7 @@ const Rent = (props: any) => {
           Previous Section
         </Button>
         <Button
-          variantColor="pink"
+          // variantColor="pink"
           onClick={() => {
             history.push("/agreement/bills/deposit");
           }}

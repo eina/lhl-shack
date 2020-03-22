@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+import axios from "axios";
 import { BrowserRouter, Switch, Route, Redirect, useLocation } from "react-router-dom";
 import {
   ThemeProvider,
@@ -35,13 +36,14 @@ const currUser = {
 
 const AppContent = () => {
   const { state, updateState }: { state: any; updateState: Function } = useContext(AppContext);
-  const location = useLocation();
-  const { pathname: currentPath } = location;
+  const { pathname: currentPath } = useLocation();
   // fake an axios request lol
   useEffect(() => {
-    updateState({
-      currUser,
-      fullName: displayFullName(currUser.first_name, currUser.last_name)
+    axios.get("/api/users/1").then(user => {
+      updateState({
+        currUser: user.data,
+        fullName: displayFullName(user.data.first_name, user.data.last_name)
+      });
     });
   }, [updateState]);
 

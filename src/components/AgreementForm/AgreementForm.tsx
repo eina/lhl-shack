@@ -1,5 +1,6 @@
-import React, { useContext } from "react";
-import { Switch, Route, Prompt, Redirect, matchPath } from "react-router-dom";
+import React, { useEffect, useContext } from "react";
+import { Switch, Route, Prompt, Redirect } from "react-router-dom";
+import NavigationPrompt from "react-router-navigation-prompt";
 import { FormikProps, Formik, FormikValues } from "formik";
 import { Button } from "@chakra-ui/core";
 
@@ -8,6 +9,8 @@ import { stringDraftJS } from "../../helpers/data";
 import { stringEditorStateToContent } from "../../helpers/functions";
 import initialValues from "../../components/AgreementForm/initialValues";
 import validationSchema from "../../components/AgreementForm/validationSchema";
+
+import FormLeavePrompt from "./FormLeavePrompt";
 
 import Household from "../../components/AgreementForm/Household";
 import Landlord from "../../components/AgreementForm/Landlord";
@@ -57,15 +60,29 @@ const AgreementForm = () => {
     >
       {({ values, errors, touched, setFieldValue, handleSubmit, handleBlur }: FormikProps<any>) => (
         <form onSubmit={handleSubmit}>
-          <Prompt
+          <NavigationPrompt
+            when={(current, next) => {
+              return !next || !next.pathname.startsWith("/agreement");
+            }}
+          >
+            {({ onConfirm, onCancel }) => (
+              <FormLeavePrompt
+                when={true}
+                onCancel={onCancel}
+                onConfirm={onConfirm}
+                currUser={state.currUser}
+                formVals={values}
+              />
+            )}
+          </NavigationPrompt>
+          {/* <Prompt
             when={true}
             message={({ pathname }) => {
               return matchPath(pathname, { path: "/agreement" })
                 ? true
                 : "Are you sure you want to navigate away?";
             }}
-          />
-
+          /> */}
           <Switch>
             <Route path="/agreement/household" component={Household} />
             <Route path="/agreement/landlord" component={Landlord} />

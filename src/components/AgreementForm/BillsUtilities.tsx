@@ -96,7 +96,7 @@ const Bills = (props: any) => {
       </FieldArray>
       <div>
         <Button
-          variantColor="orange"
+          // variantColor="orange"
           onClick={() => {
             history.push("/agreement/bills/deposit");
           }}
@@ -104,7 +104,7 @@ const Bills = (props: any) => {
           Previous Section
         </Button>
         <Button
-          variantColor="pink"
+          // variantColor="pink"
           onClick={() => {
             history.push("/agreement/housekeeping");
           }}

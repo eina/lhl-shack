@@ -1,106 +1,90 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Formik } from "formik";
 
-import { Formik } from 'formik';
+import { Heading, Button, Alert, AlertIcon, AlertDescription, CloseButton } from "@chakra-ui/core";
 
-import {
-  Heading,
-  Input,
-  Button,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
-} from '@chakra-ui/core';
-
-import initialValues from '../components/AgreementForm/initialValues';
-import AxiosHelper from '../utils/AxiosHelper';
-import FieldSet from '../components/FieldSet';
+import FieldSet from "../components/FieldSet";
 
 interface User {
-  id: number;
+  id?: number;
   first_name: string;
   last_name: string;
   phone_number: string;
   email: string;
-  password: string;
+  password?: string;
 }
 
 const defaultValues = {
-  id: 0,
-  first_name: '',
-  last_name: '',
-  phone_number: '',
-  email: '',
-  password: '',
-};
-
-const accountValues = {
-  first_name: '',
-  last_name: '',
-  phone_number: '',
-  email: '',
-  password: '',
+  first_name: "",
+  last_name: "",
+  phone_number: "",
+  email: ""
+  // password: ""
 };
 
 const Account = () => {
+  const formStatusDefault = { visible: false, success: true, message: "" };
   const [account, setAccount] = useState<User>(defaultValues);
-  const [formAlert, setFormAlert] = useState(false);
+  const [formAlert, setFormAlert] = useState(formStatusDefault);
+
   useEffect(() => {
-    axios.get('/api/users/1').then(vals => {
+    axios.get("/api/users/1").then(vals => {
       setAccount(vals.data);
     });
   }, []);
-  console.log('Here is account: ', account);
+
+  const submitHandler = (values: any, actions: any) => {
+    let { id, ...result } = values;
+    return axios
+      .patch(`/api/users/${id}`, {
+        user: result
+      })
+      .then((vals: any) => {
+        setAccount(vals.data);
+        setFormAlert({
+          visible: true,
+          success: true,
+          message: "Account successfully updated!"
+        });
+        actions.setSubmitting(false);
+      })
+      .catch(error => {
+        setFormAlert({ visible: true, success: false, message: "Account could not be updated" });
+        console.error("Could not update info: ", error);
+      });
+  };
 
   return (
     account && (
       <div>
         <h1>My Account</h1>
-        {setFormAlert && (
-          <Alert status="success">
+        {formAlert.visible && (
+          <Alert status={formAlert.success ? "success" : "error"} variant="left-accent">
             <AlertIcon />
-            Account info saved!
+            <AlertDescription>{formAlert.message}</AlertDescription>
+            <CloseButton
+              onClick={() => setFormAlert(formStatusDefault)}
+              position="absolute"
+              right="8px"
+              top="8px"
+            />
           </Alert>
         )}
         <Formik
           enableReinitialize
-          initialValues={{ ...account }}
-          onSubmit={(values, actions) => {
-            let { id: _, ...result } = values;
-            console.log('here is values: ', result);
-            return axios
-              .patch('/api/users/1', {
-                user: { ...result },
-              })
-              .then((vals: any) => {
-                setAccount(vals.data);
-                setFormAlert(true);
-              })
-              .catch(error => {
-                console.error('Could not update info: ', error);
-              });
-          }}
+          initialValues={account}
+          onSubmit={(values, actions) => submitHandler(values, actions)}
         >
           {(props: any) => (
             <form onSubmit={props.handleSubmit}>
-              <Heading as="h3" size="lg">
-                Account Info
-              </Heading>
-              <Heading as="h2" size="md">
-                {account.first_name} {account.last_name}
-              </Heading>
-              <Heading as="h4" size="md">
-                Update Account Info:
-              </Heading>
-              <FieldSet type="text" name="first_name" label="first name" />
-              <FieldSet type="text" label="last name" name="last_name" />
-              <FieldSet type="text" label="phone number" name="phone_number" />
-              <FieldSet type="text" label="email" name="email" />
-              <FieldSet type="text" label="password" name="password" />
-              {props.errors.last_name && (
-                <div id="feedback">{props.errors.last_name}</div>
-              )}
+              <Heading as="h1">Account Info</Heading>
+              <FieldSet type="text" label="First Name" name="first_name" />
+              <FieldSet type="text" label="Last Name" name="last_name" />
+              <FieldSet type="text" label="Phone Number" name="phone_number" />
+              <FieldSet type="text" label="Email" name="email" />
+              {/* <FieldSet type="text" label="password" name="password" /> */}
+              {props.errors.last_name && <div id="feedback">{props.errors.last_name}</div>}
               <Button type="submit" variantColor="pink">
                 Save
               </Button>

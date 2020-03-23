@@ -37,7 +37,7 @@ const AgreementForm = () => {
             agreement.data && agreement.data[0] && agreement.data[0].form_values
               ? agreement.data[0].form_values
               : null;
-          if (agreementID) {
+          if (formValues) {
             setAgreementID(agreement.data[0].id);
             setInitialVals(() => formatDBInitialValues(formValues));
           } else {
@@ -65,7 +65,9 @@ const AgreementForm = () => {
     }, 1000);
   };
 
-  if (!state && !initialVals) {
+  console.log("agreement id", agreementID);
+
+  if (!agreementID) {
     return <AppLoading />;
   }
 

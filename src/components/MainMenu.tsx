@@ -11,11 +11,19 @@ const MainMenu = () => {
         </ListItem>
         <ListItem>
           <Link to="/account">Account</Link>
+<<<<<<< HEAD
         </ListItem>
         <ListItem>
           <Link to="/test">Test</Link>
         </ListItem>
         <ListItem>
+=======
+        </li>
+        <li>
+          <Link to="/household">Household</Link>
+        </li>
+        <li>
+>>>>>>> feature/household-view
           <Link to="/agreement">Roommate Agreement Generator</Link>
         </ListItem>
       </List>

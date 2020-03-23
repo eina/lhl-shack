@@ -33,6 +33,7 @@ const Account = () => {
       setAccount(vals.data);
     });
   }, []);
+<<<<<<< HEAD
 
   const submitHandler = (values: any, actions: any) => {
     let { id, ...result } = values;
@@ -55,6 +56,8 @@ const Account = () => {
       });
   };
 
+=======
+>>>>>>> feature/household-view
   return (
     account && (
       <div>
@@ -73,8 +76,26 @@ const Account = () => {
         )}
         <Formik
           enableReinitialize
+<<<<<<< HEAD
           initialValues={account}
           onSubmit={(values, actions) => submitHandler(values, actions)}
+=======
+          initialValues={{ ...account }}
+          onSubmit={(values, actions) => {
+            let { id: _, ...result } = values;
+            return axios
+              .patch('/api/users/1', {
+                user: { ...result },
+              })
+              .then((vals: any) => {
+                setAccount(vals.data);
+                setFormAlert(true);
+              })
+              .catch(error => {
+                console.error('Could not update info: ', error);
+              });
+          }}
+>>>>>>> feature/household-view
         >
           {(props: any) => (
             <form onSubmit={props.handleSubmit}>

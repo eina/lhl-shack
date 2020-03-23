@@ -15,6 +15,9 @@ import Test from "./pages/Test";
 import Agreement from "./pages/Agreement";
 import Account from "./pages/Account";
 import AgreementMenu from "./components/AgreementForm/AgreementMenu";
+import Household from './pages/Household';
+import Resources from './pages/Resources'
+
 
 // test data
 // const currUser = {
@@ -65,6 +68,8 @@ const AppContent = () => {
                 <Route path="/" exact component={Home} />
                 <Route path="/test" component={Test} />
                 <Route path="/account" component={Account} />
+                <Route path="/household" component={Household} />
+              <Route path="/resources" component={Resources} />
               </Switch>
             )}
           </Box>

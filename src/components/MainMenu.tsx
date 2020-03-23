@@ -13,10 +13,16 @@ const MainMenu = () => {
           <Link to="/account">Account</Link>
         </ListItem>
         <ListItem>
+        <Link to="/household">Household</Link>
+        </ListItem>
+        <ListItem>
           <Link to="/test">Test</Link>
         </ListItem>
         <ListItem>
           <Link to="/agreement">Roommate Agreement Generator</Link>
+        </ListItem>
+        <ListItem>
+          <Link to="/resources">Resources</Link>
         </ListItem>
       </List>
     </Box>

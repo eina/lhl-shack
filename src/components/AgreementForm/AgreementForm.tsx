@@ -41,7 +41,7 @@ const AgreementForm = () => {
       });
     };
 
-    if (state && state.currUser) {
+    if (state && state.currUser && !agreementID) {
       const { currUser } = state;
       const { first_name: firstName, last_name: lastName, phone_number: phone, email } = currUser;
       setInitialVals((prev: any) => ({

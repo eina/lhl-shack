@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import {
   Button,
   Icon,
@@ -10,8 +9,7 @@ import {
   ModalBody,
   ModalFooter
 } from "@chakra-ui/core";
-
-import { formatHousekeepingForDB, formatDraftJSForDB } from "../../helpers/functions";
+import submitAgreement from "./submitAgreement";
 
 const FormLeavePrompt = (props: any) => {
   const { onCancel, onConfirm } = props;
@@ -23,30 +21,10 @@ const FormLeavePrompt = (props: any) => {
 
   const confirmLeave = () => {
     // console.log("aaaa leave", props.currUser);
-    const {
-      currUser: { household },
-      formVals: { housekeeping },
-      formVals,
-      agreementID
-    } = props;
-
-    const formattedValues = {
-      ...formVals,
-      housekeeping: { ...housekeeping, ...formatHousekeepingForDB(housekeeping) }
-    };
-    const dataToSend = {
-      household_id: household,
-      form_values: JSON.stringify(formattedValues),
-      is_complete: false,
-      is_expired: false
-    };
-    // console.log("what is the agreement id", agreementID);
-    const agreementRequest = agreementID
-      ? axios.patch(`/api/agreements/${agreementID}`, dataToSend)
-      : axios.post("api/agreements", dataToSend);
-
-    agreementRequest.then(() => {
-      // console.log("wow i sent it to the server!");
+    const { currUser: { household }, formVals, agreementID } = props;
+    
+    return submitAgreement({ formVals, householdID: household, agreementID }).then(() => {
+      console.log("wow i sent it to the server!");
       onConfirm();
     });
     // onConfirm();

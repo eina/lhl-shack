@@ -1,10 +1,8 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import React from "react";
+import { Box, Heading } from "@chakra-ui/core";
+
 import FieldSet from "../FieldSet";
-
-import { Box, Button, Heading } from "@chakra-ui/core";
-
-import { useHistory } from "react-router-dom";
-
 import RichEditor from "../RichEditor/RichEditor";
 import PrevNextNav from "./PrevNextNav";
 
@@ -26,7 +24,6 @@ export interface HousekeepingValues {
 }
 
 const Housekeeping = (props: any) => {
-  const history = useHistory();
   const { values, setFieldValue, handleBlur } = props;
 
   return (
@@ -38,7 +35,7 @@ const Housekeeping = (props: any) => {
         Guests can include mutual friends, visitors, overnight guests, partners, and even parents.
         You should think about whether there should be any reasonable restrictions on how often
         roommates can have guests over, whether there should be special rules for overnight
-        guests,if there should be rules about guests' conduct when they are visiting, and similar
+        guests,if there should be rules about guests&rsquo; conduct when they are visiting, and similar
         issues.
       </p>
       <p>We agree that the following applies to guests:</p>
@@ -123,7 +120,7 @@ const Housekeeping = (props: any) => {
       />
       <Heading as="h3">Personal Items</Heading>
       <p>
-        You should think about what rules should be in place regarding roommates' personal
+        You should think about what rules should be in place regarding roommates&rsquo; personal
         belongings, both within their own private spaces and in shared common spaces in the rental
         unit.
       </p>

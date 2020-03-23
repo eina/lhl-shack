@@ -38,9 +38,9 @@ const FieldSet = ({ label, type, value, ...props }: FieldSetConfig) => {
 
   const InputLeft = () => {
     if (props.inputGroup.left.addOn) {
-      return <InputLeftAddon>{props.inputGroup.right.addOn}</InputLeftAddon>;
+      return <InputLeftAddon>{props.inputGroup.left.addOn}</InputLeftAddon>;
     } else {
-      return <InputLeftElement>{props.inputGroup.right.element}</InputLeftElement>;
+      return <InputLeftElement>{props.inputGroup.left.element}</InputLeftElement>;
     }
   };
 

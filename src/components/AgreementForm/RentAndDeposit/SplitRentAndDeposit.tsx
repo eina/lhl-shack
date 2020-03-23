@@ -76,8 +76,9 @@ const SplitRentAndDeposit = (props: any) => {
                     type="number"
                     name={`${sectionName}.portion.${index}.roommate_amt`}
                     label="Amount to Pay"
+                    inputGroup={{ left: { addOn: "$" } }}
                   />
-                  <FormikSelect
+                  {/* <FormikSelect
                     label="Fixed/Percent"
                     name={`${sectionName}.portion.${index}.amt_type`}
                     stateName={`${sectionName}.portion.${index}.amt_type`}
@@ -88,7 +89,7 @@ const SplitRentAndDeposit = (props: any) => {
                     ]}
                     onChange={setFieldValue}
                     onBlur={handleBlur}
-                  />
+                  /> */}
                 </li>
               ))}
             </ol>

@@ -32,22 +32,22 @@ const AppContent = () => {
   const { pathname: currentPath } = useLocation();
   const isAgreementForm = currentPath.startsWith("/agreement");
   useEffect(() => {
-    // const getUserData = () => {
-    //   axios.get("/api/users/1").then(user => {
-    //     updateState({
-    //       currUser: user.data,
-    //       fullName: displayFullName(user.data.first_name, user.data.last_name)
-    //     });
-    //   });
-    // };
-    // getUserData();
-    updateState({
-      currUser: currUser,
-      fullName: displayFullName(currUser.first_name, currUser.last_name)
-    });
+    const getUserData = () => {
+      axios.get("/api/users/1").then(user => {
+        updateState({
+          currUser: user.data,
+          fullName: displayFullName(user.data.first_name, user.data.last_name)
+        });
+      });
+    };
+    getUserData();
+    // updateState({
+    //   currUser: currUser,
+    //   fullName: displayFullName(currUser.first_name, currUser.last_name)
+    // });
   }, [updateState]);
 
-  // console.log("state is here", state);
+  console.log("state is here", state);
 
   if (state && state.currUser) {
     return (

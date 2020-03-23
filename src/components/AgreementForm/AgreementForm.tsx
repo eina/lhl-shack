@@ -83,6 +83,7 @@ const AgreementForm = () => {
         handleSubmit,
         handleBlur,
         initialValues,
+        isSubmitting
       }: FormikProps<any>) => (
         <form onSubmit={handleSubmit}>
           {/* <p>{JSON.stringify(errors)}</p> */}
@@ -153,6 +154,7 @@ const AgreementForm = () => {
             </Route>
             <Route path="/agreement/signatures">
               <Signatures
+                formIsSubmitting={isSubmitting}
                 initialValues={initialValues}
                 values={values}
                 setFieldValue={setFieldValue}

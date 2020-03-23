@@ -21,6 +21,9 @@ const MainMenu = () => {
         <ListItem>
           <Link to="/agreement">Roommate Agreement Generator</Link>
         </ListItem>
+        <ListItem>
+          <Link to="/resources">Resources</Link>
+        </ListItem>
       </List>
     </Box>
   );

@@ -23,7 +23,7 @@ const FormLeavePrompt = (props: any) => {
     // console.log("aaaa leave", props.currUser);
     const { currUser: { household }, formVals, agreementID } = props;
     
-    return submitAgreement({ formVals, householdID: household, agreementID }).then(() => {
+    return submitAgreement({ formVals, householdID: household, agreementID, isComplete: false }).then(() => {
       console.log("wow i sent it to the server!");
       onConfirm();
     });

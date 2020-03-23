@@ -57,7 +57,7 @@ const AgreementForm = () => {
   const submitForm = (values: FormikValues, actions: any) => {
     const { currUser: { household } } = state;
     console.log('hello are you submittttiiiiing', values);
-    submitAgreement({ formVals: values, householdID: household, agreementID  }).then(() => {
+    submitAgreement({ formVals: values, householdID: household, agreementID, isComplete: true  }).then(() => {
       actions.setSubmitting(false);
       setSubmitSuccess(true);
     });

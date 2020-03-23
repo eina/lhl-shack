@@ -30,24 +30,14 @@ const AgreementForm = () => {
   useEffect(() => {
     const getHouseholdDetails = (currUser: any) => {
       axios
-        .get(`/api/agreements?household=${state.currUser.household}`)
+        .get(`/api/agreements/${state.currUser.household}`)
         .then(agreement => {
           // use agreement values as initial values if they exist
           const formValues =
-            agreement.data && agreement.data[0] && agreement.data[0].form_values
-              ? agreement.data[0].form_values
-              : null;
+            agreement.data && agreement.data.form_values ? agreement.data.form_values : null;
           if (formValues) {
-            setAgreementID(agreement.data[0].id);
+            setAgreementID(agreement.data.id);
             setInitialVals(() => formatDBInitialValues(formValues));
-          } else {
-            const {
-              currUser: { first_name: firstName, last_name: lastName, phone_number: phone, email }
-            } = state;
-            setInitialVals((prev: any) => ({
-              ...prev,
-              roommates: [{ firstName, lastName, phone, email }]
-            }));
           }
         })
         .catch(err => {
@@ -55,7 +45,17 @@ const AgreementForm = () => {
         });
     };
 
-    getHouseholdDetails(state.currUser);
+    if (state && state.currUser) {
+      getHouseholdDetails(state.currUser);
+    } else {
+      const {
+        currUser: { first_name: firstName, last_name: lastName, phone_number: phone, email }
+      } = state;
+      setInitialVals((prev: any) => ({
+        ...prev,
+        roommates: [{ firstName, lastName, phone, email }]
+      }));
+    }
   }, [state, agreementID]);
 
   const submitForm = (values: FormikValues, actions: any) => {

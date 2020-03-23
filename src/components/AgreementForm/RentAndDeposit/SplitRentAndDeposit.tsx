@@ -27,6 +27,8 @@ const SplitRentAndDeposit = (props: any) => {
         label="Total Amount to Pay"
         type="number"
         value={values.household[`${sectionName}Amt`]}
+        inputGroup={{ left: { addOn: "$" } }}
+        isReadOnly={true}
       />
 
       <FormikSingleDatePicker

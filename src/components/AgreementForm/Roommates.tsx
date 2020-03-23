@@ -27,8 +27,8 @@ const Roommates = () => {
                   )}
                   <FieldSet type="text" name={`roommates.${index}.firstName`} label="First Name" />
                   <FieldSet type="text" name={`roommates.${index}.lastName`} label="Last Name" />
-                  <FieldSet type="text" name={`roommates.${index}.email`} label="Email" />
-                  <FieldSet type="text" name={`roommates.${index}.phone`} label="Phone" />
+                  <FieldSet type="email" name={`roommates.${index}.email`} label="Email" />
+                  <FieldSet type="tel" name={`roommates.${index}.phone`} label="Phone" />
                   <Divider />
                 </ListItem>
               ))}

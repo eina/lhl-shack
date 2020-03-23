@@ -1,13 +1,13 @@
 import React, { useEffect, useContext, useState } from "react";
 import axios from "axios";
-import { Switch, Route, Redirect, useHistory } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import NavigationPrompt from "react-router-navigation-prompt";
 import { FormikProps, Formik, FormikValues } from "formik";
-// import { Button } from "@chakra-ui/core";
 
 import { AppContext } from "../../Store";
 import initialValues, { formatDBInitialValues } from "./initialValues";
 import validationSchema from "./validationSchema";
+import submitAgreement from "./submitAgreement";
 
 import FormLeavePrompt from "./FormLeavePrompt";
 import AppLoading from "../AppLoading";
@@ -27,10 +27,11 @@ const AgreementForm = () => {
   const { state }: { state: any } = useContext(AppContext);
   const [initialVals, setInitialVals] = useState(initialValues);
   const [agreementID, setAgreementID] = useState("");
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   useEffect(() => {
     const getHouseholdDetails = (currUser: any) => {
-      axios.get(`/api/agreements/${state.currUser.household}`).then(agreement => {
+      axios.get(`/api/agreements/${currUser.household}`).then(agreement => {
         // use agreement values as initial values if they exist
         const formValues =
           agreement.data && agreement.data.form_values ? agreement.data.form_values : null;
@@ -54,11 +55,12 @@ const AgreementForm = () => {
   }, [state, agreementID]);
 
   const submitForm = (values: FormikValues, actions: any) => {
-    actions.setSubmitting(false);
-    // setTimeout(() => {
-    //   alert(JSON.stringify(values, null, 2));
-    //   actions.setSubmitting(false);
-    // }, 1000);
+    const { currUser: { household } } = state;
+    console.log('hello are you submittttiiiiing', values);
+    submitAgreement({ formVals: values, householdID: household, agreementID  }).then(() => {
+      actions.setSubmitting(false);
+      setSubmitSuccess(true);
+    });
   };
 
   if (!state) {
@@ -69,7 +71,7 @@ const AgreementForm = () => {
     <Formik
       initialValues={initialVals}
       enableReinitialize={true}
-      onSubmit={submitForm}
+      onSubmit={(values, actions) => submitForm(values, actions)}
       validationSchema={validationSchema}
     >
       {({
@@ -80,14 +82,14 @@ const AgreementForm = () => {
         handleSubmit,
         handleBlur,
         initialValues,
-        // validateField
       }: FormikProps<any>) => (
         <form onSubmit={handleSubmit}>
+          {/* <p>{JSON.stringify(errors)}</p> */}
           <NavigationPrompt
             when={(_, next) => {
               // if initialValues === values --> you can navigate away cause nothing changed
               return (
-                JSON.stringify(values) !== JSON.stringify(initialValues) &&
+                !submitSuccess && JSON.stringify(values) !== JSON.stringify(initialValues) &&
                 (!next || !next.pathname.startsWith("/agreement"))
               );
             }}
@@ -155,6 +157,7 @@ const AgreementForm = () => {
                 touched={touched}
               />
             </Route>
+            <Route path="/agreement/preview" component={Preview}/>
           </Switch>
         </form>
       )}

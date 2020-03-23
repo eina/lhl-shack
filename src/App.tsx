@@ -47,7 +47,7 @@ const AppContent = () => {
     // });
   }, [updateState]);
 
-  console.log("state is here", state);
+  // console.log("state is here", state);
 
   if (state && state.currUser) {
     return (

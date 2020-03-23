@@ -1,24 +1,19 @@
 import React from "react";
 import moment from "moment";
 import { FieldArray } from "formik";
+import { Box, Button, Heading, List, ListItem, Divider } from "@chakra-ui/core";
 
 // import { FormValues } from "../../interfaces";
 
+import { billInterval } from "../../helpers/data";
 import FieldSet from "../FieldSet";
 import { FormikSingleDatePicker } from "../FormikDates";
 import FormikSelect from "../FormikSelect";
-
-import { billInterval } from "../../helpers/data";
-
-import { Box, Button, Heading, List, ListItem, Divider } from "@chakra-ui/core";
-
-import { useHistory } from "react-router-dom";
 import PrevNextNav from "./PrevNextNav";
 
 const Bills = (props: any) => {
   const { values, setFieldValue, handleBlur, errors, touched } = props;
   const numRoommates = values.roommates.length;
-  const history = useHistory(); //for nav buttons
 
   return (
     <Box as="section">
@@ -35,7 +30,7 @@ const Bills = (props: any) => {
                     </Button>
                   )}
                   <FieldSet type="text" name={`bills.${index}.name`} label="Bill Name" />
-                  <FieldSet type="number" name={`bills.${index}.totalAmt`} label="Total Amount" />
+                  <FieldSet type="number" name={`bills.${index}.totalAmt`} label="Total Amount" inputGroup={{ left: { addOn: "$" } }} />
                   <FormikSingleDatePicker
                     name={`bills.${index}.dueDate`}
                     label="Due Date"
@@ -71,15 +66,15 @@ const Bills = (props: any) => {
                       touched.bills[index].interval
                     }
                   />
-                  {values.bills[index].totalAmount ? (
-                    <FieldSet
-                      type="number"
-                      name={`bills.${index}.totalAmount`}
-                      label="Amount per Roommate"
-                      isReadOnly={true}
-                      value={values.bills[index].totalAmount / numRoommates}
-                    />
-                  ) : null}
+                  
+                  <FieldSet
+                    type="number"
+                    name={`bills.${index}.portion`}
+                    label="Amount per Roommate"
+                    isReadOnly={true}
+                    value={values.bills[index].totalAmt ? (values.bills[index].totalAmt / numRoommates) : 0}
+                  />
+
                   <Divider />
                 </ListItem>
               ))}
@@ -87,7 +82,7 @@ const Bills = (props: any) => {
             <Button
               type="button"
               onClick={() =>
-                arrayHelpers.push({ name: "", totalAmount: 0, dueDate: moment(), interval: [] })
+                arrayHelpers.push({ name: "", totalAmount: 0, dueDate: moment(), interval: [], portion: 0 })
               }
             >
               Add New Bill

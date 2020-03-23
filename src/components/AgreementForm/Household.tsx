@@ -28,8 +28,8 @@ const Household = () => {
       <FieldSet type="checkbox" name="household.smokingAllowed" label="Smoking Allowed?" />
       <FieldSet type="number" name="household.bedroomsAmt" label="No. of Bedrooms" />
       <FieldSet type="number" name="household.bathroomsAmt" label="No. of Bathrooms" />
-      <FieldSet type="number" name="household.rentAmt" label="Monthly Rent" />
-      <FieldSet type="number" name="household.securityDepositAmt" label="Security Deposit" />
+      <FieldSet type="number" name="household.rentAmt" label="Monthly Rent" inputGroup={{ left: { addOn: "$" } }} />
+      <FieldSet type="number" name="household.securityDepositAmt" label="Security Deposit" inputGroup={{ left: { addOn: "$" } }} />
 
       <Box as="footer">
         <PrevNextNav before="/agreement/bills/utilities" after="/agreement/landlord" />

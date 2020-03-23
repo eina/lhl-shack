@@ -19,8 +19,8 @@ const Landlord = () => {
       <FieldSet type="text" name="landlord.firstName" label="First Name" />
       <FieldSet type="text" name="landlord.lastName" label="Last Name" />
       <FieldSet type="text" name="landlord.address" label="Address" />
-      <FieldSet type="text" name="landlord.email" label="Email" />
-      <FieldSet type="text" name="landlord.phone" label="Phone Number" />
+      <FieldSet type="email" name="landlord.email" label="Email" />
+      <FieldSet type="tel" name="landlord.phone" label="Phone Number" />
       <FieldSet type="text" name="landlord.company" label="Property Management Company" />
       
       <Box as="footer">

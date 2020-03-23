@@ -22,9 +22,9 @@ const Signatures = (props: any) => {
         {arrayHelpers => (
           <div>
             <List as="ol" styleType="decimal">
-              {values.signatures.map((signature: any, index: any) => (
+              {values.signatures.map((signature: any, index: any, array: any) => (
                 <ListItem key={index}>
-                  {index > 0 && (
+                  {array.length > values.roommates.length && (
                     <Button type="button" onClick={() => arrayHelpers.remove(index)}>
                       Remove
                     </Button>

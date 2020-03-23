@@ -1,18 +1,31 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Box, List, ListItem } from "@chakra-ui/core";
 
 const MainMenu = () => {
   return (
-    <nav>
-      <ul>
-        <li>
+    <Box as="nav">
+      <List>
+        <ListItem>
           <Link to="/">Dashboard</Link>
-        </li>
-        <li>
+        </ListItem>
+        <ListItem>
+          <Link to="/account">Account</Link>
+        </ListItem>
+        <ListItem>
+        <Link to="/household">Household</Link>
+        </ListItem>
+        <ListItem>
           <Link to="/test">Test</Link>
-        </li>
-      </ul>
-    </nav>
+        </ListItem>
+        <ListItem>
+          <Link to="/agreement">Roommate Agreement Generator</Link>
+        </ListItem>
+        <ListItem>
+          <Link to="/resources">Resources</Link>
+        </ListItem>
+      </List>
+    </Box>
   );
 };
 

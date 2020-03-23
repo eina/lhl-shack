@@ -32,7 +32,7 @@ const Household = () => {
       <FieldSet type="number" name="household.securityDepositAmt" label="Security Deposit" />
 
       <Box as="footer">
-        <PrevNextNav before="/agreement/bills/utilities" after="/agreement/landlord"/>
+        <PrevNextNav before="/agreement/bills/utilities" after="/agreement/landlord" />
       </Box>
     </Box>
   );

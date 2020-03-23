@@ -18,9 +18,9 @@ const Roommates = () => {
         {arrayHelpers => (
           <div>
             <List as="ol" styleType="decimal">
-              {values.roommates.map((_, index) => (
+              {values.roommates.map((_, index, array) => (
                 <ListItem key={index}>
-                  {index > 0 && (
+                  {array.length > 2 && (
                     <Button type="button" onClick={() => arrayHelpers.remove(index)}>
                       Remove
                     </Button>

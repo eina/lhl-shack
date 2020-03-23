@@ -22,7 +22,7 @@ const Landlord = () => {
       <FieldSet type="text" name="landlord.email" label="Email" />
       <FieldSet type="text" name="landlord.phone" label="Phone Number" />
       <FieldSet type="text" name="landlord.company" label="Property Management Company" />
-
+      
       <Box as="footer">
         <PrevNextNav before="/agreement/info" after="/agreement/roommates" />
       </Box>

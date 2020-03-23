@@ -30,15 +30,17 @@ const yupReactSelect = object().shape({
 });
 const yupCheckbox = boolean().oneOf([true], "Field must be checked");
 
+export const landlord = object().shape({
+  firstName: yupName.required(requiredMsg),
+  lastName: yupName.required(requiredMsg),
+  email: yupEmail,
+  address: yupCdnAddress,
+  phone: yupCdnPhone,
+  company: yupName
+});
+
 export default object().shape({
-  landlord: object().shape({
-    firstName: yupName.required(requiredMsg),
-    lastName: yupName.required(requiredMsg),
-    email: yupEmail,
-    address: yupCdnAddress,
-    phone: yupCdnPhone,
-    company: yupName
-  }),
+  landlord,
   household: object().shape({
     address: yupCdnAddress,
     bedroomsAmt: yupMin1.required(requiredMsg),

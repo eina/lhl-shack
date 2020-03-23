@@ -37,19 +37,19 @@ const AgreementForm = () => {
         if (formValues) {
           setAgreementID(agreement.data.id);
           setInitialVals(() => formatDBInitialValues(formValues));
-        } else {
-          const {
-            currUser: { first_name: firstName, last_name: lastName, phone_number: phone, email }
-          } = state;
-          setInitialVals((prev: any) => ({
-            ...prev,
-            roommates: [{ firstName, lastName, phone, email }]
-          }));
         }
       });
     };
 
     if (state && state.currUser) {
+      const { currUser } = state;
+      const { first_name: firstName, last_name: lastName, phone_number: phone, email } = currUser;
+      console.log('current user?', currUser);
+      setInitialVals((prev: any) => ({
+        ...prev,
+        roommates: [{ firstName, lastName, phone, email }, { firstName: "", lastName: "", phone: "", email: ""}]
+      }));
+
       getHouseholdDetails(state.currUser);
     }
   }, [state, agreementID]);
@@ -80,7 +80,8 @@ const AgreementForm = () => {
         setFieldValue,
         handleSubmit,
         handleBlur,
-        initialValues
+        initialValues,
+        // validateField
       }: FormikProps<any>) => (
         <form onSubmit={handleSubmit}>
           <NavigationPrompt
@@ -155,9 +156,7 @@ const AgreementForm = () => {
                 touched={touched}
               />
             </Route>
-            {/* <Route path="/agreement/preview" component={Preview} /> */}
           </Switch>
-          {/* <Button type="submit">Test Submit</Button>  */}
         </form>
       )}
     </Formik>

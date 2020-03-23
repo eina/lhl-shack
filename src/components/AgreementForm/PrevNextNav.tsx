@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { useHistory } from "react-router-dom";
 import { Flex, Button } from '@chakra-ui/core';
 
 type PrevNextNavProps =  {
   before?: string;
   after?: string;
-  children?: any;
+  children?: ReactElement;
 }
 const PrevNextNav = ({ before, after, children}: PrevNextNavProps) => {
   const history = useHistory();
@@ -13,7 +13,9 @@ const PrevNextNav = ({ before, after, children}: PrevNextNavProps) => {
   return (
     <Flex align="center" justify="space-between">
       {before && <Button onClick={() => history.push(before)}>Previous Section</Button>}
-      {after && <Button onClick={() => history.push(after)}>Next Section</Button>}
+      {after && <Button onClick={() => {
+        history.push(after);
+      }}>Next Section</Button>}
       {children && children}
     </Flex>
   );

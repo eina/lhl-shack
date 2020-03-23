@@ -11,61 +11,45 @@ import {
   ModalFooter
 } from "@chakra-ui/core";
 
-import { formatDraftJSForDB } from "../../helpers/functions";
+import { formatHousekeepingForDB, formatDraftJSForDB } from "../../helpers/functions";
 
 const FormLeavePrompt = (props: any) => {
   const { onCancel, onConfirm } = props;
 
   const confirmStay = () => {
-    console.log("aaaaaa staaaaay");
+    // console.log("aaaaaa staaaaay");
     onCancel();
   };
 
   const confirmLeave = () => {
-    console.log("aaaa leave", props.currUser);
-    const draftJSKeys = [
-      "guestPolicy",
-      "spacesPolicy",
-      "roomsPolicy",
-      "choresPolicy",
-      "vacationPolicy",
-      "personalItemsPolicy",
-      "smokingPolicy",
-      "messagesPolicy",
-      "petsPolicy"
-    ];
+    // console.log("aaaa leave", props.currUser);
     const {
       currUser: { household },
       formVals: { housekeeping },
-      formVals
+      formVals,
+      agreementID
     } = props;
-    let updatedHousekeeping = { ...housekeeping };
 
-    // update housekeeping draft js to better saveable values
-    for (const housekeepingKey in housekeeping) {
-      if (draftJSKeys.includes(housekeepingKey)) {
-        const draftJSValue = housekeeping[housekeepingKey];
-        updatedHousekeeping = {
-          ...updatedHousekeeping,
-          [housekeepingKey]: formatDraftJSForDB(draftJSValue)
-        };
-      }
-    }
+    const formattedValues = {
+      ...formVals,
+      housekeeping: { ...housekeeping, ...formatHousekeepingForDB(housekeeping) }
+    };
+    const dataToSend = {
+      household_id: household,
+      form_values: JSON.stringify(formattedValues),
+      is_complete: false,
+      is_expired: false
+    };
+    // console.log("what is the agreement id", agreementID);
+    const agreementRequest = agreementID
+      ? axios.patch(`/api/agreements/${agreementID}`, dataToSend)
+      : axios.post("api/agreements", dataToSend);
 
-    const formattedValues = { ...formVals, housekeeping: updatedHousekeeping };
-    console.log("pls save properly", formattedValues);
-    // axios
-    //   .patch("/api/agreements", {
-    //     household_id: household,
-    //     form_values: JSON.stringify(formattedValues),
-    //     is_complete: false,
-    //     is_expired: false
-    //   })
-    //   .then(() => {
-    //     console.log("wow i sent it to the server!");
-    //     onConfirm();
-    //   });
-    onConfirm();
+    agreementRequest.then(() => {
+      // console.log("wow i sent it to the server!");
+      onConfirm();
+    });
+    // onConfirm();
   };
 
   return (

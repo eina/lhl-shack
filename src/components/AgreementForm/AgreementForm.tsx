@@ -29,32 +29,27 @@ const AgreementForm = () => {
 
   useEffect(() => {
     const getHouseholdDetails = (currUser: any) => {
-      axios
-        .get(`/api/agreements/${state.currUser.household}`)
-        .then(agreement => {
-          // use agreement values as initial values if they exist
-          const formValues =
-            agreement.data && agreement.data.form_values ? agreement.data.form_values : null;
-          if (formValues) {
-            setAgreementID(agreement.data.id);
-            setInitialVals(() => formatDBInitialValues(formValues));
-          }
-        })
-        .catch(err => {
-          console.log("error", err);
-        });
+      axios.get(`/api/agreements/${state.currUser.household}`).then(agreement => {
+        // use agreement values as initial values if they exist
+        const formValues =
+          agreement.data && agreement.data.form_values ? agreement.data.form_values : null;
+        if (formValues) {
+          setAgreementID(agreement.data.id);
+          setInitialVals(() => formatDBInitialValues(formValues));
+        } else {
+          const {
+            currUser: { first_name: firstName, last_name: lastName, phone_number: phone, email }
+          } = state;
+          setInitialVals((prev: any) => ({
+            ...prev,
+            roommates: [{ firstName, lastName, phone, email }]
+          }));
+        }
+      });
     };
 
     if (state && state.currUser) {
       getHouseholdDetails(state.currUser);
-    } else {
-      const {
-        currUser: { first_name: firstName, last_name: lastName, phone_number: phone, email }
-      } = state;
-      setInitialVals((prev: any) => ({
-        ...prev,
-        roommates: [{ firstName, lastName, phone, email }]
-      }));
     }
   }, [state, agreementID]);
 
@@ -65,9 +60,7 @@ const AgreementForm = () => {
     }, 1000);
   };
 
-  console.log("agreement id", agreementID);
-
-  if (!agreementID) {
+  if (!state) {
     return <AppLoading />;
   }
 
@@ -104,6 +97,7 @@ const AgreementForm = () => {
                 onConfirm={onConfirm}
                 currUser={state.currUser}
                 formVals={values}
+                agreementID={agreementID}
               />
             )}
           </NavigationPrompt>

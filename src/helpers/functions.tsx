@@ -41,9 +41,40 @@ export const stringEditorStateToContent = (editorState: string) => {
 /**
  * Returns a stringified JSON of Draft JS's raw elements
  * @param toSaveDraftJS Draft JS state content
+ * @returns string (JSON string)
  */
 export const formatDraftJSForDB = (toSaveDraftJS: any) => {
   const toRaw = convertToRaw(toSaveDraftJS.getCurrentContent());
   const toString = JSON.stringify(toRaw);
   return toString;
+};
+
+/**
+ * Formats Agreement Form's Draft JS housekeeping {} values
+ * @param housekeeping { object } see: initialValues.tsx
+ * @returns object
+ */
+export const formatHousekeepingForDB = (housekeeping: any) => {
+  const draftJSKeys = [
+    "guestPolicy",
+    "spacesPolicy",
+    "roomsPolicy",
+    "choresPolicy",
+    "vacationPolicy",
+    "personalItemsPolicy",
+    "smokingPolicy",
+    "messagesPolicy",
+    "petsPolicy"
+  ];
+  const result: any = {};
+
+  // update housekeeping draft js to better saveable values
+  for (const housekeepingKey in housekeeping) {
+    if (draftJSKeys.includes(housekeepingKey)) {
+      const draftJSValue = housekeeping[housekeepingKey];
+      result[housekeepingKey] = formatDraftJSForDB(draftJSValue);
+    }
+  }
+
+  return result;
 };

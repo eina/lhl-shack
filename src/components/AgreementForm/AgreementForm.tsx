@@ -44,7 +44,6 @@ const AgreementForm = () => {
     if (state && state.currUser) {
       const { currUser } = state;
       const { first_name: firstName, last_name: lastName, phone_number: phone, email } = currUser;
-      console.log('current user?', currUser);
       setInitialVals((prev: any) => ({
         ...prev,
         roommates: [{ firstName, lastName, phone, email }, { firstName: "", lastName: "", phone: "", email: ""}]

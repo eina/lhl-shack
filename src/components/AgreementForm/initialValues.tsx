@@ -65,7 +65,7 @@ const initialValues = {
     messagesPolicy: stringEditorStateToContent(""),
     petsPolicy: stringEditorStateToContent("")
   },
-  signatures: [{ fullName: "", agreed: false, date: moment() }]
+  signatures: [{ fullName: "", agreed: false, date: moment() }, { fullName: "", agreed: false, date: moment() }]
   // test values for TestDraft.tsx
   // textArea1: EditorState.createEmpty(),
   // textArea2: EditorState.createEmpty(),

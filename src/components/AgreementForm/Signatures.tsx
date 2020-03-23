@@ -65,12 +65,13 @@ const Signatures = (props: any) => {
                 </ListItem>
               ))}
             </List>
-            <Button
+            {values.roommates.length > values.signatures.length && <Button
               type="button"
               onClick={() => arrayHelpers.push({ fullName: "", agreed: false, date: moment() })}
             >
               Add Signature
-            </Button>
+            </Button>}
+
           </div>
         )}
       </FieldArray>

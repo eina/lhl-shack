@@ -3,8 +3,7 @@ import axios from 'axios';
 
 import { Heading } from '@chakra-ui/core';
 
-import { displayFullName } from "../helpers/functions";
-
+import { displayFullName } from '../helpers/functions';
 
 interface Household {
   id: number;
@@ -56,9 +55,25 @@ const landlordDefaultValues = {
   company: '',
 };
 
+interface Roomie {
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  email: string;
+}
+
+const roomieInitialValues = {
+  id: 0,
+  first_name: '',
+  last_name: '',
+  phone_number: '',
+  email: '',
+};
+
 const Household = () => {
   const [household, setHousehold] = useState<Household>(householdDefaultValues);
   const [landlord, setLandlord] = useState<Landlord>(landlordDefaultValues);
+  const [roomie, setRoomie] = useState<Roomie>(roomieInitialValues);
   useEffect(() => {
     axios.get('/api/houses/484a9270-cde9-4a29-a66a-ecd132fafb3b').then(vals => {
       setHousehold(vals.data);
@@ -67,6 +82,11 @@ const Household = () => {
   useEffect(() => {
     axios.get('/api/landlords/1').then(vals => {
       setLandlord(vals.data);
+    });
+  }, []);
+  useEffect(() => {
+    axios.get('/api/users/1').then(vals => {
+      setRoomie(vals.data);
     });
   }, []);
   return (
@@ -80,12 +100,24 @@ const Household = () => {
         ${household.total_rent_amt}/month
         <div>
           <Heading as="h1">My Landlord</Heading>
-          <div>{landlord.first_name}{' '}{landlord.last_name}</div>
+          <div>
+            {landlord.first_name} {landlord.last_name}
+          </div>
           <div>{landlord.phone_number}</div>
           <div>{landlord.email}</div>
           <div>{landlord.address}</div>
+          <div>
+            <Heading as="h1">My Roommates</Heading>
+            <div>
+              {roomie.first_name} {roomie.last_name}
+            </div>
+            <div>{roomie.phone_number}</div>
+            <div>
+            {roomie.email}
+          </div>
         </div>
       </div>
+    </div>
     )
   );
 };

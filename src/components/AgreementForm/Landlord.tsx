@@ -25,7 +25,7 @@ const Landlord = () => {
       <FieldSet type="text" name="landlord.company" label="Property Management Company" />
 
       <Button
-        variantColor="orange"
+        // variantColor="orange"
         onClick={() => {
           history.push("/agreement/info");
         }}
@@ -33,7 +33,7 @@ const Landlord = () => {
         Previous Section
       </Button>
       <Button
-        variantColor="pink"
+        // variantColor="pink"
         onClick={() => {
           history.push("/agreement/roommates");
         }}

@@ -1,46 +1,68 @@
-import React, { useContext } from "react";
-import { Switch, Route, Prompt, Redirect, matchPath } from "react-router-dom";
+import React, { useEffect, useContext, useState } from "react";
+import axios from "axios";
+import { Switch, Route, Redirect } from "react-router-dom";
+import NavigationPrompt from "react-router-navigation-prompt";
 import { FormikProps, Formik, FormikValues } from "formik";
 import { Button } from "@chakra-ui/core";
 
 import { AppContext } from "../../Store";
-import initialValues from "../../components/AgreementForm/initialValues";
-import validationSchema from "../../components/AgreementForm/validationSchema";
+import initialValues, { formatDBInitialValues } from "./initialValues";
+import validationSchema from "./validationSchema";
 
-import Household from "../../components/AgreementForm/Household";
-import Landlord from "../../components/AgreementForm/Landlord";
-import Roommates from "../../components/AgreementForm/Roommates";
-import Housekeeping from "../../components/AgreementForm/Housekeeping";
-import Rent from "../../components/AgreementForm/RentAndDeposit/Rent";
-import SecurityDeposit from "../../components/AgreementForm/RentAndDeposit/SecurityDeposit";
-import BillsUtilities from "../../components/AgreementForm/BillsUtilities";
-import Signatures from "../../components/AgreementForm/Signatures";
+import FormLeavePrompt from "./FormLeavePrompt";
+import AppLoading from "../AppLoading";
 
-const submitForm = (values: FormikValues, actions: any) => {
-  setTimeout(() => {
-    alert(JSON.stringify(values, null, 2));
-    actions.setSubmitting(false);
-  }, 1000);
-};
+import Title from "./Title";
+import Household from "./Household";
+import Landlord from "./Landlord";
+import Roommates from "./Roommates";
+import Housekeeping from "./Housekeeping";
+import Rent from "./RentAndDeposit/Rent";
+import SecurityDeposit from "./RentAndDeposit/SecurityDeposit";
+import BillsUtilities from "./BillsUtilities";
+import Signatures from "./Signatures";
 
 const AgreementForm = () => {
   const { state }: { state: any } = useContext(AppContext);
+  const [initialVals, setInitialVals] = useState(initialValues);
+  const [agreementID, setAgreementID] = useState("");
 
-  const initialVals = {
-    ...initialValues,
-    roommates:
-      state && state.currUser
-        ? [
-            {
-              firstName: state.currUser.first_name,
-              lastName: state.currUser.last_name,
-              email: state.currUser.email,
-              phone: state.currUser.phone_number
-            },
-            { firstName: "", lastName: "", email: "", phone: "" }
-          ]
-        : initialValues.roommates
+  useEffect(() => {
+    const getHouseholdDetails = (currUser: any) => {
+      axios.get(`/api/agreements/${state.currUser.household}`).then(agreement => {
+        // use agreement values as initial values if they exist
+        const formValues =
+          agreement.data && agreement.data.form_values ? agreement.data.form_values : null;
+        if (formValues) {
+          setAgreementID(agreement.data.id);
+          setInitialVals(() => formatDBInitialValues(formValues));
+        } else {
+          const {
+            currUser: { first_name: firstName, last_name: lastName, phone_number: phone, email }
+          } = state;
+          setInitialVals((prev: any) => ({
+            ...prev,
+            roommates: [{ firstName, lastName, phone, email }]
+          }));
+        }
+      });
+    };
+
+    if (state && state.currUser) {
+      getHouseholdDetails(state.currUser);
+    }
+  }, [state, agreementID]);
+
+  const submitForm = (values: FormikValues, actions: any) => {
+    setTimeout(() => {
+      alert(JSON.stringify(values, null, 2));
+      actions.setSubmitting(false);
+    }, 1000);
   };
+
+  if (!state) {
+    return <AppLoading />;
+  }
 
   return (
     <Formik
@@ -49,18 +71,39 @@ const AgreementForm = () => {
       onSubmit={submitForm}
       validationSchema={validationSchema}
     >
-      {({ values, errors, touched, setFieldValue, handleSubmit, handleBlur }: FormikProps<any>) => (
+      {({
+        values,
+        errors,
+        touched,
+        setFieldValue,
+        handleSubmit,
+        handleBlur,
+        initialValues
+      }: FormikProps<any>) => (
         <form onSubmit={handleSubmit}>
-          <Prompt
-            when={true}
-            message={({ pathname }) => {
-              return matchPath(pathname, { path: "/agreement" })
-                ? true
-                : "Are you sure you want to navigate away?";
+          <NavigationPrompt
+            when={(current, next) => {
+              // if initialValues === values --> you can navigate away cause nothing changed
+              return (
+                JSON.stringify(values) !== JSON.stringify(initialValues) &&
+                (!next || !next.pathname.startsWith("/agreement"))
+              );
             }}
-          />
-
+          >
+            {({ onConfirm, onCancel }) => (
+              <FormLeavePrompt
+                when={true}
+                onCancel={onCancel}
+                onConfirm={onConfirm}
+                currUser={state.currUser}
+                formVals={values}
+                agreementID={agreementID}
+              />
+            )}
+          </NavigationPrompt>
           <Switch>
+            <Route path="/agreement/title" component={Title} />
+            <Redirect from="/agreement" to="/agreement/title" exact />
             <Route path="/agreement/household" component={Household} />
             <Route path="/agreement/landlord" component={Landlord} />
             <Route path="/agreement/roommates" component={Roommates} />

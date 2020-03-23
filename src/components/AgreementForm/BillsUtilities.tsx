@@ -26,9 +26,9 @@ const Bills = (props: any) => {
         {arrayHelpers => (
           <div>
             <List as="ol" styleType="decimal">
-              {values.bills.map((bill: any, index: number) => (
+              {values.bills.map((bill: any, index: number, arr: any) => (
                 <ListItem key={index}>
-                  {index > 0 && (
+                  {arr.length > 1 && (
                     <Button type="button" onClick={() => arrayHelpers.remove(index)}>
                       Remove
                     </Button>
@@ -96,7 +96,7 @@ const Bills = (props: any) => {
       </FieldArray>
       <div>
         <Button
-          variantColor="orange"
+          // variantColor="orange"
           onClick={() => {
             history.push("/agreement/bills/deposit");
           }}
@@ -104,7 +104,7 @@ const Bills = (props: any) => {
           Previous Section
         </Button>
         <Button
-          variantColor="pink"
+          // variantColor="pink"
           onClick={() => {
             history.push("/agreement/housekeeping");
           }}

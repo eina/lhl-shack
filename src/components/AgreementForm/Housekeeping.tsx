@@ -4,6 +4,7 @@ import FieldSet from "../FieldSet";
 import { Button, Heading } from "@chakra-ui/core";
 
 import { useHistory } from "react-router-dom";
+
 // import { FormValues } from "../../interfaces";
 
 import RichEditor from "../RichEditor/RichEditor";
@@ -27,15 +28,8 @@ export interface HousekeepingValues {
 
 const Housekeeping = (props: any) => {
   const history = useHistory();
-  const {
-    values,
-    setFieldValue,
-    handleBlur
-    // errors,
-    // touched
-  } = props;
+  const { values, setFieldValue, handleBlur } = props;
 
-  // console.log({ errors: errors && errors.housekeeping, touched: touched && touched.housekeeping });
   return (
     <div>
       <Heading as="h2">Housekeeping Rules</Heading>
@@ -187,7 +181,7 @@ const Housekeeping = (props: any) => {
       />
       <div>
         <Button
-          variantColor="orange"
+          // variantColor="orange"
           onClick={() => {
             history.push("/agreement/bills/utilities");
           }}
@@ -195,7 +189,7 @@ const Housekeeping = (props: any) => {
           Previous Section
         </Button>
         <Button
-          variantColor="pink"
+          // variantColor="pink"
           onClick={() => {
             history.push("/agreement/signatures");
           }}

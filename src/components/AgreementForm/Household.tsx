@@ -34,7 +34,7 @@ const Household = () => {
 
       <div>
         <Button
-          variantColor="orange"
+          // variantColor="orange"
           onClick={() => {
             history.push("/agreement/bills/utilities");
           }}
@@ -42,7 +42,7 @@ const Household = () => {
           Previous Section
         </Button>
         <Button
-          variantColor="pink"
+          // variantColor="pink"
           onClick={() => {
             history.push("/agreement/signatures");
           }}

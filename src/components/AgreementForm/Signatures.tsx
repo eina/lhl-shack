@@ -80,7 +80,7 @@ const Signatures = (props: any) => {
       </FieldArray>
       <div>
         <Button
-          variantColor="orange"
+          // variantColor="orange"
           onClick={() => {
             history.push("/agreement/bills/utilities");
           }}

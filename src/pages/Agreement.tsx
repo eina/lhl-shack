@@ -1,20 +1,16 @@
 import React from "react";
 import { Box } from "@chakra-ui/core";
-// import { FormValues } from "../interfaces";
+import { AppContext } from "../Store";
 
-// import AgreementMenu from "../components/AgreementForm/AgreementMenu";
 import AgreementForm from "../components/AgreementForm/AgreementForm";
-// import TestDraft from "../components/AgreementForm/TestDraft";
+import Title from "../components/AgreementForm/Title";
 
 const Agreement = () => {
+  // const { state, updateState }: { state: any; updateState: Function } = useContext(AppContext);
   return (
-    <div>
-      {/* <Heading as="h1">Roommate Agreement Generator</Heading>​ */}
-      {/* <AgreementMenu /> */}
-      <Box as="section" mt={3}>
-        <AgreementForm />
-      </Box>
-    </div>
+    <Box as="section" mt={3}>
+      <AgreementForm />
+    </Box>
   );
 };
 export default Agreement;

@@ -1,18 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import axios from "axios";
-import { BrowserRouter, Switch, Route, Redirect, useLocation } from "react-router-dom";
-import {
-  ThemeProvider,
-  CSSReset,
-  theme,
-  Grid,
-  Flex,
-  Box,
-  Heading,
-  Text,
-  Icon,
-  Spinner
-} from "@chakra-ui/core";
+import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
+import { ThemeProvider, CSSReset, theme, Grid, Box } from "@chakra-ui/core";
 
 import { displayFullName } from "./helpers/functions";
 import { AppContext, AppProvider } from "./Store";
@@ -28,29 +17,33 @@ import Account from "./pages/Account";
 import AgreementMenu from "./components/AgreementForm/AgreementMenu";
 
 // test data
-const currUser = {
-  id: "1",
-  first_name: "Tracy",
-  last_name: "Barrows",
-  phone_number: "448-504-4347",
-  email: "test@test.com",
-  password: "testing",
-  household: "951bfa7e-d0e1-414d-9327-5e8c4bc8c56b"
-};
+// const currUser = {
+//   id: "1",
+//   first_name: "Tracy",
+//   last_name: "Barrows",
+//   phone_number: "448-504-4347",
+//   email: "test@test.com",
+//   password: "testing",
+//   household: "951bfa7e-d0e1-414d-9327-5e8c4bc8c56b"
+// };
 
 const AppContent = () => {
   const { state, updateState }: { state: any; updateState: Function } = useContext(AppContext);
   const { pathname: currentPath } = useLocation();
   const isAgreementForm = currentPath.startsWith("/agreement");
-  // fake an axios request lol
   useEffect(() => {
-    axios.get("/api/users/1").then(user => {
-      updateState({
-        currUser: user.data,
-        fullName: displayFullName(user.data.first_name, user.data.last_name)
+    const getUserData = () => {
+      axios.get("/api/users/1").then(user => {
+        updateState({
+          currUser: user.data,
+          fullName: displayFullName(user.data.first_name, user.data.last_name)
+        });
       });
-    });
+    };
+    getUserData();
   }, [updateState]);
+
+  console.log("state is here", state);
 
   if (state && state.currUser) {
     return (
@@ -65,7 +58,6 @@ const AppContent = () => {
               // Agreement Form
               <Switch>
                 <Route path="/agreement" component={Agreement} />
-                <Redirect from="/agrement" to="/agreement/title" exact />
               </Switch>
             ) : (
               // Main App Contents

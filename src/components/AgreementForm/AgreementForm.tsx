@@ -1,53 +1,62 @@
 import React, { useEffect, useContext, useState } from "react";
 import axios from "axios";
-import { Switch, Route, Prompt, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import NavigationPrompt from "react-router-navigation-prompt";
 import { FormikProps, Formik, FormikValues } from "formik";
 import { Button } from "@chakra-ui/core";
-import moment from "moment";
 
 import { AppContext } from "../../Store";
-import { stringDraftJS } from "../../helpers/data";
-import { stringEditorStateToContent } from "../../helpers/functions";
-import initialValues, { formatDBInitialValues } from "../../components/AgreementForm/initialValues";
-import validationSchema from "../../components/AgreementForm/validationSchema";
+import initialValues, { formatDBInitialValues } from "./initialValues";
+import validationSchema from "./validationSchema";
 
 import FormLeavePrompt from "./FormLeavePrompt";
 import AppLoading from "../AppLoading";
 
-import Household from "../../components/AgreementForm/Household";
-import Landlord from "../../components/AgreementForm/Landlord";
-import Roommates from "../../components/AgreementForm/Roommates";
-import Housekeeping from "../../components/AgreementForm/Housekeeping";
-import Rent from "../../components/AgreementForm/RentAndDeposit/Rent";
-import SecurityDeposit from "../../components/AgreementForm/RentAndDeposit/SecurityDeposit";
-import BillsUtilities from "../../components/AgreementForm/BillsUtilities";
-import Signatures from "../../components/AgreementForm/Signatures";
+import Title from "./Title";
+import Household from "./Household";
+import Landlord from "./Landlord";
+import Roommates from "./Roommates";
+import Housekeeping from "./Housekeeping";
+import Rent from "./RentAndDeposit/Rent";
+import SecurityDeposit from "./RentAndDeposit/SecurityDeposit";
+import BillsUtilities from "./BillsUtilities";
+import Signatures from "./Signatures";
 
 const AgreementForm = () => {
   const { state }: { state: any } = useContext(AppContext);
   const [initialVals, setInitialVals] = useState(initialValues);
+  const [agreementID, setAgreementID] = useState("");
 
   useEffect(() => {
-    axios.get(`api/agreements?household=${state.currUser.household}`).then(agreement => {
-      // use agreement values as initial values if they exist
-      const formValues =
-        agreement.data && agreement.data[0] && agreement.data[0].form_values
-          ? agreement.data[0].form_values
-          : null;
-      if (formValues) {
-        setInitialVals(() => formatDBInitialValues(formValues));
-      } else {
-        const {
-          currUser: { first_name: firstName, last_name: lastName, phone_number: phone, email }
-        } = state;
-        setInitialVals((prev: any) => ({
-          ...prev,
-          roommates: [{ firstName, lastName, phone, email }]
-        }));
-      }
-    });
-  }, [state]);
+    const getHouseholdDetails = (currUser: any) => {
+      axios
+        .get(`/api/agreements?household=${state.currUser.household}`)
+        .then(agreement => {
+          // use agreement values as initial values if they exist
+          const formValues =
+            agreement.data && agreement.data[0] && agreement.data[0].form_values
+              ? agreement.data[0].form_values
+              : null;
+          if (agreementID) {
+            setAgreementID(agreement.data[0].id);
+            setInitialVals(() => formatDBInitialValues(formValues));
+          } else {
+            const {
+              currUser: { first_name: firstName, last_name: lastName, phone_number: phone, email }
+            } = state;
+            setInitialVals((prev: any) => ({
+              ...prev,
+              roommates: [{ firstName, lastName, phone, email }]
+            }));
+          }
+        })
+        .catch(err => {
+          console.log("error", err);
+        });
+    };
+
+    getHouseholdDetails(state.currUser);
+  }, [state, agreementID]);
 
   const submitForm = (values: FormikValues, actions: any) => {
     setTimeout(() => {
@@ -56,7 +65,7 @@ const AgreementForm = () => {
     }, 1000);
   };
 
-  if (!state) {
+  if (!state && !initialVals) {
     return <AppLoading />;
   }
 
@@ -97,6 +106,8 @@ const AgreementForm = () => {
             )}
           </NavigationPrompt>
           <Switch>
+            <Route path="/agreement/title" component={Title} />
+            <Redirect from="/agreement" to="/agreement/title" exact />
             <Route path="/agreement/household" component={Household} />
             <Route path="/agreement/landlord" component={Landlord} />
             <Route path="/agreement/roommates" component={Roommates} />

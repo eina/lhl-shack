@@ -43,11 +43,11 @@ const initialValues = {
   ],
   rent: {
     ...billShape,
-    portion: [{ roommate: [], roommate_amt: 0, amt_type: [] }]
+    portion: [{ roommate: [], roommate_amt: 0, amt_type: [] }, { roommate: [], roommate_amt: 0, amt_type: [] }]
   },
   securityDeposit: {
     ...billShape,
-    portion: [{ roommate: [], roommate_amt: 0, amt_type: [] }]
+    portion: [{ roommate: [], roommate_amt: 0, amt_type: [] }, { roommate: [], roommate_amt: 0, amt_type: [] }]
   },
   bills: [{ ...billShape }],
   housekeeping: {

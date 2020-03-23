@@ -58,7 +58,7 @@ const SplitRentAndDeposit = (props: any) => {
             <ol>
               {values[sectionName].portion.map((person: object, index: number, arr: any) => (
                 <li key={index}>
-                  {(index > 0 || arr.length > 1) && (
+                  {(arr.length > 2) && (
                     <Button type="button" onClick={() => arrayHelpers.remove(index)}>
                       Remove
                     </Button>

@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment";
+import { useHistory } from "react-router-dom";
 import { Box, Button, Heading, List, ListItem } from "@chakra-ui/core";
 import { FieldArray } from "formik";
 
@@ -9,8 +10,9 @@ import FieldSet from "../FieldSet";
 import PrevNextNav from './PrevNextNav';
 
 const Signatures = (props: any) => {
-  const { values, setFieldValue, errors, touched } = props;
-
+  const { initialValues, values, setFieldValue, errors, touched } = props;
+  const history = useHistory();
+  const valuesChanged = JSON.stringify(values) !== JSON.stringify(initialValues);
   const roommateName = values.roommates.map((roomie: any) =>
     displayFullName(roomie.firstName, roomie.lastName)
   );
@@ -76,7 +78,7 @@ const Signatures = (props: any) => {
         )}
       </FieldArray>
       <PrevNextNav before="/agreement/bills/utilities">
-        <Button type="submit">Preview Agreement</Button>
+        {valuesChanged ? <Button type="submit">Save Changes Preview Agreement</Button> : <Button type="button" onClick={() => history.push('/agreement/preview')}>Preview Agreement</Button>}
       </PrevNextNav>
     </Box>
   );

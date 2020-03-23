@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import axios from "axios";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 import NavigationPrompt from "react-router-navigation-prompt";
 import { FormikProps, Formik, FormikValues } from "formik";
 
@@ -28,6 +28,7 @@ const AgreementForm = () => {
   const [initialVals, setInitialVals] = useState(initialValues);
   const [agreementID, setAgreementID] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     const getHouseholdDetails = (currUser: any) => {
@@ -56,10 +57,10 @@ const AgreementForm = () => {
 
   const submitForm = (values: FormikValues, actions: any) => {
     const { currUser: { household } } = state;
-    console.log('hello are you submittttiiiiing', values);
     submitAgreement({ formVals: values, householdID: household, agreementID, isComplete: true  }).then(() => {
       actions.setSubmitting(false);
       setSubmitSuccess(true);
+      history.push('/agreement/preview');
     });
   };
 
@@ -86,10 +87,12 @@ const AgreementForm = () => {
         <form onSubmit={handleSubmit}>
           {/* <p>{JSON.stringify(errors)}</p> */}
           <NavigationPrompt
-            when={(_, next) => {
+            when={(current, next) => {
               // if initialValues === values --> you can navigate away cause nothing changed
+              const valuesChanged = JSON.stringify(values) !== JSON.stringify(initialValues);
+              // const goToPreview = next.pathname.startsWith("/agreement")
               return (
-                !submitSuccess && JSON.stringify(values) !== JSON.stringify(initialValues) &&
+                !submitSuccess && valuesChanged &&
                 (!next || !next.pathname.startsWith("/agreement"))
               );
             }}
@@ -150,6 +153,7 @@ const AgreementForm = () => {
             </Route>
             <Route path="/agreement/signatures">
               <Signatures
+                initialValues={initialValues}
                 values={values}
                 setFieldValue={setFieldValue}
                 handleBlur={handleBlur}

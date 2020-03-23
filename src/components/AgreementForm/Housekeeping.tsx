@@ -6,6 +6,7 @@ import { Box, Button, Heading } from "@chakra-ui/core";
 import { useHistory } from "react-router-dom";
 
 import RichEditor from "../RichEditor/RichEditor";
+import PrevNextNav from "./PrevNextNav";
 
 export interface HousekeepingValues {
   guests: string;
@@ -89,7 +90,7 @@ const Housekeeping = (props: any) => {
       />
       <Heading as="h4">Shared Spaces Policy</Heading>
       <p>
-        We agree to the following about accessing each roommates' private spaces and rules around
+        We agree to the following about accessing each roommates&rsquo; private spaces and rules around
         shared spaces:
       </p>
       <RichEditor
@@ -177,24 +178,9 @@ const Housekeeping = (props: any) => {
         onBlur={handleBlur}
         focus={() => {}}
       />
-      <div>
-        <Button
-          // variantColor="orange"
-          onClick={() => {
-            history.push("/agreement/bills/utilities");
-          }}
-        >
-          Previous Section
-        </Button>
-        <Button
-          // variantColor="pink"
-          onClick={() => {
-            history.push("/agreement/signatures");
-          }}
-        >
-          Next Section
-        </Button>
-      </div>
+      <Box as="footer">
+        <PrevNextNav before="/agreement/bills/utilities" after="/agreement/signatures" />
+      </Box>
     </Box>
   );
 };

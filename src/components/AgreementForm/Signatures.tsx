@@ -1,18 +1,15 @@
 import React from "react";
 import moment from "moment";
+import { Box, Button, Heading, List, ListItem } from "@chakra-ui/core";
 import { FieldArray } from "formik";
 
 import { FormikSingleDatePicker } from "../FormikDates";
 import { displayFullName } from "../../helpers/functions";
 import FieldSet from "../FieldSet";
-
-import { Box, Button, List, ListItem } from "@chakra-ui/core";
-
-import { useHistory } from "react-router-dom";
+import PrevNextNav from './PrevNextNav';
 
 const Signatures = (props: any) => {
   const { values, setFieldValue, errors, touched } = props;
-  const history = useHistory();
 
   const roommateName = values.roommates.map((roomie: any) =>
     displayFullName(roomie.firstName, roomie.lastName)
@@ -20,7 +17,7 @@ const Signatures = (props: any) => {
 
   return (
     <Box as="section">
-      <h2>Signatures</h2>
+      <Heading as="h2">Signatures</Heading>
       <FieldArray name="signatures">
         {arrayHelpers => (
           <div>
@@ -77,16 +74,9 @@ const Signatures = (props: any) => {
           </div>
         )}
       </FieldArray>
-      <div>
-        <Button
-          // variantColor="orange"
-          onClick={() => {
-            history.push("/agreement/bills/utilities");
-          }}
-        >
-          Previous Section
-        </Button>
-      </div>
+      <PrevNextNav before="/agreement/bills/utilities">
+        <Button type="submit">Preview Agreement</Button>
+      </PrevNextNav>
     </Box>
   );
 };

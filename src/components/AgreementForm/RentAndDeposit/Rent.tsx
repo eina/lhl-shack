@@ -2,34 +2,18 @@ import React from "react";
 
 import SplitRentAndDeposit from "./SplitRentAndDeposit";
 
-import { Box, Button, Heading } from "@chakra-ui/core";
+import { Box, Heading } from "@chakra-ui/core";
 
-import { useHistory } from "react-router-dom";
+import PrevNextNav from "../PrevNextNav";
 
 const Rent = (props: any) => {
-  const history = useHistory();
   return (
     <Box as="section">
       <Heading as="h2">Rent</Heading>
       <SplitRentAndDeposit sectionName="rent" {...props} />
-      <div>
-        <Button
-          // variantColor="orange"
-          onClick={() => {
-            history.push("/agreement/roommates");
-          }}
-        >
-          Previous Section
-        </Button>
-        <Button
-          // variantColor="pink"
-          onClick={() => {
-            history.push("/agreement/bills/deposit");
-          }}
-        >
-          Next Section
-        </Button>
-      </div>
+      <Box as="footer">
+        <PrevNextNav before="/agreement/roommates" after="/agreement/bills/deposit" />
+      </Box>
     </Box>
   );
 };

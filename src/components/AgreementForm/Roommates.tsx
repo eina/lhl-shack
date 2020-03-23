@@ -1,11 +1,10 @@
 import React from "react";
 import { FieldArray, useFormikContext } from "formik";
+import { Box, Button, Heading, List, ListItem, Divider } from "@chakra-ui/core";
 
 import { FormValues } from "../../interfaces";
-
 import FieldSet from "../FieldSet";
-
-import { Box, Button, Heading, List, ListItem, Divider } from "@chakra-ui/core";
+import PrevNextNav from './PrevNextNav';
 
 import { useHistory } from "react-router-dom";
 
@@ -50,24 +49,11 @@ const Roommates = () => {
           </div>
         )}
       </FieldArray>
-      <div>
-        <Button
-          // variantColor="orange"
-          onClick={() => {
-            history.push("/agreement/landlord");
-          }}
-        >
-          Previous Section
-        </Button>
-        <Button
-          // variantColor="pink"
-          onClick={() => {
-            history.push("/agreement/bills/rent");
-          }}
-        >
-          Next Section
-        </Button>
-      </div>
+
+      <Box as="footer">
+        <PrevNextNav before="/agreement/landlord" after="/agreement/bills/rent" />
+      </Box>
+
     </Box>
   );
 };

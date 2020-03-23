@@ -1,9 +1,9 @@
 import React from "react";
-import { Box, Button, Heading } from "@chakra-ui/core";
-
-import { useHistory } from "react-router-dom";
+import { Box, Heading } from "@chakra-ui/core";
 
 import FieldSet from "../FieldSet";
+import PrevNextNav from './PrevNextNav';
+
 export interface LandlordValues {
   landlordFirsttName: string;
   landlordLastName: string;
@@ -13,7 +13,6 @@ export interface LandlordValues {
   company: string;
 }
 const Landlord = () => {
-  const history = useHistory();
   return (
     <Box as="section">
       <Heading as="h2">Landlord Contact Information</Heading>
@@ -24,22 +23,9 @@ const Landlord = () => {
       <FieldSet type="text" name="landlord.phone" label="Phone Number" />
       <FieldSet type="text" name="landlord.company" label="Property Management Company" />
 
-      <Button
-        // variantColor="orange"
-        onClick={() => {
-          history.push("/agreement/info");
-        }}
-      >
-        Previous Section
-      </Button>
-      <Button
-        // variantColor="pink"
-        onClick={() => {
-          history.push("/agreement/roommates");
-        }}
-      >
-        Next Section
-      </Button>
+      <Box as="footer">
+        <PrevNextNav before="/agreement/info" after="/agreement/roommates" />
+      </Box>
     </Box>
   );
 };

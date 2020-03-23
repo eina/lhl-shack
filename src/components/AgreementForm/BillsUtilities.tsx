@@ -13,6 +13,7 @@ import { billInterval } from "../../helpers/data";
 import { Box, Button, Heading, List, ListItem, Divider } from "@chakra-ui/core";
 
 import { useHistory } from "react-router-dom";
+import PrevNextNav from "./PrevNextNav";
 
 const Bills = (props: any) => {
   const { values, setFieldValue, handleBlur, errors, touched } = props;
@@ -94,24 +95,9 @@ const Bills = (props: any) => {
           </div>
         )}
       </FieldArray>
-      <div>
-        <Button
-          // variantColor="orange"
-          onClick={() => {
-            history.push("/agreement/bills/deposit");
-          }}
-        >
-          Previous Section
-        </Button>
-        <Button
-          // variantColor="pink"
-          onClick={() => {
-            history.push("/agreement/housekeeping");
-          }}
-        >
-          Next Section
-        </Button>
-      </div>
+      <Box as="footer">
+        <PrevNextNav before="/agreement/bills/deposit" after="/agreement/housekeeping" />
+      </Box>
     </Box>
   );
 };

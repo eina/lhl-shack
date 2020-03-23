@@ -44,6 +44,9 @@ const AgreementMenu = () => {
         <ListItem>
           <Link to="/agreement/signatures">Signatures</Link>
         </ListItem>
+        <ListItem>
+          <Link to="/agreement/preview">Preview</Link>
+        </ListItem>
       </List>
     </div>
   );

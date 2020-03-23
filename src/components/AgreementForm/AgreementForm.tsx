@@ -1,9 +1,9 @@
 import React, { useEffect, useContext, useState } from "react";
 import axios from "axios";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 import NavigationPrompt from "react-router-navigation-prompt";
 import { FormikProps, Formik, FormikValues } from "formik";
-import { Button } from "@chakra-ui/core";
+// import { Button } from "@chakra-ui/core";
 
 import { AppContext } from "../../Store";
 import initialValues, { formatDBInitialValues } from "./initialValues";
@@ -21,6 +21,7 @@ import Rent from "./RentAndDeposit/Rent";
 import SecurityDeposit from "./RentAndDeposit/SecurityDeposit";
 import BillsUtilities from "./BillsUtilities";
 import Signatures from "./Signatures";
+import Preview from "./AgreementPreview";
 
 const AgreementForm = () => {
   const { state }: { state: any } = useContext(AppContext);
@@ -54,10 +55,11 @@ const AgreementForm = () => {
   }, [state, agreementID]);
 
   const submitForm = (values: FormikValues, actions: any) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      actions.setSubmitting(false);
-    }, 1000);
+    actions.setSubmitting(false);
+    // setTimeout(() => {
+    //   alert(JSON.stringify(values, null, 2));
+    //   actions.setSubmitting(false);
+    // }, 1000);
   };
 
   if (!state) {
@@ -82,7 +84,7 @@ const AgreementForm = () => {
       }: FormikProps<any>) => (
         <form onSubmit={handleSubmit}>
           <NavigationPrompt
-            when={(current, next) => {
+            when={(_, next) => {
               // if initialValues === values --> you can navigate away cause nothing changed
               return (
                 JSON.stringify(values) !== JSON.stringify(initialValues) &&
@@ -153,8 +155,9 @@ const AgreementForm = () => {
                 touched={touched}
               />
             </Route>
+            {/* <Route path="/agreement/preview" component={Preview} /> */}
           </Switch>
-          <Button type="submit">Test Submit</Button>
+          {/* <Button type="submit">Test Submit</Button>  */}
         </form>
       )}
     </Formik>

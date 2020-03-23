@@ -1,14 +1,13 @@
 import React from "react";
 import { useFormikContext, FormikProps } from "formik";
-import { useHistory } from "react-router-dom";
-import { Box, Button, Heading } from "@chakra-ui/core";
+import { Box, Heading } from "@chakra-ui/core";
 
 import FieldSet from "../FieldSet";
 import { FormikDateRange } from "../FormikDates";
+import PrevNextNav from "./PrevNextNav";
 
 const Household = () => {
   const { values, errors, touched, setFieldValue }: FormikProps<any> = useFormikContext();
-  const history = useHistory();
   const householdErrors = errors && errors.household ? errors.household : null;
   const householdTouched = touched && touched.household ? touched.household : null;
 
@@ -32,24 +31,9 @@ const Household = () => {
       <FieldSet type="number" name="household.rentAmt" label="Monthly Rent" />
       <FieldSet type="number" name="household.securityDepositAmt" label="Security Deposit" />
 
-      <div>
-        <Button
-          // variantColor="orange"
-          onClick={() => {
-            history.push("/agreement/bills/utilities");
-          }}
-        >
-          Previous Section
-        </Button>
-        <Button
-          // variantColor="pink"
-          onClick={() => {
-            history.push("/agreement/signatures");
-          }}
-        >
-          Next Section
-        </Button>
-      </div>
+      <Box as="footer">
+        <PrevNextNav before="/agreement/bills/utilities" after="/agreement/landlord"/>
+      </Box>
     </Box>
   );
 };

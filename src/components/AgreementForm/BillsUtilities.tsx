@@ -10,7 +10,7 @@ import FormikSelect from "../FormikSelect";
 
 import { billInterval } from "../../helpers/data";
 
-import { Button, Heading, List, ListItem, Divider } from "@chakra-ui/core";
+import { Box, Button, Heading, List, ListItem, Divider } from "@chakra-ui/core";
 
 import { useHistory } from "react-router-dom";
 
@@ -20,7 +20,7 @@ const Bills = (props: any) => {
   const history = useHistory(); //for nav buttons
 
   return (
-    <div>
+    <Box as="section">
       <Heading as="h2">Bills: Utilities</Heading>
       <FieldArray name="bills">
         {arrayHelpers => (
@@ -112,7 +112,7 @@ const Bills = (props: any) => {
           Next Section
         </Button>
       </div>
-    </div>
+    </Box>
   );
 };
 

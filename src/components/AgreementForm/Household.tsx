@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormikContext, FormikProps } from "formik";
 import { useHistory } from "react-router-dom";
-import { Button, Heading } from "@chakra-ui/core";
+import { Box, Button, Heading } from "@chakra-ui/core";
 
 import FieldSet from "../FieldSet";
 import { FormikDateRange } from "../FormikDates";
@@ -13,7 +13,7 @@ const Household = () => {
   const householdTouched = touched && touched.household ? touched.household : null;
 
   return (
-    <div>
+    <Box as="section">
       <Heading as="h2">Rent and Household Information</Heading>
       <FieldSet type="text" name="household.address" label="House Address" />
       <FormikDateRange
@@ -50,7 +50,7 @@ const Household = () => {
           Next Section
         </Button>
       </div>
-    </div>
+    </Box>
   );
 };
 

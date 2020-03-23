@@ -1,14 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ListItem, List, Heading } from "@chakra-ui/core";
+import { ListItem, List, Heading, Divider } from "@chakra-ui/core";
 
 const AgreementMenu = () => {
   return (
     <div>
-      <Heading as="h1" mb={3}>
-        Roommate Agreement Generator
-      </Heading>
-      <Link to="/">Back to Dashboard</Link>
+      <List>
+        <ListItem>
+          <Link to="/">Back to Dashboard</Link>
+        </ListItem>
+        <ListItem>
+          <Link to="/agreement/title">Roommate Agreement Information</Link>
+        </ListItem>
+      </List>
+      <Divider />
       <List as="ol" styleType="decimal">
         <ListItem>
           <Link to="/agreement/household">House Information</Link>

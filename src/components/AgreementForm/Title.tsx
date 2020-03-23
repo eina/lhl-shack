@@ -1,12 +1,12 @@
 import React from "react";
-import { Button, Heading, Link, Text } from "@chakra-ui/core";
+import { Box, Button, Heading, Link, Text } from "@chakra-ui/core";
 
 import { useHistory } from "react-router-dom";
 
 const Title = () => {
   const history = useHistory();
   return (
-    <div>
+    <Box as="section">
       <Heading as="h1">Roommate Agreement</Heading>
       <Text>
         This Roommate Agreement was originally derived from Tenant Resource Advocacy Centre, also
@@ -36,7 +36,7 @@ const Title = () => {
       >
         Next Section
       </Button>
-    </div>
+    </Box>
   );
 };
 

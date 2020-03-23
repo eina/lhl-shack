@@ -1,11 +1,9 @@
 import React from "react";
 import FieldSet from "../FieldSet";
 
-import { Button, Heading } from "@chakra-ui/core";
+import { Box, Button, Heading } from "@chakra-ui/core";
 
 import { useHistory } from "react-router-dom";
-
-// import { FormValues } from "../../interfaces";
 
 import RichEditor from "../RichEditor/RichEditor";
 
@@ -31,7 +29,7 @@ const Housekeeping = (props: any) => {
   const { values, setFieldValue, handleBlur } = props;
 
   return (
-    <div>
+    <Box>
       <Heading as="h2">Housekeeping Rules</Heading>
 
       <Heading as="h3">Guests</Heading>
@@ -197,7 +195,7 @@ const Housekeeping = (props: any) => {
           Next Section
         </Button>
       </div>
-    </div>
+    </Box>
   );
 };
 

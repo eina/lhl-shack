@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Heading } from "@chakra-ui/core";
+import { Box, Button, Heading } from "@chakra-ui/core";
 
 import { useHistory } from "react-router-dom";
 
@@ -15,7 +15,7 @@ export interface LandlordValues {
 const Landlord = () => {
   const history = useHistory();
   return (
-    <div>
+    <Box as="section">
       <Heading as="h2">Landlord Contact Information</Heading>
       <FieldSet type="text" name="landlord.firstName" label="First Name" />
       <FieldSet type="text" name="landlord.lastName" label="Last Name" />
@@ -40,7 +40,7 @@ const Landlord = () => {
       >
         Next Section
       </Button>
-    </div>
+    </Box>
   );
 };
 

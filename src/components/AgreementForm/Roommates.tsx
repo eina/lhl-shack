@@ -5,7 +5,7 @@ import { FormValues } from "../../interfaces";
 
 import FieldSet from "../FieldSet";
 
-import { Button, Heading, List, ListItem, Divider } from "@chakra-ui/core";
+import { Box, Button, Heading, List, ListItem, Divider } from "@chakra-ui/core";
 
 import { useHistory } from "react-router-dom";
 
@@ -13,7 +13,7 @@ const Roommates = () => {
   const history = useHistory();
   const { values }: { values: FormValues } = useFormikContext();
   return (
-    <div>
+    <Box as="section">
       <Heading as="h2">Roommates</Heading>
       <FieldArray name="roommates">
         {arrayHelpers => (
@@ -68,7 +68,7 @@ const Roommates = () => {
           Next Section
         </Button>
       </div>
-    </div>
+    </Box>
   );
 };
 

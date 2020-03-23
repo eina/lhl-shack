@@ -2,12 +2,11 @@ import React from "react";
 import moment from "moment";
 import { FieldArray } from "formik";
 
-// import { FormValues } from "../../interfaces";
 import { FormikSingleDatePicker } from "../FormikDates";
 import { displayFullName } from "../../helpers/functions";
 import FieldSet from "../FieldSet";
 
-import { Button, List, ListItem } from "@chakra-ui/core";
+import { Box, Button, List, ListItem } from "@chakra-ui/core";
 
 import { useHistory } from "react-router-dom";
 
@@ -20,7 +19,7 @@ const Signatures = (props: any) => {
   );
 
   return (
-    <div>
+    <Box as="section">
       <h2>Signatures</h2>
       <FieldArray name="signatures">
         {arrayHelpers => (
@@ -88,7 +87,7 @@ const Signatures = (props: any) => {
           Previous Section
         </Button>
       </div>
-    </div>
+    </Box>
   );
 };
 

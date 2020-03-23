@@ -19,15 +19,15 @@ import Household from './pages/Household';
 
 
 // test data
-// const currUser = {
-//   id: "1",
-//   first_name: "Tracy",
-//   last_name: "Barrows",
-//   phone_number: "448-504-4347",
-//   email: "test@test.com",
-//   password: "testing",
-//   household: "951bfa7e-d0e1-414d-9327-5e8c4bc8c56b"
-// };
+const currUser = {
+  id: "1",
+  first_name: "Tracy",
+  last_name: "Barrows",
+  phone_number: "448-504-4347",
+  email: "test@test.com",
+  password: "testing",
+  household: "951bfa7e-d0e1-414d-9327-5e8c4bc8c56b"
+};
 
 const AppContent = () => {
   const { state, updateState }: { state: any; updateState: Function } = useContext(AppContext);

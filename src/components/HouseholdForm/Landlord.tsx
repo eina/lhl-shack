@@ -2,7 +2,6 @@ import React from "react";
 import { Box, Heading } from "@chakra-ui/core";
 
 import FieldSet from "../FieldSet";
-import PrevNextNav from './PrevNextNav';
 
 export interface LandlordValues {
   landlordFirsttName: string;
@@ -22,10 +21,7 @@ const Landlord = () => {
       <FieldSet type="email" name="landlord.email" label="Email" />
       <FieldSet type="tel" name="landlord.phone_number" label="Phone Number" />
       <FieldSet type="text" name="landlord.company" label="Property Management Company" />
-      
-      <Box as="footer">
-        <PrevNextNav before="/agreement/info" after="/agreement/roommates" />
-      </Box>
+    
     </Box>
   );
 };

@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOMServer from 'react-dom/server';
 import { useFormikContext } from 'formik';
 import { Heading, Box, List, ListItem } from '@chakra-ui/core';
 import { displayFullName } from '../../helpers/functions';
@@ -29,13 +28,18 @@ const LandlordPreview = ({landlord}: {landlord: any}) => {
   );
 };
 
+type PreviewProps = {
+  agreementID: string;
+}
+
 // add date_saved column
-const AgreementPreview = () => {
+const AgreementPreview = ({ agreementID }: PreviewProps) => {
   const { values, values: { landlord, household, account, roommates, rent, securityDeposit, bills, housekeeping, signatures} } = useFormikContext();
 
-  const landlordString = ReactDOMServer.renderToStaticMarkup(<LandlordPreview landlord={landlord}/>);
+  // const landlordString = ReactDOMServer.renderToStaticMarkup(<LandlordPreview landlord={landlord}/>);
   // it woooooooooooooorks
-  console.log('does this work', landlordString);
+  // build them separately and return as one string and send them to the server somehow!!!
+  // console.log('does this work', landlordString);
 
   return (
     <Box>
@@ -43,6 +47,8 @@ const AgreementPreview = () => {
 
       <LandlordPreview landlord={landlord} />
       {/* {JSON.stringify(values)} */}
+
+      <button>Create Household</button>
     </Box>
   );
 };

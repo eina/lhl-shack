@@ -31,27 +31,32 @@ const yupReactSelect = object().shape({
 const yupCheckbox = boolean().oneOf([true], "Field must be checked");
 
 export const landlord = object().shape({
-  firstName: yupName.required(requiredMsg),
-  lastName: yupName.required(requiredMsg),
+  first_name: yupName.required(requiredMsg),
+  last_name: yupName.required(requiredMsg),
   email: yupEmail,
   address: yupCdnAddress,
-  phone: yupCdnPhone,
+  phone_number: yupCdnPhone,
   company: yupName
 });
 
-export default object().shape({
+export const household = object().shape({
+  address: yupCdnAddress,
+  bedroomsAmt: yupMin1.required(requiredMsg),
+  bathroomsAmt: yupMin1.required(requiredMsg),
+  rentAmt: yupMin1.required(requiredMsg),
+  securityDepositAmt: yupMin1.required(requiredMsg),
+  leaseDates: object().shape({
+    startDate: date().required(requiredMsg),
+    endDate: date().required(requiredMsg)
+  })
+});
+
+export const householdForm = object().shape({
   landlord,
-  household: object().shape({
-    address: yupCdnAddress,
-    bedroomsAmt: yupMin1.required(requiredMsg),
-    bathroomsAmt: yupMin1.required(requiredMsg),
-    rentAmt: yupMin1.required(requiredMsg),
-    securityDepositAmt: yupMin1.required(requiredMsg),
-    leaseDates: object().shape({
-      startDate: date().required(requiredMsg),
-      endDate: date().required(requiredMsg)
-    })
-  }),
+  household
+});
+
+export default object().shape({
   roommates: array()
     // .min(2, `You must have at least 2 two people in a household`)
     .of(

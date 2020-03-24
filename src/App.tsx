@@ -12,6 +12,7 @@ import MainMenu from "./components/MainMenu";
 
 import Home from "./pages/Home";
 import Test from "./pages/Test";
+import CreateHousehold from "./pages/CreateHousehold";
 import Agreement from "./pages/Agreement";
 import Account from "./pages/Account";
 import AgreementMenu from "./components/AgreementForm/AgreementMenu";
@@ -30,7 +31,7 @@ const currUser = {
 const AppContent = () => {
   const { state, updateState }: { state: any; updateState: Function } = useContext(AppContext);
   const { pathname: currentPath } = useLocation();
-  const isAgreementForm = currentPath.startsWith("/agreement");
+  const isHouseholdOrAgreementForm = currentPath.startsWith("/create-household") || currentPath.startsWith("/agreement");
   useEffect(() => {
     const getUserData = () => {
       axios.get("/api/users/1").then(user => {
@@ -55,12 +56,13 @@ const AppContent = () => {
         <AppHeader {...state} />
 
         <Grid templateColumns="1fr 4fr" gap={1} p={5} className="container">
-          {isAgreementForm ? <AgreementMenu /> : <MainMenu />}
+          {isHouseholdOrAgreementForm ? <AgreementMenu /> : <MainMenu />}
 
           <Box as="main" bg="gray.50" pr={10} pl={10} rounded={10}>
-            {isAgreementForm ? (
+            {isHouseholdOrAgreementForm ? (
               // Agreement Form
               <Switch>
+                <Route path="/create-household" component={CreateHousehold}/>
                 <Route path="/agreement" component={Agreement} />
               </Switch>
             ) : (

@@ -5,7 +5,7 @@ import NavigationPrompt from "react-router-navigation-prompt";
 import { FormikProps, Formik, FormikValues } from "formik";
 
 import { AppContext } from "../../Store";
-import initialValues, { formatDBInitialValues } from "./initialValues";
+import initialValues, { formatDBInitialValues, finishedAgreement } from "./initialValues";
 import validationSchema from "./validationSchema";
 import submitAgreement from "./submitAgreement";
 
@@ -13,8 +13,6 @@ import FormLeavePrompt from "./FormLeavePrompt";
 import AppLoading from "../AppLoading";
 
 import Title from "./Title";
-import Household from "./Household";
-import Landlord from "./Landlord";
 import Roommates from "./Roommates";
 import Housekeeping from "./Housekeeping";
 import Rent from "./RentAndDeposit/Rent";
@@ -25,7 +23,7 @@ import Preview from "./AgreementPreview";
 
 const AgreementForm = () => {
   const { state }: { state: any } = useContext(AppContext);
-  const [initialVals, setInitialVals] = useState(initialValues);
+  const [initialVals, setInitialVals] = useState(finishedAgreement);
   const [agreementID, setAgreementID] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const history = useHistory();
@@ -44,12 +42,12 @@ const AgreementForm = () => {
     };
 
     if (state && state.currUser && !agreementID) {
-      const { currUser } = state;
-      const { first_name: firstName, last_name: lastName, phone_number: phone, email } = currUser;
-      setInitialVals((prev: any) => ({
-        ...prev,
-        roommates: [{ firstName, lastName, phone, email }, { firstName: "", lastName: "", phone: "", email: ""}]
-      }));
+      // const { currUser } = state;
+      // const { first_name: firstName, last_name: lastName, phone_number: phone, email } = currUser;
+      // setInitialVals((prev: any) => ({
+      //   ...prev,
+      //   roommates: [{ firstName, lastName, phone, email }, { firstName: "", lastName: "", phone: "", email: ""}]
+      // }));
 
       getHouseholdDetails(state.currUser);
     }
@@ -57,7 +55,9 @@ const AgreementForm = () => {
 
   const submitForm = (values: FormikValues, actions: any) => {
     const { currUser: { household } } = state;
+    console.log('hello agreementId', agreementID);
     submitAgreement({ formVals: values, householdID: household, agreementID, isComplete: true  }).then(() => {
+      console.log('sent things to the server!');
       actions.setSubmitting(false);
       setSubmitSuccess(true);
       history.push('/agreement/preview');
@@ -112,8 +112,8 @@ const AgreementForm = () => {
           <Switch>
             <Route path="/agreement/title" component={Title} />
             <Redirect from="/agreement" to="/agreement/title" exact />
-            <Route path="/agreement/household" component={Household} />
-            <Route path="/agreement/landlord" component={Landlord} />
+            {/* <Route path="/agreement/landlord" component={Landlord} />
+            <Route path="/agreement/household" component={Household} /> */}
             <Route path="/agreement/roommates" component={Roommates} />
             <Redirect from="/agreement/bills" to="/agreement/bills/rent" exact />
             <Route path="/agreement/bills/rent">
@@ -163,7 +163,7 @@ const AgreementForm = () => {
                 touched={touched}
               />
             </Route>
-            <Route path="/agreement/preview" component={Preview}/>
+            <Route path="/agreement/preview"><Preview agreementID={agreementID}/></Route>
           </Switch>
         </form>
       )}

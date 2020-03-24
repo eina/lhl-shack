@@ -16,10 +16,10 @@ const AgreementMenu = () => {
       <Divider />
       <List as="ol" styleType="decimal">
         <ListItem>
-          <Link to="/agreement/household">House Information</Link>
+          <Link to="/agreement/landlord">Landlord Information</Link>
         </ListItem>
         <ListItem>
-          <Link to="/agreement/landlord">Landlord Information</Link>
+          <Link to="/agreement/household">House Information</Link>
         </ListItem>
         <ListItem>
           <Link to="/agreement/roommates">Roommates</Link>

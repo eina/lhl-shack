@@ -24,6 +24,9 @@ const MainMenu = () => {
         <ListItem>
           <Link to="/resources">Resources</Link>
         </ListItem>
+        <ListItem>
+          <Link to="/housekeeping">Housekeeping</Link>
+        </ListItem>
       </List>
     </Box>
   );

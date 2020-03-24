@@ -23,7 +23,7 @@ const SplitRentAndDeposit = (props: any) => {
   return (
     <div>
       <FieldSet
-        name={`${sectionName}.totalAmt`}
+        name={`${sectionName}.total_amount`}
         label="Total Amount to Pay"
         type="number"
         // value={values.household[`${sectionName}Amt`]}
@@ -32,10 +32,10 @@ const SplitRentAndDeposit = (props: any) => {
       />
 
       <FormikSingleDatePicker
-        name={`${sectionName}.dueDate`}
+        name={`${sectionName}.due_date`}
         label="Due Date"
-        stateName={`${sectionName}.dueDate`}
-        stateValue={values[sectionName].dueDate}
+        stateName={`${sectionName}.due_date`}
+        stateValue={values[sectionName].due_date}
         onChange={setFieldValue}
         numberOfMonths={1}
         error={errorObj}
@@ -60,7 +60,7 @@ const SplitRentAndDeposit = (props: any) => {
             <ol>
               {values[sectionName].portion.map((person: object, index: number, arr: any) => (
                 <li key={index}>
-                  {(arr.length > 2) && (
+                  {arr.length > 2 && (
                     <Button type="button" onClick={() => arrayHelpers.remove(index)}>
                       Remove
                     </Button>

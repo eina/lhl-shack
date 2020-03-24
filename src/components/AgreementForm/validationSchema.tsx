@@ -68,8 +68,8 @@ export default object().shape({
       })
     ),
   rent: object().shape({
-    // totalAmt: yupMin1.required(requiredMsg),
-    dueDate: date().required(requiredMsg),
+    // total_amount: yupMin1.required(requiredMsg),
+    due_date: date().required(requiredMsg),
     interval: yupReactSelect,
     portion: array().of(
       object().shape({
@@ -79,21 +79,21 @@ export default object().shape({
     )
   }),
   securityDeposit: object().shape({
-    // totalAmt: yupMin1.required(requiredMsg),
-    dueDate: object().required(requiredMsg),
+    // total_amount: yupMin1.required(requiredMsg),
+    due_date: object().required(requiredMsg),
     interval: yupReactSelect,
     portion: array().of(
       object().shape({
         roommate: yupReactSelect,
-        roommate_amt: yupMin1,
+        roommate_amt: yupMin1
       })
     )
   }),
   bills: array().of(
     object().shape({
       name: yupName.nullable().required(requiredMsg),
-      totalAmt: yupMin1.required(requiredMsg),
-      dueDate: date().required(requiredMsg),
+      total_amount: yupMin1.required(requiredMsg),
+      due_date: date().required(requiredMsg),
       interval: yupReactSelect
     })
   ),

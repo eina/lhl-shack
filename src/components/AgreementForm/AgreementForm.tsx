@@ -59,12 +59,12 @@ const AgreementForm = () => {
     const { currUser: { household } } = state;
     console.log('hello agreementId', agreementID);
     console.log('hi form values', values);
-    submitAgreement({ formVals: values, householdID: household, agreementID, isComplete: true  }).then(() => {
-      console.log('sent things to the server!');
-      actions.setSubmitting(false);
-      setSubmitSuccess(true);
-      history.push('/agreement/preview');
-    });
+    // submitAgreement({ formVals: values, householdID: household, agreementID, isComplete: true  }).then(() => {
+    //   console.log('sent things to the server!');
+    //   actions.setSubmitting(false);
+    //   setSubmitSuccess(true);
+    //   history.push('/agreement/preview');
+    // });
   };
 
   if (!state) {

@@ -30,22 +30,27 @@ const Bills = (props: any) => {
                     </Button>
                   )}
                   <FieldSet type="text" name={`bills.${index}.name`} label="Bill Name" />
-                  <FieldSet type="number" name={`bills.${index}.totalAmt`} label="Total Amount" inputGroup={{ left: { addOn: "$" } }} />
+                  <FieldSet
+                    type="number"
+                    name={`bills.${index}.total_amount`}
+                    label="Total Amount"
+                    inputGroup={{ left: { addOn: "$" } }}
+                  />
                   <FormikSingleDatePicker
-                    name={`bills.${index}.dueDate`}
+                    name={`bills.${index}.due_date`}
                     label="Due Date"
-                    stateName={`bills.${index}.dueDate`}
-                    stateValue={values.bills[index].dueDate}
+                    stateName={`bills.${index}.due_date`}
+                    stateValue={values.bills[index].due_date}
                     onChange={setFieldValue}
                     numberOfMonths={1}
                     error={
-                      errors && errors.bills && errors.bills[index] && errors.bills[index].dueDate
+                      errors && errors.bills && errors.bills[index] && errors.bills[index].due_date
                     }
                     touched={
                       touched &&
                       touched.bills &&
                       touched.bills[index] &&
-                      touched.bills[index].dueDate
+                      touched.bills[index].due_date
                     }
                   />
                   <FormikSelect
@@ -66,13 +71,15 @@ const Bills = (props: any) => {
                       touched.bills[index].interval
                     }
                   />
-                  
+
                   <FieldSet
                     type="number"
                     name={`bills.${index}.portion`}
                     label="Amount per Roommate"
                     isReadOnly={true}
-                    value={values.bills[index].totalAmt ? (values.bills[index].totalAmt / numRoommates) : 0}
+                    value={
+                      values.bills[index].total_amount ? values.bills[index].total_amount / numRoommates : 0
+                    }
                   />
 
                   <Divider />
@@ -82,7 +89,13 @@ const Bills = (props: any) => {
             <Button
               type="button"
               onClick={() =>
-                arrayHelpers.push({ name: "", totalAmount: 0, dueDate: moment(), interval: [], portion: 0 })
+                arrayHelpers.push({
+                  name: "",
+                  totalAmount: 0,
+                  due_date: moment(),
+                  interval: [],
+                  portion: 0
+                })
               }
             >
               Add New Bill

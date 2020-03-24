@@ -10,12 +10,15 @@ import {
   AccordionHeader,
   AccordionPanel,
   AccordionIcon,
-  Divider
+  Divider,
 } from '@chakra-ui/core';
 
 const Resources = () => {
   return (
     <div>
+      <Heading as="h1" mb={3}>
+        Resources
+      </Heading>
       <Accordion>
         <AccordionItem>
           <AccordionHeader>

@@ -53,6 +53,8 @@ const AgreementForm = () => {
     }
   }, [state, agreementID]);
 
+  // console.log('is landlord and house here', state);
+
   const submitForm = (values: FormikValues, actions: any) => {
     const { currUser: { household } } = state;
     console.log('hello agreementId', agreementID);

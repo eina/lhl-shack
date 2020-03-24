@@ -34,7 +34,7 @@ type PreviewProps = {
 
 // add date_saved column
 const AgreementPreview = ({ agreementID }: PreviewProps) => {
-  const { values, values: { landlord, household, account, roommates, rent, securityDeposit, bills, housekeeping, signatures} } = useFormikContext();
+  const { values, values: {account, roommates, rent, securityDeposit, bills, housekeeping, signatures} } = useFormikContext();
 
   // const landlordString = ReactDOMServer.renderToStaticMarkup(<LandlordPreview landlord={landlord}/>);
   // it woooooooooooooorks
@@ -45,7 +45,7 @@ const AgreementPreview = ({ agreementID }: PreviewProps) => {
     <Box>
       <Heading as="h1">Rommate Agreement</Heading>
 
-      <LandlordPreview landlord={landlord} />
+      {/* <LandlordPreview landlord={landlord} /> */}
       {/* {JSON.stringify(values)} */}
 
       <button>Create Household</button>

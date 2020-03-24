@@ -1,9 +1,12 @@
 import React from 'react'
 
+import { Heading } from "@chakra-ui/core"
+
+
 const Housekeeping = () => {
   return (
     <div>
-      Housekeeping info...
+      <Heading as="h1">Housekeeping</Heading>
     </div>
   )
 }

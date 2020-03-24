@@ -6,7 +6,7 @@ const billShape = {
   total_amount: 0,
   due_date: moment(),
   interval: [], // once, monthly, every 2 months, annually
-  bill_portion: 0
+  user_amount: 0
   // portion: [
   //   { roommate: [], roommate_amt: 0 },
   //   { roommate: [], roommate_amt: 0 }

@@ -18,7 +18,7 @@ const Bills = (props: any) => {
   useEffect(() => {
     // update bill portion when inputting total number
     values.bills.map((bill: any, index: number) => {
-      setFieldValue(`bills[${index}].bill_portion`, bill.total_amount / numRoommates);
+      setFieldValue(`bills[${index}].user_amount`, bill.total_amount / numRoommates);
     });
   }, [values.bills]);
 
@@ -86,10 +86,10 @@ const Bills = (props: any) => {
 
                   <FieldSet
                     type="number"
-                    name={`bills.${index}.bill_portion`}
+                    name={`bills.${index}.user_amount`}
                     label="Amount per Roommate"
                     isReadOnly={true}
-                    value={ values.bills[index].total_amount / numRoommates }
+                    value={values.bills[index].total_amount / numRoommates}
                   />
                 </ListItem>
               ))}
@@ -102,7 +102,7 @@ const Bills = (props: any) => {
                   total_amount: 0,
                   due_date: moment(),
                   interval: [],
-                  bill_portion: 0
+                  user_amount: 0
                 })
               }
             >

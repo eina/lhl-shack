@@ -69,29 +69,44 @@ const submitAgreement = ({ formVals, householdID, agreementID, isComplete }: Agr
                     ...formVals.roommates[index],
                     password: uuidV4()
                   })
-                  .then(() => user.data[0].id);
+                  .then(createdUser => {
+                    console.log("createdUser", createdUser);
+                    return createdUser.data[0].id;
+                  });
               } else {
                 return axios
                   .patch(`/api/users/${user.data[0].id}`, {
                     ...formVals.roommates[index]
                   })
-                  .then(() => user.data[0].id);
+                  .then(editedUser => {
+                    console.log("editedUser", editedUser);
+                    return editedUser.data.id;
+                  });
               }
             });
           })
           .then(users => Promise.all(users)) // grab users id
           .then(usersIDs => {
+            const billIdentifier = uuidV4();
             return axios.get(`/api/bills?household_id=${householdID}`).then(houseBills => {
-              // simplified bills table: total_amount, user_amount, name, due_date, interval
-              console.log("what are these", usersIDs, houseBills.data, formVals.bills);
+              console.log("houseBills.data", houseBills.data);
               // if there are no bills
-              // if (!houseBills.data.length) {
-              //   const billData = {}
-              //   // make a bill, loop through the usersIDs
-              //   usersIDs.map(userID => axios.post("/api/bills/", {...billData, user_id: userID}));
-              // } else {
-              //   console.log("something");
-              // }
+              // make a bill, loop through the usersIDs
+              return usersIDs.map((userID, index) => {
+                if (!houseBills.data.length) {
+                  const billToSend = {
+                    ...formVals.bills[index],
+                    total_amount: formVals.bills[index].total_amount * 1,
+                    interval: formVals.bills[index].interval.value,
+                    bill_uuid: billIdentifier,
+                    user_id: userID,
+                    household_id: householdID
+                  };
+                  return axios.post("/api/bills/", billToSend);
+                } else {
+                  console.log("something");
+                }
+              });
             });
           }); // return vals.data;
       } else {

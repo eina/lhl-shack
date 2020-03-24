@@ -15,12 +15,12 @@ const householdInitialValues = {
       startDate: moment(),
       endDate: moment()
     },
-    smokingAllowed: false,
-    petFriendly: true,
-    bedroomsAmt: 2,
-    bathroomsAmt: 1,
-    rentAmt: "",
-    securityDepositAmt: ""
+    pet_friendly: true,
+    smoking_allowed: false,
+    number_of_bedrooms: 2,
+    number_of_bathrooms: 1,
+    total_rent_amt: "",
+    total_security_deposit_amt: ""
   },
 };
 

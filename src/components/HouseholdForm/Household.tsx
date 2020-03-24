@@ -23,12 +23,12 @@ const Household = () => {
         error={householdErrors}
         touched={householdTouched}
       />
-      <FieldSet type="checkbox" name="household.petFriendly" label="Pet Friendly?" />
-      <FieldSet type="checkbox" name="household.smokingAllowed" label="Smoking Allowed?" />
-      <FieldSet type="number" name="household.bedroomsAmt" label="No. of Bedrooms" />
-      <FieldSet type="number" name="household.bathroomsAmt" label="No. of Bathrooms" />
-      <FieldSet type="number" name="household.rentAmt" label="Monthly Rent" inputGroup={{ left: { addOn: "$" } }} />
-      <FieldSet type="number" name="household.securityDepositAmt" label="Security Deposit" inputGroup={{ left: { addOn: "$" } }} />
+      <FieldSet type="checkbox" name="household.pet_friendly" label="Pet Friendly?" />
+      <FieldSet type="checkbox" name="household.smoking_allowed" label="Smoking Allowed?" />
+      <FieldSet type="number" name="household.number_of_bedrooms" label="No. of Bedrooms" />
+      <FieldSet type="number" name="household.number_of_bathrooms" label="No. of Bathrooms" />
+      <FieldSet type="number" name="household.total_rent_amt" label="Monthly Rent" inputGroup={{ left: { addOn: "$" } }} />
+      <FieldSet type="number" name="household.total_security_deposit_amt" label="Security Deposit" inputGroup={{ left: { addOn: "$" } }} />
 
     </Box>
   );

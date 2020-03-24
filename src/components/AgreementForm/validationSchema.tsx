@@ -41,10 +41,10 @@ export const landlord = object().shape({
 
 export const household = object().shape({
   address: yupCdnAddress,
-  bedroomsAmt: yupMin1.required(requiredMsg),
-  bathroomsAmt: yupMin1.required(requiredMsg),
-  rentAmt: yupMin1.required(requiredMsg),
-  securityDepositAmt: yupMin1.required(requiredMsg),
+  number_of_bedrooms: yupMin1.required(requiredMsg),
+  number_of_bathrooms: yupMin1.required(requiredMsg),
+  total_rent_amt: yupMin1.required(requiredMsg),
+  total_security_deposit_amt: yupMin1.required(requiredMsg),
   leaseDates: object().shape({
     startDate: date().required(requiredMsg),
     endDate: date().required(requiredMsg)

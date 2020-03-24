@@ -29,7 +29,7 @@ const currUser = {
 };
 
 const AppContent = () => {
-  const { state, updateState }: { state: any; updateState: Function } = useContext(AppContext);
+  const { state, updateState }: { state: any; updateState: any } = useContext(AppContext);
   const { pathname: currentPath } = useLocation();
   const isHouseholdOrAgreementForm = currentPath.startsWith("/create-household") || currentPath.startsWith("/agreement");
   useEffect(() => {
@@ -47,8 +47,7 @@ const AppContent = () => {
     //   fullName: displayFullName(currUser.first_name, currUser.last_name)
     // });
   }, [updateState]);
-
-  // console.log("state is here", state);
+  
 
   if (state && state.currUser) {
     return (
@@ -85,14 +84,15 @@ const AppContent = () => {
 // what renders on index
 const App = () => {
   return (
-    <AppProvider>
-      <ThemeProvider theme={theme}>
-        <CSSReset />
-        <BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <CSSReset />
+      <BrowserRouter>
+        <AppProvider>
           <AppContent />
-        </BrowserRouter>
-      </ThemeProvider>
-    </AppProvider>
+        </AppProvider>
+      </BrowserRouter>
+    </ThemeProvider>
+    
   );
 };
 

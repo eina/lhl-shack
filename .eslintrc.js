@@ -16,7 +16,7 @@ module.exports = {
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/camelcase": "off",
-    camelcase: [2, { properties: "never" }]
+    camelcase: [0, { properties: "never" }]
   },
   overrides: [
     // {

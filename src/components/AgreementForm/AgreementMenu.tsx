@@ -10,6 +10,9 @@ const AgreementMenu = () => {
           <Link to="/">Back to Dashboard</Link>
         </ListItem>
         <ListItem>
+          <Link to="/create-household">Create Household</Link>
+        </ListItem>
+        <ListItem>
           <Link to="/agreement/title">Roommate Agreement Information</Link>
         </ListItem>
       </List>

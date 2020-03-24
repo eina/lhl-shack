@@ -23,7 +23,7 @@ import Preview from "./AgreementPreview";
 
 const AgreementForm = () => {
   const { state }: { state: any } = useContext(AppContext);
-  const [initialVals, setInitialVals] = useState(finishedAgreement);
+  const [initialVals, setInitialVals] = useState(initialValues);
   const [agreementID, setAgreementID] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const history = useHistory();
@@ -42,12 +42,12 @@ const AgreementForm = () => {
     };
 
     if (state && state.currUser && !agreementID) {
-      // const { currUser } = state;
-      // const { first_name, last_name, phone_number, email } = currUser;
-      // setInitialVals((prev: any) => ({
-      //   ...prev,
-      //   roommates: [{ first_name, last_name, phone_number, email }, { first_name: "", last_name: "", phone_number: "", email: ""}]
-      // }));
+      const { currUser } = state;
+      const { first_name, last_name, phone_number, email } = currUser;
+      setInitialVals((prev: any) => ({
+        ...prev,
+        roommates: [{ first_name, last_name, phone_number, email }, { first_name: "", last_name: "", phone_number: "", email: ""}]
+      }));
 
       getHouseholdDetails(state.currUser);
     }
@@ -59,12 +59,12 @@ const AgreementForm = () => {
     const { currUser: { household } } = state;
     console.log('hello agreementId', agreementID);
     console.log('hi form values', values);
-    // submitAgreement({ formVals: values, householdID: household, agreementID, isComplete: true  }).then(() => {
-    //   console.log('sent things to the server!');
-    //   actions.setSubmitting(false);
-    //   setSubmitSuccess(true);
-    //   history.push('/agreement/preview');
-    // });
+    submitAgreement({ formVals: values, householdID: household, agreementID, isComplete: true  }).then(() => {
+      console.log('sent things to the server!');
+      actions.setSubmitting(false);
+      setSubmitSuccess(true);
+      history.push('/agreement/preview');
+    });
   };
 
   if (!state) {

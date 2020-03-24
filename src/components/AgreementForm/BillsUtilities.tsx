@@ -74,7 +74,7 @@ const Bills = (props: any) => {
 
                   <FieldSet
                     type="number"
-                    name={`bills.${index}.portion`}
+                    name={`bills.${index}.bill_portion`}
                     label="Amount per Roommate"
                     isReadOnly={true}
                     value={

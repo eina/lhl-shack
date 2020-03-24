@@ -1,44 +1,47 @@
-import React, { useContext, useEffect } from "react";
-import axios from "axios";
-import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
-import { ThemeProvider, CSSReset, theme, Grid, Box } from "@chakra-ui/core";
+import React, { useContext, useEffect } from 'react';
+import axios from 'axios';
+import { BrowserRouter, Switch, Route, useLocation } from 'react-router-dom';
+import { ThemeProvider, CSSReset, theme, Grid, Box } from '@chakra-ui/core';
 
-import { displayFullName } from "./helpers/functions";
-import { AppContext, AppProvider } from "./Store";
+import { displayFullName } from './helpers/functions';
+import { AppContext, AppProvider } from './Store';
 
-import AppLoading from "./components/AppLoading";
-import AppHeader from "./components/AppHeader";
-import MainMenu from "./components/MainMenu";
+import AppLoading from './components/AppLoading';
+import AppHeader from './components/AppHeader';
+import MainMenu from './components/MainMenu';
 
-import Home from "./pages/Home";
-import Test from "./pages/Test";
-import Agreement from "./pages/Agreement";
-import Account from "./pages/Account";
-import AgreementMenu from "./components/AgreementForm/AgreementMenu";
+import Home from './pages/Home';
+import Test from './pages/Test';
+import Agreement from './pages/Agreement';
+import Account from './pages/Account';
+import AgreementMenu from './components/AgreementForm/AgreementMenu';
 import Household from './pages/Household';
-
+import Resources from './pages/Resources';
 
 // test data
 const currUser = {
-  id: "1",
-  first_name: "Tracy",
-  last_name: "Barrows",
-  phone_number: "448-504-4347",
-  email: "test@test.com",
-  password: "testing",
-  household: "951bfa7e-d0e1-414d-9327-5e8c4bc8c56b"
+  id: '1',
+  first_name: 'Tracy',
+  last_name: 'Barrows',
+  phone_number: '448-504-4347',
+  email: 'test@test.com',
+  password: 'testing',
+  household: '951bfa7e-d0e1-414d-9327-5e8c4bc8c56b',
 };
 
 const AppContent = () => {
-  const { state, updateState }: { state: any; updateState: Function } = useContext(AppContext);
+  const {
+    state,
+    updateState,
+  }: { state: any; updateState: Function } = useContext(AppContext);
   const { pathname: currentPath } = useLocation();
-  const isAgreementForm = currentPath.startsWith("/agreement");
+  const isAgreementForm = currentPath.startsWith('/agreement');
   useEffect(() => {
     const getUserData = () => {
-      axios.get("/api/users/1").then(user => {
+      axios.get('/api/users/1').then(user => {
         updateState({
           currUser: user.data,
-          fullName: displayFullName(user.data.first_name, user.data.last_name)
+          fullName: displayFullName(user.data.first_name, user.data.last_name),
         });
       });
     };
@@ -68,6 +71,7 @@ const AppContent = () => {
                 <Route path="/test" component={Test} />
                 <Route path="/account" component={Account} />
                 <Route path="/household" component={Household} />
+                <Route path="/resources" component={Resources} />
               </Switch>
             )}
           </Box>

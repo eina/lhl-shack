@@ -4,14 +4,13 @@ import {
   Heading,
   Link,
   Icon,
-  Stack,
-  Text,
   Box,
   Accordion,
   AccordionItem,
   AccordionHeader,
   AccordionPanel,
   AccordionIcon,
+  Divider
 } from '@chakra-ui/core';
 
 const Resources = () => {
@@ -41,6 +40,7 @@ const Resources = () => {
             >
               Tenant Survival Guide <Icon name="external-link" mx="2px" />
             </Link>
+            <Divider />
             <p>
               The Tenant Rights website has outlined the BC Residential Tenancy
               Act to help tenants navigate the details of the Act.

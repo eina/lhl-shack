@@ -1,4 +1,5 @@
 import moment from "moment";
+import { v4 as uuidV4 } from "uuid";
 import { stringEditorStateToContent } from "../../helpers/functions";
 
 const billShape = {
@@ -6,7 +7,8 @@ const billShape = {
   total_amount: 0,
   due_date: moment(),
   interval: [], // once, monthly, every 2 months, annually
-  user_amount: 0
+  user_amount: 0,
+  bill_uuid: uuidV4()
   // portion: [
   //   { roommate: [], roommate_amt: 0 },
   //   { roommate: [], roommate_amt: 0 }

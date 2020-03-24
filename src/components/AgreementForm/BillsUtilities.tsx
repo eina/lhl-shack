@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { v4 as uuidV4 } from "uuid";
 import moment from "moment";
 import { FieldArray } from "formik";
 import { Box, Button, Heading, List, ListItem, Divider, Flex, FormLabel, Switch } from "@chakra-ui/core";
@@ -41,6 +42,12 @@ const Bills = (props: any) => {
                     name={`bills.${index}.name`}
                     label="Bill Name"
                     isReadOnly={index < 2}
+                  />
+                  <FieldSet
+                    type="text"
+                    name={`bills.${index}.bill_uuid`}
+                    label="Bill ID"
+                    isReadOnly={true}
                   />
                   <FieldSet
                     type="number"
@@ -102,7 +109,8 @@ const Bills = (props: any) => {
                   total_amount: 0,
                   due_date: moment(),
                   interval: [],
-                  user_amount: 0
+                  user_amount: 0,
+                  bill_uuid: uuidV4()
                 })
               }
             >

@@ -6,6 +6,7 @@ import { FormikValues } from "formik";
 
 import { formatHousekeepingForDB } from "../../helpers/functions";
 import Preview from "./AgreementPreview";
+// import { userInfo } from "os";
 
 type AgreementProps = {
   formVals: FormikValues;
@@ -57,6 +58,7 @@ const submitAgreement = ({ formVals, householdID, agreementID, isComplete }: Agr
         // save the users
         // check if the users exist first
         const usersPromiseArray = formVals.roommates.map((roomie: any) =>
+          // stop the whole thing here if the user emails are the same
           axios.get(`/api/users?email=${roomie.email}`)
         );
         return Promise.all(usersPromiseArray)
@@ -70,8 +72,7 @@ const submitAgreement = ({ formVals, householdID, agreementID, isComplete }: Agr
                     password: uuidV4()
                   })
                   .then(createdUser => {
-                    console.log("createdUser", createdUser);
-                    return createdUser.data[0].id;
+                    return createdUser.data.id;
                   });
               } else {
                 return axios
@@ -79,7 +80,6 @@ const submitAgreement = ({ formVals, householdID, agreementID, isComplete }: Agr
                     ...formVals.roommates[index]
                   })
                   .then(editedUser => {
-                    console.log("editedUser", editedUser);
                     return editedUser.data.id;
                   });
               }
@@ -87,26 +87,35 @@ const submitAgreement = ({ formVals, householdID, agreementID, isComplete }: Agr
           })
           .then(users => Promise.all(users)) // grab users id
           .then(usersIDs => {
-            const billIdentifier = uuidV4();
             return axios.get(`/api/bills?household_id=${householdID}`).then(houseBills => {
               console.log("houseBills.data", houseBills.data);
+              console.log("user ids", usersIDs);
               // if there are no bills
               // make a bill, loop through the usersIDs
-              return usersIDs.map((userID, index) => {
-                if (!houseBills.data.length) {
+              if (!houseBills.data.length) {
+                return formVals.bills.map((bill: any) => {
+                  const billIdentifier = uuidV4();
                   const billToSend = {
-                    ...formVals.bills[index],
-                    total_amount: formVals.bills[index].total_amount * 1,
-                    interval: formVals.bills[index].interval.value,
+                    ...bill,
+                    total_amount: bill.total_amount * 1,
+                    interval: bill.interval.value,
                     bill_uuid: billIdentifier,
-                    user_id: userID,
                     household_id: householdID
                   };
-                  return axios.post("/api/bills/", billToSend);
-                } else {
-                  console.log("something");
-                }
-              });
+                  return usersIDs.map(userID => {
+                    console.log("creating a bill for", userID);
+                    return axios.post("/api/bills/", { ...billToSend, user_id: userID });
+                  });
+                });
+              } else {
+                // have list of bills,
+                // since am
+                const billIdentifiers = houseBills.data.map((bill: any) => ({
+                  bill_id: bill.id,
+                  bill_uuid: bill.bill_uuid
+                }));
+                console.log("something", billIdentifiers);
+              }
             });
           }); // return vals.data;
       } else {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
-import { Heading } from '@chakra-ui/core';
+import { Heading, Grid, Box, Avatar } from '@chakra-ui/core';
 
 import { displayFullName } from '../helpers/functions';
 
@@ -122,42 +122,49 @@ const Household = () => {
       });
   }, []);
 
-  console.log('here are the roomiez: ', roomies);
-
-  // useEffect(() => {
-  //   axios.get('/api/landlords/1').then(vals => {
-  //     setLandlord(vals.data);
-  //   });
-  // }, []);
-
   return (
     house && (
       <div>
-        <Heading as="h1">My house</Heading>
-        <div>{house.address}</div>
-        <div>
+        <dl>
+          <Heading as="h3">Household</Heading>
+        </dl>
+        <dd>{house.address}</dd>
+        {/* <dd>
           {house.start_date} - {house.end_date}
-        </div>
-        ${house.total_rent_amt}/month
+        </dd> */}
+        {/* <dd>${house.total_rent_amt}/month</dd> */}
+        <dl>
+          <Heading as="h3">My Landlord</Heading>
+          <dd>
+            <b>Landlord:</b> {landlord.first_name} {landlord.last_name}
+          </dd>
+          <dd>
+            <b>Phone number:</b> {landlord.phone_number}
+          </dd>
+          <dd>
+            <b>Email:</b> {landlord.email}
+          </dd>
+          <dd>
+            <b>Address:</b> {landlord.address}
+          </dd>
+        </dl>
         <div>
-          <Heading as="h1">My Landlord</Heading>
-          <div>
-            {landlord.first_name} {landlord.last_name}
-          </div>
-          <div>{landlord.phone_number}</div>
-          <div>{landlord.email}</div>
-          <div>{landlord.address}</div>
-          <div>
-            <Heading as="h1">My Roommates</Heading>
-            {roomies.map((roomie: any) => (
-              <div key={roomie.id}>
-              
-                <p>{roomie.first_name} {roomie.last_name}</p>
-                <p>{roomie.phone_number}</p>
-                <p>{roomie.email}</p>
-              </div>
-            ))}
-          </div>
+          <Heading as="h3">Roommates</Heading>
+
+          {roomies.map((roomie: any) => (
+            <div key={roomie.id}>
+              <Grid templateColumns="repeat(6, 1fr)" gap={6}>
+                <Box rounded="md" border="blue.400">
+                  <Avatar src={roomie.avatar} />
+                  <p>
+                    {roomie.first_name} {roomie.last_name}
+                  </p>
+                  <p>{roomie.phone_number}</p>
+                  <p>{roomie.email}</p>
+                </Box>
+              </Grid>
+            </div>
+          ))}
         </div>
       </div>
     )

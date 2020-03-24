@@ -31,7 +31,8 @@ const currUser = {
 const AppContent = () => {
   const { state, updateState }: { state: any; updateState: any } = useContext(AppContext);
   const { pathname: currentPath } = useLocation();
-  const isHouseholdOrAgreementForm = currentPath.startsWith("/create-household") || currentPath.startsWith("/agreement");
+  const isHouseholdOrAgreementForm =
+    currentPath.startsWith("/create-household") || currentPath.startsWith("/agreement");
   useEffect(() => {
     const getUserData = () => {
       axios.get("/api/users/1").then(user => {
@@ -47,7 +48,6 @@ const AppContent = () => {
     //   fullName: displayFullName(currUser.first_name, currUser.last_name)
     // });
   }, [updateState]);
-  
 
   if (state && state.currUser) {
     return (
@@ -61,7 +61,7 @@ const AppContent = () => {
             {isHouseholdOrAgreementForm ? (
               // Agreement Form
               <Switch>
-                <Route path="/create-household" component={CreateHousehold}/>
+                <Route path="/create-household" component={CreateHousehold} />
                 <Route path="/agreement" component={Agreement} />
               </Switch>
             ) : (
@@ -92,7 +92,6 @@ const App = () => {
         </AppProvider>
       </BrowserRouter>
     </ThemeProvider>
-    
   );
 };
 

@@ -119,7 +119,7 @@ const AgreementForm = () => {
             <Route path="/agreement/household" component={Household} /> */}
             <Route path="/agreement/roommates" component={Roommates} />
             <Redirect from="/agreement/bills" to="/agreement/bills/rent" exact />
-            <Route path="/agreement/bills/rent">
+            {/* <Route path="/agreement/bills/rent">
               <Rent
                 values={values}
                 setFieldValue={setFieldValue}
@@ -136,8 +136,8 @@ const AgreementForm = () => {
                 errors={errors}
                 touched={touched}
               />
-            </Route>
-            <Route path="/agreement/bills/utilities">
+            </Route> */}
+            <Route path="/agreement/bills">
               <BillsUtilities
                 values={values}
                 setFieldValue={setFieldValue}

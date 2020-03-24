@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 import { FieldArray } from "formik";
-import { Box, Button, Heading, List, ListItem, Divider } from "@chakra-ui/core";
+import { Box, Button, Heading, List, ListItem, Divider, Flex, FormLabel, Switch } from "@chakra-ui/core";
 
 // import { FormValues } from "../../interfaces";
 
@@ -17,19 +17,24 @@ const Bills = (props: any) => {
 
   return (
     <Box as="section">
-      <Heading as="h2">Bills: Utilities</Heading>
+      <Heading as="h2">Bills</Heading>
       <FieldArray name="bills">
         {arrayHelpers => (
           <div>
             <List as="ol" styleType="decimal">
               {values.bills.map((bill: any, index: number, arr: any) => (
                 <ListItem key={index}>
-                  {arr.length > 1 && (
+                  {arr.length > 2 && index > 1 && (
                     <Button type="button" onClick={() => arrayHelpers.remove(index)}>
                       Remove
                     </Button>
                   )}
-                  <FieldSet type="text" name={`bills.${index}.name`} label="Bill Name" />
+                  <FieldSet
+                    type="text"
+                    name={`bills.${index}.name`}
+                    label="Bill Name"
+                    isReadOnly={index < 2}
+                  />
                   <FieldSet
                     type="number"
                     name={`bills.${index}.total_amount`}
@@ -78,11 +83,11 @@ const Bills = (props: any) => {
                     label="Amount per Roommate"
                     isReadOnly={true}
                     value={
-                      values.bills[index].total_amount ? values.bills[index].total_amount / numRoommates : 0
+                      values.bills[index].total_amount
+                        ? values.bills[index].total_amount / numRoommates
+                        : 0
                     }
                   />
-
-                  <Divider />
                 </ListItem>
               ))}
             </List>
@@ -91,10 +96,10 @@ const Bills = (props: any) => {
               onClick={() =>
                 arrayHelpers.push({
                   name: "",
-                  totalAmount: 0,
+                  total_amount: 0,
                   due_date: moment(),
                   interval: [],
-                  portion: 0
+                  bill_portion: 0
                 })
               }
             >

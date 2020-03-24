@@ -67,34 +67,40 @@ export default object().shape({
         phone_number: yupCdnPhone.required(requiredMsg)
       })
     ),
-  rent: object().shape({
-    total_amount: yupMin1.required(requiredMsg),
-    due_date: date().required(requiredMsg),
-    interval: yupReactSelect,
-    portion: array().of(
-      object().shape({
-        roommate: yupReactSelect,
-        roommate_amt: yupMin1
-      })
-    )
-  }),
-  securityDeposit: object().shape({
-    total_amount: yupMin1.required(requiredMsg),
-    due_date: object().required(requiredMsg),
-    interval: yupReactSelect,
-    portion: array().of(
-      object().shape({
-        roommate: yupReactSelect,
-        roommate_amt: yupMin1
-      })
-    )
-  }),
+  // rent: object().shape({
+  //   total_amount: yupMin1.required(requiredMsg),
+  //   due_date: date().required(requiredMsg),
+  //   interval: yupReactSelect,
+  //   portion: array().of(
+  //     object().shape({
+  //       roommate: yupReactSelect,
+  //       roommate_amt: yupMin1
+  //     })
+  //   )
+  // }),
+  // securityDeposit: object().shape({
+  //   total_amount: yupMin1.required(requiredMsg),
+  //   due_date: object().required(requiredMsg),
+  //   interval: yupReactSelect,
+  //   portion: array().of(
+  //     object().shape({
+  //       roommate: yupReactSelect,
+  //       roommate_amt: yupMin1
+  //     })
+  //   )
+  // }),
   bills: array().of(
     object().shape({
       name: yupName.required(requiredMsg),
       total_amount: yupMin1.required(requiredMsg),
       due_date: date().required(requiredMsg),
-      interval: yupReactSelect
+      interval: yupReactSelect,
+      // portion: array().of(
+      //   object().shape({
+      //     roommate: yupReactSelect,
+      //     roommate_amt: yupMin1
+      //   })
+      // )
     })
   ),
   housekeeping: object().shape({

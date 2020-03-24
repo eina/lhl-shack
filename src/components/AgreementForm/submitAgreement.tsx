@@ -79,6 +79,7 @@ const submitAgreement = ({ formVals, householdID, agreementID, isComplete }: Agr
             return axios.get(`/api/bills?household_id=${householdID}`).then(houseBills => {
               const { portion: rentPortion, ...rentDetails} = formVals.rent;
               const { portion: depositPortion, ...depositDetails } = formVals.securityDeposit;
+              // simplified bills table: total_amount, user_amount, name, due_date, interval
               // if there are no bills
               if (!houseBills.data.length) {
                 console.log("trying to save bills!", { rentDetails, depositDetails });

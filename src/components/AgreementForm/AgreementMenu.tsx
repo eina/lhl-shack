@@ -29,7 +29,7 @@ const AgreementMenu = () => {
         </ListItem>
         <ListItem>
           <Link to="/agreement/bills">Bills</Link>
-          <List ml={4} styleType="disc">
+          {/* <List ml={4} styleType="disc">
             <ListItem>
               <Link to="/agreement/bills/rent">Bills: Rent</Link>
             </ListItem>
@@ -39,7 +39,7 @@ const AgreementMenu = () => {
             <ListItem>
               <Link to="/agreement/bills/utilities">Bills: Utilities</Link>
             </ListItem>
-          </List>
+          </List> */}
         </ListItem>
         <ListItem>
           <Link to="/agreement/housekeeping">Housekeeping</Link>

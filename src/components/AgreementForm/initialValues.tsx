@@ -2,10 +2,15 @@ import moment from "moment";
 import { stringEditorStateToContent } from "../../helpers/functions";
 
 const billShape = {
-  name: null,
+  name: "Rent",
   total_amount: 0,
   due_date: moment(),
-  interval: [] // once, monthly, every 2 months, annually
+  interval: [], // once, monthly, every 2 months, annually
+  bill_portion: 0
+  // portion: [
+  //   { roommate: [], roommate_amt: 0 },
+  //   { roommate: [], roommate_amt: 0 }
+  // ]
 };
 
 const initialValues = {
@@ -14,23 +19,26 @@ const initialValues = {
     { first_name: "", last_name: "", email: "", phone_number: "" },
     { first_name: "", last_name: "", email: "", phone_number: "" }
   ],
-  rent: {
-    ...billShape,
-    portion: [
-      { roommate: [], roommate_amt: 0 },
-      { roommate: [], roommate_amt: 0 }
-    ]
-    // portion: [{ roommate: [], roommate_amt: 0, amt_type: [] }, { roommate: [], roommate_amt: 0, amt_type: [] }]
-  },
-  securityDeposit: {
-    ...billShape,
-    portion: [
-      { roommate: [], roommate_amt: 0 },
-      { roommate: [], roommate_amt: 0 }
-    ]
-    // portion: [{ roommate: [], roommate_amt: 0, amt_type: [] }, { roommate: [], roommate_amt: 0, amt_type: [] }]
-  },
-  bills: [{ ...billShape }],
+  // rent: {
+  //   ...billShape,
+  //   portion: [
+  //     { roommate: [], roommate_amt: 0 },
+  //     { roommate: [], roommate_amt: 0 }
+  //   ]
+  //   // portion: [{ roommate: [], roommate_amt: 0, amt_type: [] }, { roommate: [], roommate_amt: 0, amt_type: [] }]
+  // },
+  // securityDeposit: {
+  //   ...billShape,
+  //   portion: [
+  //     { roommate: [], roommate_amt: 0 },
+  //     { roommate: [], roommate_amt: 0 }
+  //   ]
+  //   // portion: [{ roommate: [], roommate_amt: 0, amt_type: [] }, { roommate: [], roommate_amt: 0, amt_type: [] }]
+  // },
+  bills: [
+    { ...billShape, name: "Rent" },
+    { ...billShape, name: "Security Deposit" }
+  ],
   housekeeping: {
     weekdayPM: "",
     weekdayAM: "",
@@ -182,23 +190,23 @@ export const finishedAgreement = formatDBInitialValues(
         weekendAM: "6",
         weekendPM: "12",
         petsPolicy:
-                 '{"blocks":[{"key":"6r0h3","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
+          '{"blocks":[{"key":"6r0h3","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
         guestPolicy:
-                 '{"blocks":[{"key":"13dm7","text":"Marshmallow  halvah gummi bears dragée candy. Pie marzipan muffin fruitcake. Topping  dessert halvah sweet topping. Chupa chups icing ice cream caramels.","type":"unstyled","depth":0,"inlineStyleRanges":[{"offset":0,"length":11,"style":"BOLD"},{"offset":20,"length":5,"style":"ITALIC"},{"offset":77,"length":7,"style":"UNDERLINE"}],"entityRanges":[],"data":{}}],"entityMap":{}}',
+          '{"blocks":[{"key":"13dm7","text":"Marshmallow  halvah gummi bears dragée candy. Pie marzipan muffin fruitcake. Topping  dessert halvah sweet topping. Chupa chups icing ice cream caramels.","type":"unstyled","depth":0,"inlineStyleRanges":[{"offset":0,"length":11,"style":"BOLD"},{"offset":20,"length":5,"style":"ITALIC"},{"offset":77,"length":7,"style":"UNDERLINE"}],"entityRanges":[],"data":{}}],"entityMap":{}}',
         roomsPolicy:
-                 '{"blocks":[{"key":"al2i6","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
+          '{"blocks":[{"key":"al2i6","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
         choresPolicy:
-                 '{"blocks":[{"key":"16rh6","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
+          '{"blocks":[{"key":"16rh6","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
         spacesPolicy:
-                 '{"blocks":[{"key":"7q3cn","text":"aaaaaaaaaaaaaaaaaaa","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
+          '{"blocks":[{"key":"7q3cn","text":"aaaaaaaaaaaaaaaaaaa","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
         smokingPolicy:
-                 '{"blocks":[{"key":"70o8m","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
+          '{"blocks":[{"key":"70o8m","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
         messagesPolicy:
-                 '{"blocks":[{"key":"11hkg","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
+          '{"blocks":[{"key":"11hkg","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
         vacationPolicy:
-                 '{"blocks":[{"key":"1067p","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
+          '{"blocks":[{"key":"1067p","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
         personalItemsPolicy:
-                 '{"blocks":[{"key":"104ap","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}'
+          '{"blocks":[{"key":"104ap","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}'
       },
       securityDeposit: {
         name: null,

@@ -1,7 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
-import { Heading, Grid, Box, Avatar } from '@chakra-ui/core';
+import {
+  Heading,
+  Grid,
+  Box,
+  Avatar,
+  Divider,
+  SimpleGrid,
+  Flex,
+} from '@chakra-ui/core';
 
 import { displayFullName } from '../helpers/functions';
 
@@ -128,6 +136,7 @@ const Household = () => {
         <dl>
           <Heading as="h3">Household</Heading>
         </dl>
+        <Divider />
         <dd>{house.address}</dd>
         {/* <dd>
           {house.start_date} - {house.end_date}
@@ -135,6 +144,7 @@ const Household = () => {
         {/* <dd>${house.total_rent_amt}/month</dd> */}
         <dl>
           <Heading as="h3">My Landlord</Heading>
+          <Divider />
           <dd>
             <b>Landlord:</b> {landlord.first_name} {landlord.last_name}
           </dd>
@@ -150,19 +160,19 @@ const Household = () => {
         </dl>
         <div>
           <Heading as="h3">Roommates</Heading>
-
+          <Divider />
           {roomies.map((roomie: any) => (
             <div key={roomie.id}>
-              <Grid templateColumns="repeat(6, 1fr)" gap={6}>
-                <Box rounded="md" border="blue.400">
+              <SimpleGrid columns={2} spacing={5}>
+                <span>
                   <Avatar src={roomie.avatar} />
                   <p>
                     {roomie.first_name} {roomie.last_name}
                   </p>
                   <p>{roomie.phone_number}</p>
                   <p>{roomie.email}</p>
-                </Box>
-              </Grid>
+                </span>
+              </SimpleGrid>
             </div>
           ))}
         </div>

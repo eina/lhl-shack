@@ -1,7 +1,14 @@
 import React, { useContext, useEffect } from 'react';
 import axios from 'axios';
 import { BrowserRouter, Switch, Route, useLocation } from 'react-router-dom';
-import { ThemeProvider, CSSReset, theme, Grid, Box } from '@chakra-ui/core';
+import {
+  ThemeProvider,
+  CSSReset,
+  theme,
+  Grid,
+  Box,
+  Divider,
+} from '@chakra-ui/core';
 
 import { displayFullName } from './helpers/functions';
 import { AppContext, AppProvider } from './Store';
@@ -19,15 +26,15 @@ import Household from './pages/Household';
 import Resources from './pages/Resources';
 
 // test data
-const currUser = {
-  id: '1',
-  first_name: 'Tracy',
-  last_name: 'Barrows',
-  phone_number: '448-504-4347',
-  email: 'test@test.com',
-  password: 'testing',
-  household: '951bfa7e-d0e1-414d-9327-5e8c4bc8c56b',
-};
+// const currUser = {
+//   id: '1',
+//   first_name: 'Tracy',
+//   last_name: 'Barrows',
+//   phone_number: '448-504-4347',
+//   email: 'test@test.com',
+//   password: 'testing',
+//   household: '951bfa7e-d0e1-414d-9327-5e8c4bc8c56b',
+// };
 
 const AppContent = () => {
   const {
@@ -48,8 +55,6 @@ const AppContent = () => {
     getUserData();
   }, [updateState]);
 
-  // console.log("state is here", state);
-
   if (state && state.currUser) {
     return (
       <Box className="App" w="100%">
@@ -67,11 +72,11 @@ const AppContent = () => {
             ) : (
               // Main App Contents
               <Switch>
-                <Route path="/" exact component={Home} />
+                {/* <Route path="/" exact component={Home} /> */}
                 <Route path="/test" component={Test} />
-                <Route path="/account" component={Account} />
                 <Route path="/household" component={Household} />
                 <Route path="/resources" component={Resources} />
+                <Route path="/account" component={Account} />
               </Switch>
             )}
           </Box>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Button } from "@chakra-ui/core";
 import axios from 'axios';
-import { Formik, Form, FormikValues, FormikProps } from 'formik';
+import { Formik, FormikValues, FormikProps } from 'formik';
 
 import { AppContext } from "../../Store";
 
@@ -43,14 +43,12 @@ const CreateHouseholdForm = () => {
   console.log('hi state', state);
 
   return (
-    <Formik initialValues={initialValues} validationSchema={householdForm} onSubmit={(values, actions) => submitHousehold(values, actions)}>
+    <Formik initialValues={initialValues}  enableReinitialize={true} validationSchema={householdForm} onSubmit={(values, actions) => submitHousehold(values, actions)}>
       {({
-        errors,
         handleSubmit,
         isSubmitting
       }: FormikProps<any>) => (
         <form onSubmit={handleSubmit}>
-          {JSON.stringify(errors)}
           <Landlord />
           <Household />
           <Button type="submit" mt={5} mb={3} isLoading={isSubmitting} loadingText="Creating Household">Create Household</Button>

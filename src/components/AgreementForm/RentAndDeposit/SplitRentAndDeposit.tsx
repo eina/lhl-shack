@@ -56,7 +56,7 @@ const SplitRentAndDeposit = (props: any) => {
         {arrayHelpers => (
           <div>
             <ol>
-              {values.rent.portion.map((person: object, index: number, arr: any) => (
+              {values[sectionName].portion.map((person: object, index: number, arr: any) => (
                 <li key={index}>
                   {(index > 0 || arr.length > 1) && (
                     <Button type="button" onClick={() => arrayHelpers.remove(index)}>
@@ -94,10 +94,13 @@ const SplitRentAndDeposit = (props: any) => {
             </ol>
 
             {/* add more roommates if  # of roommates =/= length of FieldArray */}
-            {values.roommates.length > values.rent.portion.length && (
+            {values.roommates.length > values[sectionName].portion.length && (
               <Button
                 type="button"
-                onClick={() => arrayHelpers.push({ roommate: [], roommate_amt: 0, amt_type: [] })}
+                onClick={() => {
+                  console.log("puuuush");
+                  arrayHelpers.push({ roommate: [], roommate_amt: 0, amt_type: [] });
+                }}
               >
                 Add Roommate
               </Button>

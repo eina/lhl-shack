@@ -29,7 +29,7 @@ const Title = () => {
         agreeing to terms with any roommates.
       </Text>
       <Button
-        variantColor="pink"
+        // variantColor="pink"
         onClick={() => {
           history.push("/agreement/household");
         }}

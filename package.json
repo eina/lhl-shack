@@ -29,6 +29,7 @@
     "react-dates": "^21.8.0",
     "react-dom": "^16.13.0",
     "react-router-dom": "^5.1.2",
+    "react-router-navigation-prompt": "^1.8.10",
     "react-scripts": "3.4.0",
     "react-select": "^3.0.8",
     "typescript": "^3.8.3",

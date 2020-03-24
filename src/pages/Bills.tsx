@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import react-table from 'react-table'
+import module = require("react-table")
 const Styles = styled.div `
   table {
     width: 100%;
@@ -24,3 +26,38 @@ const Styles = styled.div `
     }
   }
 `
+
+function Table({columns, data}) {
+  const {getTableProps, getTableBodyProps, headerGroups, rows, prepareRow} = useTable({columns, data})
+
+  // Render Data Table UI
+  return (
+    <table {...getTableProps()}>
+      <thead>
+        {headerGroups.map(headerGroup => (
+          <tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup
+              .headers
+              .map(column => (
+                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+              ))}
+          </tr>
+        ))}
+      </thead>
+      <tbody {...getTableBodyProps()}>
+        {rows.map((row, i) => {
+          prepareRow(row);
+          return (
+            <tr {...row.getRowProps()}>
+              {row
+                .cells
+                .map(cell => {
+                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                })}
+            </tr>
+          )
+        })}
+      </tbody>
+    </table>
+  )
+}

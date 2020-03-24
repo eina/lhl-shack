@@ -73,7 +73,7 @@ const AppContent = () => {
             ) : (
               // Main App Contents
               <Switch>
-                <Route path="/" component={Home} />
+                <Route path="/"  exact component={Home} />
                 <Route path="/test" component={Test} />
                 <Route path="/household" component={Household} />
                 <Route path="/account" component={Housekeeping} />

@@ -61,10 +61,10 @@ export default object().shape({
     // .min(2, `You must have at least 2 two people in a household`)
     .of(
       object().shape({
-        firstName: yupName.required(requiredMsg),
-        lastName: yupName.required(requiredMsg),
+        first_name: yupName.required(requiredMsg),
+        last_name: yupName.required(requiredMsg),
         email: yupEmail.required(requiredMsg),
-        phone: yupCdnPhone.required(requiredMsg)
+        phone_number: yupCdnPhone.required(requiredMsg)
       })
     ),
   rent: object().shape({

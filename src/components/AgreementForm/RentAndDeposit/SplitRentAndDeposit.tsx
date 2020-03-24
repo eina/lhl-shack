@@ -14,7 +14,7 @@ const SplitRentAndDeposit = (props: any) => {
 
   const roommateOptions = values.roommates.map((roomie: any) => ({
     value: roomie,
-    label: displayFullName(roomie.firstName, roomie.lastName)
+    label: displayFullName(roomie.first_name, roomie.last_name)
   }));
 
   const errorObj = errors && errors[sectionName];
@@ -26,9 +26,9 @@ const SplitRentAndDeposit = (props: any) => {
         name={`${sectionName}.totalAmt`}
         label="Total Amount to Pay"
         type="number"
-        value={values.household[`${sectionName}Amt`]}
+        // value={values.household[`${sectionName}Amt`]}
         inputGroup={{ left: { addOn: "$" } }}
-        isReadOnly={true}
+        // isReadOnly={true}
       />
 
       <FormikSingleDatePicker

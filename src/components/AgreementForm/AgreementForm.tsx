@@ -43,10 +43,10 @@ const AgreementForm = () => {
 
     if (state && state.currUser && !agreementID) {
       // const { currUser } = state;
-      // const { first_name: firstName, last_name: lastName, phone_number: phone, email } = currUser;
+      // const { first_name, last_name, phone_number, email } = currUser;
       // setInitialVals((prev: any) => ({
       //   ...prev,
-      //   roommates: [{ firstName, lastName, phone, email }, { firstName: "", lastName: "", phone: "", email: ""}]
+      //   roommates: [{ first_name, last_name, phone_number, email }, { first_name: "", last_name: "", phone_number: "", email: ""}]
       // }));
 
       getHouseholdDetails(state.currUser);
@@ -58,6 +58,7 @@ const AgreementForm = () => {
   const submitForm = (values: FormikValues, actions: any) => {
     const { currUser: { household } } = state;
     console.log('hello agreementId', agreementID);
+    console.log('hi form values', values);
     submitAgreement({ formVals: values, householdID: household, agreementID, isComplete: true  }).then(() => {
       console.log('sent things to the server!');
       actions.setSubmitting(false);
@@ -88,7 +89,7 @@ const AgreementForm = () => {
         isSubmitting
       }: FormikProps<any>) => (
         <form onSubmit={handleSubmit}>
-          {/* <p>{JSON.stringify(errors)}</p> */}
+          <p>{JSON.stringify(errors)}</p>
           <NavigationPrompt
             when={(current, next) => {
               // if initialValues === values --> you can navigate away cause nothing changed

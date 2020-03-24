@@ -1,10 +1,11 @@
-import React from 'react';
-import ReactDOMServer from 'react-dom/server';
-import axios from 'axios';
-import { FormikValues } from 'formik';
+import React from "react";
+import ReactDOMServer from "react-dom/server";
+import axios from "axios";
+import { v4 as uuidV4 } from "uuid";
+import { FormikValues } from "formik";
 
-import { formatHousekeepingForDB } from '../../helpers/functions';
-import Preview from './AgreementPreview';
+import { formatHousekeepingForDB } from "../../helpers/functions";
+import Preview from "./AgreementPreview";
 
 type AgreementProps = {
   formVals: FormikValues;
@@ -29,12 +30,15 @@ const saveAgreement = ({ formVals, householdID, agreementID, isComplete }: Agree
   // }
 
   dataToSend = dataWithoutHTML;
-  
+
   const agreementRequest = agreementID
-    ? axios.patch(`/api/agreements/${agreementID}`, dataToSend)
-      .then(() => axios.patch(`/api/households/${householdID}`, { housekeeping: JSON.stringify(formVals.housekeeping)}))
+    ? axios.patch(`/api/agreements/${agreementID}`, dataToSend).then(() =>
+        axios.patch(`/api/households/${householdID}`, {
+          housekeeping: JSON.stringify(formVals.housekeeping)
+        })
+      )
     : axios.post("/api/agreements", dataToSend);
-  
+
   return agreementRequest;
 };
 
@@ -47,8 +51,34 @@ const submitAgreement = ({ formVals, householdID, agreementID, isComplete }: Agr
   // save the users
   // save the bills
   // save the agreement
-  return saveAgreement({ formVals: formattedValues, householdID, agreementID, isComplete });
-   
+  // only save the other things when submitting from the agreement form (isComplete == true)
+  return saveAgreement({ formVals: formattedValues, householdID, agreementID, isComplete }).then(
+    vals => {
+      if (isComplete) {
+        const usersPromiseArray = formVals.roommates.map((roomie: any) =>
+          axios.get(`/api/users?email=${roomie.email}`)
+        );
+        console.log(usersPromiseArray);
+        return Promise.all(usersPromiseArray).then(usersData => {
+          return usersData.map((user: any, index: number) => {
+            console.log(formVals.roommates[index]);
+            // if user doesn't exist
+            if (user.data.length === 0) {
+              return axios.post(`/api/users/`, {
+                ...formVals.roommates[index],
+                password: uuidV4()
+              });
+            } else {
+              return axios.patch(`/api/users/${user.data[0].id}`, { ...formVals.roommates[index] });
+            }
+          });
+        });
+        // return vals.data;
+      } else {
+        return vals.data;
+      }
+    }
+  );
 };
 
 export default submitAgreement;

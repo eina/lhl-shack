@@ -25,10 +25,10 @@ const Roommates = () => {
                       Remove
                     </Button>
                   )}
-                  <FieldSet type="text" name={`roommates.${index}.firstName`} label="First Name" />
-                  <FieldSet type="text" name={`roommates.${index}.lastName`} label="Last Name" />
+                  <FieldSet type="text" name={`roommates.${index}.first_name`} label="First Name" />
+                  <FieldSet type="text" name={`roommates.${index}.last_name`} label="Last Name" />
                   <FieldSet type="email" name={`roommates.${index}.email`} label="Email" />
-                  <FieldSet type="tel" name={`roommates.${index}.phone`} label="Phone" />
+                  <FieldSet type="tel" name={`roommates.${index}.phone_number`} label="Phone" />
                   <Divider />
                 </ListItem>
               ))}
@@ -37,10 +37,10 @@ const Roommates = () => {
               type="button"
               onClick={() =>
                 arrayHelpers.push({
-                  firstName: "",
-                  lastName: "",
+                  first_name: "",
+                  last_name: "",
                   email: "",
-                  phone: ""
+                  phone_number: ""
                 })
               }
             >

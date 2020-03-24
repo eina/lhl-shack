@@ -14,7 +14,7 @@ const Signatures = (props: any) => {
   const history = useHistory();
   const valuesChanged = JSON.stringify(values) !== JSON.stringify(initialValues);
   const roommateName = values.roommates.map((roomie: any) =>
-    displayFullName(roomie.firstName, roomie.lastName)
+    displayFullName(roomie.first_name, roomie.last_name)
   );
 
   return (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import moment from "moment";
 import { FieldArray } from "formik";
 import { Box, Button, Heading, List, ListItem, Divider, Flex, FormLabel, Switch } from "@chakra-ui/core";
@@ -14,6 +14,13 @@ import PrevNextNav from "./PrevNextNav";
 const Bills = (props: any) => {
   const { values, setFieldValue, handleBlur, errors, touched } = props;
   const numRoommates = values.roommates.length;
+
+  useEffect(() => {
+    // update bill portion when inputting total number
+    values.bills.map((bill: any, index: number) => {
+      setFieldValue(`bills[${index}].bill_portion`, bill.total_amount / numRoommates);
+    });
+  }, [values.bills]);
 
   return (
     <Box as="section">
@@ -82,11 +89,7 @@ const Bills = (props: any) => {
                     name={`bills.${index}.bill_portion`}
                     label="Amount per Roommate"
                     isReadOnly={true}
-                    value={
-                      values.bills[index].total_amount
-                        ? values.bills[index].total_amount / numRoommates
-                        : 0
-                    }
+                    value={ values.bills[index].total_amount / numRoommates }
                   />
                 </ListItem>
               ))}

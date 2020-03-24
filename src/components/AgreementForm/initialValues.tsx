@@ -2,7 +2,7 @@ import moment from "moment";
 import { stringEditorStateToContent } from "../../helpers/functions";
 
 const billShape = {
-  name: "Rent",
+  name: "",
   total_amount: 0,
   due_date: moment(),
   interval: [], // once, monthly, every 2 months, annually
@@ -79,14 +79,14 @@ export const formatDBInitialValues = (dbInitValsObj: any) => ({
   //     endDate: moment(dbInitValsObj.household.leaseDates.endDate)
   //   }
   // },
-  rent: {
-    ...dbInitValsObj.rent,
-    due_date: moment(dbInitValsObj.rent.due_date)
-  },
-  securityDeposit: {
-    ...dbInitValsObj.securityDeposit,
-    due_date: moment(dbInitValsObj.securityDeposit.due_date)
-  },
+  // rent: {
+  //   ...dbInitValsObj.rent,
+  //   due_date: moment(dbInitValsObj.rent.due_date)
+  // },
+  // securityDeposit: {
+  //   ...dbInitValsObj.securityDeposit,
+  //   due_date: moment(dbInitValsObj.securityDeposit.due_date)
+  // },
   bills: dbInitValsObj.bills.map((bill: any) => ({
     ...bill,
     due_date: moment(bill.due_date)

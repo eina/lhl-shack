@@ -11,9 +11,11 @@ interface Bill {
 }
 
 
-const testData = [{name: 'Bell Mobility', dueDate: '2020-03-23', total: 120, yourTotal: 60, billStatus: 'unpaid', yourPaymentStatus: 'late', roomiePaymentStatus: 'late'},
-{name: 'BC Hydro', dueDate: '2020-04-01', total: 80, yourTotal: 40, billStatus: 'unpaid', yourPaymentStatus: 'not due', roomiePaymentStatus: 'not due'},
- ]
+const testData = [{name: 'TELUS Internet', dueDate: '2020-03-23', total: 120, yourTotal: 60, billStatus: 'unpaid', yourPaymentStatus: 'late', roomiePaymentStatus: 'late'},
+{name: 'BC Hydro', dueDate: '2020-04-01', total: 80, yourTotal: 40, billStatus: 'unpaid', yourPaymentStatus: 'upcoming', roomiePaymentStatus: 'upcoming'},
+{name: 'Netflix', dueDate: '2020-04-30', total: 20, yourTotal: 10, billStatus: 'unpaid', yourPaymentStatus: 'upcoming', roomiePaymentStatus: 'upcoming'},
+{name: 'Utilities', dueDate: '2020-04-30', total: 100, yourTotal: 50, billStatus: 'unpaid', yourPaymentStatus: 'upcoming', roomiePaymentStatus: 'upcoming'},
+{name: 'TELUS Cable', dueDate: '2020-03-23', total: 120, yourTotal: 60, billStatus: 'unpaid', yourPaymentStatus: 'late', roomiePaymentStatus: 'late'}]
 
 const getData = (rowIndex: number): Bill => {
   return testData[rowIndex]
@@ -31,7 +33,7 @@ const Bills = () => {
   return (
     <div>
       <Heading as="h1">Bills</Heading>
-      <Table numRows={1}>
+      <Table numRows={5}>
         <Column name="Name" cellRenderer={getCellRenderer('name')} />
         <Column name="Due Date" cellRenderer={getCellRenderer('dueDate')} />
         <Column name="Total" cellRenderer={getCellRenderer('total')} />

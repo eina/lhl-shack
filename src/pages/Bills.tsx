@@ -12,19 +12,27 @@ const list = [
 
 const Bills = () => {
 // Render your table
-ReactDOM.render(
-  <Table
-    width={300}
-    height={300}
-    headerHeight={20}
-    rowHeight={30}
-    rowCount={list.length}
-    rowGetter={({index}) => list[index]}>
-    <Column label="Name" dataKey="name" width={100} />
-    <Column width={200} label="Description" dataKey="description" />
-  </Table>,
-  document.getElementById('example'),
-);
+
+  // ReactDOM.render(
+  //   <Table
+  //     width={300}
+  //     height={300}
+  //     headerHeight={20}
+  //     rowHeight={30}
+  //     rowCount={list.length}
+  //     rowGetter={({index}) => list[index]}>
+  //     <Column label="Name" dataKey="name" width={100} />
+  //     <Column width={200} label="Description" dataKey="description" />
+  //   </Table>,
+  //   document.getElementById('example'),
+  // );
+
+return (
+  <div>
+    <h1>Hi There!</h1>
+  </div>
+)
+
 
 }
 

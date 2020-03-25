@@ -87,6 +87,7 @@ const submitAgreement = ({ formVals, householdID, agreementID, isComplete }: Agr
           })
           .then(users => Promise.all(users)) // grab users id
           .then(usersIDs => {
+            // account for deleting == formVals.bills is not gonna be the same length as the server (grab it per household and count the keys?)
             // 1. loop through formvals to double check that you're not recreating a bill that's already made (through bill_uuid)
             return formVals.bills.map((bill: any) => {
               const billToSend = {
@@ -106,16 +107,21 @@ const submitAgreement = ({ formVals, householdID, agreementID, isComplete }: Agr
                     }
                   })
                   .then(houseBillPerUser => {
-                    // console.log("single bill per user", houseBillPerUser);
                     // check if bill exists for the user or not
                     if (!houseBillPerUser.data.length) {
                       console.log(`creating ${bill.bill_uuid} for userID`);
-                      return axios.post("/api/bills/", { ...billToSend, user_id: userID });
-                    } else {
-                      console.log(`updating (!?!) ${bill.bill_uuid} for userID`);
-                      return axios.patch(`/api/bills/${bill.id}`, {
+                      return axios.post("/api/bills/", {
                         ...billToSend,
                         user_id: userID
+                      });
+                    } else {
+                      console.log(`updating (!?!) ${bill.bill_uuid} for userID`);
+                      // loop through the created bills with that bill uuidhouseBillPerUser.data
+                      return houseBillPerUser.data.map((billToUpdate: any) => {
+                        return axios.patch(`/api/bills/${billToUpdate.id}`, {
+                          ...billToSend,
+                          user_id: userID
+                        });
                       });
                     }
                   });

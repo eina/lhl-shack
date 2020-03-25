@@ -102,8 +102,8 @@ const submitAgreement = ({ formVals, householdID, agreementID, isComplete }: Agr
                   .get("/api/bills", {
                     params: {
                       bill_uuid: bill.bill_uuid,
-                      household_id: householdID,
-                      user_id: userID
+                      household_id: householdID
+                      // user_id: userID
                     }
                   })
                   .then(houseBillPerUser => {

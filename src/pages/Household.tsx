@@ -71,34 +71,26 @@ const Household = () => {
   const [landlord, setLandlord] = useState<Landlord>(landlordDefaultValues);
   const [roomies, setRoomies] = useState(roomieInitialValues);
   const { currUser } = state;
-  console.log(currUser);
   useEffect(() => {
     let houseId: string;
     axios
       .get(`/api/households/${currUser.household}`)
       .then(vals => {
-        // console.log("Here is vals data: ",vals.data)
         houseId = vals.data.house_id;
-        // console.log("here is houseId: ", houseId)
         return houseId;
-        // setHousehold(vals.data);
       })
       .then(houseId => axios.get(`/api/houses/${houseId}`))
       .then(house => {
-        // console.log("this is house data: ", house.data);
         setHouse(house.data);
         return house.data.landlord_id;
       })
       .then(landlordId => axios.get(`/api/landlords/${landlordId}`))
       .then(landlord => {
-        // console.log("here is landlord: ", landlord.data)
         setLandlord(landlord.data);
       })
       .then(() => axios.get(`/api/households?house_id=${houseId}`))
       .then(tenants => {
-        // console.log('here are the tenants: ', tenants.data)
         const usersId = tenants.data.map((tenant: any) => tenant.user_id);
-        // console.log('here are users id: ', usersId)
         return usersId;
       })
       .then(usersId => {
@@ -115,7 +107,6 @@ const Household = () => {
         usersPromises.forEach((user: any) => {
           setRoomies((prev: any) => [...prev, user.data]);
         });
-        // users promises is an array. loop through it & put usersPromises.data into the state.
       });
   }, [currUser.household]);
 

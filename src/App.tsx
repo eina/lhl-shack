@@ -82,7 +82,7 @@ const AppContent = () => {
                 <Route path="/test" component={Test} />
                 <Route path="/household" component={Household} />
                 <Route path="/bills" component={Bills} />
-                <Route path="/account" component={Housekeeping} />
+                <Route path="/housekeeping" component={Housekeeping} />
                 <Route path="/resources" component={Resources} />
                 <Route path="/account" component={Account} />
                 <Route path="/household" component={Household} />

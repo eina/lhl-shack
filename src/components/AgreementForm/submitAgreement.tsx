@@ -43,10 +43,12 @@ const saveAgreement = ({ formVals, householdID, agreementID, isComplete }: Agree
   );
 };
 
-type SaveUsersProps = {
+type SavingProps = {
   formVals: any;
+  householdID?: any;
+  usersIDs?: any;
 };
-const saveUsers = ({ formVals }: SaveUsersProps) => {
+const saveUsers = ({ formVals }: SavingProps) => {
   // save the users
   // check if the users exist first
   const usersPromiseArray = formVals.roommates.map((roomie: any) =>
@@ -78,13 +80,55 @@ const saveUsers = ({ formVals }: SaveUsersProps) => {
   });
 };
 
+const saveBills = ({ formVals, householdID, usersIDs }: SavingProps) => {
+  // 1. loop through formvals to double check that you're not recreating a bill that's already made (through bill_uuid)
+  return formVals.bills.map((bill: any) => {
+    const billToSend = {
+      ...bill,
+      total_amount: bill.total_amount * 1,
+      interval: bill.interval.value,
+      household_id: householdID
+    };
+    // 2. check if there is a bill that exists with bill_uuid & household_id & user_id
+    return usersIDs.map((userID: any) => {
+      return axios
+        .get("/api/bills", {
+          params: {
+            bill_uuid: bill.bill_uuid,
+            household_id: householdID,
+            user_id: userID
+          }
+        })
+        .then(houseBillPerUser => {
+          // check if bill exists for the user or not
+          // console.log(houseBillPerUser.data, userID);
+          if (!houseBillPerUser.data.length) {
+            console.log(`creating ${bill.bill_uuid} for ${userID}`);
+            return axios.post("/api/bills/", {
+              ...billToSend,
+              user_id: userID
+            });
+          } else {
+            console.log(`updating (!?!) ${bill.bill_uuid} for ${userID}`);
+            // loop through the created bills with that bill uuidhouseBillPerUser.data
+            return houseBillPerUser.data.map((billToUpdate: any) => {
+              return axios.patch(`/api/bills/${billToUpdate.id}`, {
+                ...billToSend
+                // user_id: userID
+              });
+            });
+          }
+        });
+    });
+  });
+};
+
 const submitAgreement = ({ formVals, householdID, agreementID, isComplete }: AgreementProps) => {
   const { housekeeping } = formVals;
   const formattedValues = {
     ...formVals,
     housekeeping: { ...housekeeping, ...formatHousekeepingForDB(housekeeping) }
   };
-  // save the bills
   // save the agreement
   return saveAgreement({ formVals: formattedValues, householdID, agreementID, isComplete }).then(
     vals => {
@@ -93,48 +137,7 @@ const submitAgreement = ({ formVals, householdID, agreementID, isComplete }: Agr
         // save the users
         return saveUsers({ formVals })
           .then(users => Promise.all(users)) // grab users id
-          .then(usersIDs => {
-            console.log("excuse me where are my users", usersIDs);
-            // 1. loop through formvals to double check that you're not recreating a bill that's already made (through bill_uuid)
-            return formVals.bills.map((bill: any) => {
-              const billToSend = {
-                ...bill,
-                total_amount: bill.total_amount * 1,
-                interval: bill.interval.value,
-                household_id: householdID
-              };
-              // 2. check if there is a bill that exists with bill_uuid & household_id & user_id
-              return usersIDs.map(userID => {
-                return axios
-                  .get("/api/bills", {
-                    params: {
-                      bill_uuid: bill.bill_uuid,
-                      household_id: householdID,
-                      user_id: userID
-                    }
-                  })
-                  .then(houseBillPerUser => {
-                    // check if bill exists for the user or not
-                    if (!houseBillPerUser.data.length) {
-                      console.log(`creating ${bill.bill_uuid} for ${userID}`);
-                      return axios.post("/api/bills/", {
-                        ...billToSend,
-                        user_id: userID
-                      });
-                    } else {
-                      console.log(`updating (!?!) ${bill.bill_uuid} for ${userID}`);
-                      // loop through the created bills with that bill uuidhouseBillPerUser.data
-                      return houseBillPerUser.data.map((billToUpdate: any) => {
-                        return axios.patch(`/api/bills/${billToUpdate.id}`, {
-                          ...billToSend,
-                          user_id: userID
-                        });
-                      });
-                    }
-                  });
-              });
-            });
-          });
+          .then(usersIDs => saveBills({ formVals, householdID, usersIDs })); // save the bills
       } else {
         return vals.data;
       }

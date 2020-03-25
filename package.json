@@ -24,6 +24,7 @@
     "@typescript-eslint/parser": "^2.24.0",
     "axios": "^0.19.2",
     "draft-js": "^0.11.4",
+    "draft-js-export-html": "^1.4.1",
     "emotion-theming": "^10.0.27",
     "formik": "^2.1.4",
     "http-proxy-middleware": "^1.0.1",

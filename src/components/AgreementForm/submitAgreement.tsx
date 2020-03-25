@@ -8,6 +8,38 @@ import { formatHousekeepingForDB } from "../../helpers/functions";
 import Preview from "./AgreementPreview";
 // import { userInfo } from "os";
 
+// export const AgreementPreview = (props: any) => {
+//   const { roommates } = props;
+
+//   // const landlordString = ReactDOMServer.renderToStaticMarkup(<LandlordPreview landlord={landlord}/>);
+//   // it woooooooooooooorks
+//   // build them separately and return as one string and send them to the server somehow!!!
+//   // console.log('does this work', landlordString);
+
+//   return (
+//     <section>
+//       <p>
+//         <strong>This agreement is entered into by:</strong>
+//       </p>
+//       <ul>
+//         {roommates.map((roommie: any, index: number) => (
+//           <li key={index}>
+//             {roommie.first_name} {roommie.last_name}
+//           </li>
+//         ))}
+//       </ul>
+//       <p>
+//           We the roommates of (insert address here) agree that this document represents a binding
+//           agreement between us with respect to our tenancy beginning on________________, 20___. We
+//           further agree that if this agreement conflicts with any of our rights and obligations
+//           under the Tenancy Agreement dated_________________, with respect to the above rental unit
+//           or with the provisions of any applicable laws, the said Tenancy Agreement and the
+//           applicable law(s) will prevail in all respects.
+//       </p>
+//     </section>
+//   );
+// };
+
 type AgreementProps = {
   formVals: FormikValues;
   householdID: string | number;
@@ -23,11 +55,14 @@ const saveAgreement = ({ formVals, householdID, agreementID, isComplete }: Agree
     is_complete: isComplete,
     is_expired: false
   };
+
+  console.log("hi!", ReactDOMServer.renderToStaticMarkup(<Preview {...formVals} />));
   // if (isComplete) {
   //   const htmlString = ReactDOMServer.renderToStaticMarkup(<Preview agreementID={agreementID} />);
-  //   dataToSend = { ...dataWithoutHTML, html_string: htmlString };
+  //   console.log('hi!', htmlString);
+  //   // dataToSend = { ...dataWithoutHTML, html_string: htmlString };
   // } else {
-  //   dataToSend = dataWithoutHTML;
+  //   // dataToSend = dataWithoutHTML;
   // }
 
   dataToSend = dataWithoutHTML;
@@ -38,7 +73,7 @@ const saveAgreement = ({ formVals, householdID, agreementID, isComplete }: Agree
 
   return agreementRequest.then(() =>
     axios.patch(`/api/households/${householdID}`, {
-      housekeeping: formVals.housekeeping
+      housekeeping: JSON.stringify(formVals.housekeeping)
     })
   );
 };

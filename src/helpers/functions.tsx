@@ -1,4 +1,5 @@
 import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
+import { draftJSKeys } from './data';
 
 export const displayFullName = (firstName: string, lastName: string) => {
   return `${firstName} ${lastName}`;
@@ -49,23 +50,13 @@ export const formatDraftJSForDB = (toSaveDraftJS: any) => {
   return toString;
 };
 
+
 /**
  * Formats Agreement Form's Draft JS housekeeping {} values
  * @param housekeeping { object } see: initialValues.tsx
  * @returns object
  */
 export const formatHousekeepingForDB = (housekeeping: any) => {
-  const draftJSKeys = [
-    "guestPolicy",
-    "spacesPolicy",
-    "roomsPolicy",
-    "choresPolicy",
-    "vacationPolicy",
-    "personalItemsPolicy",
-    "smokingPolicy",
-    "messagesPolicy",
-    "petsPolicy"
-  ];
   const result: any = {};
 
   // update housekeeping draft js to better saveable values

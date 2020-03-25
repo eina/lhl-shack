@@ -15,8 +15,6 @@ import AppLoading from "../AppLoading";
 import Title from "./Title";
 import Roommates from "./Roommates";
 import Housekeeping from "./Housekeeping";
-import Rent from "./RentAndDeposit/Rent";
-import SecurityDeposit from "./RentAndDeposit/SecurityDeposit";
 import BillsUtilities from "./BillsUtilities";
 import Signatures from "./Signatures";
 import Preview from "./AgreementPreview";
@@ -96,7 +94,8 @@ const AgreementForm = () => {
               const valuesChanged = JSON.stringify(values) !== JSON.stringify(initialValues);
               // const goToPreview = next.pathname.startsWith("/agreement")
               return (
-                !submitSuccess && valuesChanged &&
+                !submitSuccess &&
+                valuesChanged &&
                 (!next || !next.pathname.startsWith("/agreement"))
               );
             }}
@@ -119,24 +118,6 @@ const AgreementForm = () => {
             <Route path="/agreement/household" component={Household} /> */}
             <Route path="/agreement/roommates" component={Roommates} />
             <Redirect from="/agreement/bills" to="/agreement/bills/rent" exact />
-            {/* <Route path="/agreement/bills/rent">
-              <Rent
-                values={values}
-                setFieldValue={setFieldValue}
-                handleBlur={handleBlur}
-                errors={errors}
-                touched={touched}
-              />
-            </Route>
-            <Route path="/agreement/bills/deposit">
-              <SecurityDeposit
-                values={values}
-                setFieldValue={setFieldValue}
-                handleBlur={handleBlur}
-                errors={errors}
-                touched={touched}
-              />
-            </Route> */}
             <Route path="/agreement/bills">
               <BillsUtilities
                 values={values}
@@ -166,7 +147,9 @@ const AgreementForm = () => {
                 touched={touched}
               />
             </Route>
-            <Route path="/agreement/preview"><Preview agreementID={agreementID}/></Route>
+            <Route path="/agreement/preview">
+              <Preview {...values} agreementID={agreementID} />
+            </Route>
           </Switch>
         </form>
       )}

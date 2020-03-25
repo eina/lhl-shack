@@ -23,7 +23,7 @@ const Bills = (props: any) => {
     values.bills.map((bill: any, index: number) => {
       setFieldValue(`bills[${index}].user_amount`, bill.total_amount / numRoommates);
     });
-  }, [values.bills]);
+  }, [values.bills, numRoommates, setFieldValue]);
 
   type DeleteBillTypes = {
     arrayRemove: CallableFunction;

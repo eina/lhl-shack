@@ -1,8 +1,9 @@
 import React from "react";
-import moment from 'moment';
-import { displayFullName } from '../../helpers/functions';
-import { draftJSKeys } from '../../helpers/data';
-import { Editor, EditorState, convertFromRaw } from "draft-js";
+import moment from "moment";
+import { displayFullName, formatHousekeepingForDB } from "../../helpers/functions";
+import { draftJSKeys } from "../../helpers/data";
+// import { Editor, EditorState, convertFromRaw } from "draft-js";
+import { stateToHTML } from "draft-js-export-html";
 
 const formatHousekeepingForPreview = (housekeeping: any) => {
   const result: any = {};
@@ -10,24 +11,29 @@ const formatHousekeepingForPreview = (housekeeping: any) => {
   // update housekeeping draft js to better saveable values
   for (const housekeepingKey in housekeeping) {
     if (draftJSKeys.includes(housekeepingKey)) {
-      const draftJSValue = housekeeping[housekeepingKey];
-      console.log("draftJSValue", draftJSValue);
-      // result[housekeepingKey] = formatDraftJSForDB(draftJSValue);
+      const draftJSContent = housekeeping[housekeepingKey].getCurrentContent();
+      result[housekeepingKey] = stateToHTML(draftJSContent);
     }
   }
 
   return result;
 };
 
-
 const AgreementPreview = (props: any) => {
   const { roommates, bills, housekeeping } = props;
-  const [ rent, securityDeposit, ...utilities] = bills;
-  const { weekdayAM, weekdayPM, weekendAM, weekendPM, guestPolicy, spacesPolicy, roomsPolicy, choresPolicy, vacationPolicy, personalItemsPolicy,smokingPolicy, messagesPolicy, petsPolicy } = housekeeping;
-
-  console.log("test", formatHousekeepingForPreview(housekeeping));
-
-  console.log(props);
+  const [rent, securityDeposit, ...utilities] = bills;
+  const { weekdayAM, weekdayPM, weekendAM, weekendPM } = housekeeping;
+  const {
+    guestPolicy,
+    spacesPolicy,
+    roomsPolicy,
+    choresPolicy,
+    vacationPolicy,
+    personalItemsPolicy,
+    smokingPolicy,
+    messagesPolicy,
+    petsPolicy
+  } = formatHousekeepingForPreview(housekeeping);
 
   return (
     <div>
@@ -86,7 +92,6 @@ const AgreementPreview = (props: any) => {
           ))}
         </section>
       ) : null}
-
       <section>
         <h2>Noise</h2>
         <p>
@@ -101,6 +106,69 @@ const AgreementPreview = (props: any) => {
           until <strong>{weekendAM} am</strong> on weekends and holidays.
         </p>
       </section>
+
+      {guestPolicy && (
+        <section>
+          <h2>Guest Policy</h2>
+          <div dangerouslySetInnerHTML={{ __html: guestPolicy }} />
+        </section>
+      )}
+
+      {spacesPolicy && (
+        <section>
+          <h2>Spaces Policy</h2>
+          <div dangerouslySetInnerHTML={{ __html: spacesPolicy }} />
+        </section>
+      )}
+
+      {roomsPolicy && (
+        <section>
+          <h2>Rooms Policy</h2>
+          <div dangerouslySetInnerHTML={{ __html: roomsPolicy }} />
+        </section>
+      )}
+
+      {choresPolicy && (
+        <section>
+          <h2>Chores Policy</h2>
+          <div dangerouslySetInnerHTML={{ __html: choresPolicy }} />
+        </section>
+      )}
+
+      {vacationPolicy && (
+        <section>
+          <h2>Vacation Policy</h2>
+          <div dangerouslySetInnerHTML={{ __html: vacationPolicy }} />
+        </section>
+      )}
+
+      {personalItemsPolicy && (
+        <section>
+          <h2>Vacation Policy</h2>
+          <div dangerouslySetInnerHTML={{ __html: personalItemsPolicy }} />
+        </section>
+      )}
+
+      {smokingPolicy && (
+        <section>
+          <h2>Vacation Policy</h2>
+          <div dangerouslySetInnerHTML={{ __html: smokingPolicy }} />
+        </section>
+      )}
+
+      {messagesPolicy && (
+        <section>
+          <h2>Vacation Policy</h2>
+          <div dangerouslySetInnerHTML={{ __html: messagesPolicy }} />
+        </section>
+      )}
+
+      {petsPolicy && (
+        <section>
+          <h2>Vacation Policy</h2>
+          <div dangerouslySetInnerHTML={{ __html: petsPolicy }} />
+        </section>
+      )}
     </div>
   );
 };

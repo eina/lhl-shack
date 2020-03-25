@@ -25,7 +25,7 @@ import AgreementMenu from './components/AgreementForm/AgreementMenu';
 import Household from './pages/Household';
 import Resources from './pages/Resources';
 import Housekeeping from './pages/Housekeeping';
-import Bills from './pages/Bills'
+import Bills from './pages/Bills';
 
 // test data
 // const currUser = {
@@ -74,10 +74,10 @@ const AppContent = () => {
             ) : (
               // Main App Contents
               <Switch>
-                <Route path="/"  exact component={Home} />
+                <Route path="/" exact component={Home} />
                 <Route path="/test" component={Test} />
                 <Route path="/household" component={Household} />
-                <Route path="/account" component={Bills} />
+                <Route path="/bills" component={Bills} />
                 <Route path="/account" component={Housekeeping} />
                 <Route path="/resources" component={Resources} />
                 <Route path="/account" component={Account} />

@@ -1,3 +1,4 @@
+/* eslint-disable func-style */
 import React from "react";
 
 // context: https://github.com/typescript-cheatsheets/react-typescript-cheatsheet#context

@@ -30,68 +30,77 @@ const yupReactSelect = object().shape({
 });
 const yupCheckbox = boolean().oneOf([true], "Field must be checked");
 
+export const landlord = object().shape({
+  first_name: yupName.required(requiredMsg),
+  last_name: yupName.required(requiredMsg),
+  email: yupEmail,
+  address: yupCdnAddress,
+  phone_number: yupCdnPhone,
+  company: yupName
+});
+
+export const household = object().shape({
+  address: yupCdnAddress,
+  number_of_bedrooms: yupMin1.required(requiredMsg),
+  number_of_bathrooms: yupMin1.required(requiredMsg),
+  total_rent_amt: yupMin1.required(requiredMsg),
+  total_security_deposit_amt: yupMin1.required(requiredMsg),
+  leaseDates: object().shape({
+    startDate: date().required(requiredMsg),
+    endDate: date().required(requiredMsg)
+  })
+});
+
+export const householdForm = object().shape({
+  landlord,
+  household
+});
+
 export default object().shape({
-  landlord: object().shape({
-    firstName: yupName.required(requiredMsg),
-    lastName: yupName.required(requiredMsg),
-    email: yupEmail,
-    address: yupCdnAddress,
-    phone: yupCdnPhone,
-    company: yupName
-  }),
-  household: object().shape({
-    address: yupCdnAddress,
-    bedroomsAmt: yupMin1.required(requiredMsg),
-    bathroomsAmt: yupMin1.required(requiredMsg),
-    rentAmt: yupMin1.required(requiredMsg),
-    securityDepositAmt: yupMin1.required(requiredMsg),
-    leaseDates: object().shape({
-      startDate: date().required(requiredMsg),
-      endDate: date().required(requiredMsg)
-    })
-  }),
   roommates: array()
     // .min(2, `You must have at least 2 two people in a household`)
     .of(
       object().shape({
-        firstName: yupName.required(requiredMsg),
-        lastName: yupName.required(requiredMsg),
+        first_name: yupName.required(requiredMsg),
+        last_name: yupName.required(requiredMsg),
         email: yupEmail.required(requiredMsg),
-        phone: yupCdnPhone.required(requiredMsg)
+        phone_number: yupCdnPhone.required(requiredMsg)
       })
     ),
-  rent: object().shape({
-    name: yupName.nullable().required(requiredMsg),
-    totalAmt: yupMin1.required(requiredMsg),
-    dueDate: date().required(requiredMsg),
-    interval: yupReactSelect,
-    portion: array().of(
-      object().shape({
-        roommate: yupReactSelect,
-        roommate_amt: yupMin1,
-        amt_type: yupReactSelect
-      })
-    )
-  }),
-  securityDeposit: object().shape({
-    name: yupName.nullable().required(requiredMsg),
-    totalAmt: yupMin1.required(requiredMsg),
-    dueDate: object().required(requiredMsg),
-    interval: yupReactSelect,
-    portion: array().of(
-      object().shape({
-        roommate: yupReactSelect,
-        roommate_amt: yupMin1,
-        amt_type: yupReactSelect
-      })
-    )
-  }),
+  // rent: object().shape({
+  //   total_amount: yupMin1.required(requiredMsg),
+  //   due_date: date().required(requiredMsg),
+  //   interval: yupReactSelect,
+  //   portion: array().of(
+  //     object().shape({
+  //       roommate: yupReactSelect,
+  //       roommate_amt: yupMin1
+  //     })
+  //   )
+  // }),
+  // securityDeposit: object().shape({
+  //   total_amount: yupMin1.required(requiredMsg),
+  //   due_date: object().required(requiredMsg),
+  //   interval: yupReactSelect,
+  //   portion: array().of(
+  //     object().shape({
+  //       roommate: yupReactSelect,
+  //       roommate_amt: yupMin1
+  //     })
+  //   )
+  // }),
   bills: array().of(
     object().shape({
-      name: yupName.nullable().required(requiredMsg),
-      totalAmt: yupMin1.required(requiredMsg),
-      dueDate: date().required(requiredMsg),
-      interval: yupReactSelect
+      name: yupName.required(requiredMsg),
+      total_amount: yupMin1.required(requiredMsg),
+      due_date: date().required(requiredMsg),
+      interval: yupReactSelect,
+      // portion: array().of(
+      //   object().shape({
+      //     roommate: yupReactSelect,
+      //     roommate_amt: yupMin1
+      //   })
+      // )
     })
   ),
   housekeeping: object().shape({

@@ -1,34 +1,32 @@
 import React from "react";
 import moment from "moment";
+import { useHistory } from "react-router-dom";
+import { Box, Button, Heading, List, ListItem } from "@chakra-ui/core";
 import { FieldArray } from "formik";
 
-// import { FormValues } from "../../interfaces";
 import { FormikSingleDatePicker } from "../FormikDates";
 import { displayFullName } from "../../helpers/functions";
 import FieldSet from "../FieldSet";
-
-import { Button, List, ListItem } from "@chakra-ui/core";
-
-import { useHistory } from "react-router-dom";
+import PrevNextNav from './PrevNextNav';
 
 const Signatures = (props: any) => {
-  const { values, setFieldValue, errors, touched } = props;
+  const { initialValues, values, setFieldValue, errors, touched, formIsSubmitting } = props;
   const history = useHistory();
-
+  const valuesChanged = JSON.stringify(values) !== JSON.stringify(initialValues);
   const roommateName = values.roommates.map((roomie: any) =>
-    displayFullName(roomie.firstName, roomie.lastName)
+    displayFullName(roomie.first_name, roomie.last_name)
   );
 
   return (
-    <div>
-      <h2>Signatures</h2>
+    <Box as="section">
+      <Heading as="h2">Signatures</Heading>
       <FieldArray name="signatures">
         {arrayHelpers => (
           <div>
             <List as="ol" styleType="decimal">
-              {values.signatures.map((signature: any, index: any) => (
+              {values.signatures.map((signature: any, index: any, array: any) => (
                 <ListItem key={index}>
-                  {index > 0 && (
+                  {array.length > values.roommates.length && (
                     <Button type="button" onClick={() => arrayHelpers.remove(index)}>
                       Remove
                     </Button>
@@ -69,26 +67,23 @@ const Signatures = (props: any) => {
                 </ListItem>
               ))}
             </List>
-            <Button
+            {values.roommates.length > values.signatures.length && <Button
               type="button"
               onClick={() => arrayHelpers.push({ fullName: "", agreed: false, date: moment() })}
             >
               Add Signature
-            </Button>
+            </Button>}
+
           </div>
         )}
       </FieldArray>
-      <div>
-        <Button
-          // variantColor="orange"
-          onClick={() => {
-            history.push("/agreement/bills/utilities");
-          }}
-        >
-          Previous Section
-        </Button>
-      </div>
-    </div>
+      {/* {valuesChanged ? <Button isLoading={formIsSubmitting}
+          loadingText="Generating Preview" type="submit">Save &amp; Preview Agreement</Button> : <Button type="button" onClick={() => history.push('/agreement/preview')}>Preview Agreement</Button>} */}
+      <PrevNextNav before="/agreement/bills/utilities">
+        <Button isLoading={formIsSubmitting}
+          loadingText="Generating Preview" type="submit">Save &amp; Preview Agreement</Button>
+      </PrevNextNav>
+    </Box>
   );
 };
 

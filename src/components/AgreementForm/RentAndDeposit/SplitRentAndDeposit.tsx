@@ -14,7 +14,7 @@ const SplitRentAndDeposit = (props: any) => {
 
   const roommateOptions = values.roommates.map((roomie: any) => ({
     value: roomie,
-    label: displayFullName(roomie.firstName, roomie.lastName)
+    label: displayFullName(roomie.first_name, roomie.last_name)
   }));
 
   const errorObj = errors && errors[sectionName];
@@ -23,17 +23,19 @@ const SplitRentAndDeposit = (props: any) => {
   return (
     <div>
       <FieldSet
-        name={`${sectionName}.totalAmt`}
+        name={`${sectionName}.total_amount`}
         label="Total Amount to Pay"
         type="number"
-        value={values.household[`${sectionName}Amt`]}
+        // value={values.household[`${sectionName}Amt`]}
+        inputGroup={{ left: { addOn: "$" } }}
+        // isReadOnly={true}
       />
 
       <FormikSingleDatePicker
-        name={`${sectionName}.dueDate`}
+        name={`${sectionName}.due_date`}
         label="Due Date"
-        stateName={`${sectionName}.dueDate`}
-        stateValue={values[sectionName].dueDate}
+        stateName={`${sectionName}.due_date`}
+        stateValue={values[sectionName].due_date}
         onChange={setFieldValue}
         numberOfMonths={1}
         error={errorObj}
@@ -58,7 +60,7 @@ const SplitRentAndDeposit = (props: any) => {
             <ol>
               {values[sectionName].portion.map((person: object, index: number, arr: any) => (
                 <li key={index}>
-                  {(index > 0 || arr.length > 1) && (
+                  {arr.length > 2 && (
                     <Button type="button" onClick={() => arrayHelpers.remove(index)}>
                       Remove
                     </Button>
@@ -76,8 +78,9 @@ const SplitRentAndDeposit = (props: any) => {
                     type="number"
                     name={`${sectionName}.portion.${index}.roommate_amt`}
                     label="Amount to Pay"
+                    inputGroup={{ left: { addOn: "$" } }}
                   />
-                  <FormikSelect
+                  {/* <FormikSelect
                     label="Fixed/Percent"
                     name={`${sectionName}.portion.${index}.amt_type`}
                     stateName={`${sectionName}.portion.${index}.amt_type`}
@@ -88,7 +91,7 @@ const SplitRentAndDeposit = (props: any) => {
                     ]}
                     onChange={setFieldValue}
                     onBlur={handleBlur}
-                  />
+                  /> */}
                 </li>
               ))}
             </ol>

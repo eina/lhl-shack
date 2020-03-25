@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Box } from "@chakra-ui/core";
 
 import AgreementForm from "../components/AgreementForm/AgreementForm";

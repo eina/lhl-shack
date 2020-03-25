@@ -7,8 +7,7 @@ const billShape = {
   total_amount: 0,
   due_date: moment(),
   interval: [], // once, monthly, every 2 months, annually
-  user_amount: 0,
-  bill_uuid: uuidV4()
+  user_amount: 0
   // portion: [
   //   { roommate: [], roommate_amt: 0 },
   //   { roommate: [], roommate_amt: 0 }
@@ -38,8 +37,8 @@ const initialValues = {
   //   // portion: [{ roommate: [], roommate_amt: 0, amt_type: [] }, { roommate: [], roommate_amt: 0, amt_type: [] }]
   // },
   bills: [
-    { ...billShape, name: "Rent" },
-    { ...billShape, name: "Security Deposit" }
+    { ...billShape, name: "Rent", bill_uuid: uuidV4() },
+    { ...billShape, name: "Security Deposit", bill_uuid: uuidV4() }
   ],
   housekeeping: {
     weekdayPM: "",

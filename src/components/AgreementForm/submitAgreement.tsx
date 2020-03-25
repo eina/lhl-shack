@@ -87,36 +87,67 @@ const submitAgreement = ({ formVals, householdID, agreementID, isComplete }: Agr
           })
           .then(users => Promise.all(users)) // grab users id
           .then(usersIDs => {
-            return axios.get(`/api/bills?household_id=${householdID}`).then(houseBills => {
-              console.log("houseBills.data", houseBills.data);
-              console.log("user ids", usersIDs);
-              // if there are no bills
-              // make a bill, loop through the usersIDs
-              if (!houseBills.data.length) {
-                return formVals.bills.map((bill: any) => {
-                  const billIdentifier = uuidV4();
-                  const billToSend = {
-                    ...bill,
-                    total_amount: bill.total_amount * 1,
-                    interval: bill.interval.value,
-                    bill_uuid: billIdentifier,
-                    household_id: householdID
-                  };
-                  return usersIDs.map(userID => {
-                    console.log("creating a bill for", userID);
-                    return axios.post("/api/bills/", { ...billToSend, user_id: userID });
+            // 1. loop through formvals to double check that you're not recreating a bill that's already made (through bill_uuid)
+            return formVals.bills.map((bill: any) => {
+              const billToSend = {
+                ...bill,
+                total_amount: bill.total_amount * 1,
+                interval: bill.interval.value,
+                household_id: householdID
+              };
+              // 2. check if there is a bill that exists with bill_uuid & household_id & user_id
+              return usersIDs.map(userID => {
+                return axios
+                  .get("/api/bills", {
+                    params: {
+                      bill_uuid: bill.bill_uuid,
+                      household_id: householdID,
+                      user_id: userID
+                    }
+                  })
+                  .then(houseBillPerUser => {
+                    // console.log("single bill per user", houseBillPerUser);
+                    // check if bill exists for the user or not
+                    if (!houseBillPerUser.data.length) {
+                      console.log(`creating ${bill.bill_uuid} for userID`);
+                      return axios.post("/api/bills/", { ...billToSend, user_id: userID });
+                    } else {
+                      console.log(`updating (!?!) ${bill.bill_uuid} for userID`);
+                      return axios.patch(`/api/bills/${bill.id}`, {
+                        ...billToSend,
+                        user_id: userID
+                      });
+                    }
                   });
-                });
-              } else {
-                // have list of bills,
-                // since am
-                const billIdentifiers = houseBills.data.map((bill: any) => ({
-                  bill_id: bill.id,
-                  bill_uuid: bill.bill_uuid
-                }));
-                console.log("something", billIdentifiers);
-              }
+              });
             });
+
+            // return axios.get(`/api/bills?household_id=${householdID}`).then(houseBills => {
+            //   // if there are no bills
+            //   // make a bill, loop through the usersIDs
+            //   if (!houseBills.data.length || houseBills.data.length !== formVals.bills.length) {
+            //     return formVals.bills.map((bill: any) => {
+            //       const billToSend = {
+            //         ...bill,
+            //         total_amount: bill.total_amount * 1,
+            //         interval: bill.interval.value,
+            //         household_id: householdID
+            //       };
+            //       return usersIDs.map(userID => {
+            //         console.log("creating a bill for", userID);
+            //         return axios.post("/api/bills/", { ...billToSend, user_id: userID });
+            //       });
+            //     });
+            //   } else {
+            //     // have list of bills,
+            //     // since am
+            //     const billIdentifiers = houseBills.data.map((bill: any) => ({
+            //       bill_id: bill.id,
+            //       bill_uuid: bill.bill_uuid
+            //     }));
+            //     console.log("something", billIdentifiers);
+            //   }
+            // });
           }); // return vals.data;
       } else {
         return vals.data;

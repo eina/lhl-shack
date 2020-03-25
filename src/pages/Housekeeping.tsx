@@ -26,6 +26,8 @@ const Housekeeping = () => {
     axios
       .get(`/api/households/${currUser.household}`)
       .then((vals) => {
+
+        // { guestPolicy: EditorState.createWithContent(convertFromRaw(JSON.parse(vals.data.agreements[0].form_values.housekeeping.guestPolicy)))}
         console.log('here is housekeeping: ', vals.data.agreements[0].form_values.housekeeping)
         setHousekeeping(vals.data.agreements[0].form_values.housekeeping)
       })
@@ -35,10 +37,9 @@ const Housekeeping = () => {
   return (
     <div>
       <h1>Housekeeping</h1>
+      <h2>Guest Policy</h2>
       {housekeeping.guestPolicy && <Editor
         editorState={EditorState.createWithContent(convertFromRaw(JSON.parse(housekeeping.guestPolicy)))}
-        // editorStateName="housekeeping.guestPolicy"
-        // focus={() => {}}
         onChange={() => {}}
         readOnly={true}
       />}

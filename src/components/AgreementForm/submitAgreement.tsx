@@ -38,7 +38,7 @@ const saveAgreement = ({ formVals, householdID, agreementID, isComplete }: Agree
 
   return agreementRequest.then(() =>
     axios.patch(`/api/households/${householdID}`, {
-      housekeeping: formVals.housekeeping
+      housekeeping: JSON.stringify(formVals.housekeeping)
     })
   );
 };

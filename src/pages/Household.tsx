@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect, useContext } from "react";
+import axios from "axios";
 
-import { Heading } from '@chakra-ui/core';
+import { Heading, Grid, Box, Avatar, Divider, SimpleGrid, Flex } from "@chakra-ui/core";
 
-import { displayFullName } from '../helpers/functions';
+import { displayFullName } from "../helpers/functions";
 
-interface Household {
+import { AppContext } from "../Store";
+
+interface House {
   id: number;
   total_rent_amt: number;
   total_security_deposit_amt: number;
@@ -20,19 +22,19 @@ interface Household {
   landlord_id: number;
 }
 
-const householdDefaultValues = {
+const houseDefaultValues = {
   id: 0,
   total_rent_amt: 0,
   total_security_deposit_amt: 0,
-  address: '',
+  address: "",
   number_of_rooms: 0,
   number_of_bathrooms: 0,
   pet_friendly: false,
   smoking_allowed: false,
-  start_date: '',
-  end_date: '',
+  start_date: "",
+  end_date: "",
   user_id: 0,
-  landlord_id: 0,
+  landlord_id: 0
 };
 
 interface Landlord {
@@ -47,77 +49,115 @@ interface Landlord {
 
 const landlordDefaultValues = {
   id: 0,
-  first_name: '',
-  last_name: '',
-  phone_number: '',
-  address: '',
-  email: '',
-  company: '',
+  first_name: "",
+  last_name: "",
+  phone_number: "",
+  address: "",
+  email: "",
+  company: ""
 };
 
-interface Roomie {
-  first_name: string;
-  last_name: string;
-  phone_number: string;
-  email: string;
-}
-
-const roomieInitialValues = {
-  id: 0,
-  first_name: '',
-  last_name: '',
-  phone_number: '',
-  email: '',
-};
+// interface Roomie {
+//   first_name: string;
+//   last_name: string;
+//   phone_number: string;
+//   email: string;
+// }
+const roomieInitialValues: any = [];
 
 const Household = () => {
-  const [household, setHousehold] = useState<Household>(householdDefaultValues);
+  const { state, updateState }: { state: any; updateState: Function } = useContext(AppContext);
+  const [house, setHouse] = useState<House>(houseDefaultValues);
   const [landlord, setLandlord] = useState<Landlord>(landlordDefaultValues);
-  const [roomie, setRoomie] = useState<Roomie>(roomieInitialValues);
+  const [roomies, setRoomies] = useState(roomieInitialValues);
+  const { currUser } = state;
   useEffect(() => {
-    axios.get('/api/houses/484a9270-cde9-4a29-a66a-ecd132fafb3b').then(vals => {
-      setHousehold(vals.data);
-    });
-  }, []);
-  useEffect(() => {
-    axios.get('/api/landlords/1').then(vals => {
-      setLandlord(vals.data);
-    });
-  }, []);
-  useEffect(() => {
-    axios.get('/api/users/1').then(vals => {
-      setRoomie(vals.data);
-    });
-  }, []);
+    let houseId: string;
+    axios
+      .get(`/api/households/${currUser.household}`)
+      .then(vals => {
+        houseId = vals.data.house_id;
+        return houseId;
+      })
+      .then(houseId => axios.get(`/api/houses/${houseId}`))
+      .then(house => {
+        setHouse(house.data);
+        return house.data.landlord_id;
+      })
+      .then(landlordId => axios.get(`/api/landlords/${landlordId}`))
+      .then(landlord => {
+        setLandlord(landlord.data);
+      })
+      .then(() => axios.get(`/api/households?house_id=${houseId}`))
+      .then(tenants => {
+        const usersId = tenants.data.map((tenant: any) => tenant.user_id);
+        return usersId;
+      })
+      .then(usersId => {
+        console.log("Here is usersId: ", usersId);
+        const promisesArray: any = [];
+        usersId.forEach((userId: any) => {
+          promisesArray.push(axios.get(`/api/users/${userId}`));
+        });
+        console.log("here promises arrray! ", promisesArray);
+        return Promise.all(promisesArray);
+      })
+      .then(usersPromises => {
+        console.log("here is userspromises: ", usersPromises);
+        usersPromises.forEach((user: any) => {
+          setRoomies((prev: any) => [...prev, user.data]);
+        });
+      });
+  }, [currUser.household]);
+
   return (
-    household && (
+    house && (
       <div>
-        <Heading as="h1">My Household</Heading>
-        <div>{household.address}</div>
+        <dl>
+          <Heading as="h3">Household</Heading>
+        </dl>
+        <Divider />
+        <dd>{house.address}</dd>
+        {/* <dd>
+          {house.start_date} - {house.end_date}
+        </dd> */}
+        {/* <dd>${house.total_rent_amt}/month</dd> */}
+        <dl>
+          <Heading as="h3">My Landlord</Heading>
+          <Divider />
+          <dd>
+            <b>Landlord:</b> {landlord.first_name} {landlord.last_name}
+          </dd>
+          <dd>
+            <b>Phone number:</b> {landlord.phone_number}
+          </dd>
+          <dd>
+            <b>Email:</b> {landlord.email}
+          </dd>
+          <dd>
+            <b>Address:</b> {landlord.address}
+          </dd>
+        </dl>
         <div>
-          {household.start_date} - {household.end_date}
-        </div>
-        ${household.total_rent_amt}/month
-        <div>
-          <Heading as="h1">My Landlord</Heading>
-          <div>
-            {landlord.first_name} {landlord.last_name}
-          </div>
-          <div>{landlord.phone_number}</div>
-          <div>{landlord.email}</div>
-          <div>{landlord.address}</div>
-          <div>
-            <Heading as="h1">My Roommates</Heading>
-            <div>
-              {roomie.first_name} {roomie.last_name}
+          <Heading as="h3">Roommates</Heading>
+          <Divider />
+          {roomies.map((roomie: any) => (
+            <div key={roomie.id}>
+              {/* change this, grid should be outside of the loop */}
+              <SimpleGrid columns={2} spacing={5}>
+                <span>
+                  <Avatar src={roomie.avatar} />
+                  <p>
+                    {roomie.first_name} {roomie.last_name}
+                  </p>
+                  <p>{roomie.phone_number}</p>
+                  <p>{roomie.email}</p>
+                </span>
+              </SimpleGrid>
             </div>
-            <div>{roomie.phone_number}</div>
-            <div>
-            {roomie.email}
-          </div>
+          ))}
         </div>
       </div>
-    </div>
     )
   );
 };

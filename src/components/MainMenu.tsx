@@ -16,6 +16,9 @@ const MainMenu = () => {
         <Link to="/household">Household</Link>
         </ListItem>
         <ListItem>
+          <Link to="/bills">Bills</Link>
+        </ListItem>
+        <ListItem>
           <Link to="/test">Test</Link>
         </ListItem>
         <ListItem>
@@ -23,6 +26,9 @@ const MainMenu = () => {
         </ListItem>
         <ListItem>
           <Link to="/resources">Resources</Link>
+        </ListItem>
+        <ListItem>
+          <Link to="/housekeeping">Housekeeping</Link>
         </ListItem>
       </List>
     </Box>

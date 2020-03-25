@@ -1,12 +1,11 @@
 import React from "react";
-import { Button, Heading, Link, Text } from "@chakra-ui/core";
-
 import { useHistory } from "react-router-dom";
+import { Box, Button, Heading, Link, Text } from "@chakra-ui/core";
 
 const Title = () => {
   const history = useHistory();
   return (
-    <div>
+    <Box as="section">
       <Heading as="h1">Roommate Agreement</Heading>
       <Text>
         This Roommate Agreement was originally derived from Tenant Resource Advocacy Centre, also
@@ -25,18 +24,14 @@ const Title = () => {
       </Text>
       <Text>
         Please visit <Link href="http//www.tenants.bc.ca">www.tenants.bc.ca</Link> to inform
-        yourself about tenants' rights and obligations in Britsh Columbia before discussing and
+        yourself about tenants&rsquo; rights and obligations in Britsh Columbia before discussing and
         agreeing to terms with any roommates.
       </Text>
-      <Button
-        variantColor="pink"
-        onClick={() => {
-          history.push("/agreement/household");
-        }}
-      >
-        Next Section
-      </Button>
-    </div>
+
+      <Box as="footer">
+        <Button onClick={() => history.push('/agreement/household')}>Start Roommate Agreement Form</Button>
+      </Box>
+    </Box>
   );
 };
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { Editor, RichUtils } from "draft-js";
+import { Flex } from "@chakra-ui/core";
 
 import "draft-js/dist/Draft.css";
 import "./RichEditor.css";
@@ -43,22 +44,24 @@ export class RichEditor extends React.Component<RichEditorProps> {
     const { editorState } = this.props;
     // If the user changes block type before entering any text, we can
     // either style the placeholder or hide it. Let's just hide it now.
-    let className = "RichEditor-editor";
-    let contentState = editorState.getCurrentContent();
-    if (!contentState.hasText()) {
-      if (
-        contentState
-          .getBlockMap()
-          .first()
-          .getType() !== "unstyled"
-      ) {
-        className += " RichEditor-hidePlaceholder";
-      }
-    }
+    const className = "RichEditor-editor";
+    // let contentState = editorState.getCurrentContent();
+    // if (!contentState.hasText()) {
+    //   if (
+    //     contentState
+    //       .getBlockMap()
+    //       .first()
+    //       .getType() !== "unstyled"
+    //   ) {
+    //     className += " RichEditor-hidePlaceholder";
+    //   }
+    // }
     return (
       <div className="RichEditor-root">
-        <BlockStyleControls editorState={editorState} onToggle={this.toggleBlockType} />
-        <InlineStyleControls editorState={editorState} onToggle={this.toggleInlineStyle} />
+        <Flex>
+          <BlockStyleControls editorState={editorState} onToggle={this.toggleBlockType} />
+          <InlineStyleControls editorState={editorState} onToggle={this.toggleInlineStyle} />
+        </Flex>
         <div className={className}>
           <Editor
             blockStyleFn={getBlockStyle}
@@ -67,7 +70,7 @@ export class RichEditor extends React.Component<RichEditorProps> {
             // handleKeyCommand={this.handleKeyCommand}
             onChange={this.onChange}
             onTab={this.onTab}
-            placeholder="Policy goes here..."
+            placeholder=""
             ref="editor"
             spellCheck={true}
           />
@@ -87,10 +90,10 @@ const styleMap = {
 };
 function getBlockStyle(block: any) {
   switch (block.getType()) {
-    case "blockquote":
-      return "RichEditor-blockquote";
-    default:
-      return "";
+  case "blockquote":
+    return "RichEditor-blockquote";
+  default:
+    return "";
   }
 }
 
@@ -129,16 +132,16 @@ class StyleButton extends React.Component<StyleButtonProps> {
   }
 }
 const BLOCK_TYPES = [
-  { label: "H1", style: "header-one" },
-  { label: "H2", style: "header-two" },
-  { label: "H3", style: "header-three" },
-  { label: "H4", style: "header-four" },
-  { label: "H5", style: "header-five" },
-  { label: "H6", style: "header-six" },
-  { label: "Blockquote", style: "blockquote" },
+  // { label: "H1", style: "header-one" },
+  // { label: "H2", style: "header-two" },
+  // { label: "H3", style: "header-three" },
+  // { label: "H4", style: "header-four" },
+  // { label: "H5", style: "header-five" },
+  // { label: "H6", style: "header-six" },
+  // { label: "Blockquote", style: "blockquote" },
   { label: "UL", style: "unordered-list-item" },
-  { label: "OL", style: "ordered-list-item" },
-  { label: "Code Block", style: "code-block" }
+  { label: "OL", style: "ordered-list-item" }
+  // { label: "Code Block", style: "code-block" }
 ];
 const BlockStyleControls = (props: any) => {
   const { editorState } = props;
@@ -161,14 +164,14 @@ const BlockStyleControls = (props: any) => {
     </div>
   );
 };
-var INLINE_STYLES = [
+const INLINE_STYLES = [
   { label: "Bold", style: "BOLD" },
   { label: "Italic", style: "ITALIC" },
-  { label: "Underline", style: "UNDERLINE" },
-  { label: "Monospace", style: "CODE" }
+  { label: "Underline", style: "UNDERLINE" }
+  // { label: "Monospace", style: "CODE" }
 ];
 const InlineStyleControls = (props: any) => {
-  var currentStyle = props.editorState.getCurrentInlineStyle();
+  const currentStyle = props.editorState.getCurrentInlineStyle();
   return (
     <div className="RichEditor-controls">
       {INLINE_STYLES.map(type => (

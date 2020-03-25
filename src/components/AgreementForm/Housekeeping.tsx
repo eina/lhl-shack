@@ -1,12 +1,10 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import React from "react";
+import { Box, Heading } from "@chakra-ui/core";
+
 import FieldSet from "../FieldSet";
-
-import { Button, Heading } from "@chakra-ui/core";
-
-import { useHistory } from "react-router-dom";
-// import { FormValues } from "../../interfaces";
-
 import RichEditor from "../RichEditor/RichEditor";
+import PrevNextNav from "./PrevNextNav";
 
 export interface HousekeepingValues {
   guests: string;
@@ -26,18 +24,10 @@ export interface HousekeepingValues {
 }
 
 const Housekeeping = (props: any) => {
-  const history = useHistory();
-  const {
-    values,
-    setFieldValue,
-    handleBlur
-    // errors,
-    // touched
-  } = props;
+  const { values, setFieldValue, handleBlur } = props;
 
-  // console.log({ errors: errors && errors.housekeeping, touched: touched && touched.housekeeping });
   return (
-    <div>
+    <Box>
       <Heading as="h2">Housekeeping Rules</Heading>
 
       <Heading as="h3">Guests</Heading>
@@ -45,7 +35,7 @@ const Housekeeping = (props: any) => {
         Guests can include mutual friends, visitors, overnight guests, partners, and even parents.
         You should think about whether there should be any reasonable restrictions on how often
         roommates can have guests over, whether there should be special rules for overnight
-        guests,if there should be rules about guests' conduct when they are visiting, and similar
+        guests,if there should be rules about guests&rsquo; conduct when they are visiting, and similar
         issues.
       </p>
       <p>We agree that the following applies to guests:</p>
@@ -97,7 +87,7 @@ const Housekeeping = (props: any) => {
       />
       <Heading as="h4">Shared Spaces Policy</Heading>
       <p>
-        We agree to the following about accessing each roommates' private spaces and rules around
+        We agree to the following about accessing each roommates&rsquo; private spaces and rules around
         shared spaces:
       </p>
       <RichEditor
@@ -130,7 +120,7 @@ const Housekeeping = (props: any) => {
       />
       <Heading as="h3">Personal Items</Heading>
       <p>
-        You should think about what rules should be in place regarding roommates' personal
+        You should think about what rules should be in place regarding roommates&rsquo; personal
         belongings, both within their own private spaces and in shared common spaces in the rental
         unit.
       </p>
@@ -185,25 +175,10 @@ const Housekeeping = (props: any) => {
         onBlur={handleBlur}
         focus={() => {}}
       />
-      <div>
-        <Button
-          variantColor="orange"
-          onClick={() => {
-            history.push("/agreement/bills/utilities");
-          }}
-        >
-          Previous Section
-        </Button>
-        <Button
-          variantColor="pink"
-          onClick={() => {
-            history.push("/agreement/signatures");
-          }}
-        >
-          Next Section
-        </Button>
-      </div>
-    </div>
+      <Box as="footer">
+        <PrevNextNav before="/agreement/bills/utilities" after="/agreement/signatures" />
+      </Box>
+    </Box>
   );
 };
 

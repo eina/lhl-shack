@@ -35,7 +35,7 @@ const Account = () => {
   }, []);
 
   const submitHandler = (values: any, actions: any) => {
-    let { id, ...result } = values;
+    const { id, ...result } = values;
     return axios
       .patch(`/api/users/${id}`, {
         user: result

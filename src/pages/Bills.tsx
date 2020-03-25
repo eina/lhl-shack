@@ -33,7 +33,7 @@ const Bills = () => {
   return (
     <div>
       <Heading as="h1">Bills</Heading>
-      <Table numRows={5}>
+      <Table numRows={5} enableRowHeader={false}>
         <Column name="Name" cellRenderer={getCellRenderer('name')} />
         <Column name="Due Date" cellRenderer={getCellRenderer('dueDate')} />
         <Column name="Total" cellRenderer={getCellRenderer('total')} />

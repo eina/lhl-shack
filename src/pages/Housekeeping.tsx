@@ -6,7 +6,7 @@ import { AppContext } from '../Store';
 
 // import RichEditor from "../components/RichEditor/RichEditor";
 
-import { Heading } from '@chakra-ui/core';
+import { Heading, Divider } from '@chakra-ui/core';
 import { Editor, EditorState, convertFromRaw } from 'draft-js';
 
 interface HousekeepingRule {
@@ -35,7 +35,10 @@ const Housekeeping = () => {
   return (
     <div>
       <Heading as="h1">Housekeeping</Heading>
-      <Heading as="h2">Guest Policy</Heading>
+      <Divider />
+      <Heading as="h3" size="lg">
+        Guest Policy
+      </Heading>
       {housekeeping.guestPolicy && (
         <Editor
           editorState={EditorState.createWithContent(
@@ -45,21 +48,26 @@ const Housekeeping = () => {
           readOnly={true}
         />
       )}
-      <Heading as="h2">Noise Policy</Heading>
+      <Heading as="h3" size="lg">
+        Noise Policy
+      </Heading>
       {housekeeping.weekdayAM && (
         <div>
           <p>
             <b>Weekday Quiet Times: </b>
             {housekeeping.weekdayPM}PM - {housekeeping.weekdayAM}AM
           </p>
+          <Divider />
           <p>
             <b>Weekend Quiet Times: </b>
             {housekeeping.weekendPM}PM - {housekeeping.weekendAM}AM
           </p>
         </div>
       )}
-
-      <Heading as="h2">Rooms Policy</Heading>
+      <Divider />
+      <Heading as="h3" size="lg">
+        Rooms Policy
+      </Heading>
       {housekeeping.roomsPolicy && (
         <Editor
           editorState={EditorState.createWithContent(
@@ -69,7 +77,11 @@ const Housekeeping = () => {
           readOnly={true}
         />
       )}
-      <Heading as="h2"> Spaces Policy</Heading>
+      <Divider />
+      <Heading as="h3" size="lg">
+        {' '}
+        Spaces Policy
+      </Heading>
       {housekeeping.spacesPolicy && (
         <Editor
           editorState={EditorState.createWithContent(
@@ -79,8 +91,10 @@ const Housekeeping = () => {
           readOnly={true}
         />
       )}
-
-      <Heading as="h2">Chores Policy</Heading>
+      <Divider />
+      <Heading as="h3" size="lg">
+        Chores Policy
+      </Heading>
       {housekeeping.choresPolicy && (
         <Editor
           editorState={EditorState.createWithContent(
@@ -90,8 +104,10 @@ const Housekeeping = () => {
           readOnly={true}
         />
       )}
-
-      <Heading as="h2">Vacations Policy</Heading>
+      <Divider />
+      <Heading as="h3" size="lg">
+        Vacations Policy
+      </Heading>
       {housekeeping.vacationPolicy && (
         <Editor
           editorState={EditorState.createWithContent(
@@ -101,8 +117,10 @@ const Housekeeping = () => {
           readOnly={true}
         />
       )}
-
-      <Heading as="h2">Personal Items Policy</Heading>
+      <Divider />
+      <Heading as="h3" size="lg">
+        Personal Items Policy
+      </Heading>
       {housekeeping.personalItemsPolicy && (
         <Editor
           editorState={EditorState.createWithContent(
@@ -112,8 +130,10 @@ const Housekeeping = () => {
           readOnly={true}
         />
       )}
-
-      <Heading as="h2">Messages Policy</Heading>
+      <Divider />
+      <Heading as="h3" size="lg">
+        Messages Policy
+      </Heading>
       {housekeeping.messagesPolicy && (
         <Editor
           editorState={EditorState.createWithContent(
@@ -123,8 +143,10 @@ const Housekeeping = () => {
           readOnly={true}
         />
       )}
-
-      <Heading as="h2">Smoking Policy</Heading>
+      <Divider />
+      <Heading as="h3" size="lg">
+        Smoking Policy
+      </Heading>
       {housekeeping.smokingPolicy && (
         <Editor
           editorState={EditorState.createWithContent(
@@ -134,8 +156,10 @@ const Housekeeping = () => {
           readOnly={true}
         />
       )}
-
-      <Heading as="h2">Pets Policy</Heading>
+      <Divider />
+      <Heading as="h3" size="lg">
+        Pets Policy
+      </Heading>
       {housekeeping.petsPolicy && (
         <Editor
           editorState={EditorState.createWithContent(

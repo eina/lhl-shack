@@ -24,15 +24,15 @@ import Housekeeping from "./pages/Housekeeping";
 import Bills from "./pages/Bills";
 
 // test data
-const currUser = {
-  id: "1",
-  first_name: "Tracy",
-  last_name: "Barrows",
-  phone_number: "448-504-4347",
-  email: "test@test.com",
-  password: "testing",
-  household: 1
-};
+// const currUser = {
+//   id: "1",
+//   first_name: "Tracy",
+//   last_name: "Barrows",
+//   phone_number: "448-504-4347",
+//   email: "test@test.com",
+//   password: "testing",
+//   household: 1
+// };
 
 const AppContent = () => {
   const { state, updateState }: { state: any; updateState: any } = useContext(AppContext);

@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import axios from "axios";
 import { BrowserRouter, Switch, Route, useLocation, Link } from "react-router-dom";
 import { ThemeProvider, CSSReset, Grid, Box, Heading } from "@chakra-ui/core";
-import { Global, css } from "@emotion/core";
+import { Global } from "@emotion/core";
 import customTheme from "./chakra/customTheme";
 
 import { displayFullName } from "./helpers/functions";
@@ -24,15 +24,15 @@ import Housekeeping from "./pages/Housekeeping";
 import Bills from "./pages/Bills";
 
 // test data
-const currUser = {
-  id: "1",
-  first_name: "Tracy",
-  last_name: "Barrows",
-  phone_number: "448-504-4347",
-  email: "test@test.com",
-  password: "testing",
-  household: 1
-};
+// const currUser = {
+//   id: "1",
+//   first_name: "Tracy",
+//   last_name: "Barrows",
+//   phone_number: "448-504-4347",
+//   email: "test@test.com",
+//   password: "testing",
+//   household: 1
+// };
 
 const AppContent = () => {
   const { state, updateState }: { state: any; updateState: any } = useContext(AppContext);

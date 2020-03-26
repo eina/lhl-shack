@@ -20,9 +20,7 @@ const Bills = (props: any) => {
 
   useEffect(() => {
     // update bill portion when inputting total number
-    values.bills.map((bill: any, index: number) => {
-      setFieldValue(`bills[${index}].user_amount`, bill.total_amount / numRoommates);
-    });
+    values.bills.map((bill: any, index: number) => setFieldValue(`bills[${index}].user_amount`, bill.total_amount / numRoommates));
   }, [values.bills, numRoommates, setFieldValue]);
 
   type DeleteBillTypes = {

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 
-import { Heading, Grid, Box, Avatar, Divider, SimpleGrid, Flex } from "@chakra-ui/core";
+import { Heading, Avatar, Divider, SimpleGrid } from "@chakra-ui/core";
 
-import { displayFullName } from "../helpers/functions";
+// import { displayFullName } from "../helpers/functions";
 
 import { AppContext } from "../Store";
 
@@ -66,7 +66,7 @@ const landlordDefaultValues = {
 const roomieInitialValues: any = [];
 
 const Household = () => {
-  const { state, updateState }: { state: any; updateState: Function } = useContext(AppContext);
+  const { state }: { state: any } = useContext(AppContext);
   const [house, setHouse] = useState<House>(houseDefaultValues);
   const [landlord, setLandlord] = useState<Landlord>(landlordDefaultValues);
   const [roomies, setRoomies] = useState(roomieInitialValues);

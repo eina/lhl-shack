@@ -6,10 +6,9 @@ import { FormValues } from "../../interfaces";
 import FieldSet from "../FieldSet";
 import PrevNextNav from './PrevNextNav';
 
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 const Roommates = () => {
-  const history = useHistory();
   const { values }: { values: FormValues } = useFormikContext();
   return (
     <Box as="section">

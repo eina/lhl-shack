@@ -9,33 +9,28 @@ const billShape = {
 };
 
 const initialValues = {
-  landlord: {
-    firstName: "",
-    lastName: "",
-    address: "",
-    phone: "",
-    email: "",
-    company: ""
-  },
-  household: {
-    address: "",
-    leaseDates: {
-      startDate: moment(),
-      endDate: moment()
-    },
-    smokingAllowed: false,
-    petFriendly: true,
-    bedroomsAmt: 2,
-    bathroomsAmt: 1,
-    rentAmt: "",
-    securityDepositAmt: ""
-  },
-  account: {
-    first_name: "",
-    last_name: "",
-    phone_number: "",
-    email: ""
-  },
+  // landlord: {
+  //   firstName: "",
+  //   lastName: "",
+  //   address: "",
+  //   phone: "",
+  //   email: "",
+  //   company: ""
+  // },
+  // household: {
+  //   address: "",
+  //   leaseDates: {
+  //     startDate: moment(),
+  //     endDate: moment()
+  //   },
+  //   smokingAllowed: false,
+  //   petFriendly: true,
+  //   bedroomsAmt: 2,
+  //   bathroomsAmt: 1,
+  //   rentAmt: "",
+  //   securityDepositAmt: ""
+  // },
+
   roommates: [
     // { firstName: "Roommate", lastName: "One", email: "roomie1@email.com", phone: "6041234567" }
     { firstName: "", lastName: "", email: "", phone: "" },

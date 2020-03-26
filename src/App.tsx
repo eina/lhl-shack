@@ -57,7 +57,15 @@ const AppContent = () => {
 
   if (state && state.currUser) {
     return (
-      <Box className="App" w="100%" h="100%" lineHeight="tall" fontSize="lg" boxSizing="border-box">
+      <Box
+        className="App"
+        w="100%"
+        h="100%"
+        lineHeight="tall"
+        fontSize="lg"
+        boxSizing="border-box"
+        color="gray.900"
+      >
         <Grid templateColumns="1fr 4fr" className="container">
           <Box as="aside" px="4em">
             <Heading
@@ -69,7 +77,9 @@ const AppContent = () => {
               py="10"
               mb={0}
             >
-              <Link to="/">shack</Link>
+              <Link to="/">
+                <Box as="span" color="brand">shack</Box>
+              </Link>
             </Heading>
             {isHouseholdOrAgreementForm ? <AgreementMenu /> : <MainMenu />}
           </Box>
@@ -90,7 +100,7 @@ const AppContent = () => {
                   <Route path="/test" component={Test} />
                   <Route path="/household" component={Household} />
                   <Route path="/bills" component={Bills} />
-                  <Route path="/account" component={Housekeeping} />
+                  <Route path="/housekeeping" component={Housekeeping} />
                   <Route path="/resources" component={Resources} />
                   <Route path="/account" component={Account} />
                 </Switch>

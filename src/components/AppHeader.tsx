@@ -9,12 +9,13 @@ type AppHeadProps = {
 
 const AppHeader = ({ currUser, fullName }: AppHeadProps) => {
   return (
-    <Flex as="nav" align="center" justify="space-between" py="80px">
+    <Flex as="nav" align="center" justify="space-between" py="64px">
       <Link to="/agreement">Roommate Agreement Generator</Link>
-      <Flex align="center">
-        <Icon name="bell" />
+      <Link to="/account">{fullName}</Link>
+      {/* <Flex align="center">
+        <Icon name="bell" mr={3}/>
         <Text>{fullName}</Text>
-      </Flex>
+      </Flex> */}
     </Flex>
   );
 };

@@ -28,7 +28,7 @@ const Title = () => {
         agreeing to terms with any roommates.
       </Text>
 
-      <Box as="footer">
+      <Box as="footer" my={10}>
         <Button onClick={() => history.push('/agreement/roommates')}>Start Roommate Agreement Form</Button>
       </Box>
     </Box>

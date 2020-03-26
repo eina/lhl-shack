@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import axios from "axios";
-import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Switch, Route, useLocation, Link } from "react-router-dom";
 import { ThemeProvider, CSSReset, Grid, Box, Heading } from "@chakra-ui/core";
 import { Global, css } from "@emotion/core";
 import customTheme from "./chakra/customTheme";
@@ -60,8 +60,16 @@ const AppContent = () => {
       <Box className="App" w="100%" h="100%" lineHeight="tall" fontSize="lg" boxSizing="border-box">
         <Grid templateColumns="1fr 4fr" className="container">
           <Box as="aside" px="4em">
-            <Heading as="h1" size="lg" fontFamily="logo" fontSize="6xl" fontWeight="black" py="10" mb={0}>
-              shack
+            <Heading
+              as="h1"
+              size="lg"
+              fontFamily="logo"
+              fontSize="6xl"
+              fontWeight="black"
+              py="10"
+              mb={0}
+            >
+              <Link to="/">shack</Link>
             </Heading>
             {isHouseholdOrAgreementForm ? <AgreementMenu /> : <MainMenu />}
           </Box>

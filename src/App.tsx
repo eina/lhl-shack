@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import axios from "axios";
 import { BrowserRouter, Switch, Route, useLocation, Link } from "react-router-dom";
 import { ThemeProvider, CSSReset, Grid, Box, Heading } from "@chakra-ui/core";
-import { Global, css } from "@emotion/core";
+import { Global } from "@emotion/core";
 import customTheme from "./chakra/customTheme";
 
 import { displayFullName } from "./helpers/functions";

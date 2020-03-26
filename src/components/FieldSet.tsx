@@ -26,7 +26,8 @@ type FieldSetConfig = {
 };
 
 const FieldSet = ({ label, type, value, ...props }: FieldSetConfig) => {
-  const [field, meta, helpers] = useField(props);
+  const [field, meta] = useField(props);
+  // const [field, meta, helpers] = useField(props);
 
   const InputRight = () => {
     if (props.inputGroup.right.addOn) {

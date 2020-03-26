@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import { Flex, Heading, Icon, Text } from "@chakra-ui/core";
+import { Flex, Icon, Text } from "@chakra-ui/core";
 
 type AppHeadProps = {
   currUser: any;

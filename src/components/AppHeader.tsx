@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import { Flex, Heading, Icon, Text } from "@chakra-ui/core";
 
 type AppHeadProps = {
@@ -8,16 +9,12 @@ type AppHeadProps = {
 
 const AppHeader = ({ currUser, fullName }: AppHeadProps) => {
   return (
-    <Flex as="header" align="center" p={10} bg="teal.500" color="white" justify="space-between">
-      <Heading as="h1" size="lg">
-        shack
-      </Heading>
-      {currUser && fullName ? (
-        <Flex as="nav" align="center">
-          <Icon name="bell" />
-          <Text>{fullName}</Text>
-        </Flex>
-      ) : null}
+    <Flex as="nav" align="center" justify="space-between" py="80px">
+      <Link to="/agreement">Roommate Agreement Generator</Link>
+      <Flex align="center">
+        <Icon name="bell" />
+        <Text>{fullName}</Text>
+      </Flex>
     </Flex>
   );
 };

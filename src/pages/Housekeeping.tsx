@@ -1,11 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-
 import axios from 'axios';
 
 import { AppContext } from '../Store';
-
-// import RichEditor from "../components/RichEditor/RichEditor";
-
 import { Heading, Divider } from '@chakra-ui/core';
 import { Editor, EditorState, convertFromRaw } from 'draft-js';
 

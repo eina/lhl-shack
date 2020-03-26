@@ -1,4 +1,6 @@
 import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
+import { stateToHTML } from "draft-js-export-html";
+import { draftJSKeys } from "./data";
 
 export const displayFullName = (firstName: string, lastName: string) => {
   return `${firstName} ${lastName}`;
@@ -55,17 +57,6 @@ export const formatDraftJSForDB = (toSaveDraftJS: any) => {
  * @returns object
  */
 export const formatHousekeepingForDB = (housekeeping: any) => {
-  const draftJSKeys = [
-    "guestPolicy",
-    "spacesPolicy",
-    "roomsPolicy",
-    "choresPolicy",
-    "vacationPolicy",
-    "personalItemsPolicy",
-    "smokingPolicy",
-    "messagesPolicy",
-    "petsPolicy"
-  ];
   const result: any = {};
 
   // update housekeeping draft js to better saveable values
@@ -76,5 +67,22 @@ export const formatHousekeepingForDB = (housekeeping: any) => {
     }
   }
 
+  return result;
+};
+
+/**
+ * Format Housekeeping sections to HMTL
+ * @param housekeeping object
+ */
+export const formatHousekeepingToHTML = (housekeeping: any) => {
+  const result: any = {};
+
+  // update housekeeping draft js to better saveable values
+  for (const housekeepingKey in housekeeping) {
+    if (draftJSKeys.includes(housekeepingKey)) {
+      const draftJSContent = housekeeping[housekeepingKey].getCurrentContent();
+      result[housekeepingKey] = stateToHTML(draftJSContent);
+    }
+  }
   return result;
 };

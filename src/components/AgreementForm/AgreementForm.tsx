@@ -5,7 +5,8 @@ import NavigationPrompt from "react-router-navigation-prompt";
 import { FormikProps, Formik, FormikValues } from "formik";
 
 import { AppContext } from "../../Store";
-import initialValues, { formatDBInitialValues, finishedAgreement } from "./initialValues";
+import { formatHousekeepingToHTML } from "../../helpers/functions";
+import initialValues, { formatDBInitialValues } from "./initialValues";
 import validationSchema from "./validationSchema";
 import submitAgreement from "./submitAgreement";
 
@@ -15,22 +16,23 @@ import AppLoading from "../AppLoading";
 import Title from "./Title";
 import Roommates from "./Roommates";
 import Housekeeping from "./Housekeeping";
-import Rent from "./RentAndDeposit/Rent";
-import SecurityDeposit from "./RentAndDeposit/SecurityDeposit";
 import BillsUtilities from "./BillsUtilities";
 import Signatures from "./Signatures";
 import Preview from "./AgreementPreview";
+import { Box } from "@chakra-ui/core";
 
 const AgreementForm = () => {
-  const { state }: { state: any } = useContext(AppContext);
+  const { state, updateState }: { state: any; updateState: any } = useContext(AppContext);
   const [initialVals, setInitialVals] = useState(initialValues);
   const [agreementID, setAgreementID] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [agreementMeta, setAgreementMeta] = useState({ created_at: null, updated_at: null});
   const history = useHistory();
 
   useEffect(() => {
     const getHouseholdDetails = (currUser: any) => {
       axios.get(`/api/agreements/${currUser.household}`).then(agreement => {
+        setAgreementMeta({ created_at: agreement.data.created_at, updated_at: agreement.data.updated_at });
         // use agreement values as initial values if they exist
         const formValues =
           agreement.data && agreement.data.form_values ? agreement.data.form_values : null;
@@ -41,29 +43,72 @@ const AgreementForm = () => {
       });
     };
 
-    if (state && state.currUser && !agreementID) {
+    if (state.currUser && !agreementID) {
       const { currUser } = state;
       const { first_name, last_name, phone_number, email } = currUser;
       setInitialVals((prev: any) => ({
         ...prev,
-        roommates: [{ first_name, last_name, phone_number, email }, { first_name: "", last_name: "", phone_number: "", email: ""}]
+        roommates: [
+          { first_name, last_name, phone_number, email },
+          { first_name: "", last_name: "", phone_number: "", email: "" }
+        ]
       }));
 
       getHouseholdDetails(state.currUser);
     }
-  }, [state, agreementID]);
 
-  // console.log('is landlord and house here', state);
+    // grab household information
+
+    // grab house information
+  }, [state.currUser, agreementID, updateState]);
+
+  useEffect(() => {
+    if (state.currUser && state.currUser.landlord) {
+      // grab landlord information
+      axios.get(`/api/landlords/${state.currUser.landlord}`).then(landlord => {
+        const { created_at, updated_at, ...contact } = landlord.data;
+        updateState((prev: any) => ({ ...prev, landlord: contact }));
+      });
+    }
+
+    if (state.currUser && state.currUser.house) {
+      // grab house information
+      axios.get(`/api/houses/${state.currUser.house}`).then(house => {
+        const { address } = house.data;
+        updateState((prev: any) => ({ ...prev, house: { address } }));
+      });
+    }
+
+    if (state.currUser && state.currUser.household) {
+      // grab household information
+      axios.get(`/api/households/${state.currUser.household}`).then(household => {
+        const { start_date } = household.data;
+        updateState((prev: any) => ({ ...prev, household: { start_date } }));
+      });
+    }
+  }, [state.currUser, updateState]);
+
+  const { landlord, house, household } = state;
 
   const submitForm = (values: FormikValues, actions: any) => {
-    const { currUser: { household } } = state;
-    console.log('hello agreementId', agreementID);
-    console.log('hi form values', values);
-    submitAgreement({ formVals: values, householdID: household, agreementID, isComplete: true  }).then(() => {
-      console.log('sent things to the server!');
+    const {
+      currUser: { household: householdID }
+    } = state;
+    // console.log("hello agreementId", agreementID);
+    // console.log("hi form values", values);
+
+    submitAgreement({
+      formVals: values,
+      householdID,
+      agreementID,
+      isComplete: true,
+      previewDetails: { house, landlord, household, agreementMeta }
+    }).then(link => {
+      console.log("hi link", link);
+      updateState((prev: any) => ({ ...prev, agreementLink: link }));
       actions.setSubmitting(false);
       setSubmitSuccess(true);
-      history.push('/agreement/preview');
+      history.push("/agreement/preview");
     });
   };
 
@@ -89,15 +134,15 @@ const AgreementForm = () => {
         isSubmitting
       }: FormikProps<any>) => (
         <form onSubmit={handleSubmit}>
-          <p>{JSON.stringify(errors)}</p>
           <NavigationPrompt
-            when={(current, next) => {
+            when={(_, next) => {
               // if initialValues === values --> you can navigate away cause nothing changed
               const valuesChanged = JSON.stringify(values) !== JSON.stringify(initialValues);
               // const goToPreview = next.pathname.startsWith("/agreement")
               return (
-                !submitSuccess && valuesChanged &&
-                (!next || !next.pathname.startsWith("/agreement"))
+                !submitSuccess &&
+                  valuesChanged &&
+                  (!next || !next.pathname.startsWith("/agreement"))
               );
             }}
           >
@@ -112,62 +157,58 @@ const AgreementForm = () => {
               />
             )}
           </NavigationPrompt>
-          <Switch>
-            <Route path="/agreement/title" component={Title} />
-            <Redirect from="/agreement" to="/agreement/title" exact />
-            {/* <Route path="/agreement/landlord" component={Landlord} />
+          <Box maxW="80%">
+            <Switch>
+              <Route path="/agreement/title" component={Title} />
+              <Redirect from="/agreement" to="/agreement/title" exact />
+              {/* <Route path="/agreement/landlord" component={Landlord} />
             <Route path="/agreement/household" component={Household} /> */}
-            <Route path="/agreement/roommates" component={Roommates} />
-            <Redirect from="/agreement/bills" to="/agreement/bills/rent" exact />
-            {/* <Route path="/agreement/bills/rent">
-              <Rent
-                values={values}
-                setFieldValue={setFieldValue}
-                handleBlur={handleBlur}
-                errors={errors}
-                touched={touched}
-              />
-            </Route>
-            <Route path="/agreement/bills/deposit">
-              <SecurityDeposit
-                values={values}
-                setFieldValue={setFieldValue}
-                handleBlur={handleBlur}
-                errors={errors}
-                touched={touched}
-              />
-            </Route> */}
-            <Route path="/agreement/bills">
-              <BillsUtilities
-                values={values}
-                setFieldValue={setFieldValue}
-                handleBlur={handleBlur}
-                errors={errors}
-                touched={touched}
-              />
-            </Route>
-            <Route path="/agreement/housekeeping">
-              <Housekeeping
-                values={values}
-                setFieldValue={setFieldValue}
-                handleBlur={handleBlur}
-                errors={errors}
-                touched={touched}
-              />
-            </Route>
-            <Route path="/agreement/signatures">
-              <Signatures
-                formIsSubmitting={isSubmitting}
-                initialValues={initialValues}
-                values={values}
-                setFieldValue={setFieldValue}
-                handleBlur={handleBlur}
-                errors={errors}
-                touched={touched}
-              />
-            </Route>
-            <Route path="/agreement/preview"><Preview agreementID={agreementID}/></Route>
-          </Switch>
+              <Route path="/agreement/roommates" component={Roommates} />
+              <Redirect from="/agreement/bills" to="/agreement/bills/rent" exact />
+              <Route path="/agreement/bills">
+                <BillsUtilities
+                  values={values}
+                  setFieldValue={setFieldValue}
+                  handleBlur={handleBlur}
+                  errors={errors}
+                  touched={touched}
+                />
+              </Route>
+              <Route path="/agreement/housekeeping">
+                <Housekeeping
+                  values={values}
+                  setFieldValue={setFieldValue}
+                  handleBlur={handleBlur}
+                  errors={errors}
+                  touched={touched}
+                />
+              </Route>
+              <Route path="/agreement/signatures">
+                <Signatures
+                  formIsSubmitting={isSubmitting}
+                  initialValues={initialValues}
+                  values={values}
+                  setFieldValue={setFieldValue}
+                  handleBlur={handleBlur}
+                  errors={errors}
+                  touched={touched}
+                />
+              </Route>
+              <Route path="/agreement/preview">
+                {house && landlord && household && (
+                  <Preview
+                    {...values}
+                    agreementID={agreementID}
+                    formattedHousekeeping={formatHousekeepingToHTML(values.housekeeping)}
+                    landlord={landlord}
+                    house={house}
+                    household={household}
+                    {...agreementMeta}
+                  />
+                )}
+              </Route>
+            </Switch>
+          </Box>
         </form>
       )}
     </Formik>

@@ -48,6 +48,7 @@ const FieldSet = ({ label, type, value, ...props }: FieldSetConfig) => {
     <FormControl
       isInvalid={meta.touched && meta.error ? true : false}
       isDisabled={props.disabled !== undefined ? props.disabled : false}
+      mb={3}
     >
       {/* <p>{value}</p> */}
       {type === "checkbox" ? (

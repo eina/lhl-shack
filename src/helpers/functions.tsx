@@ -75,7 +75,6 @@ export const formatHousekeepingForDB = (housekeeping: any) => {
  * @param housekeeping object
  */
 export const formatHousekeepingToHTML = (housekeeping: any) => {
-  console.log("hi i am grabbing housekeeping", housekeeping);
   const result: any = {};
 
   // update housekeeping draft js to better saveable values

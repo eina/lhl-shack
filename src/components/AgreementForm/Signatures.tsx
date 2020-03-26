@@ -67,21 +67,23 @@ const Signatures = (props: any) => {
                 </ListItem>
               ))}
             </List>
-            {values.roommates.length > values.signatures.length && <Button
-              type="button"
-              onClick={() => arrayHelpers.push({ fullName: "", agreed: false, date: moment() })}
-            >
-              Add Signature
-            </Button>}
-
+            {values.roommates.length > values.signatures.length && (
+              <Button
+                type="button"
+                onClick={() => arrayHelpers.push({ fullName: "", agreed: false, date: moment() })}
+              >
+                Add Signature
+              </Button>
+            )}
           </div>
         )}
       </FieldArray>
-      {/* {valuesChanged ? <Button isLoading={formIsSubmitting}
-          loadingText="Generating Preview" type="submit">Save &amp; Preview Agreement</Button> : <Button type="button" onClick={() => history.push('/agreement/preview')}>Preview Agreement</Button>} */}
+      <Button isLoading={formIsSubmitting} loadingText="Generating Preview" type="submit">
+        Save &amp; Preview Agreement
+      </Button>
       <PrevNextNav before="/agreement/bills/utilities">
-        <Button isLoading={formIsSubmitting}
-          loadingText="Generating Preview" type="submit">Save &amp; Preview Agreement</Button>
+        {valuesChanged ? <Button isLoading={formIsSubmitting}
+          loadingText="Generating Preview" type="submit">Save &amp; Preview Agreement</Button> : <Button type="button" onClick={() => history.push('/agreement/preview')}>Preview Agreement</Button>}
       </PrevNextNav>
     </Box>
   );

@@ -21,7 +21,8 @@ import Signatures from "./Signatures";
 import Preview from "./AgreementPreview";
 
 const AgreementForm = () => {
-  const { state }: { state: any } = useContext(AppContext);
+  const { state, updateState }: { state: any; updateState: any } = useContext(AppContext);
+
   const [initialVals, setInitialVals] = useState(initialValues);
   const [agreementID, setAgreementID] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState(false);
@@ -40,7 +41,7 @@ const AgreementForm = () => {
       });
     };
 
-    if (state && state.currUser && !agreementID) {
+    if (state.currUser && !agreementID) {
       const { currUser } = state;
       const { first_name, last_name, phone_number, email } = currUser;
       setInitialVals((prev: any) => ({
@@ -53,24 +54,55 @@ const AgreementForm = () => {
 
       getHouseholdDetails(state.currUser);
     }
-  }, [state, agreementID]);
 
-  // console.log('is landlord and house here', state);
+    // grab household information
+
+    // grab house information
+  }, [state.currUser, agreementID, updateState]);
+
+  useEffect(() => {
+    if (state.currUser && state.currUser.landlord) {
+      // grab landlord information
+      axios.get(`/api/landlords/${state.currUser.landlord}`).then(landlord => {
+        const { created_at, updated_at, ...contact } = landlord.data;
+        updateState((prev: any) => ({ ...prev, landlord: contact }));
+      });
+    }
+
+    if (state.currUser && state.currUser.house) {
+      // grab house information
+      axios.get(`/api/houses/${state.currUser.house}`).then(house => {
+        const { address } = house.data;
+        updateState((prev: any) => ({ ...prev, house: { address } }));
+      });
+    }
+
+    if (state.currUser && state.currUser.household) {
+      // grab household information
+      axios.get(`/api/households/${state.currUser.household}`).then(household => {
+        const { start_date } = household.data;
+        updateState((prev: any) => ({ ...prev, household: { start_date } }));
+      });
+    }
+  }, [state.currUser, updateState]);
+
+  const { landlord, house, household } = state;
 
   const submitForm = (values: FormikValues, actions: any) => {
     const {
-      currUser: { household }
+      currUser: { household: householdID }
     } = state;
-    console.log("hello agreementId", agreementID);
-    console.log("hi form values", values);
+    // console.log("hello agreementId", agreementID);
+    // console.log("hi form values", values);
 
     submitAgreement({
       formVals: values,
-      householdID: household,
+      householdID,
       agreementID,
-      isComplete: true
-    }).then(() => {
-      console.log("sent things to the server!");
+      isComplete: true,
+      previewDetails: { house, landlord, household }
+    }).then(link => {
+      updateState((prev: any) => ({ ...prev, agreementLink: link }));
       actions.setSubmitting(false);
       setSubmitSuccess(true);
       history.push("/agreement/preview");
@@ -101,7 +133,7 @@ const AgreementForm = () => {
         <form onSubmit={handleSubmit}>
           <p>{JSON.stringify(errors)}</p>
           <NavigationPrompt
-            when={(current, next) => {
+            when={(_, next) => {
               // if initialValues === values --> you can navigate away cause nothing changed
               const valuesChanged = JSON.stringify(values) !== JSON.stringify(initialValues);
               // const goToPreview = next.pathname.startsWith("/agreement")
@@ -160,11 +192,16 @@ const AgreementForm = () => {
               />
             </Route>
             <Route path="/agreement/preview">
-              <Preview
-                {...values}
-                agreementID={agreementID}
-                formattedHousekeeping={formatHousekeepingToHTML(values.housekeeping)}
-              />
+              {house && landlord && household && (
+                <Preview
+                  {...values}
+                  agreementID={agreementID}
+                  formattedHousekeeping={formatHousekeepingToHTML(values.housekeeping)}
+                  landlord={landlord}
+                  house={house}
+                  household={household}
+                />
+              )}
             </Route>
           </Switch>
         </form>

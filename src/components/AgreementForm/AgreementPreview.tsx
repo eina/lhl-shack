@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AppContext } from "../../Store";
 import moment from "moment";
 
 const AgreementPreview = (props: any) => {
-  const { roommates, bills, housekeeping, formattedHousekeeping } = props;
+  const {
+    landlord,
+    house,
+    household,
+    roommates,
+    bills,
+    housekeeping,
+    formattedHousekeeping,
+    signatures
+  } = props;
   const [rent, securityDeposit, ...utilities] = bills;
   const { weekdayAM, weekdayPM, weekendAM, weekendPM } = housekeeping;
   const {
@@ -17,12 +27,12 @@ const AgreementPreview = (props: any) => {
     petsPolicy
   } = formattedHousekeeping;
 
-  console.log("what is here", guestPolicy);
-
   return (
     <div>
+      <h1>Roommate Agreement</h1>
+      <p>Last updated on: {moment().toString()}</p>
       <section>
-        <h1>Roommates</h1>
+        <h2>Roommates</h2>
         <p>
           <strong>This agreement is entered into by:</strong>
         </p>
@@ -34,15 +44,29 @@ const AgreementPreview = (props: any) => {
           ))}
         </ul>
         <p>
-          We the roommates of (insert address here) agree that this document represents a binding
-          agreement between us with respect to our tenancy beginning on________________, 20___. We
-          further agree that if this agreement conflicts with any of our rights and obligations
-          under the Tenancy Agreement dated_________________, with respect to the above rental unit
-          or with the provisions of any applicable laws, the said Tenancy Agreement and the
-          applicable law(s) will prevail in all respects.
+          We the roommates of {house.address} agree that this document represents a binding
+          agreement between us with respect to our tenancy beginning on{" "}
+          {moment(household.start_date).toString()}.
+        </p>
+        <p>
+          We further agree that if this agreement conflicts with any of our rights and obligations
+          under the Tenancy Agreement, with respect to the above rental unit or with the provisions4
+          of any applicable laws, the said Tenancy Agreement and the applicable law(s) will prevail
+          in all respects.
         </p>
       </section>
-      {/* insert landlord & household shit here */}
+      <section>
+        <h2>Landlord Contact Information</h2>
+        <ul>
+          <li>
+            {landlord.first_name} {landlord.first_name}
+          </li>
+          <li>{landlord.address}</li>
+          <li>{landlord.email}</li>
+          <li>{landlord.phone_number}</li>
+          {landlord.company && <li>{landlord.company}</li>}
+        </ul>
+      </section>
       <section>
         <h2>Rent and Security Deposit</h2>
 
@@ -51,14 +75,19 @@ const AgreementPreview = (props: any) => {
           <li>{rent.name}</li>
           <li>Total amount: ${rent.total_amount}</li>
           <li>Roommate amount: ${rent.user_amount}</li>
-          <li>To be paid: ${rent.interval.label}</li>
+          <li>
+            To be paid: {rent.interval.label} starting {moment(rent.due_date).toString()}
+          </li>
         </ul>
 
         <p>We agree that the our security deposit obligations will be apportioned as follows:</p>
         <ul>
           <li>Total amount: ${securityDeposit.total_amount}</li>
           <li>Roommate amount: ${securityDeposit.user_amount}</li>
-          <li>To be paid: {securityDeposit.interval.label}</li>
+          <li>
+            To be paid: {securityDeposit.interval.label} starting{" "}
+            {moment(securityDeposit.due_date).toString()}
+          </li>
         </ul>
       </section>
       {utilities.length ? (
@@ -70,7 +99,10 @@ const AgreementPreview = (props: any) => {
               <ul>
                 <li>Total amount: ${utility.total_amount}</li>
                 <li>Roommate amount: ${utility.user_amount}</li>
-                <li>To be paid: {utility.interval.label}</li>
+                <li>
+                  To be paid: {utility.interval.label} starting{" "}
+                  {moment(utility.due_date).toString()}
+                </li>
               </ul>
             </div>
           ))}
@@ -155,6 +187,28 @@ const AgreementPreview = (props: any) => {
           <div dangerouslySetInnerHTML={{ __html: petsPolicy }} />
         </section>
       )}
+
+      <section>
+        <p>
+          Each of us has received a copy of and read our Tenancy Agreement. (Note that your landlord
+          is required by law to provide each tenant with a copy of the Tenancy Agreement.)
+        </p>
+        <p>
+          The signing of this agreement indicates our full understanding and acceptance of the above
+          provisions and terms.
+        </p>
+
+        <ul>
+          {signatures.map((roomie: any, index: number) => (
+            <li key={index}>
+              <p>
+                {roomie.fullName} digitally signed this agreement on{" "}
+                {moment(roomie.date).toString()}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </section>
     </div>
   );
 };

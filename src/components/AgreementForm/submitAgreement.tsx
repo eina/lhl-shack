@@ -13,6 +13,7 @@ type AgreementProps = {
   agreementID: string;
   isComplete: boolean;
   formattedHousekeeping?: any;
+  previewDetails?: any;
 };
 
 const saveAgreement = ({
@@ -20,7 +21,8 @@ const saveAgreement = ({
   householdID,
   agreementID,
   isComplete,
-  formattedHousekeeping
+  formattedHousekeeping,
+  previewDetails
 }: AgreementProps) => {
   let dataToSend;
 
@@ -33,36 +35,24 @@ const saveAgreement = ({
 
   const previewProps = {
     ...formVals,
-    test: "test"
+    formattedHousekeeping,
+    ...previewDetails
   };
-  console.log("are you gonna lag here???");
-  console.log("ahhh", formattedHousekeeping);
 
-  console.log(
-    "hi!",
-    ReactDOMServer.renderToString(
-      <Preview {...previewProps} formattedHousekeeping={formattedHousekeeping} />
-    )
-  );
-  // if (isComplete) {
-  //   const htmlString = ReactDOMServer.renderToStaticMarkup(<Preview agreementID={agreementID} />);
-  //   console.log('hi!', htmlString);
-  //   // dataToSend = { ...dataWithoutHTML, html_string: htmlString };
-  // } else {
-  //   // dataToSend = dataWithoutHTML;
-  // }
+  if (isComplete) {
+    const htmlString = ReactDOMServer.renderToStaticMarkup(<Preview {...previewProps} />);
+    dataToSend = { ...dataWithoutHTML, html_string: htmlString };
+  } else {
+    dataToSend = dataWithoutHTML;
+  }
 
-  dataToSend = dataWithoutHTML;
+  // dataToSend = dataWithoutHTML;
 
   const agreementRequest = agreementID
     ? axios.patch(`/api/agreements/${agreementID}`, dataToSend)
     : axios.post("/api/agreements", dataToSend);
 
-  return agreementRequest.then(() =>
-    axios.patch(`/api/households/${householdID}`, {
-      housekeeping: JSON.stringify(formVals.housekeeping)
-    })
-  );
+  return agreementRequest;
 };
 
 type SavingProps = {
@@ -150,13 +140,14 @@ const submitAgreement = ({
   householdID,
   agreementID,
   isComplete,
-  formattedHousekeeping
+  previewDetails
 }: AgreementProps) => {
   const { housekeeping } = formVals;
   const formattedValues = {
     ...formVals,
     housekeeping: { ...housekeeping, ...formatHousekeepingForDB(housekeeping) }
   };
+  let agreementLink: string;
 
   // save the agreement
   return saveAgreement({
@@ -164,18 +155,27 @@ const submitAgreement = ({
     householdID,
     agreementID,
     isComplete,
-    formattedHousekeeping: formatHousekeepingToHTML(housekeeping)
-  }).then(vals => {
-    // only save the other things when submitting from the agreement form (isComplete == true)
-    if (isComplete) {
-      // save the users
-      return saveUsers({ formVals })
-        .then(users => Promise.all(users)) // grab users id
-        .then(usersIDs => saveBills({ formVals, householdID, usersIDs })); // save the bills
-    } else {
-      return vals.data;
-    }
-  });
+    formattedHousekeeping: formatHousekeepingToHTML(housekeeping),
+    previewDetails
+  })
+    .then(agreementData => {
+      agreementLink = agreementData.data.link;
+      return axios.patch(`/api/households/${householdID}`, {
+        housekeeping: JSON.stringify(formVals.housekeeping)
+      });
+    })
+    .then(vals => {
+      // only save the other things when submitting from the agreement form (isComplete == true)
+      if (isComplete) {
+        // save the users
+        return saveUsers({ formVals })
+          .then(users => Promise.all(users)) // grab users id
+          .then(usersIDs => saveBills({ formVals, householdID, usersIDs }))
+          .then(() => agreementLink); // save the bills
+      } else {
+        return vals.data;
+      }
+    });
 };
 
 export default submitAgreement;

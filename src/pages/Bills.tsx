@@ -1,4 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import Select from 'react-select';
 import Griddle, {
@@ -6,15 +7,31 @@ import Griddle, {
   RowDefinition,
   ColumnDefinition,
 } from 'griddle-react';
-import { Heading } from '@chakra-ui/core';
+import { Heading, useToast } from '@chakra-ui/core';
 import { AppContext } from '../Store';
+
+const rowDataSelector = (state: any, { griddleKey }: any) => {
+  return state
+    .get('data')
+    .find((rowMap: any) => rowMap.get('griddleKey') === griddleKey)
+    .toJSON();
+};
+
+const enhancedWithRowData = connect((state, props) => {
+  return {
+    // rowData will be available into MyCustomComponent
+    rowData: rowDataSelector(state, props),
+  };
+});
 
 const Bills = () => {
   const {
     state,
     updateState,
   }: { state: any; updateState: Function } = useContext(AppContext);
+  const toast = useToast();
   const [bills, setBills] = useState([]);
+  const [userBillStatus, setUserBilStats] = useState({});
   const { currUser } = state;
   useEffect(() => {
     if (currUser) {
@@ -33,13 +50,36 @@ const Bills = () => {
     }
   }, []);
 
-  const userPaymentSelect = ({ value }: any) => {
+  const userPaymentSelect = (props: any) => {
+    const { value, griddleKey, rowData } = props;
     const options = [
       { value: 'unpaid', label: 'Unpaid' },
       { value: 'paid', label: 'Paid' },
     ];
 
-    return <Select options={options} value={options.find(option => option.value === value)}/>;
+    const onChangeHandler = (event: any) => {
+      const { id } = rowData;
+      console.log('on change handler', event);
+      console.log('is there rowData', rowData);
+      // 1. do an axios patch request --> need bil.id
+      axios.patch(`/api/bills/${id}`, { user_status: value }).then(() =>
+        toast({
+          title: 'Marked as paid!',
+          description: "We've created your account for you.",
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        })
+      );
+    };
+
+    return (
+      <Select
+        options={options}
+        value={options.find(option => option.value === value)}
+        onChange={(e: any) => onChangeHandler(e.value)}
+      />
+    );
   };
 
   const billPaymentSelect = ({ value }: any) => {
@@ -48,7 +88,12 @@ const Bills = () => {
       { value: 'paid', label: 'Paid' },
     ];
 
-    return <Select options={options} value={options.find(option => option.value === value)}/>;
+    return (
+      <Select
+        options={options}
+        value={options.find(option => option.value === value)}
+      />
+    );
   };
 
   return (
@@ -65,7 +110,7 @@ const Bills = () => {
             <ColumnDefinition
               id="user_status"
               title="Your Payment Status"
-              customComponent={userPaymentSelect}
+              customComponent={enhancedWithRowData(userPaymentSelect)}
             />
             <ColumnDefinition
               id="bill_status"

@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
+import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 
-import { Heading, Avatar, Divider, SimpleGrid } from "@chakra-ui/core";
+import { Heading, Avatar, Divider, SimpleGrid } from '@chakra-ui/core';
 
 // import { displayFullName } from "../helpers/functions";
 
-import { AppContext } from "../Store";
+import { AppContext } from '../Store';
 
 interface House {
   id: number;
@@ -26,15 +26,15 @@ const houseDefaultValues = {
   id: 0,
   total_rent_amt: 0,
   total_security_deposit_amt: 0,
-  address: "",
+  address: '',
   number_of_rooms: 0,
   number_of_bathrooms: 0,
   pet_friendly: false,
   smoking_allowed: false,
-  start_date: "",
-  end_date: "",
+  start_date: '',
+  end_date: '',
   user_id: 0,
-  landlord_id: 0
+  landlord_id: 0,
 };
 
 interface Landlord {
@@ -49,12 +49,12 @@ interface Landlord {
 
 const landlordDefaultValues = {
   id: 0,
-  first_name: "",
-  last_name: "",
-  phone_number: "",
-  address: "",
-  email: "",
-  company: ""
+  first_name: '',
+  last_name: '',
+  phone_number: '',
+  address: '',
+  email: '',
+  company: '',
 };
 
 // interface Roomie {
@@ -71,43 +71,54 @@ const Household = () => {
   const [landlord, setLandlord] = useState<Landlord>(landlordDefaultValues);
   const [roomies, setRoomies] = useState(roomieInitialValues);
   const { currUser } = state;
+  console.log(state);
+
+  /* 
+    data you have:
+    houseID, userID, landlordID, householdID
+
+    data you need to show:
+    - house information
+    - landlord info
+    - rooommates info
+  */
   useEffect(() => {
     let houseId: string;
-    axios
-      .get(`/api/households/${currUser.household}`)
-      .then(vals => {
-        houseId = vals.data.house_id;
-        return houseId;
-      })
-      .then(houseId => axios.get(`/api/houses/${houseId}`))
-      .then(house => {
-        setHouse(house.data);
-        return house.data.landlord_id;
-      })
-      .then(landlordId => axios.get(`/api/landlords/${landlordId}`))
-      .then(landlord => {
-        setLandlord(landlord.data);
-      })
-      .then(() => axios.get(`/api/households?house_id=${houseId}`))
-      .then(tenants => {
-        const usersId = tenants.data.map((tenant: any) => tenant.user_id);
-        return usersId;
-      })
-      .then(usersId => {
-        console.log("Here is usersId: ", usersId);
-        const promisesArray: any = [];
-        usersId.forEach((userId: any) => {
-          promisesArray.push(axios.get(`/api/users/${userId}`));
-        });
-        console.log("here promises arrray! ", promisesArray);
-        return Promise.all(promisesArray);
-      })
-      .then(usersPromises => {
-        console.log("here is userspromises: ", usersPromises);
-        usersPromises.forEach((user: any) => {
-          setRoomies((prev: any) => [...prev, user.data]);
-        });
-      });
+    // axios
+    //   .get(`/api/households/${currUser.household}`)
+    //   .then(vals => {
+    //     houseId = vals.data.house_id;
+    //     return houseId;
+    //   })
+    //   .then(houseId => axios.get(`/api/houses/${houseId}`))
+    //   .then(house => {
+    //     setHouse(house.data);
+    //     return house.data.landlord_id;
+    //   })
+    //   .then(landlordId => axios.get(`/api/landlords/${landlordId}`))
+    //   .then(landlord => {
+    //     setLandlord(landlord.data);
+    //   })
+    //   .then(() => axios.get(`/api/households?house_id=${houseId}`))
+    //   .then(tenants => {
+    //     const usersId = tenants.data.map((tenant: any) => tenant.user_id);
+    //     return usersId;
+    //   })
+    //   .then(usersId => {
+    //     console.log('Here is usersId: ', usersId);
+    //     const promisesArray: any = [];
+    //     usersId.forEach((userId: any) => {
+    //       promisesArray.push(axios.get(`/api/users/${userId}`));
+    //     });
+    //     console.log('here promises arrray! ', promisesArray);
+    //     return Promise.all(promisesArray);
+    //   })
+    //   .then(usersPromises => {
+    //     console.log('here is userspromises: ', usersPromises);
+    //     usersPromises.forEach((user: any) => {
+    //       setRoomies((prev: any) => [...prev, user.data]);
+    //     });
+    //   });
   }, [currUser.household]);
 
   return (
@@ -141,21 +152,19 @@ const Household = () => {
         <div>
           <Heading as="h3">Roommates</Heading>
           <Divider />
-          {roomies.map((roomie: any) => (
-            <div key={roomie.id}>
-              {/* change this, grid should be outside of the loop */}
-              <SimpleGrid columns={2} spacing={5}>
-                <span>
-                  <Avatar src={roomie.avatar} />
-                  <p>
-                    {roomie.first_name} {roomie.last_name}
-                  </p>
-                  <p>{roomie.phone_number}</p>
-                  <p>{roomie.email}</p>
-                </span>
-              </SimpleGrid>
-            </div>
-          ))}
+          <SimpleGrid columns={2} spacing={5}>
+            {roomies.map((roomie: any) => (
+              <div key={roomie.id}>
+
+                <Avatar src={roomie.avatar} />
+                <p>
+                  {roomie.first_name} {roomie.last_name}
+                </p>
+                <p>{roomie.phone_number}</p>
+                <p>{roomie.email}</p>
+              </div>
+            ))}
+          </SimpleGrid>
         </div>
       </div>
     )

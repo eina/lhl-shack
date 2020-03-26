@@ -58,7 +58,7 @@ const AgreementPreview = (props: any) => {
 
         <Box {...sectionProps}>
           <Text>
-            We the roommates of {house.address} agree that this document represents a binding
+            We the roommates of {house.address}, agree that this document represents a binding
             agreement between us with respect to our tenancy beginning on{" "}
             {moment(household.start_date).format(momentFormat)}.
           </Text>

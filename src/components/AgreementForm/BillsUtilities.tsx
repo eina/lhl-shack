@@ -3,7 +3,7 @@ import axios from "axios";
 import moment from "moment";
 import { v4 as uuidV4 } from "uuid";
 import { FieldArray } from "formik";
-import { Box, Button, Heading, Text, Grid } from "@chakra-ui/core";
+import { Box, Button, Heading, Text, Grid, Flex } from "@chakra-ui/core";
 
 import { AppContext } from '../../Store';
 import { billInterval } from "../../helpers/data";
@@ -58,7 +58,7 @@ const Bills = (props: any) => {
           <div>
             <Box>
               {values.bills.map((bill: any, index: number, arr: any) => (
-                <Grid key={index} templateColumns="2em 4fr" mb={5}>
+                <Grid key={index} templateColumns="2em 4fr" mb={8}>
                   <Text fontSize="md">{index + 1}.</Text>
                   <div>
                     {arr.length > 2 && index > 1 && (
@@ -89,47 +89,49 @@ const Bills = (props: any) => {
                       label="Total Amount"
                       inputGroup={{ left: { addOn: "$" } }}
                     />
-                    <FormikSingleDatePicker
-                      name={`bills.${index}.due_date`}
-                      label="Due Date"
-                      stateName={`bills.${index}.due_date`}
-                      stateValue={values.bills[index].due_date}
-                      onChange={setFieldValue}
-                      numberOfMonths={1}
-                      error={
-                        errors &&
-                        errors.bills &&
-                        errors.bills[index] &&
-                        errors.bills[index].due_date
-                      }
-                      touched={
-                        touched &&
-                        touched.bills &&
-                        touched.bills[index] &&
-                        touched.bills[index].due_date
-                      }
-                    />
-                    <FormikSelect
-                      label="Billing Cycle"
-                      name={`bills.${index}.interval`}
-                      stateName={`bills.${index}.interval`}
-                      stateValue={values.bills[index].interval}
-                      options={billInterval}
-                      onChange={setFieldValue}
-                      onBlur={handleBlur}
-                      error={
-                        errors &&
-                        errors.bills &&
-                        errors.bills[index] &&
-                        errors.bills[index].interval
-                      }
-                      touched={
-                        touched &&
-                        touched.bills &&
-                        touched.bills[index] &&
-                        touched.bills[index].interval
-                      }
-                    />
+                    <Flex w="600px" mb={3}>
+                      <FormikSingleDatePicker
+                        name={`bills.${index}.due_date`}
+                        label="Due Date"
+                        stateName={`bills.${index}.due_date`}
+                        stateValue={values.bills[index].due_date}
+                        onChange={setFieldValue}
+                        numberOfMonths={1}
+                        error={
+                          errors &&
+                          errors.bills &&
+                          errors.bills[index] &&
+                          errors.bills[index].due_date
+                        }
+                        touched={
+                          touched &&
+                          touched.bills &&
+                          touched.bills[index] &&
+                          touched.bills[index].due_date
+                        }
+                      />
+                      <FormikSelect
+                        label="Billing Cycle"
+                        name={`bills.${index}.interval`}
+                        stateName={`bills.${index}.interval`}
+                        stateValue={values.bills[index].interval}
+                        options={billInterval}
+                        onChange={setFieldValue}
+                        onBlur={handleBlur}
+                        error={
+                          errors &&
+                          errors.bills &&
+                          errors.bills[index] &&
+                          errors.bills[index].interval
+                        }
+                        touched={
+                          touched &&
+                          touched.bills &&
+                          touched.bills[index] &&
+                          touched.bills[index].interval
+                        }
+                      />
+                    </Flex>
 
                     <FieldSet
                       type="number"
@@ -137,6 +139,7 @@ const Bills = (props: any) => {
                       label="Amount per Roommate"
                       isReadOnly={true}
                       value={values.bills[index].total_amount / numRoommates}
+                      inputGroup={{ left: { addOn: "$" } }}
                     />
                   </div>
                 </Grid>

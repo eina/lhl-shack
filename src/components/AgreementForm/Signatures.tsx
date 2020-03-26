@@ -33,18 +33,6 @@ const Signatures = (props: any) => {
                         Remove
                       </Button>
                     )}
-                    <FieldSet
-                      type="text"
-                      name={`signatures.${index}.fullName`}
-                      label={roommateName[index]}
-                      formHelper={`Please match name inputted with ${roommateName[index]}`}
-                    />
-
-                    <FieldSet
-                      type="checkbox"
-                      name={`signatures.${index}.agreed`}
-                      label="I have agreed to what has been written in this agreement."
-                    />
 
                     <FormikSingleDatePicker
                       stateValue={values.signatures[index].date}
@@ -66,6 +54,19 @@ const Signatures = (props: any) => {
                         touched.signatures[index].date
                       }
                     />
+                    
+                    <FieldSet
+                      type="text"
+                      name={`signatures.${index}.fullName`}
+                      label={roommateName[index]}
+                      formHelper={`Please match name inputted with ${roommateName[index]}`}
+                    />
+
+                    <FieldSet
+                      type="checkbox"
+                      name={`signatures.${index}.agreed`}
+                      label="I have agreed to what has been written in this agreement."
+                    />
                   </div>
                 </Grid>
               ))}
@@ -81,17 +82,20 @@ const Signatures = (props: any) => {
           </div>
         )}
       </FieldArray>
-      <PrevNextNav before="/agreement/bills/utilities">
-        {valuesChanged ? (
-          <Button isLoading={formIsSubmitting} loadingText="Generating Preview" type="submit">
-            Save &amp; Preview Agreement
-          </Button>
-        ) : (
-          <Button type="button" onClick={() => history.push("/agreement/preview")}>
-            Preview Agreement
-          </Button>
-        )}
-      </PrevNextNav>
+
+      <Box as="footer" my={10}>
+        <PrevNextNav before="/agreement/bills/utilities">
+          {valuesChanged ? (
+            <Button isLoading={formIsSubmitting} loadingText="Generating Preview" type="submit">
+              Save &amp; Preview Agreement
+            </Button>
+          ) : (
+            <Button type="button" onClick={() => history.push("/agreement/preview")}>
+              Preview Agreement
+            </Button>
+          )}
+        </PrevNextNav>
+      </Box>
     </Box>
   );
 };

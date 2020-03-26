@@ -31,6 +31,7 @@ const AgreementForm = () => {
   useEffect(() => {
     const getHouseholdDetails = (currUser: any) => {
       axios.get(`/api/agreements/${currUser.household}`).then(agreement => {
+        console.log("do you have updated date here", agreement.data);
         // use agreement values as initial values if they exist
         const formValues =
           agreement.data && agreement.data.form_values ? agreement.data.form_values : null;
@@ -102,6 +103,7 @@ const AgreementForm = () => {
       isComplete: true,
       previewDetails: { house, landlord, household }
     }).then(link => {
+      console.log("hi link", link);
       updateState((prev: any) => ({ ...prev, agreementLink: link }));
       actions.setSubmitting(false);
       setSubmitSuccess(true);

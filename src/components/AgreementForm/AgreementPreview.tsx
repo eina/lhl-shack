@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
-import { AppContext } from "../../Store";
+import React from "react";
 import moment from "moment";
 
 const AgreementPreview = (props: any) => {
+  const updateFormat = "dddd, MMMM Do YYYY, h:mm:ss a";
+  const momentFormat = "dddd, MMMM Do YYYY";
   const {
     landlord,
     house,
@@ -30,7 +31,7 @@ const AgreementPreview = (props: any) => {
   return (
     <div>
       <h1>Roommate Agreement</h1>
-      <p>Last updated on: {moment().toString()}</p>
+      <p>Last updated on: {moment().format(updateFormat)}</p>
       <section>
         <h2>Roommates</h2>
         <p>
@@ -46,7 +47,7 @@ const AgreementPreview = (props: any) => {
         <p>
           We the roommates of {house.address} agree that this document represents a binding
           agreement between us with respect to our tenancy beginning on{" "}
-          {moment(household.start_date).toString()}.
+          {moment(household.start_date).format(momentFormat)}.
         </p>
         <p>
           We further agree that if this agreement conflicts with any of our rights and obligations
@@ -76,7 +77,7 @@ const AgreementPreview = (props: any) => {
           <li>Total amount: ${rent.total_amount}</li>
           <li>Roommate amount: ${rent.user_amount}</li>
           <li>
-            To be paid: {rent.interval.label} starting {moment(rent.due_date).toString()}
+            To be paid: {rent.interval.label} starting {moment(rent.due_date).format(momentFormat)}
           </li>
         </ul>
 
@@ -86,7 +87,7 @@ const AgreementPreview = (props: any) => {
           <li>Roommate amount: ${securityDeposit.user_amount}</li>
           <li>
             To be paid: {securityDeposit.interval.label} starting{" "}
-            {moment(securityDeposit.due_date).toString()}
+            {moment(securityDeposit.due_date).format(momentFormat)}
           </li>
         </ul>
       </section>
@@ -101,7 +102,7 @@ const AgreementPreview = (props: any) => {
                 <li>Roommate amount: ${utility.user_amount}</li>
                 <li>
                   To be paid: {utility.interval.label} starting{" "}
-                  {moment(utility.due_date).toString()}
+                  {moment(utility.due_date).format(momentFormat)}
                 </li>
               </ul>
             </div>
@@ -203,7 +204,7 @@ const AgreementPreview = (props: any) => {
             <li key={index}>
               <p>
                 {roomie.fullName} digitally signed this agreement on{" "}
-                {moment(roomie.date).toString()}
+                {moment(roomie.date).format(momentFormat)}
               </p>
             </li>
           ))}

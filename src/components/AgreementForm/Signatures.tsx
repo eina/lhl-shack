@@ -78,9 +78,6 @@ const Signatures = (props: any) => {
           </div>
         )}
       </FieldArray>
-      <Button isLoading={formIsSubmitting} loadingText="Generating Preview" type="submit">
-        Save &amp; Preview Agreement
-      </Button>
       <PrevNextNav before="/agreement/bills/utilities">
         {valuesChanged ? <Button isLoading={formIsSubmitting}
           loadingText="Generating Preview" type="submit">Save &amp; Preview Agreement</Button> : <Button type="button" onClick={() => history.push('/agreement/preview')}>Preview Agreement</Button>}

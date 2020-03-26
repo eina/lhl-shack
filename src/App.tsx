@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import axios from "axios";
 import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
-import { ThemeProvider, CSSReset, Grid, Box } from "@chakra-ui/core";
+import { ThemeProvider, CSSReset, Grid, Box, Heading } from "@chakra-ui/core";
 import customTheme from "./chakra/customTheme";
 
 import { displayFullName } from "./helpers/functions";
@@ -56,31 +56,37 @@ const AppContent = () => {
 
   if (state && state.currUser) {
     return (
-      <Box className="App" w="100%" lineHeight="tall" fontSize="lg" px={20}>
-        <AppHeader {...state} />
+      <Box className="App" w="100%" h="100%" lineHeight="tall" fontSize="lg" boxSizing="border-box">
+        <Grid templateColumns="1fr 4fr" className="container">
+          <Box as="aside" px="4em">
+            <Heading as="h1" size="lg" fontFamily="logo" fontSize="6xl" fontWeight="black" py="10">
+              shack
+            </Heading>
+            {isHouseholdOrAgreementForm ? <AgreementMenu /> : <MainMenu />}
+          </Box>
 
-        <Grid templateColumns="1fr 4fr" gap={1} className="container">
-          {isHouseholdOrAgreementForm ? <AgreementMenu /> : <MainMenu />}
-
-          <Box as="main" pr={10} pl={10} rounded={10}>
-            {isHouseholdOrAgreementForm ? (
-              // Agreement Form
-              <Switch>
-                <Route path="/create-household" component={CreateHousehold} />
-                <Route path="/agreement" component={Agreement} />
-              </Switch>
-            ) : (
-              // Main App Contents
-              <Switch>
-                <Route path="/" exact component={Home} />
-                <Route path="/test" component={Test} />
-                <Route path="/household" component={Household} />
-                <Route path="/bills" component={Bills} />
-                <Route path="/account" component={Housekeeping} />
-                <Route path="/resources" component={Resources} />
-                <Route path="/account" component={Account} />
-              </Switch>
-            )}
+          <Box bg="gray.50" pr="8em" pl="3em" pb="5em" minH="100vh">
+            <AppHeader {...state} />
+            <Box as="main">
+              {isHouseholdOrAgreementForm ? (
+                // Agreement Form
+                <Switch>
+                  <Route path="/create-household" component={CreateHousehold} />
+                  <Route path="/agreement" component={Agreement} />
+                </Switch>
+              ) : (
+                // Main App Contents
+                <Switch>
+                  <Route path="/" exact component={Home} />
+                  <Route path="/test" component={Test} />
+                  <Route path="/household" component={Household} />
+                  <Route path="/bills" component={Bills} />
+                  <Route path="/account" component={Housekeeping} />
+                  <Route path="/resources" component={Resources} />
+                  <Route path="/account" component={Account} />
+                </Switch>
+              )}
+            </Box>
           </Box>
         </Grid>
       </Box>

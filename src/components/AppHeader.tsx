@@ -8,16 +8,9 @@ type AppHeadProps = {
 
 const AppHeader = ({ currUser, fullName }: AppHeadProps) => {
   return (
-    <Flex as="header" align="center" justify="space-between" py={10}>
-      <Heading as="h1" size="lg" fontFamily="logo" fontSize="6xl" fontWeight="black">
-        shack
-      </Heading>
-      {currUser && fullName ? (
-        <Flex as="nav" align="center">
-          <Icon name="bell" />
-          <Text>{fullName}</Text>
-        </Flex>
-      ) : null}
+    <Flex as="nav" align="center" justify="flex-end" py="80px" lineHeight="65px" h="65px">
+      <Icon name="bell" />
+      <Text>{fullName}</Text>
     </Flex>
   );
 };

@@ -25,16 +25,6 @@ const getCellRenderer = (key: string, bills: any) => {
   };
 };
 
-const displayBillColumns = (bill: any) => {
-  const result: any = {};
-  console.log('bill: ', bill);
-  for (const billDetail in bill) {
-    const value = bill[billDetail];
-    console.log('bill detail and value: ', billDetail, value);
-    result[billDetail] = value;
-  }
-  return result;
-};
 
 const Bills = () => {
   const {
@@ -53,6 +43,7 @@ const Bills = () => {
     });
   }, []);
   console.log('here are bills: ', bills);
+  console.log('bils length: ', bills.length)
   return (
     <div>
       <h1>Bills testing testing 123</h1>

@@ -14,22 +14,17 @@ interface HousekeepingRule {
 }
 
 const Housekeeping = () => {
-  const {
-    state,
-    updateState,
-  }: { state: any; updateState: Function } = useContext(AppContext);
+  const { state }: { state: any } = useContext(AppContext);
   const emptyHousekeepingRule: HousekeepingRule = {};
   const [housekeeping, setHousekeeping] = useState(emptyHousekeepingRule);
   const { currUser } = state;
 
   useEffect(() => {
-    let houseId: string;
     axios.get(`/api/households/${currUser.household}`).then(vals => {
       // { guestPolicy: EditorState.createWithContent(convertFromRaw(JSON.parse(vals.data.agreements[0].form_values.housekeeping.guestPolicy)))}
-      console.log('here is vals: ', vals.data.housekeeping);
       setHousekeeping(vals.data.housekeeping);
     });
-  }, []);
+  }, [currUser.household]);
   // const contentState = convertFromRaw(housekeeping);
   // const editorState = EditorState.createWithContent(contentState);
   return (

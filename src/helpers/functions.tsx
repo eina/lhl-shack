@@ -1,5 +1,6 @@
 import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
-import { draftJSKeys } from './data';
+import { stateToHTML } from "draft-js-export-html";
+import { draftJSKeys } from "./data";
 
 export const displayFullName = (firstName: string, lastName: string) => {
   return `${firstName} ${lastName}`;
@@ -50,7 +51,6 @@ export const formatDraftJSForDB = (toSaveDraftJS: any) => {
   return toString;
 };
 
-
 /**
  * Formats Agreement Form's Draft JS housekeeping {} values
  * @param housekeeping { object } see: initialValues.tsx
@@ -67,5 +67,23 @@ export const formatHousekeepingForDB = (housekeeping: any) => {
     }
   }
 
+  return result;
+};
+
+/**
+ * Format Housekeeping sections to HMTL
+ * @param housekeeping object
+ */
+export const formatHousekeepingToHTML = (housekeeping: any) => {
+  console.log("hi i am grabbing housekeeping", housekeeping);
+  const result: any = {};
+
+  // update housekeeping draft js to better saveable values
+  for (const housekeepingKey in housekeeping) {
+    if (draftJSKeys.includes(housekeepingKey)) {
+      const draftJSContent = housekeeping[housekeepingKey].getCurrentContent();
+      result[housekeepingKey] = stateToHTML(draftJSContent);
+    }
+  }
   return result;
 };

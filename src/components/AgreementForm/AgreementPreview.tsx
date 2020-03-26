@@ -1,26 +1,8 @@
 import React from "react";
 import moment from "moment";
-import { displayFullName, formatHousekeepingForDB } from "../../helpers/functions";
-import { draftJSKeys } from "../../helpers/data";
-// import { Editor, EditorState, convertFromRaw } from "draft-js";
-import { stateToHTML } from "draft-js-export-html";
-
-const formatHousekeepingForPreview = (housekeeping: any) => {
-  const result: any = {};
-
-  // update housekeeping draft js to better saveable values
-  for (const housekeepingKey in housekeeping) {
-    if (draftJSKeys.includes(housekeepingKey)) {
-      const draftJSContent = housekeeping[housekeepingKey].getCurrentContent();
-      result[housekeepingKey] = stateToHTML(draftJSContent);
-    }
-  }
-
-  return result;
-};
 
 const AgreementPreview = (props: any) => {
-  const { roommates, bills, housekeeping } = props;
+  const { roommates, bills, housekeeping, formattedHousekeeping } = props;
   const [rent, securityDeposit, ...utilities] = bills;
   const { weekdayAM, weekdayPM, weekendAM, weekendPM } = housekeeping;
   const {
@@ -33,7 +15,9 @@ const AgreementPreview = (props: any) => {
     smokingPolicy,
     messagesPolicy,
     petsPolicy
-  } = formatHousekeepingForPreview(housekeeping);
+  } = formattedHousekeeping;
+
+  console.log("what is here", guestPolicy);
 
   return (
     <div>
@@ -107,6 +91,8 @@ const AgreementPreview = (props: any) => {
         </p>
       </section>
 
+      <div dangerouslySetInnerHTML={{ __html: "<p>test test test</p>" }}></div>
+
       {guestPolicy && (
         <section>
           <h2>Guest Policy</h2>
@@ -144,28 +130,28 @@ const AgreementPreview = (props: any) => {
 
       {personalItemsPolicy && (
         <section>
-          <h2>Vacation Policy</h2>
+          <h2>Personal Items Policy</h2>
           <div dangerouslySetInnerHTML={{ __html: personalItemsPolicy }} />
         </section>
       )}
 
       {smokingPolicy && (
         <section>
-          <h2>Vacation Policy</h2>
+          <h2>Smoking Policy</h2>
           <div dangerouslySetInnerHTML={{ __html: smokingPolicy }} />
         </section>
       )}
 
       {messagesPolicy && (
         <section>
-          <h2>Vacation Policy</h2>
+          <h2>Messages Policy</h2>
           <div dangerouslySetInnerHTML={{ __html: messagesPolicy }} />
         </section>
       )}
 
       {petsPolicy && (
         <section>
-          <h2>Vacation Policy</h2>
+          <h2>Pets Policy</h2>
           <div dangerouslySetInnerHTML={{ __html: petsPolicy }} />
         </section>
       )}

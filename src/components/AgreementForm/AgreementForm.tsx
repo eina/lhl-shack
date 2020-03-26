@@ -5,7 +5,8 @@ import NavigationPrompt from "react-router-navigation-prompt";
 import { FormikProps, Formik, FormikValues } from "formik";
 
 import { AppContext } from "../../Store";
-import initialValues, { formatDBInitialValues, finishedAgreement } from "./initialValues";
+import { formatHousekeepingToHTML } from "../../helpers/functions";
+import initialValues, { formatDBInitialValues } from "./initialValues";
 import validationSchema from "./validationSchema";
 import submitAgreement from "./submitAgreement";
 
@@ -44,7 +45,10 @@ const AgreementForm = () => {
       const { first_name, last_name, phone_number, email } = currUser;
       setInitialVals((prev: any) => ({
         ...prev,
-        roommates: [{ first_name, last_name, phone_number, email }, { first_name: "", last_name: "", phone_number: "", email: ""}]
+        roommates: [
+          { first_name, last_name, phone_number, email },
+          { first_name: "", last_name: "", phone_number: "", email: "" }
+        ]
       }));
 
       getHouseholdDetails(state.currUser);
@@ -54,14 +58,22 @@ const AgreementForm = () => {
   // console.log('is landlord and house here', state);
 
   const submitForm = (values: FormikValues, actions: any) => {
-    const { currUser: { household } } = state;
-    console.log('hello agreementId', agreementID);
-    console.log('hi form values', values);
-    submitAgreement({ formVals: values, householdID: household, agreementID, isComplete: true  }).then(() => {
-      console.log('sent things to the server!');
+    const {
+      currUser: { household }
+    } = state;
+    console.log("hello agreementId", agreementID);
+    console.log("hi form values", values);
+
+    submitAgreement({
+      formVals: values,
+      householdID: household,
+      agreementID,
+      isComplete: true
+    }).then(() => {
+      console.log("sent things to the server!");
       actions.setSubmitting(false);
       setSubmitSuccess(true);
-      history.push('/agreement/preview');
+      history.push("/agreement/preview");
     });
   };
 
@@ -148,7 +160,11 @@ const AgreementForm = () => {
               />
             </Route>
             <Route path="/agreement/preview">
-              <Preview {...values} agreementID={agreementID} />
+              <Preview
+                {...values}
+                agreementID={agreementID}
+                formattedHousekeeping={formatHousekeepingToHTML(values.housekeeping)}
+              />
             </Route>
           </Switch>
         </form>

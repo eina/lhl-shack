@@ -4,51 +4,26 @@ import axios from "axios";
 import { v4 as uuidV4 } from "uuid";
 import { FormikValues } from "formik";
 
-import { formatHousekeepingForDB } from "../../helpers/functions";
+import { formatHousekeepingForDB, formatHousekeepingToHTML } from "../../helpers/functions";
 import Preview from "./AgreementPreview";
-// import { userInfo } from "os";
-
-// export const AgreementPreview = (props: any) => {
-//   const { roommates } = props;
-
-//   // const landlordString = ReactDOMServer.renderToStaticMarkup(<LandlordPreview landlord={landlord}/>);
-//   // it woooooooooooooorks
-//   // build them separately and return as one string and send them to the server somehow!!!
-//   // console.log('does this work', landlordString);
-
-//   return (
-//     <section>
-//       <p>
-//         <strong>This agreement is entered into by:</strong>
-//       </p>
-//       <ul>
-//         {roommates.map((roommie: any, index: number) => (
-//           <li key={index}>
-//             {roommie.first_name} {roommie.last_name}
-//           </li>
-//         ))}
-//       </ul>
-//       <p>
-//           We the roommates of (insert address here) agree that this document represents a binding
-//           agreement between us with respect to our tenancy beginning on________________, 20___. We
-//           further agree that if this agreement conflicts with any of our rights and obligations
-//           under the Tenancy Agreement dated_________________, with respect to the above rental unit
-//           or with the provisions of any applicable laws, the said Tenancy Agreement and the
-//           applicable law(s) will prevail in all respects.
-//       </p>
-//     </section>
-//   );
-// };
 
 type AgreementProps = {
   formVals: FormikValues;
   householdID: string | number;
   agreementID: string;
   isComplete: boolean;
+  formattedHousekeeping?: any;
 };
 
-const saveAgreement = ({ formVals, householdID, agreementID, isComplete }: AgreementProps) => {
+const saveAgreement = ({
+  formVals,
+  householdID,
+  agreementID,
+  isComplete,
+  formattedHousekeeping
+}: AgreementProps) => {
   let dataToSend;
+
   const dataWithoutHTML = {
     household_id: householdID,
     form_values: JSON.stringify(formVals),
@@ -56,7 +31,19 @@ const saveAgreement = ({ formVals, householdID, agreementID, isComplete }: Agree
     is_expired: false
   };
 
-  console.log("hi!", ReactDOMServer.renderToStaticMarkup(<Preview {...formVals} />));
+  const previewProps = {
+    ...formVals,
+    test: "test"
+  };
+  console.log("are you gonna lag here???");
+  console.log("ahhh", formattedHousekeeping);
+
+  console.log(
+    "hi!",
+    ReactDOMServer.renderToString(
+      <Preview {...previewProps} formattedHousekeeping={formattedHousekeeping} />
+    )
+  );
   // if (isComplete) {
   //   const htmlString = ReactDOMServer.renderToStaticMarkup(<Preview agreementID={agreementID} />);
   //   console.log('hi!', htmlString);
@@ -158,26 +145,37 @@ const saveBills = ({ formVals, householdID, usersIDs }: SavingProps) => {
   });
 };
 
-const submitAgreement = ({ formVals, householdID, agreementID, isComplete }: AgreementProps) => {
+const submitAgreement = ({
+  formVals,
+  householdID,
+  agreementID,
+  isComplete,
+  formattedHousekeeping
+}: AgreementProps) => {
   const { housekeeping } = formVals;
   const formattedValues = {
     ...formVals,
     housekeeping: { ...housekeeping, ...formatHousekeepingForDB(housekeeping) }
   };
+
   // save the agreement
-  return saveAgreement({ formVals: formattedValues, householdID, agreementID, isComplete }).then(
-    vals => {
-      // only save the other things when submitting from the agreement form (isComplete == true)
-      if (isComplete) {
-        // save the users
-        return saveUsers({ formVals })
-          .then(users => Promise.all(users)) // grab users id
-          .then(usersIDs => saveBills({ formVals, householdID, usersIDs })); // save the bills
-      } else {
-        return vals.data;
-      }
+  return saveAgreement({
+    formVals: formattedValues,
+    householdID,
+    agreementID,
+    isComplete,
+    formattedHousekeeping: formatHousekeepingToHTML(housekeeping)
+  }).then(vals => {
+    // only save the other things when submitting from the agreement form (isComplete == true)
+    if (isComplete) {
+      // save the users
+      return saveUsers({ formVals })
+        .then(users => Promise.all(users)) // grab users id
+        .then(usersIDs => saveBills({ formVals, householdID, usersIDs })); // save the bills
+    } else {
+      return vals.data;
     }
-  );
+  });
 };
 
 export default submitAgreement;

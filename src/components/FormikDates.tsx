@@ -81,7 +81,7 @@ export const FormikSingleDatePicker = (props: FormikDateProps) => {
   return (
     <FormControl isInvalid={!!isError && fieldError}>
       <FormLabel>
-        {label}
+        <div>{label}</div>
         <SingleDatePicker
           id={name}
           date={stateValue}

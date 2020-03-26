@@ -1,19 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect, useContext } from "react";
+import axios from "axios";
 
-import {
-  Heading,
-  Grid,
-  Box,
-  Avatar,
-  Divider,
-  SimpleGrid,
-  Flex,
-} from '@chakra-ui/core';
+import { Heading, Avatar, Divider, SimpleGrid } from "@chakra-ui/core";
 
-import { displayFullName } from '../helpers/functions';
+// import { displayFullName } from "../helpers/functions";
 
-import { AppContext } from '../Store';
+import { AppContext } from "../Store";
 
 interface House {
   id: number;
@@ -34,15 +26,15 @@ const houseDefaultValues = {
   id: 0,
   total_rent_amt: 0,
   total_security_deposit_amt: 0,
-  address: '',
+  address: "",
   number_of_rooms: 0,
   number_of_bathrooms: 0,
   pet_friendly: false,
   smoking_allowed: false,
-  start_date: '',
-  end_date: '',
+  start_date: "",
+  end_date: "",
   user_id: 0,
-  landlord_id: 0,
+  landlord_id: 0
 };
 
 interface Landlord {
@@ -57,33 +49,30 @@ interface Landlord {
 
 const landlordDefaultValues = {
   id: 0,
-  first_name: '',
-  last_name: '',
-  phone_number: '',
-  address: '',
-  email: '',
-  company: '',
+  first_name: "",
+  last_name: "",
+  phone_number: "",
+  address: "",
+  email: "",
+  company: ""
 };
 
-interface Roomie {
-  first_name: string;
-  last_name: string;
-  phone_number: string;
-  email: string;
-}
+// interface Roomie {
+//   first_name: string;
+//   last_name: string;
+//   phone_number: string;
+//   email: string;
+// }
 const roomieInitialValues: any = [];
 
 const Household = () => {
-  const {
-    state,
-    updateState,
-  }: { state: any; updateState: Function } = useContext(AppContext);
+  const { state }: { state: any } = useContext(AppContext);
   const [house, setHouse] = useState<House>(houseDefaultValues);
   const [landlord, setLandlord] = useState<Landlord>(landlordDefaultValues);
   const [roomies, setRoomies] = useState(roomieInitialValues);
   const { currUser } = state;
-  let houseId: string;
   useEffect(() => {
+    let houseId: string;
     axios
       .get(`/api/households/${currUser.household}`)
       .then(vals => {
@@ -105,21 +94,21 @@ const Household = () => {
         return usersId;
       })
       .then(usersId => {
-        console.log('Here is usersId: ', usersId);
+        console.log("Here is usersId: ", usersId);
         const promisesArray: any = [];
         usersId.forEach((userId: any) => {
           promisesArray.push(axios.get(`/api/users/${userId}`));
         });
-        console.log('here promises arrray! ', promisesArray);
+        console.log("here promises arrray! ", promisesArray);
         return Promise.all(promisesArray);
       })
       .then(usersPromises => {
-        console.log('here is userspromises: ', usersPromises);
+        console.log("here is userspromises: ", usersPromises);
         usersPromises.forEach((user: any) => {
           setRoomies((prev: any) => [...prev, user.data]);
         });
       });
-  }, []);
+  }, [currUser.household]);
 
   return (
     house && (
@@ -154,6 +143,7 @@ const Household = () => {
           <Divider />
           {roomies.map((roomie: any) => (
             <div key={roomie.id}>
+              {/* change this, grid should be outside of the loop */}
               <SimpleGrid columns={2} spacing={5}>
                 <span>
                   <Avatar src={roomie.avatar} />

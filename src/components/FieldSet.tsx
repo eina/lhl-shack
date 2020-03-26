@@ -26,7 +26,8 @@ type FieldSetConfig = {
 };
 
 const FieldSet = ({ label, type, value, ...props }: FieldSetConfig) => {
-  const [field, meta, helpers] = useField(props);
+  const [field, meta] = useField(props);
+  // const [field, meta, helpers] = useField(props);
 
   const InputRight = () => {
     if (props.inputGroup.right.addOn) {
@@ -38,9 +39,9 @@ const FieldSet = ({ label, type, value, ...props }: FieldSetConfig) => {
 
   const InputLeft = () => {
     if (props.inputGroup.left.addOn) {
-      return <InputLeftAddon>{props.inputGroup.right.addOn}</InputLeftAddon>;
+      return <InputLeftAddon>{props.inputGroup.left.addOn}</InputLeftAddon>;
     } else {
-      return <InputLeftElement>{props.inputGroup.right.element}</InputLeftElement>;
+      return <InputLeftElement>{props.inputGroup.left.element}</InputLeftElement>;
     }
   };
 
@@ -48,8 +49,9 @@ const FieldSet = ({ label, type, value, ...props }: FieldSetConfig) => {
     <FormControl
       isInvalid={meta.touched && meta.error ? true : false}
       isDisabled={props.disabled !== undefined ? props.disabled : false}
+      mb={3}
     >
-      <p>{value}</p>
+      {/* <p>{value}</p> */}
       {type === "checkbox" ? (
         <Checkbox
           {...field}

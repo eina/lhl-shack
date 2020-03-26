@@ -1,6 +1,4 @@
 import React, { useEffect, useContext, useState } from 'react';
-import ReactDOM from 'react-dom';
-// import {Column, Table} from 'react-virtualized';
 import { Cell, Column, Table } from '@blueprintjs/table';
 import '../../node_modules/@blueprintjs/table/lib/css/table.css';
 

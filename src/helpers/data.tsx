@@ -5,6 +5,18 @@ export const billInterval = [
   { label: "Annually", value: "annually" }
 ];
 
+export const draftJSKeys = [
+  "guestPolicy",
+  "spacesPolicy",
+  "roomsPolicy",
+  "choresPolicy",
+  "vacationPolicy",
+  "personalItemsPolicy",
+  "smokingPolicy",
+  "messagesPolicy",
+  "petsPolicy"
+];
+
 // test draft js initial value
 const testContent = {
   blocks: [

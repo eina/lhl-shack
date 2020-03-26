@@ -44,7 +44,7 @@ export class RichEditor extends React.Component<RichEditorProps> {
     const { editorState } = this.props;
     // If the user changes block type before entering any text, we can
     // either style the placeholder or hide it. Let's just hide it now.
-    let className = "RichEditor-editor";
+    const className = "RichEditor-editor";
     // let contentState = editorState.getCurrentContent();
     // if (!contentState.hasText()) {
     //   if (
@@ -90,10 +90,10 @@ const styleMap = {
 };
 function getBlockStyle(block: any) {
   switch (block.getType()) {
-    case "blockquote":
-      return "RichEditor-blockquote";
-    default:
-      return "";
+  case "blockquote":
+    return "RichEditor-blockquote";
+  default:
+    return "";
   }
 }
 
@@ -164,14 +164,14 @@ const BlockStyleControls = (props: any) => {
     </div>
   );
 };
-var INLINE_STYLES = [
+const INLINE_STYLES = [
   { label: "Bold", style: "BOLD" },
   { label: "Italic", style: "ITALIC" },
   { label: "Underline", style: "UNDERLINE" }
   // { label: "Monospace", style: "CODE" }
 ];
 const InlineStyleControls = (props: any) => {
-  var currentStyle = props.editorState.getCurrentInlineStyle();
+  const currentStyle = props.editorState.getCurrentInlineStyle();
   return (
     <div className="RichEditor-controls">
       {INLINE_STYLES.map(type => (

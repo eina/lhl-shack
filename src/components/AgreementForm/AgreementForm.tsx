@@ -19,6 +19,7 @@ import Housekeeping from "./Housekeeping";
 import BillsUtilities from "./BillsUtilities";
 import Signatures from "./Signatures";
 import Preview from "./AgreementPreview";
+import { Box } from "@chakra-ui/core";
 
 const AgreementForm = () => {
   const { state, updateState }: { state: any; updateState: any } = useContext(AppContext);
@@ -140,8 +141,8 @@ const AgreementForm = () => {
               // const goToPreview = next.pathname.startsWith("/agreement")
               return (
                 !submitSuccess &&
-                valuesChanged &&
-                (!next || !next.pathname.startsWith("/agreement"))
+                  valuesChanged &&
+                  (!next || !next.pathname.startsWith("/agreement"))
               );
             }}
           >
@@ -156,56 +157,58 @@ const AgreementForm = () => {
               />
             )}
           </NavigationPrompt>
-          <Switch>
-            <Route path="/agreement/title" component={Title} />
-            <Redirect from="/agreement" to="/agreement/title" exact />
-            {/* <Route path="/agreement/landlord" component={Landlord} />
+          <Box maxW="80%">
+            <Switch>
+              <Route path="/agreement/title" component={Title} />
+              <Redirect from="/agreement" to="/agreement/title" exact />
+              {/* <Route path="/agreement/landlord" component={Landlord} />
             <Route path="/agreement/household" component={Household} /> */}
-            <Route path="/agreement/roommates" component={Roommates} />
-            <Redirect from="/agreement/bills" to="/agreement/bills/rent" exact />
-            <Route path="/agreement/bills">
-              <BillsUtilities
-                values={values}
-                setFieldValue={setFieldValue}
-                handleBlur={handleBlur}
-                errors={errors}
-                touched={touched}
-              />
-            </Route>
-            <Route path="/agreement/housekeeping">
-              <Housekeeping
-                values={values}
-                setFieldValue={setFieldValue}
-                handleBlur={handleBlur}
-                errors={errors}
-                touched={touched}
-              />
-            </Route>
-            <Route path="/agreement/signatures">
-              <Signatures
-                formIsSubmitting={isSubmitting}
-                initialValues={initialValues}
-                values={values}
-                setFieldValue={setFieldValue}
-                handleBlur={handleBlur}
-                errors={errors}
-                touched={touched}
-              />
-            </Route>
-            <Route path="/agreement/preview">
-              {house && landlord && household && (
-                <Preview
-                  {...values}
-                  agreementID={agreementID}
-                  formattedHousekeeping={formatHousekeepingToHTML(values.housekeeping)}
-                  landlord={landlord}
-                  house={house}
-                  household={household}
-                  {...agreementMeta}
+              <Route path="/agreement/roommates" component={Roommates} />
+              <Redirect from="/agreement/bills" to="/agreement/bills/rent" exact />
+              <Route path="/agreement/bills">
+                <BillsUtilities
+                  values={values}
+                  setFieldValue={setFieldValue}
+                  handleBlur={handleBlur}
+                  errors={errors}
+                  touched={touched}
                 />
-              )}
-            </Route>
-          </Switch>
+              </Route>
+              <Route path="/agreement/housekeeping">
+                <Housekeeping
+                  values={values}
+                  setFieldValue={setFieldValue}
+                  handleBlur={handleBlur}
+                  errors={errors}
+                  touched={touched}
+                />
+              </Route>
+              <Route path="/agreement/signatures">
+                <Signatures
+                  formIsSubmitting={isSubmitting}
+                  initialValues={initialValues}
+                  values={values}
+                  setFieldValue={setFieldValue}
+                  handleBlur={handleBlur}
+                  errors={errors}
+                  touched={touched}
+                />
+              </Route>
+              <Route path="/agreement/preview">
+                {house && landlord && household && (
+                  <Preview
+                    {...values}
+                    agreementID={agreementID}
+                    formattedHousekeeping={formatHousekeepingToHTML(values.housekeeping)}
+                    landlord={landlord}
+                    house={house}
+                    household={household}
+                    {...agreementMeta}
+                  />
+                )}
+              </Route>
+            </Switch>
+          </Box>
         </form>
       )}
     </Formik>

@@ -35,8 +35,8 @@ const Housekeeping = (props: any) => {
         Guests can include mutual friends, visitors, overnight guests, partners, and even parents.
         You should think about whether there should be any reasonable restrictions on how often
         roommates can have guests over, whether there should be special rules for overnight
-        guests,if there should be rules about guests&rsquo; conduct when they are visiting, and similar
-        issues.
+        guests,if there should be rules about guests&rsquo; conduct when they are visiting, and
+        similar issues.
       </p>
       <p>We agree that the following applies to guests:</p>
       <RichEditor
@@ -87,8 +87,8 @@ const Housekeeping = (props: any) => {
       />
       <Heading as="h4">Shared Spaces Policy</Heading>
       <p>
-        We agree to the following about accessing each roommates&rsquo; private spaces and rules around
-        shared spaces:
+        We agree to the following about accessing each roommates&rsquo; private spaces and rules
+        around shared spaces:
       </p>
       <RichEditor
         editorState={values.housekeeping.spacesPolicy}
@@ -175,7 +175,7 @@ const Housekeeping = (props: any) => {
         onBlur={handleBlur}
         focus={() => {}}
       />
-      <Box as="footer">
+      <Box as="footer" my={10}>
         <PrevNextNav before="/agreement/bills/utilities" after="/agreement/signatures" />
       </Box>
     </Box>

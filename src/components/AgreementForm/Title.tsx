@@ -29,7 +29,7 @@ const Title = () => {
       </Text>
 
       <Box as="footer">
-        <Button onClick={() => history.push('/agreement/household')}>Start Roommate Agreement Form</Button>
+        <Button onClick={() => history.push('/agreement/roommates')}>Start Roommate Agreement Form</Button>
       </Box>
     </Box>
   );

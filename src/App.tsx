@@ -1,21 +1,15 @@
-import React, { useContext, useEffect } from 'react';
-import axios from 'axios';
-import { BrowserRouter, Switch, Route, useLocation } from 'react-router-dom';
-import {
-  ThemeProvider,
-  CSSReset,
-  theme,
-  Grid,
-  Box,
-  Divider,
-} from '@chakra-ui/core';
+import React, { useContext, useEffect } from "react";
+import axios from "axios";
+import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
+import { ThemeProvider, CSSReset, Grid, Box } from "@chakra-ui/core";
+import customTheme from "./chakra/customTheme";
 
-import { displayFullName } from './helpers/functions';
-import { AppContext, AppProvider } from './Store';
+import { displayFullName } from "./helpers/functions";
+import { AppContext, AppProvider } from "./Store";
 
-import AppLoading from './components/AppLoading';
-import AppHeader from './components/AppHeader';
-import MainMenu from './components/MainMenu';
+import AppLoading from "./components/AppLoading";
+import AppHeader from "./components/AppHeader";
+import MainMenu from "./components/MainMenu";
 
 import Home from "./pages/Home";
 import Test from "./pages/Test";
@@ -23,10 +17,10 @@ import CreateHousehold from "./pages/CreateHousehold";
 import Agreement from "./pages/Agreement";
 import Account from "./pages/Account";
 import AgreementMenu from "./components/AgreementForm/AgreementMenu";
-import Household from './pages/Household';
-import Resources from './pages/Resources';
-import Housekeeping from './pages/Housekeeping';
-import Bills from './pages/Bills';
+import Household from "./pages/Household";
+import Resources from "./pages/Resources";
+import Housekeeping from "./pages/Housekeeping";
+import Bills from "./pages/Bills";
 
 // test data
 const currUser = {
@@ -46,10 +40,10 @@ const AppContent = () => {
     currentPath.startsWith("/create-household") || currentPath.startsWith("/agreement");
   useEffect(() => {
     const getUserData = () => {
-      axios.get('/api/users/1').then(user => {
+      axios.get("/api/users/1").then(user => {
         updateState({
           currUser: user.data,
-          fullName: displayFullName(user.data.first_name, user.data.last_name),
+          fullName: displayFullName(user.data.first_name, user.data.last_name)
         });
       });
     };
@@ -62,13 +56,13 @@ const AppContent = () => {
 
   if (state && state.currUser) {
     return (
-      <Box className="App" w="100%">
+      <Box className="App" w="100%" lineHeight="tall" fontSize="lg" px={20}>
         <AppHeader {...state} />
 
-        <Grid templateColumns="1fr 4fr" gap={1} p={5} className="container">
+        <Grid templateColumns="1fr 4fr" gap={1} className="container">
           {isHouseholdOrAgreementForm ? <AgreementMenu /> : <MainMenu />}
 
-          <Box as="main" bg="gray.50" pr={10} pl={10} rounded={10}>
+          <Box as="main" pr={10} pl={10} rounded={10}>
             {isHouseholdOrAgreementForm ? (
               // Agreement Form
               <Switch>
@@ -99,7 +93,7 @@ const AppContent = () => {
 // what renders on index
 const App = () => {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={customTheme}>
       <CSSReset />
       <BrowserRouter>
         <AppProvider>

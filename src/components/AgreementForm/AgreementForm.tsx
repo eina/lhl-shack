@@ -22,16 +22,16 @@ import Preview from "./AgreementPreview";
 
 const AgreementForm = () => {
   const { state, updateState }: { state: any; updateState: any } = useContext(AppContext);
-
   const [initialVals, setInitialVals] = useState(initialValues);
   const [agreementID, setAgreementID] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [agreementMeta, setAgreementMeta] = useState({ created_at: null, updated_at: null});
   const history = useHistory();
 
   useEffect(() => {
     const getHouseholdDetails = (currUser: any) => {
       axios.get(`/api/agreements/${currUser.household}`).then(agreement => {
-        console.log("do you have updated date here", agreement.data);
+        setAgreementMeta({ created_at: agreement.data.created_at, updated_at: agreement.data.updated_at });
         // use agreement values as initial values if they exist
         const formValues =
           agreement.data && agreement.data.form_values ? agreement.data.form_values : null;
@@ -101,7 +101,7 @@ const AgreementForm = () => {
       householdID,
       agreementID,
       isComplete: true,
-      previewDetails: { house, landlord, household }
+      previewDetails: { house, landlord, household, agreementMeta }
     }).then(link => {
       console.log("hi link", link);
       updateState((prev: any) => ({ ...prev, agreementLink: link }));
@@ -133,7 +133,6 @@ const AgreementForm = () => {
         isSubmitting
       }: FormikProps<any>) => (
         <form onSubmit={handleSubmit}>
-          <p>{JSON.stringify(errors)}</p>
           <NavigationPrompt
             when={(_, next) => {
               // if initialValues === values --> you can navigate away cause nothing changed
@@ -202,6 +201,7 @@ const AgreementForm = () => {
                   landlord={landlord}
                   house={house}
                   household={household}
+                  {...agreementMeta}
                 />
               )}
             </Route>

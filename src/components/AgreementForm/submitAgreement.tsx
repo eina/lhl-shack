@@ -75,11 +75,9 @@ const saveUsers = ({ formVals, currUserID, houseID }: SavingProps) => {
     const saveUserHousehold = (userID: number) => {
       return axios.get('/api/households', { params: { user_id: userID, house_id: houseID } })
         .then(householdUsers => {
-          console.log('hi are you here', formVals.housekeeping);
           if (!householdUsers.data.length) {
             axios.post('/api/households', { user_id: userID, house_id: houseID, ...formVals.leaseDates, is_active: true, housekeeping: JSON.stringify(formVals.housekeeping)});
           } else {
-            console.log('update the user in the household!');
             axios.patch(`/api/households/${householdUsers.data[0].id}`, { user_id: userID, house_id: houseID, ...formVals.leaseDates, is_active: true, housekeeping: JSON.stringify(formVals.housekeeping) });
           }
         });
@@ -133,13 +131,13 @@ const saveBills = ({ formVals, householdID, usersIDs }: SavingProps) => {
           // check if bill exists for the user or not
           // console.log(houseBillPerUser.data, userID);
           if (!houseBillPerUser.data.length) {
-            console.log(`creating ${bill.bill_uuid} for ${userID}`);
+            // console.log(`creating ${bill.bill_uuid} for ${userID}`);
             return axios.post("/api/bills/", {
               ...billToSend,
               user_id: userID
             });
           } else {
-            console.log(`updating (!?!) ${bill.bill_uuid} for ${userID}`);
+            // console.log(`updating (!?!) ${bill.bill_uuid} for ${userID}`);
             // loop through the created bills with that bill uuidhouseBillPerUser.data
             return houseBillPerUser.data.map((billToUpdate: any) => {
               return axios.patch(`/api/bills/${billToUpdate.id}`, {

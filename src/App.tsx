@@ -11,8 +11,9 @@ import {
   DrawerBody,
   Box,
   Heading,
+  Button,
+  Flex,
   useDisclosure,
-  Button
 } from "@chakra-ui/core";
 import { Global } from "@emotion/core";
 import customTheme from "./chakra/customTheme";
@@ -129,8 +130,8 @@ const AppContent = () => {
 
           {/* <Box bg="gray.50" pr="8em" pl="3em" pb="5em" minH="100vh"> */}
           <Box w="100%" className="main-content">
-            <AppHeader {...state} />
-            <Button onClick={onOpen}>Open</Button>
+          
+            <AppHeader {...state} drawerOpen={onOpen}/>
             <Box as="main">
               {isHouseholdOrAgreementForm ? (
                 // Agreement Form

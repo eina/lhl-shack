@@ -14,6 +14,14 @@ a {
   // font-weight: 600;
 }
 
+.show-nav-btn {
+  display: inline-flex !important;
+
+  @media (min-width: 1024px) {
+    display: none !important;
+  }
+}
+
 .side-nav {
   display: none;
 

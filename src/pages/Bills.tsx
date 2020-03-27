@@ -1,5 +1,4 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { connect } from 'react-redux';
 import axios from 'axios';
 import Select from 'react-select';
 import Griddle, {
@@ -9,22 +8,6 @@ import Griddle, {
 } from 'griddle-react';
 import { Heading, useToast } from '@chakra-ui/core';
 import { AppContext } from '../Store';
-
-
-
-// const rowDataSelector = (state: any, { griddleKey }: any) => {
-//   return state
-//     .get("data")
-//     .find((rowMap: any) => rowMap.get("griddleKey") === griddleKey)
-//     .toJSON();
-// };
-
-// const enhancedWithRowData = connect((state, props) => {
-//   console.log('is this loading', state);
-//   return {
-//     rowData: rowDataSelector(state, props)
-//   };
-// });
 
 const Bills = () => {
   const { state }: { state: any } = useContext(AppContext);
@@ -36,7 +19,7 @@ const Bills = () => {
       axios.get('/api/bills', { params: { household_id: currUser.household, user_id: currUser.id } })
         .then(vals => setBills(vals.data));
     }
-  }, []);
+  }, [currUser]);
 
   const options = [
     { value: "unpaid", label: "Unpaid" },
@@ -49,10 +32,11 @@ const Bills = () => {
     const bill: any = bills.find(({ bill_uuid }: any) => bill_uuid === value);
     const [selectedValue, setSelectedValue] = useState(bill.user_status);
 
-    const handleOnChange = (value: any) => {
-      setSelectedValue(value);
+    const handleOnChange = (optObj: any) => {
+      axios.patch(`/api/bills/${bill.id}`, { user_status: optObj.value }).then(() => {
+        setSelectedValue(optObj);
+      });
     };
-
 
     return (
       <Select

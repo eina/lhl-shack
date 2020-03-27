@@ -3,8 +3,6 @@ import axios from 'axios';
 
 import { Heading, Avatar, Divider, SimpleGrid } from '@chakra-ui/core';
 
-// import { displayFullName } from "../helpers/functions";
-
 import { AppContext } from '../Store';
 
 interface House {
@@ -57,12 +55,6 @@ const landlordDefaultValues = {
   company: '',
 };
 
-// interface Roomie {
-//   first_name: string;
-//   last_name: string;
-//   phone_number: string;
-//   email: string;
-// }
 const roomieInitialValues: any = [];
 
 const Household = () => {
@@ -73,15 +65,6 @@ const Household = () => {
   const { currUser } = state;
   console.log(state);
 
-  /* 
-    data you have:
-    houseID, userID, landlordID, householdID
-
-    data you need to show:
-    x house information 
-    x landlord info
-    - rooommates info
-  */
   useEffect(() => {
     //get house info
     axios.get(`api/houses/${currUser.house}`).then(vals => {
@@ -93,28 +76,11 @@ const Household = () => {
       setLandlord(vals.data);
     });
 
+    //get roomies
     axios.get(`api/agreements?house_id=${currUser.house}`).then(vals => {
-      setRoomies(vals.data[0].form_values.roommates)
-      console.log('agreements roomies?: ', vals.data[0].form_values.roommates)
-    })
-    // axios
-    //   .get(`/api/households?house_id=${currUser.house}`)
-    //   .then(tenants => {
-    //     const usersId = tenants.data.map((tenant: any) => tenant.user_id);
-    //     return usersId;
-    //   })
-    //   .then(usersId => {
-    //     const promisesArray: any = [];
-    //     usersId.forEach((userId: any) => {
-    //       promisesArray.push(axios.get(`/api/users/${userId}`));
-    //     });
-    //     return Promise.all(promisesArray);
-    //   })
-    //   .then(usersPromises => {
-    //     usersPromises.forEach((user: any) => {
-    //       setRoomies((prev: any) => [...prev, user.data]);
-    //     });
-    //   });
+      setRoomies(vals.data[0].form_values.roommates);
+      console.log('agreements roomies?: ', vals.data[0].form_values.roommates);
+    });
   }, [currUser.household]);
 
   return (
@@ -125,10 +91,6 @@ const Household = () => {
         </dl>
         <Divider />
         <dd>{house.address}</dd>
-        {/* <dd>
-          {house.start_date} - {house.end_date}
-        </dd> */}
-        {/* <dd>${house.total_rent_amt}/month</dd> */}
         <dl>
           <Heading as="h3">My Landlord</Heading>
           <Divider />

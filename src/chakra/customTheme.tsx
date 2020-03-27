@@ -5,6 +5,7 @@ import "typeface-montserrat";
 
 export default {
   ...theme,
+  breakpoints: ["30em", "48em", "64em", "80em"],
   fonts: {
     ...theme.fonts,
     body: "Roboto, sans-serif",

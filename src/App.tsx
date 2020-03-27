@@ -1,9 +1,11 @@
 import React, { useContext, useEffect } from "react";
 import axios from "axios";
 import { BrowserRouter, Switch, Route, useLocation, Link } from "react-router-dom";
-import { ThemeProvider, CSSReset, Grid, Box, Heading } from "@chakra-ui/core";
+import { ThemeProvider, CSSReset, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerBody, Box, Heading, useDisclosure, Button } from "@chakra-ui/core";
 import { Global } from "@emotion/core";
 import customTheme from "./chakra/customTheme";
+
+import './App.scss';
 
 import { displayFullName } from "./helpers/functions";
 import { AppContext, AppProvider } from "./Store";
@@ -35,16 +37,24 @@ import Bills from "./pages/Bills";
 // };
 
 const AppContent = () => {
-  const { state, updateState }: { state: any; updateState: any } = useContext(AppContext);
+  const {
+    state,
+    updateState
+  }: { state: any; updateState: any } = useContext(AppContext);
   const { pathname: currentPath } = useLocation();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const isHouseholdOrAgreementForm =
-    currentPath.startsWith("/create-household") || currentPath.startsWith("/agreement");
+                             currentPath.startsWith("/create-household") ||
+                             currentPath.startsWith("/agreement");
   useEffect(() => {
     const getUserData = () => {
       axios.get("/api/users/1").then(user => {
         updateState({
           currUser: user.data,
-          fullName: displayFullName(user.data.first_name, user.data.last_name)
+          fullName: displayFullName(
+            user.data.first_name,
+            user.data.last_name
+          )
         });
       });
     };
@@ -64,16 +74,42 @@ const AppContent = () => {
         lineHeight="tall"
         fontSize="lg"
         boxSizing="border-box"
-        color="gray.900"
+        bg="gray.50"
+        minH="100vh"
       >
-        <Grid templateColumns="1fr 4fr" className="container">
-          <Box as="aside" px="4em">
+        <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
             <Heading
               as="h1"
               size="lg"
               fontFamily="logo"
               fontSize="6xl"
               fontWeight="black"
+              px="1em"
+              py="10"
+              mb={0}
+            >
+              <Link to="/">
+                <Box as="span" color="brand">
+                  shack
+                </Box>
+              </Link>
+            </Heading>
+            <DrawerBody>{isHouseholdOrAgreementForm ? <AgreementMenu /> : <MainMenu />}</DrawerBody>
+          </DrawerContent>
+        </Drawer>
+
+        <Box className="container">
+          <Box as="aside" className="side-nav" bg="white" minH="100vh">
+            <Heading
+              as="h1"
+              size="lg"
+              fontFamily="logo"
+              fontSize="6xl"
+              fontWeight="black"
+              px="1em"
               py="10"
               mb={0}
             >
@@ -86,8 +122,10 @@ const AppContent = () => {
             {isHouseholdOrAgreementForm ? <AgreementMenu /> : <MainMenu />}
           </Box>
 
-          <Box bg="gray.50" pr="8em" pl="3em" pb="5em" minH="100vh">
+          {/* <Box bg="gray.50" pr="8em" pl="3em" pb="5em" minH="100vh"> */}
+          <Box w="100%" className="main-content">
             <AppHeader {...state} />
+            <Button onClick={onOpen}>Open</Button>
             <Box as="main">
               {isHouseholdOrAgreementForm ? (
                 // Agreement Form
@@ -109,7 +147,7 @@ const AppContent = () => {
               )}
             </Box>
           </Box>
-        </Grid>
+        </Box>
       </Box>
     );
   } else {

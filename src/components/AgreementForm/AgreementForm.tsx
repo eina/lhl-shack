@@ -20,7 +20,7 @@ import Housekeeping from "./Housekeeping";
 import BillsUtilities from "./BillsUtilities";
 import Signatures from "./Signatures";
 import Preview from "./AgreementPreview";
-import { Box } from "@chakra-ui/core";
+import { Box, Link as ChakraLink, Alert, AlertIcon, AlertTitle, AlertDescription, CloseButton } from "@chakra-ui/core";
 
 const AgreementForm = () => {
   const { state, updateState }: { state: any; updateState: any } = useContext(AppContext);
@@ -34,6 +34,7 @@ const AgreementForm = () => {
     const getHouseholdDetails = (currUser: any) => {
       axios.get(`/api/agreements/${currUser.household}`).then(agreement => {
         setAgreementMeta({ created_at: agreement.data.created_at, updated_at: agreement.data.updated_at });
+        updateState((prev: any) => ({ ...prev, agreementLink: agreement.data.pdf_link }));
         // use agreement values as initial values if they exist
         const formValues =
           agreement.data && agreement.data.form_values ? agreement.data.form_values : null;
@@ -104,7 +105,6 @@ const AgreementForm = () => {
       isComplete: true,
       previewDetails: { house, landlord, household, agreementMeta }
     }).then((link: any) => {
-      console.log("hi link", link);
       updateState((prev: any) => ({ ...prev, agreementLink: link }));
       actions.setSubmitting(false);
       setSubmitSuccess(true);
@@ -134,6 +134,17 @@ const AgreementForm = () => {
         isSubmitting
       }: FormikProps<any>) => (
         <form onSubmit={handleSubmit}>
+          {state.agreementLink ? (
+            <Alert status="info" mb={8}>
+              <AlertIcon />
+              <AlertTitle mr={2}>Agreement PDF Generated!</AlertTitle>
+              <AlertDescription>
+                <ChakraLink href={`https://${state.agreementLink}`} target="_blank" rel="noopener">
+                  Click here to check it out.
+                </ChakraLink>
+              </AlertDescription>
+            </Alert>
+          ) : null}
           <NavigationPrompt
             when={(_, next) => {
               // if initialValues === values --> you can navigate away cause nothing changed
@@ -141,8 +152,8 @@ const AgreementForm = () => {
               // const goToPreview = next.pathname.startsWith("/agreement")
               return (
                 !submitSuccess &&
-                  valuesChanged &&
-                  (!next || !next.pathname.startsWith("/agreement"))
+                valuesChanged &&
+                (!next || !next.pathname.startsWith("/agreement"))
               );
             }}
           >
@@ -196,15 +207,17 @@ const AgreementForm = () => {
               </Route>
               <Route path="/agreement/preview">
                 {house && landlord && household && (
-                  <Preview
-                    {...values}
-                    agreementID={agreementID}
-                    formattedHousekeeping={formatHousekeepingToHTML(values.housekeeping)}
-                    landlord={landlord}
-                    house={house}
-                    household={household}
-                    {...agreementMeta}
-                  />
+                  <>
+                    <Preview
+                      {...values}
+                      agreementID={agreementID}
+                      formattedHousekeeping={formatHousekeepingToHTML(values.housekeeping)}
+                      landlord={landlord}
+                      house={house}
+                      household={household}
+                      {...agreementMeta}
+                    />
+                  </>
                 )}
               </Route>
             </Switch>

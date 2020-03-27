@@ -9,6 +9,11 @@
   }
 }
 
+a {
+  color: #7780e4;
+  // font-weight: 600;
+}
+
 .side-nav {
   display: none;
 
@@ -16,15 +21,14 @@
     display: block;
   }
 
-  li {
-    margin-bottom: 0.5em;
-    padding: 0.25em 1em;
-  }
   li a {
+    display: block;
+    padding: 0.25em 1em;
+    margin-bottom: 0.5em;
     &:hover,
     &:focus {
-      outline: black;
-      background: red;
+      outline: solid #e8dcf8;
+      background: #f1ebfb;
     }
   }
 }

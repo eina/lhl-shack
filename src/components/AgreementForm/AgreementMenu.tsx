@@ -17,7 +17,7 @@ const AgreementMenu = () => {
         </ListItem>
       </List>
       <Divider />
-      <List as="ol" styleType="decimal">
+      <List>
         {/* <ListItem>
           <Link to="/agreement/landlord">Landlord Information</Link>
         </ListItem>

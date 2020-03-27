@@ -41,14 +41,15 @@ const saveAgreement = ({
     ...previewDetails
   };
 
-  // if (isComplete) {
-  //   const htmlString = ReactDOMServer.renderToStaticMarkup(<Preview {...previewProps} />);
-  //   dataToSend = { ...dataWithoutHTML, html_string: htmlString };
-  // } else {
-  //   dataToSend = dataWithoutHTML;
-  // }
+  if (isComplete) {
+    const htmlString = ReactDOMServer.renderToStaticMarkup(<Preview {...previewProps} />);
+    console.log("hello???", isComplete, htmlString);
+    dataToSend = { ...dataWithoutHTML, html_string: htmlString };
+  } else {
+    dataToSend = dataWithoutHTML;
+  }
 
-  dataToSend = dataWithoutHTML;
+  // dataToSend = dataWithoutHTML;
 
   const agreementRequest = agreementID
     ? axios.patch(`/api/agreements/${agreementID}`, dataToSend)
@@ -181,7 +182,7 @@ const submitAgreement = ({
     previewDetails
   })
     .then(agreementData => {
-      agreementLink = agreementData.data.link;
+      agreementLink = agreementData.data.pdf_link;
       return axios.patch(`/api/households/${householdID}`, {
         housekeeping: JSON.stringify(formVals.housekeeping)
       });

@@ -11,10 +11,10 @@ const householdInitialValues = {
   },
   household: {
     address: "test v4m 5v3",
-    leaseDates: {
-      startDate: moment(),
-      endDate: moment()
-    },
+    // leaseDates: {
+    //   startDate: moment(),
+    //   endDate: moment()
+    // },
     pet_friendly: true,
     smoking_allowed: false,
     number_of_bedrooms: 2,

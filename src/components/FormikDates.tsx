@@ -42,7 +42,7 @@ export const FormikDateRange = (props: FormikDateProps) => {
   return (
     <FormControl isInvalid={!!isError && fieldError}>
       <FormLabel>
-        {label}
+        <div>{label}</div>
         <DateRangePicker
           startDate={stateValue.startDate}
           startDateId={`${name}-start`}

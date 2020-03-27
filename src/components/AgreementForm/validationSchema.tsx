@@ -45,10 +45,10 @@ export const household = object().shape({
   number_of_bathrooms: yupMin1.required(requiredMsg),
   total_rent_amt: yupMin1.required(requiredMsg),
   total_security_deposit_amt: yupMin1.required(requiredMsg),
-  leaseDates: object().shape({
-    startDate: date().required(requiredMsg),
-    endDate: date().required(requiredMsg)
-  })
+  // leaseDates: object().shape({
+  //   startDate: date().required(requiredMsg),
+  //   endDate: date().required(requiredMsg)
+  // })
 });
 
 export const householdForm = object().shape({
@@ -57,6 +57,10 @@ export const householdForm = object().shape({
 });
 
 export default object().shape({
+  leaseDates: object().shape({
+    startDate: date().required(requiredMsg),
+    endDate: date().required(requiredMsg)
+  }),
   roommates: array()
     // .min(2, `You must have at least 2 two people in a household`)
     .of(

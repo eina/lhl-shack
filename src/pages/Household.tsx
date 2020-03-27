@@ -78,43 +78,39 @@ const Household = () => {
     houseID, userID, landlordID, householdID
 
     data you need to show:
-    - house information
-    - landlord info
+    x house information 
+    x landlord info
     - rooommates info
   */
   useEffect(() => {
-    let houseId: string;
+    //get house info
+    axios.get(`api/houses/${currUser.house}`).then(vals => {
+      setHouse(vals.data);
+    });
+
+    //get landlord info
+    axios.get(`api/landlords/${currUser.landlord}`).then(vals => {
+      setLandlord(vals.data);
+    });
+
+    axios.get(`api/agreements?house_id=${currUser.house}`).then(vals => {
+      setRoomies(vals.data[0].form_values.roommates)
+      console.log('agreements roomies?: ', vals.data[0].form_values.roommates)
+    })
     // axios
-    //   .get(`/api/households/${currUser.household}`)
-    //   .then(vals => {
-    //     houseId = vals.data.house_id;
-    //     return houseId;
-    //   })
-    //   .then(houseId => axios.get(`/api/houses/${houseId}`))
-    //   .then(house => {
-    //     setHouse(house.data);
-    //     return house.data.landlord_id;
-    //   })
-    //   .then(landlordId => axios.get(`/api/landlords/${landlordId}`))
-    //   .then(landlord => {
-    //     setLandlord(landlord.data);
-    //   })
-    //   .then(() => axios.get(`/api/households?house_id=${houseId}`))
+    //   .get(`/api/households?house_id=${currUser.house}`)
     //   .then(tenants => {
     //     const usersId = tenants.data.map((tenant: any) => tenant.user_id);
     //     return usersId;
     //   })
     //   .then(usersId => {
-    //     console.log('Here is usersId: ', usersId);
     //     const promisesArray: any = [];
     //     usersId.forEach((userId: any) => {
     //       promisesArray.push(axios.get(`/api/users/${userId}`));
     //     });
-    //     console.log('here promises arrray! ', promisesArray);
     //     return Promise.all(promisesArray);
     //   })
     //   .then(usersPromises => {
-    //     console.log('here is userspromises: ', usersPromises);
     //     usersPromises.forEach((user: any) => {
     //       setRoomies((prev: any) => [...prev, user.data]);
     //     });
@@ -155,7 +151,6 @@ const Household = () => {
           <SimpleGrid columns={2} spacing={5}>
             {roomies.map((roomie: any) => (
               <div key={roomie.id}>
-
                 <Avatar src={roomie.avatar} />
                 <p>
                   {roomie.first_name} {roomie.last_name}

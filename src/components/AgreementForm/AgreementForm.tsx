@@ -134,6 +134,7 @@ const AgreementForm = () => {
         isSubmitting
       }: FormikProps<any>) => (
         <form onSubmit={handleSubmit}>
+          <p>{JSON.stringify(errors)}</p>
           <NavigationPrompt
             when={(_, next) => {
               // if initialValues === values --> you can navigate away cause nothing changed

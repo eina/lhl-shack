@@ -58,8 +58,8 @@ export const householdForm = object().shape({
 
 export default object().shape({
   leaseDates: object().shape({
-    startDate: date().required(requiredMsg),
-    endDate: date().required(requiredMsg)
+    start_date: date().required(requiredMsg),
+    end_date: date().required(requiredMsg)
   }),
   roommates: array()
     // .min(2, `You must have at least 2 two people in a household`)

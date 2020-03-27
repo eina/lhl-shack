@@ -44,9 +44,9 @@ export const FormikDateRange = (props: FormikDateProps) => {
       <FormLabel>
         <div>{label}</div>
         <DateRangePicker
-          startDate={stateValue.startDate}
+          startDate={stateValue.start_date}
           startDateId={`${name}-start`}
-          endDate={stateValue.endDate}
+          endDate={stateValue.end_date}
           endDateId={`${name}-end`}
           onDatesChange={handleDatesChange}
           focusedInput={focusedSingleInput}

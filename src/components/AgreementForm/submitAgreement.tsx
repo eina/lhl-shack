@@ -78,7 +78,10 @@ const saveUsers = ({ formVals, currUserID, houseID }: SavingProps) => {
           console.log('households???', householdUsers.data);
           if (!householdUsers.data.length) {
             console.log('put the user in the household!');
-            axios.post('/api/households', { user_id: userID, house_id: houseID,});
+            axios.post('/api/households', { user_id: userID, house_id: houseID, ...formVals.leaseDates});
+          } else if (!householdUsers.data[0].start_date) {
+            console.log('update the user in the household!');
+            axios.patch(`/api/households/${householdUsers.data[0].id}`, { user_id: userID, house_id: houseID, ...formVals.leaseDates });
           }
         });
     };
@@ -91,6 +94,7 @@ const saveUsers = ({ formVals, currUserID, houseID }: SavingProps) => {
             password: uuidV4()
           })
           .then(createdUser => {
+            saveUserHousehold(createdUser.data.id);
             return createdUser.data.id;
           });
       } else {

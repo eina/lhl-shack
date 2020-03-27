@@ -11,8 +11,8 @@ import { AppContext } from '../Store';
 
 const Bills = () => {
   const { state }: { state: any } = useContext(AppContext);
+  const toast = useToast();
   const [bills, setBills] = useState([]);
-  // const [userBillStatus, setUserBilStats] = useState({});
   const { currUser } = state;
   useEffect(() => {
     if (currUser) {
@@ -27,15 +27,33 @@ const Bills = () => {
   ];
 
   const UserPaymentSelect = (props: any) => {
-    // console.log('hello', rowData);
     const { value } = props;
-    const bill: any = bills.find(({ bill_uuid }: any) => bill_uuid === value);
+    const bill: any = bills.find(({ id }: any) => id === value);
     const [selectedValue, setSelectedValue] = useState(bill.user_status);
 
     const handleOnChange = (optObj: any) => {
-      axios.patch(`/api/bills/${bill.id}`, { user_status: optObj.value }).then(() => {
-        setSelectedValue(optObj);
-      });
+      axios
+        .patch(`/api/bills/${bill.id}`, { user_status: optObj.value })
+        .then(() => {
+          setSelectedValue(optObj);
+          toast({
+            title: `${bill.name} marked as ${optObj.value}!`,
+            status: "success",
+            position: "top-right",
+            duration: 4500,
+            isClosable: true
+          });
+        })
+        .catch(() => {
+          toast({
+            title: `Could not mark ${bill.name} as ${optObj.value}`,
+            description: `Please try again later.`,
+            status: "error",
+            position: "top-right",
+            duration: 4500,
+            isClosable: true
+          });
+        });
     };
 
     return (
@@ -48,13 +66,36 @@ const Bills = () => {
   };
 
   const BillPaymentSelect = ({ value }: any) => {
-    const [selectedValue, setSelectedValue] = useState(value);
+    const bill: any = bills.find(({ bill_uuid }: any) => bill_uuid === value);
+    const [selectedValue, setSelectedValue] = useState(bill.user_status);
+
+    const handleOnChange = (optObj: any) => {
+      axios.patch(`/api/bills/${bill.id}`, { user_status: optObj.value }).then(() => {
+        setSelectedValue(optObj);
+        toast({
+          title: `${bill.name} marked as ${optObj.value}!`,
+          status: "success",
+          position: "top-right",
+          duration: 4500,
+          isClosable: true
+        });
+      }).catch(() => {
+        toast({
+          title: `Could not mark ${bill.name} as ${optObj.value}`,
+          description: `Please try again later.`,
+          status: "error",
+          position: "top-right",
+          duration: 4500,
+          isClosable: true
+        });
+      });
+    };
 
     return (
       <Select
         options={options}
         value={options.find(option => option.value === selectedValue)}
-        onChange={value => setSelectedValue(value)}
+        onChange={handleOnChange}
       />
     );
   };
@@ -98,12 +139,12 @@ const Bills = () => {
             <ColumnDefinition id="interval" title="Interval" customComponent={FormatInterval} />
             <ColumnDefinition id="due_date" title="Due Date" />
             <ColumnDefinition
-              id="bill_uuid"
+              id="id"
               title="Your Payment Status"
-              customComponent={bills => UserPaymentSelect(bills)}
+              customComponent={UserPaymentSelect}
             />
             <ColumnDefinition
-              id="bill_status"
+              id="bill_uuid"
               title="Bill Payment Status"
               customComponent={BillPaymentSelect}
             />

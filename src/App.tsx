@@ -41,7 +41,7 @@ const AppContent = () => {
     currentPath.startsWith("/create-household") || currentPath.startsWith("/agreement");
   useEffect(() => {
     const getUserData = () => {
-      axios.get("/api/users/1").then(user => {
+      axios.get("/api/users/2").then(user => {
         updateState({
           currUser: user.data,
           fullName: displayFullName(user.data.first_name, user.data.last_name)
@@ -78,7 +78,9 @@ const AppContent = () => {
               mb={0}
             >
               <Link to="/">
-                <Box as="span" color="brand">shack</Box>
+                <Box as="span" color="brand">
+                  shack
+                </Box>
               </Link>
             </Heading>
             {isHouseholdOrAgreementForm ? <AgreementMenu /> : <MainMenu />}
@@ -120,14 +122,16 @@ const App = () => {
   return (
     <ThemeProvider theme={customTheme}>
       <CSSReset />
-      <Global styles={`      
+      <Global
+        styles={`      
         h1, h2, h3, h4, h5, h5 {
           margin-bottom: 0.65em;
         }
         main p {
           margin-bottom: 0.5em;
         }
-      `} />
+      `}
+      />
       <BrowserRouter>
         <AppProvider>
           <AppContent />

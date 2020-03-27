@@ -132,49 +132,55 @@ const Bills = () => {
     <div>
       <Heading as="h1">Bills</Heading>
       {bills.length && (
-        <Griddle
-          data={bills}
-          plugins={[plugins.LocalPlugin]}
-          components={{
-            Layout: NewLayout
-          }}
-          styleConfig={{
-            icons: {
-              TableHeadingCell: {
-                sortDescendingIcon: "↓",
-                sortAscendingIcon: "↑"
+        <Box className="griddle-container">
+          <Griddle
+            data={bills}
+            plugins={[plugins.LocalPlugin]}
+            components={{
+              Layout: NewLayout
+            }}
+            styleConfig={{
+              icons: {
+                TableHeadingCell: {
+                  sortDescendingIcon: "↓",
+                  sortAscendingIcon: "↑"
+                }
               }
-            }
-          }}
-        >
-          <RowDefinition>
-            <ColumnDefinition id="name" title="Name" />
-            <ColumnDefinition
-              id="user_amount"
-              title="Your Amount Due"
-              customComponent={({ value }) => <span>${value}</span>}
-            />
-            <ColumnDefinition
-              id="total_amount"
-              title="Total Amount Due"
-              customComponent={({ value }) => <span>${value}</span>}
-            />
-            <ColumnDefinition id="interval" title="Interval" customComponent={FormatInterval} />
-            <ColumnDefinition
-              id="due_date"
-              title="Due Date"
-              customComponent={({ value }) => (
-                <span>{moment(value).format("dd MMM Do, YYYY")}</span>
-              )}
-            />
-            <ColumnDefinition id="id" title="Portion Status" customComponent={UserPaymentSelect} />
-            <ColumnDefinition
-              id="bill_uuid"
-              title="Total Status"
-              customComponent={BillPaymentSelect}
-            />
-          </RowDefinition>
-        </Griddle>
+            }}
+          >
+            <RowDefinition>
+              <ColumnDefinition id="name" title="Name" />
+              <ColumnDefinition
+                id="user_amount"
+                title="Your Amount Due"
+                customComponent={({ value }) => <span>${value}</span>}
+              />
+              <ColumnDefinition
+                id="total_amount"
+                title="Total Amount Due"
+                customComponent={({ value }) => <span>${value}</span>}
+              />
+              <ColumnDefinition id="interval" title="Interval" customComponent={FormatInterval} />
+              <ColumnDefinition
+                id="due_date"
+                title="Due Date"
+                customComponent={({ value }) => (
+                  <span>{moment(value).format("dd MMM Do, YYYY")}</span>
+                )}
+              />
+              <ColumnDefinition
+                id="id"
+                title="Portion Status"
+                customComponent={UserPaymentSelect}
+              />
+              <ColumnDefinition
+                id="bill_uuid"
+                title="Total Status"
+                customComponent={BillPaymentSelect}
+              />
+            </RowDefinition>
+          </Griddle>
+        </Box>
       )}
     </div>
   );

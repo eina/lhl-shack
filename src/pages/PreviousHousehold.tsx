@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
-import { ListItem } from "@chakra-ui/core"
+import { Divider, Box, SimpleGrid, Heading } from '@chakra-ui/core';
 import { AppContext } from '../Store';
 
 interface PastHouseholdData {
@@ -12,37 +12,36 @@ interface PastHouseholdData {
   landlord_phone: string;
 }
 
-
 const pastHouseholdData = [
   {
     user_id: 1,
     address: `335-550 Taylor St, Vancouver, BC, V6B 1R1, Canada`,
     lease_period: `2016-08-01 - 2018-08-01`,
     landlord_name: 'Kyle Jones',
-    landlord_phone: '778-552-4492'
+    landlord_phone: '778-552-4492',
   },
   {
     user_id: 1,
     address: `328 Eglinton Ave, Toronto, ON, M4P 1A6, Canada`,
     lease_period: `2013-08-01 - 2016-08-01`,
     landlord_name: 'Tracie McDonald',
-    landlord_phone: '416-555-0134'
+    landlord_phone: '416-555-0134',
   },
   {
     user_id: 2,
     address: `601-258 6th St, New Westminster, BC, V3L 4U8, Canada`,
     lease_period: `2015-08-01 - 2016-08-01`,
     landlord_name: 'Linda Parker',
-    landlord_phone: '604-555-6251'
+    landlord_phone: '604-555-6251',
   },
   {
     user_id: 2,
     address: `1647 Semlin Dr, Vancouver, BC V5L 3J8, Canada`,
     lease_period: `2010-02-01 - 2015-02-01`,
     landlord_name: 'Ryan Woods',
-    landlord_phone: '778-993-2211'
-  }
-]
+    landlord_phone: '778-993-2211',
+  },
+];
 
 const PreviousHousehold = () => {
   const { state }: { state: any } = useContext(AppContext);
@@ -50,15 +49,25 @@ const PreviousHousehold = () => {
 
   return (
     <div>
-    <h1>Previous Houeholds</h1>
-    {console.log(currUser)}
-    {pastHouseholdData.filter((pastPlace) => ( pastPlace.user_id === currUser.id )).map( pastPlace => (
-      <h1>{pastPlace.address}</h1>
-    )) 
-    }
+      <Heading as="h1">My Previous Houeholds:</Heading>
+      <SimpleGrid>
+        {console.log(currUser)}
+        {pastHouseholdData
+          .filter(pastPlace => pastPlace.user_id === currUser.id)
+          .map(pastPlace => (
+            <Box>
+              <dd>
+                <dl><b>Address: </b>{pastPlace.address}</dl>
+                <dl><b>Lease period: </b>{pastPlace.lease_period}</dl>
+                <dl><b>Landlord: </b>{pastPlace.landlord_name}</dl>
+                <dl><b>Landlord phone number: </b>{pastPlace.landlord_phone}</dl>
+              </dd>
+              <Divider />
+            </Box>
+          ))}
+      </SimpleGrid>
     </div>
-
-  )
-}
+  );
+};
 
 export default PreviousHousehold;

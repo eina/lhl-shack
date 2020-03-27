@@ -50,6 +50,7 @@ const FieldSet = ({ label, type, value, ...props }: FieldSetConfig) => {
       isInvalid={meta.touched && meta.error ? true : false}
       isDisabled={props.disabled !== undefined ? props.disabled : false}
       mb={3}
+      maxW="80%"
     >
       {/* <p>{value}</p> */}
       {type === "checkbox" ? (

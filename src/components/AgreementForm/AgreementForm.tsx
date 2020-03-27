@@ -168,60 +168,58 @@ const AgreementForm = () => {
               />
             )}
           </NavigationPrompt>
-          <Box maxW="80%">
-            <Switch>
-              <Route path="/agreement/title" component={Title} />
-              <Redirect from="/agreement" to="/agreement/title" exact />
-              {/* <Route path="/agreement/landlord" component={Landlord} />
+          <Switch>
+            <Route path="/agreement/title" component={Title} />
+            <Redirect from="/agreement" to="/agreement/title" exact />
+            {/* <Route path="/agreement/landlord" component={Landlord} />
             <Route path="/agreement/household" component={Household} /> */}
-              <Route path="/agreement/lease" component={LeaseDates} />
-              <Route path="/agreement/roommates" component={Roommates} />
-              <Route path="/agreement/bills">
-                <BillsUtilities
-                  values={values}
-                  setFieldValue={setFieldValue}
-                  handleBlur={handleBlur}
-                  errors={errors}
-                  touched={touched}
-                />
-              </Route>
-              <Route path="/agreement/housekeeping">
-                <Housekeeping
-                  values={values}
-                  setFieldValue={setFieldValue}
-                  handleBlur={handleBlur}
-                  errors={errors}
-                  touched={touched}
-                />
-              </Route>
-              <Route path="/agreement/signatures">
-                <Signatures
-                  formIsSubmitting={isSubmitting}
-                  initialValues={initialValues}
-                  values={values}
-                  setFieldValue={setFieldValue}
-                  handleBlur={handleBlur}
-                  errors={errors}
-                  touched={touched}
-                />
-              </Route>
-              <Route path="/agreement/preview">
-                {house && landlord && household && (
-                  <>
-                    <Preview
-                      {...values}
-                      agreementID={agreementID}
-                      formattedHousekeeping={formatHousekeepingToHTML(values.housekeeping)}
-                      landlord={landlord}
-                      house={house}
-                      household={household}
-                      {...agreementMeta}
-                    />
-                  </>
-                )}
-              </Route>
-            </Switch>
-          </Box>
+            <Route path="/agreement/lease" component={LeaseDates} />
+            <Route path="/agreement/roommates" component={Roommates} />
+            <Route path="/agreement/bills">
+              <BillsUtilities
+                values={values}
+                setFieldValue={setFieldValue}
+                handleBlur={handleBlur}
+                errors={errors}
+                touched={touched}
+              />
+            </Route>
+            <Route path="/agreement/housekeeping">
+              <Housekeeping
+                values={values}
+                setFieldValue={setFieldValue}
+                handleBlur={handleBlur}
+                errors={errors}
+                touched={touched}
+              />
+            </Route>
+            <Route path="/agreement/signatures">
+              <Signatures
+                formIsSubmitting={isSubmitting}
+                initialValues={initialValues}
+                values={values}
+                setFieldValue={setFieldValue}
+                handleBlur={handleBlur}
+                errors={errors}
+                touched={touched}
+              />
+            </Route>
+            <Route path="/agreement/preview">
+              {house && landlord && household && (
+                <>
+                  <Preview
+                    {...values}
+                    agreementID={agreementID}
+                    formattedHousekeeping={formatHousekeepingToHTML(values.housekeeping)}
+                    landlord={landlord}
+                    house={house}
+                    household={household}
+                    {...agreementMeta}
+                  />
+                </>
+              )}
+            </Route>
+          </Switch>
         </form>
       )}
     </Formik>

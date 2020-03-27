@@ -139,7 +139,7 @@ const Household = () => {
           <Heading as="h3" fontSize="3xl">
             Roommates
           </Heading>
-          <Grid templateColumns="repeat(3, 1fr)" gridGap={10}>
+          <Box className="res-three-grid">
             {roomies.map((roomie: any) => (
               <Flex key={roomie.id} align="center" bg="white" p={6} rounded="lg">
                 <Avatar name={`${roomie.first_name} ${roomie.last_name}`} size="xl" />
@@ -154,7 +154,7 @@ const Household = () => {
                 </Box>
               </Flex>
             ))}
-          </Grid>
+          </Box>
         </Box>
       </Box>
     )

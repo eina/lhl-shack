@@ -61,3 +61,16 @@ a {
     color: #374047;
   }
 }
+
+.res-three-grid {
+  display: grid;
+  grid-gap: 1em;
+
+  @media (min-width: 860px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1280px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

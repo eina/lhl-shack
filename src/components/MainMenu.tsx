@@ -13,6 +13,9 @@ const MainMenu = () => {
           <Link to="/household">Household</Link>
         </ListItem>
         <ListItem>
+          <Link to="/previoushousehold">My Past Households</Link>
+        </ListItem>
+        <ListItem>
           <Link to="/bills">Bills</Link>
         </ListItem>
         {/* <ListItem>

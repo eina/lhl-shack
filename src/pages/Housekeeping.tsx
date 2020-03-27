@@ -4,6 +4,7 @@ import axios from 'axios';
 import { AppContext } from '../Store';
 import { Heading, Divider } from '@chakra-ui/core';
 import { Editor, EditorState, convertFromRaw } from 'draft-js';
+import Agreement from './Agreement';
 
 interface HousekeepingRule {
   [key: string]: any;
@@ -17,13 +18,12 @@ const Housekeeping = () => {
 
   useEffect(() => {
     axios.get(`/api/households/${currUser.household}`).then(vals => {
-      // { guestPolicy: EditorState.createWithContent(convertFromRaw(JSON.parse(vals.data.agreements[0].form_values.housekeeping.guestPolicy)))}
       setHousekeeping(vals.data.housekeeping);
     });
   }, [currUser.household]);
-  // const contentState = convertFromRaw(housekeeping);
-  // const editorState = EditorState.createWithContent(contentState);
+
   return (
+    housekeeping && (
     <div>
       <Heading as="h1">Housekeeping</Heading>
       <Divider />
@@ -161,7 +161,7 @@ const Housekeeping = () => {
         />
       )}
     </div>
-  );
+  ));
 };
 
 export default Housekeeping;

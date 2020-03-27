@@ -11,7 +11,7 @@ interface FormikSelectProps {
   label: string;
   name: string;
   options: any;
-  multi?: Boolean;
+  multi?: boolean;
   error?: any;
   touched?: any;
 }
@@ -30,7 +30,7 @@ const FormikSelect = (props: FormikSelectProps) => {
   };
 
   return (
-    <FormControl isInvalid={!!props.error && props.touched}>
+    <FormControl isInvalid={!!props.error && props.touched} w="100%">
       <FormLabel htmlFor={name}>{label}</FormLabel>
       <Select options={options} onChange={handleChange} onBlur={handleBlur} value={stateValue} />
       {!!props.error && props.touched && <FormErrorMessage>{props.error.value}</FormErrorMessage>}

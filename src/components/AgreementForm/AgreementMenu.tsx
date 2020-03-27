@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ListItem, List, Heading, Divider } from "@chakra-ui/core";
+import { Box, ListItem, List, Divider } from "@chakra-ui/core";
 
 const AgreementMenu = () => {
   return (
-    <div>
+    <Box fontSize="xl">
       <List>
         <ListItem>
           <Link to="/">Back to Dashboard</Link>
@@ -24,6 +24,9 @@ const AgreementMenu = () => {
         <ListItem>
           <Link to="/agreement/household">House Information</Link>
         </ListItem> */}
+        <ListItem>
+          <Link to="/agreement/lease">Lease Dates</Link>
+        </ListItem>
         <ListItem>
           <Link to="/agreement/roommates">Roommates</Link>
         </ListItem>
@@ -51,7 +54,7 @@ const AgreementMenu = () => {
           <Link to="/agreement/preview">Preview</Link>
         </ListItem> */}
       </List>
-    </div>
+    </Box>
   );
 };
 

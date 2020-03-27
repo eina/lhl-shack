@@ -42,11 +42,11 @@ export const FormikDateRange = (props: FormikDateProps) => {
   return (
     <FormControl isInvalid={!!isError && fieldError}>
       <FormLabel>
-        {label}
+        <div>{label}</div>
         <DateRangePicker
-          startDate={stateValue.startDate}
+          startDate={stateValue.start_date}
           startDateId={`${name}-start`}
-          endDate={stateValue.endDate}
+          endDate={stateValue.end_date}
           endDateId={`${name}-end`}
           onDatesChange={handleDatesChange}
           focusedInput={focusedSingleInput}
@@ -81,7 +81,7 @@ export const FormikSingleDatePicker = (props: FormikDateProps) => {
   return (
     <FormControl isInvalid={!!isError && fieldError}>
       <FormLabel>
-        {label}
+        <div>{label}</div>
         <SingleDatePicker
           id={name}
           date={stateValue}

@@ -30,13 +30,15 @@ const Housekeeping = (props: any) => {
     <Box>
       <Heading as="h2">Housekeeping Rules</Heading>
 
-      <Heading as="h3">Guests</Heading>
+      <Heading as="h3" fontSize="2xl">
+        Guests
+      </Heading>
       <p>
         Guests can include mutual friends, visitors, overnight guests, partners, and even parents.
         You should think about whether there should be any reasonable restrictions on how often
         roommates can have guests over, whether there should be special rules for overnight
-        guests,if there should be rules about guests&rsquo; conduct when they are visiting, and similar
-        issues.
+        guests,if there should be rules about guests&rsquo; conduct when they are visiting, and
+        similar issues.
       </p>
       <p>We agree that the following applies to guests:</p>
       <RichEditor
@@ -47,7 +49,9 @@ const Housekeeping = (props: any) => {
         focus={() => {}}
       />
 
-      <Heading as="h3">Quiet Times</Heading>
+      <Heading as="h3" fontSize="2xl">
+        Quiet Times
+      </Heading>
       <FieldSet
         type="number"
         label="We agree that quiet time will be from (PM)"
@@ -73,8 +77,12 @@ const Housekeeping = (props: any) => {
         inputGroup={{ right: { addOn: "AM" } }}
       />
 
-      <Heading as="h3">Private and Shared Spaces</Heading>
-      <Heading as="h4">Room Occupancy Policy</Heading>
+      <Heading as="h3" fontSize="2xl" mt={6}>
+        Private and Shared Spaces
+      </Heading>
+      <Heading as="h4" fontSize="xl">
+        Room Occupancy Policy
+      </Heading>
       <p>
         We agree that the following persons shall occupy the following bedrooms during our tenancy
       </p>
@@ -85,10 +93,12 @@ const Housekeeping = (props: any) => {
         onBlur={handleBlur}
         focus={() => {}}
       />
-      <Heading as="h4">Shared Spaces Policy</Heading>
+      <Heading as="h4" fontSize="xl">
+        Shared Spaces Policy
+      </Heading>
       <p>
-        We agree to the following about accessing each roommates&rsquo; private spaces and rules around
-        shared spaces:
+        We agree to the following about accessing each roommates&rsquo; private spaces and rules
+        around shared spaces:
       </p>
       <RichEditor
         editorState={values.housekeeping.spacesPolicy}
@@ -97,7 +107,9 @@ const Housekeeping = (props: any) => {
         onBlur={handleBlur}
         focus={() => {}}
       />
-      <Heading as="h3">Chores</Heading>
+      <Heading as="h3" fontSize="2xl">
+        Chores
+      </Heading>
       <p>We agree to share the following household responsibilities in the following manner:</p>
       <RichEditor
         editorState={values.housekeeping.choresPolicy}
@@ -106,7 +118,9 @@ const Housekeeping = (props: any) => {
         onBlur={handleBlur}
         focus={() => {}}
       />
-      <Heading as="h3">Vacations &amp; Vacation Policy</Heading>
+      <Heading as="h3" fontSize="2xl">
+        Vacations &amp; Vacation Policy
+      </Heading>
       <p>
         We agree to the following rules regarding times some or all roommates will be living away
         from the shared property:
@@ -118,7 +132,9 @@ const Housekeeping = (props: any) => {
         onBlur={handleBlur}
         focus={() => {}}
       />
-      <Heading as="h3">Personal Items</Heading>
+      <Heading as="h3" fontSize="2xl">
+        Personal Items
+      </Heading>
       <p>
         You should think about what rules should be in place regarding roommates&rsquo; personal
         belongings, both within their own private spaces and in shared common spaces in the rental
@@ -126,8 +142,9 @@ const Housekeeping = (props: any) => {
       </p>
 
       <p>Regarding furniture and belongings in common and private areas, we agree that:</p>
-      <Heading as="h4">Personal Items Policy</Heading>
-      <h5>Personal Items Policy</h5>
+      <Heading as="h4" fontSize="xl">
+        Personal Items Policy
+      </Heading>
       <RichEditor
         editorState={values.housekeeping.personalItemsPolicy}
         editorStateName="housekeeping.personalItemsPolicy"
@@ -135,7 +152,9 @@ const Housekeeping = (props: any) => {
         onBlur={handleBlur}
         focus={() => {}}
       />
-      <Heading as="h3">Smoking</Heading>
+      <Heading as="h3" fontSize="2xl">
+        Smoking
+      </Heading>
       <p>
         If smoking is permitted, decide if roommates can smoke and if so, where. Also consider vapes
         and marijuana. We agree to the following rules regarding the smoking of different substances
@@ -148,7 +167,9 @@ const Housekeeping = (props: any) => {
         onBlur={handleBlur}
         focus={() => {}}
       />
-      <Heading as="h3">Messages</Heading>
+      <Heading as="h3" fontSize="2xl">
+        Messages
+      </Heading>
       <p>
         It is always important to have good communication between roommates. Designate an area to
         leave messages for each other, and to leave messges from the landlord. We agree that any
@@ -161,7 +182,9 @@ const Housekeeping = (props: any) => {
         onBlur={handleBlur}
         focus={() => {}}
       />
-      <Heading as="h3">Pets</Heading>
+      <Heading as="h3" fontSize="2xl">
+        Pets
+      </Heading>
       <p>
         If pets are allowed, decide whether visitors can bring pets in. Tenants, under the
         Residential Tenancy Act, have the right to determine the rules in the rental unit about
@@ -175,7 +198,7 @@ const Housekeeping = (props: any) => {
         onBlur={handleBlur}
         focus={() => {}}
       />
-      <Box as="footer">
+      <Box as="footer" my={10}>
         <PrevNextNav before="/agreement/bills/utilities" after="/agreement/signatures" />
       </Box>
     </Box>

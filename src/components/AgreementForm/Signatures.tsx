@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
-import { Box, Button, Heading, List, ListItem } from "@chakra-ui/core";
+import { Box, Button, Heading, Grid, Text } from "@chakra-ui/core";
 import { FieldArray } from "formik";
 
 import { FormikSingleDatePicker } from "../FormikDates";
@@ -23,66 +23,82 @@ const Signatures = (props: any) => {
       <FieldArray name="signatures">
         {arrayHelpers => (
           <div>
-            <List as="ol" styleType="decimal">
+            <Box>
               {values.signatures.map((signature: any, index: any, array: any) => (
-                <ListItem key={index}>
-                  {array.length > values.roommates.length && (
-                    <Button type="button" onClick={() => arrayHelpers.remove(index)}>
-                      Remove
-                    </Button>
-                  )}
-                  <FieldSet
-                    type="text"
-                    name={`signatures.${index}.fullName`}
-                    label={roommateName[index]}
-                    formHelper={`Please match name inputted with ${roommateName[index]}`}
-                  />
+                <Grid key={index} templateColumns="2em 4fr" mb={5}>
+                  <Text fontSize="md">{index + 1}.</Text>
+                  <div>
+                    {array.length > values.roommates.length && (
+                      <Button type="button" onClick={() => arrayHelpers.remove(index)}>
+                        Remove
+                      </Button>
+                    )}
 
-                  <FieldSet
-                    type="checkbox"
-                    name={`signatures.${index}.agreed`}
-                    label="I have agreed to what has been written in this agreement."
-                  />
+                    <FormikSingleDatePicker
+                      stateValue={values.signatures[index].date}
+                      stateName={`signatures.${index}.date`}
+                      name={`signatures.${index}.date`}
+                      onChange={setFieldValue}
+                      numberOfMonths={1}
+                      label="Date Signed"
+                      error={
+                        errors &&
+                        errors.signatures &&
+                        errors.signatures[index] &&
+                        errors.signatures[index].date
+                      }
+                      touched={
+                        touched &&
+                        touched.signatures &&
+                        touched.signatures[index] &&
+                        touched.signatures[index].date
+                      }
+                    />
+                    
+                    <FieldSet
+                      type="text"
+                      name={`signatures.${index}.fullName`}
+                      label={roommateName[index]}
+                      formHelper={`Please match name inputted with ${roommateName[index]}`}
+                    />
 
-                  <FormikSingleDatePicker
-                    stateValue={values.signatures[index].date}
-                    stateName={`signatures.${index}.date`}
-                    name={`signatures.${index}.date`}
-                    onChange={setFieldValue}
-                    numberOfMonths={1}
-                    label="Date Signed"
-                    error={
-                      errors &&
-                      errors.signatures &&
-                      errors.signatures[index] &&
-                      errors.signatures[index].date
-                    }
-                    touched={
-                      touched &&
-                      touched.signatures &&
-                      touched.signatures[index] &&
-                      touched.signatures[index].date
-                    }
-                  />
-                </ListItem>
+                    <FieldSet
+                      type="checkbox"
+                      name={`signatures.${index}.agreed`}
+                      label="I have agreed to what has been written in this agreement."
+                    />
+                  </div>
+                </Grid>
               ))}
-            </List>
-            {values.roommates.length > values.signatures.length && <Button
-              type="button"
-              onClick={() => arrayHelpers.push({ fullName: "", agreed: false, date: moment() })}
-            >
-              Add Signature
-            </Button>}
-
+            </Box>
+            {values.roommates.length > values.signatures.length && (
+              <Button
+                type="button"
+                onClick={() => arrayHelpers.push({ fullName: "", agreed: false, date: moment() })}
+              >
+                Add Signature
+              </Button>
+            )}
           </div>
         )}
       </FieldArray>
-      {/* {valuesChanged ? <Button isLoading={formIsSubmitting}
-          loadingText="Generating Preview" type="submit">Save &amp; Preview Agreement</Button> : <Button type="button" onClick={() => history.push('/agreement/preview')}>Preview Agreement</Button>} */}
-      <PrevNextNav before="/agreement/bills/utilities">
-        <Button isLoading={formIsSubmitting}
-          loadingText="Generating Preview" type="submit">Save &amp; Preview Agreement</Button>
-      </PrevNextNav>
+
+      <Box as="footer" my={10}>
+        <Button isLoading={formIsSubmitting} loadingText="Generating Preview" type="submit">
+          Save &amp; Preview Agreement
+        </Button>
+        {/* <PrevNextNav before="/agreement/bills/utilities">
+          {valuesChanged ? (
+            <Button isLoading={formIsSubmitting} loadingText="Generating Preview" type="submit">
+              Save &amp; Preview Agreement
+            </Button>
+          ) : (
+            <Button type="button" onClick={() => history.push("/agreement/preview")}>
+              Preview Agreement
+            </Button>
+          )}
+        </PrevNextNav> */}
+      </Box>
     </Box>
   );
 };

@@ -75,13 +75,12 @@ const saveUsers = ({ formVals, currUserID, houseID }: SavingProps) => {
     const saveUserHousehold = (userID: number) => {
       return axios.get('/api/households', { params: { user_id: userID, house_id: houseID } })
         .then(householdUsers => {
-          console.log('households???', householdUsers.data);
+          console.log('hi are you here', formVals.housekeeping);
           if (!householdUsers.data.length) {
-            console.log('put the user in the household!');
-            axios.post('/api/households', { user_id: userID, house_id: houseID, ...formVals.leaseDates});
-          } else if (!householdUsers.data[0].start_date) {
+            axios.post('/api/households', { user_id: userID, house_id: houseID, ...formVals.leaseDates, is_active: true, housekeeping: JSON.stringify(formVals.housekeeping)});
+          } else {
             console.log('update the user in the household!');
-            axios.patch(`/api/households/${householdUsers.data[0].id}`, { user_id: userID, house_id: houseID, ...formVals.leaseDates });
+            axios.patch(`/api/households/${householdUsers.data[0].id}`, { user_id: userID, house_id: houseID, ...formVals.leaseDates, is_active: true, housekeeping: JSON.stringify(formVals.housekeeping) });
           }
         });
     };
@@ -191,9 +190,9 @@ const submitAgreement = ({
       // only save the other things when submitting from the agreement form (isComplete == true)
       if (isComplete) {
         // save the users
-        return saveUsers({ formVals, currUserID: userID, houseID })
+        return saveUsers({ formVals: formattedValues, currUserID: userID, houseID })
           .then(users => Promise.all(users)) // grab users id
-          .then(usersIDs => saveBills({ formVals, householdID, usersIDs }))
+          .then(usersIDs => saveBills({ formVals: formattedValues, householdID, usersIDs }))
           .then(() => agreementLink); // save the bills
       } else {
         return vals.data;

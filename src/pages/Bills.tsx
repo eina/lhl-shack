@@ -10,37 +10,21 @@ import Griddle, {
 import { Heading, useToast } from '@chakra-ui/core';
 import { AppContext } from '../Store';
 
-const UserPaymentSelect = ({ value }: any) => {
-  const [selectedValue, setSelectedValue] = useState(value);
-  const options = [
-    { value: "unpaid", label: "Unpaid" },
-    { value: "paid", label: "Paid" }
-  ];
 
-  return (
-    <Select
-      options={options}
-      value={options.find(option => option.value === selectedValue)}
-      onChange={value => setSelectedValue(value)}
-    />
-  );
-};
 
-const BillPaymentSelect = ({ value }: any) => {
-  const [selectedValue, setSelectedValue] = useState(value);
-  const options = [
-    { value: "unpaid", label: "Unpaid" },
-    { value: "paid", label: "Paid" }
-  ];
+// const rowDataSelector = (state: any, { griddleKey }: any) => {
+//   return state
+//     .get("data")
+//     .find((rowMap: any) => rowMap.get("griddleKey") === griddleKey)
+//     .toJSON();
+// };
 
-  return (
-    <Select
-      options={options}
-      value={options.find(option => option.value === selectedValue)}
-      onChange={value => setSelectedValue(value)}
-    />
-  );
-};
+// const enhancedWithRowData = connect((state, props) => {
+//   console.log('is this loading', state);
+//   return {
+//     rowData: rowDataSelector(state, props)
+//   };
+// });
 
 const Bills = () => {
   const { state }: { state: any } = useContext(AppContext);
@@ -54,21 +38,85 @@ const Bills = () => {
     }
   }, []);
 
+  const options = [
+    { value: "unpaid", label: "Unpaid" },
+    { value: "paid", label: "Paid" }
+  ];
+
+  const UserPaymentSelect = (props: any) => {
+    // console.log('hello', rowData);
+    const { value } = props;
+    const bill: any = bills.find(({ bill_uuid }: any) => bill_uuid === value);
+    const [selectedValue, setSelectedValue] = useState(bill.user_status);
+
+    const handleOnChange = (value: any) => {
+      setSelectedValue(value);
+    };
+
+
+    return (
+      <Select
+        options={options}
+        value={options.find(option => option.value === selectedValue)}
+        onChange={handleOnChange}
+      />
+    );
+  };
+
+  const BillPaymentSelect = ({ value }: any) => {
+    const [selectedValue, setSelectedValue] = useState(value);
+
+    return (
+      <Select
+        options={options}
+        value={options.find(option => option.value === selectedValue)}
+        onChange={value => setSelectedValue(value)}
+      />
+    );
+  };
+
+  const NewLayout = ({ Table, Pagination, Filter, SettingsWrapper }: any) => (
+    <>
+      <Filter />
+      <Table />
+      {/* <Pagination /> */}
+    </>
+  );
+
+  const FormatInterval = ({ value }: any) => {
+    switch (value) {
+    case 'monthly':
+      return <span>Monthly</span>;
+    case '2monthly':
+      return <span>Every 2 Months</span>;
+    case 'annually':
+      return <span>Annually</span>;
+    default:
+      return <span>Once</span>;
+    }
+  };
+
   return (
     <div>
       <Heading as="h1">Bills</Heading>
       {bills.length && (
-        <Griddle data={bills} plugins={[plugins.LocalPlugin]}>
+        <Griddle
+          data={bills}
+          plugins={[plugins.LocalPlugin]}
+          components={{
+            Layout: NewLayout
+          }}
+        >
           <RowDefinition>
             <ColumnDefinition id="name" title="Name" />
             <ColumnDefinition id="user_amount" title="Your Amount Due" />
             <ColumnDefinition id="total_amount" title="Total Amount Due" />
-            <ColumnDefinition id="interval" title="Interval" />
+            <ColumnDefinition id="interval" title="Interval" customComponent={FormatInterval} />
             <ColumnDefinition id="due_date" title="Due Date" />
             <ColumnDefinition
-              id="user_status"
+              id="bill_uuid"
               title="Your Payment Status"
-              customComponent={UserPaymentSelect}
+              customComponent={bills => UserPaymentSelect(bills)}
             />
             <ColumnDefinition
               id="bill_status"

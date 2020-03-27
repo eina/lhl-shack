@@ -1,4 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
+import moment from 'moment';
 import axios from 'axios';
 import Select from 'react-select';
 import Griddle, {
@@ -6,8 +7,10 @@ import Griddle, {
   RowDefinition,
   ColumnDefinition,
 } from 'griddle-react';
-import { Heading, useToast } from '@chakra-ui/core';
+import { Heading, Box, useToast } from '@chakra-ui/core';
 import { AppContext } from '../Store';
+
+import './Bills.scss';
 
 const Bills = () => {
   const { state }: { state: any } = useContext(AppContext);
@@ -15,9 +18,8 @@ const Bills = () => {
   const [bills, setBills] = useState([]);
   const { currUser } = state;
   useEffect(() => {
-    console.log("hi", { house_id: currUser.house, user_id: currUser.id });
     if (currUser) {
-      axios.get('/api/bills', { params: { house_id: currUser.house, user_id: currUser.id } })
+      axios.get('/api/bills', { params: { household_id: currUser.household, user_id: currUser.id } })
         .then(vals => setBills(vals.data));
     }
   }, [currUser]);
@@ -58,11 +60,13 @@ const Bills = () => {
     };
 
     return (
-      <Select
-        options={options}
-        value={options.find(option => option.value === selectedValue)}
-        onChange={handleOnChange}
-      />
+      <Box maxW="150px">
+        <Select
+          options={options}
+          value={options.find(option => option.value === selectedValue)}
+          onChange={handleOnChange}
+        />
+      </Box>
     );
   };
 
@@ -93,17 +97,19 @@ const Bills = () => {
     };
 
     return (
-      <Select
-        options={options}
-        value={options.find(option => option.value === selectedValue)}
-        onChange={handleOnChange}
-      />
+      <Box maxW="150px">
+        <Select
+          options={options}
+          value={options.find(option => option.value === selectedValue)}
+          onChange={handleOnChange}
+        />
+      </Box>
     );
   };
 
-  const NewLayout = ({ Table, Pagination, Filter, SettingsWrapper }: any) => (
+  const NewLayout = ({ Table, Filter }: any) => (
     <>
-      <Filter />
+      {/* <Filter /> */}
       <Table />
       {/* <Pagination /> */}
     </>
@@ -132,21 +138,39 @@ const Bills = () => {
           components={{
             Layout: NewLayout
           }}
+          styleConfig={{
+            icons: {
+              TableHeadingCell: {
+                sortDescendingIcon: "↓",
+                sortAscendingIcon: "↑"
+              }
+            }
+          }}
         >
           <RowDefinition>
             <ColumnDefinition id="name" title="Name" />
-            <ColumnDefinition id="user_amount" title="Your Amount Due" />
-            <ColumnDefinition id="total_amount" title="Total Amount Due" />
-            <ColumnDefinition id="interval" title="Interval" customComponent={FormatInterval} />
-            <ColumnDefinition id="due_date" title="Due Date" />
             <ColumnDefinition
-              id="id"
-              title="Your Payment Status"
-              customComponent={UserPaymentSelect}
+              id="user_amount"
+              title="Your Amount Due"
+              customComponent={({ value }) => <span>${value}</span>}
             />
             <ColumnDefinition
+              id="total_amount"
+              title="Total Amount Due"
+              customComponent={({ value }) => <span>${value}</span>}
+            />
+            <ColumnDefinition id="interval" title="Interval" customComponent={FormatInterval} />
+            <ColumnDefinition
+              id="due_date"
+              title="Due Date"
+              customComponent={({ value }) => (
+                <span>{moment(value).format("dd MMM Do, YYYY")}</span>
+              )}
+            />
+            <ColumnDefinition id="id" title="Portion Status" customComponent={UserPaymentSelect} />
+            <ColumnDefinition
               id="bill_uuid"
-              title="Bill Payment Status"
+              title="Total Status"
               customComponent={BillPaymentSelect}
             />
           </RowDefinition>

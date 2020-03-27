@@ -10,6 +10,38 @@ import Griddle, {
 import { Heading, useToast } from '@chakra-ui/core';
 import { AppContext } from '../Store';
 
+const UserPaymentSelect = ({ value }: any) => {
+  const [selectedValue, setSelectedValue] = useState(value);
+  const options = [
+    { value: "unpaid", label: "Unpaid" },
+    { value: "paid", label: "Paid" }
+  ];
+
+  return (
+    <Select
+      options={options}
+      value={options.find(option => option.value === selectedValue)}
+      onChange={value => setSelectedValue(value)}
+    />
+  );
+};
+
+const BillPaymentSelect = ({ value }: any) => {
+  const [selectedValue, setSelectedValue] = useState(value);
+  const options = [
+    { value: "unpaid", label: "Unpaid" },
+    { value: "paid", label: "Paid" }
+  ];
+
+  return (
+    <Select
+      options={options}
+      value={options.find(option => option.value === selectedValue)}
+      onChange={value => setSelectedValue(value)}
+    />
+  );
+};
+
 const Bills = () => {
   const { state }: { state: any } = useContext(AppContext);
   const [bills, setBills] = useState([]);
@@ -21,36 +53,6 @@ const Bills = () => {
         .then(vals => setBills(vals.data));
     }
   }, []);
-
-  const userPaymentSelect = ({ value }: any) => {
-    console.log('what is this', value);
-    const options = [
-      { value: "unpaid", label: "Unpaid" },
-      { value: "paid", label: "Paid" }
-    ];
-
-    return (
-      <Select
-        options={options}
-        value={options.find(option => option.value === value)}
-      />
-    );
-  };
-
-  const billPaymentSelect = ({ value }: any) => {
-    const options = [
-      { value: 'unpaid', label: 'Unpaid' },
-      { value: 'paid', label: 'Paid' },
-    ];
-
-    return (
-      <Select
-        options={options}
-        value={options.find(option => option.value === value)}
-      />
-    );
-  };
-  
 
   return (
     <div>
@@ -66,12 +68,12 @@ const Bills = () => {
             <ColumnDefinition
               id="user_status"
               title="Your Payment Status"
-              customComponent={userPaymentSelect}
+              customComponent={UserPaymentSelect}
             />
             <ColumnDefinition
               id="bill_status"
               title="Bill Payment Status"
-              customComponent={billPaymentSelect}
+              customComponent={BillPaymentSelect}
             />
           </RowDefinition>
         </Griddle>

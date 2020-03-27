@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { connect } from 'react-redux';
+import moment from 'moment';
 import axios from 'axios';
 import Select from 'react-select';
 import Griddle, {
@@ -7,102 +7,171 @@ import Griddle, {
   RowDefinition,
   ColumnDefinition,
 } from 'griddle-react';
-import { Heading, useToast } from '@chakra-ui/core';
+import { Heading, Box, useToast } from '@chakra-ui/core';
 import { AppContext } from '../Store';
 
-const rowDataSelector = (state: any, { griddleKey }: any) => {
-  return state
-    .get('data')
-    .find((rowMap: any) => rowMap.get('griddleKey') === griddleKey)
-    .toJSON();
-};
-
-const enhancedWithRowData = connect((state, props) => {
-  console.log('waaaaat', state, props);
-  return {
-    // rowData will be available into MyCustomComponent
-    rowData: rowDataSelector(state, props),
-  };
-});
+import './Bills.scss';
 
 const Bills = () => {
   const { state }: { state: any } = useContext(AppContext);
   const toast = useToast();
   const [bills, setBills] = useState([]);
-  // const [userBillStatus, setUserBilStats] = useState({});
   const { currUser } = state;
   useEffect(() => {
     if (currUser) {
       axios.get('/api/bills', { params: { household_id: currUser.household, user_id: currUser.id } })
         .then(vals => setBills(vals.data));
     }
-  }, []);
+  }, [currUser]);
 
-  const UserPaymentSelect = ({ value, griddleKey, rowData }: any) => {
-    const options = [
-      { value: 'unpaid', label: 'Unpaid' },
-      { value: 'paid', label: 'Paid' },
-    ];
+  const options = [
+    { value: "unpaid", label: "Unpaid" },
+    { value: "paid", label: "Paid" }
+  ];
 
-    const onChangeHandler = (event: any) => {
-      const { id } = rowData;
-      console.log('on change handler', event);
-      console.log('is there rowData', rowData);
-      // 1. do an axios patch request --> need bil.id
-      axios.patch(`/api/bills/${id}`, { user_status: value }).then(() =>
-        toast({
-          title: 'Marked as paid!',
-          description: "We've created your account for you.",
-          status: 'success',
-          duration: 9000,
-          isClosable: true,
+  const UserPaymentSelect = (props: any) => {
+    const { value } = props;
+    const bill: any = bills.find(({ id }: any) => id === value);
+    const [selectedValue, setSelectedValue] = useState(bill.user_status);
+
+    const handleOnChange = (optObj: any) => {
+      axios
+        .patch(`/api/bills/${bill.id}`, { user_status: optObj.value })
+        .then(() => {
+          setSelectedValue(optObj);
+          toast({
+            title: `${bill.name} marked as ${optObj.value}!`,
+            status: "success",
+            position: "top-right",
+            duration: 4500,
+            isClosable: true
+          });
         })
-      );
+        .catch(() => {
+          toast({
+            title: `Could not mark ${bill.name} as ${optObj.value}`,
+            description: `Please try again later.`,
+            status: "error",
+            position: "top-right",
+            duration: 4500,
+            isClosable: true
+          });
+        });
     };
 
     return (
-      <Select
-        options={options}
-        value={options.find(option => option.value === value)}
-        // onChange={(e: any) => onChangeHandler(e.value)}
-      />
+      <Box maxW="150px">
+        <Select
+          options={options}
+          value={options.find(option => option.value === selectedValue)}
+          onChange={handleOnChange}
+        />
+      </Box>
     );
   };
 
-  const billPaymentSelect = ({ value }: any) => {
-    const options = [
-      { value: 'unpaid', label: 'Unpaid' },
-      { value: 'paid', label: 'Paid' },
-    ];
+  const BillPaymentSelect = ({ value }: any) => {
+    const bill: any = bills.find(({ bill_uuid }: any) => bill_uuid === value);
+    const [selectedValue, setSelectedValue] = useState(bill.user_status);
+
+    const handleOnChange = (optObj: any) => {
+      axios.patch(`/api/bills/${bill.id}`, { user_status: optObj.value }).then(() => {
+        setSelectedValue(optObj);
+        toast({
+          title: `${bill.name} marked as ${optObj.value}!`,
+          status: "success",
+          position: "top-right",
+          duration: 4500,
+          isClosable: true
+        });
+      }).catch(() => {
+        toast({
+          title: `Could not mark ${bill.name} as ${optObj.value}`,
+          description: `Please try again later.`,
+          status: "error",
+          position: "top-right",
+          duration: 4500,
+          isClosable: true
+        });
+      });
+    };
 
     return (
-      <Select
-        options={options}
-        // value={options.find(option => option.value === value)}
-      />
+      <Box maxW="150px">
+        <Select
+          options={options}
+          value={options.find(option => option.value === selectedValue)}
+          onChange={handleOnChange}
+        />
+      </Box>
     );
+  };
+
+  const NewLayout = ({ Table, Filter }: any) => (
+    <>
+      {/* <Filter /> */}
+      <Table />
+      {/* <Pagination /> */}
+    </>
+  );
+
+  const FormatInterval = ({ value }: any) => {
+    switch (value) {
+    case 'monthly':
+      return <span>Monthly</span>;
+    case '2monthly':
+      return <span>Every 2 Months</span>;
+    case 'annually':
+      return <span>Annually</span>;
+    default:
+      return <span>Once</span>;
+    }
   };
 
   return (
     <div>
       <Heading as="h1">Bills</Heading>
       {bills.length && (
-        <Griddle data={bills} plugins={[plugins.LocalPlugin]}>
+        <Griddle
+          data={bills}
+          plugins={[plugins.LocalPlugin]}
+          components={{
+            Layout: NewLayout
+          }}
+          styleConfig={{
+            icons: {
+              TableHeadingCell: {
+                sortDescendingIcon: "↓",
+                sortAscendingIcon: "↑"
+              }
+            }
+          }}
+        >
           <RowDefinition>
             <ColumnDefinition id="name" title="Name" />
-            <ColumnDefinition id="user_amount" title="Your Amount Due" />
-            <ColumnDefinition id="total_amount" title="Total Amount Due" />
-            <ColumnDefinition id="interval" title="Interval" />
-            <ColumnDefinition id="due_date" title="Due Date" />
             <ColumnDefinition
-              id="user_status"
-              title="Your Payment Status"
-              customComponent={UserPaymentSelect}
+              id="user_amount"
+              title="Your Amount Due"
+              customComponent={({ value }) => <span>${value}</span>}
             />
             <ColumnDefinition
-              id="bill_status"
-              title="Bill Payment Status"
-              customComponent={billPaymentSelect}
+              id="total_amount"
+              title="Total Amount Due"
+              customComponent={({ value }) => <span>${value}</span>}
+            />
+            <ColumnDefinition id="interval" title="Interval" customComponent={FormatInterval} />
+            <ColumnDefinition
+              id="due_date"
+              title="Due Date"
+              customComponent={({ value }) => (
+                <span>{moment(value).format("dd MMM Do, YYYY")}</span>
+              )}
+            />
+            <ColumnDefinition id="id" title="Portion Status" customComponent={UserPaymentSelect} />
+            <ColumnDefinition
+              id="bill_uuid"
+              title="Total Status"
+              customComponent={BillPaymentSelect}
             />
           </RowDefinition>
         </Griddle>

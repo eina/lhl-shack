@@ -115,7 +115,9 @@ const saveBills = ({ formVals, householdID, usersIDs }: SavingProps) => {
       ...bill,
       total_amount: bill.total_amount * 1,
       interval: bill.interval.value,
-      household_id: householdID
+      household_id: householdID,
+      user_status: "unpaid",
+      bill_status: "unpaid"
     };
     // 2. check if there is a bill that exists with bill_uuid & household_id & user_id
     return usersIDs.map((userID: any) => {
@@ -124,7 +126,7 @@ const saveBills = ({ formVals, householdID, usersIDs }: SavingProps) => {
           params: {
             bill_uuid: bill.bill_uuid,
             household_id: householdID,
-            user_id: userID
+            user_id: userID,
           }
         })
         .then(houseBillPerUser => {

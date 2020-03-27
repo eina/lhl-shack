@@ -18,6 +18,7 @@ const rowDataSelector = (state: any, { griddleKey }: any) => {
 };
 
 const enhancedWithRowData = connect((state, props) => {
+  console.log('waaaaat', state, props);
   return {
     // rowData will be available into MyCustomComponent
     rowData: rowDataSelector(state, props),
@@ -25,33 +26,19 @@ const enhancedWithRowData = connect((state, props) => {
 });
 
 const Bills = () => {
-  const {
-    state,
-    updateState,
-  }: { state: any; updateState: Function } = useContext(AppContext);
+  const { state }: { state: any } = useContext(AppContext);
   const toast = useToast();
   const [bills, setBills] = useState([]);
-  const [userBillStatus, setUserBilStats] = useState({});
+  // const [userBillStatus, setUserBilStats] = useState({});
   const { currUser } = state;
   useEffect(() => {
     if (currUser) {
-      console.log('params: ', {
-        household_id: currUser.household_id,
-        user_id: currUser.id,
-      });
-      axios
-        .get('/api/bills', {
-          params: { household_id: currUser.household, user_id: currUser.id },
-        })
-        .then(vals => {
-          console.log('here are vals: ', vals.data);
-          setBills(vals.data);
-        });
+      axios.get('/api/bills', { params: { household_id: currUser.household, user_id: currUser.id } })
+        .then(vals => setBills(vals.data));
     }
   }, []);
 
-  const userPaymentSelect = (props: any) => {
-    const { value, griddleKey, rowData } = props;
+  const UserPaymentSelect = ({ value, griddleKey, rowData }: any) => {
     const options = [
       { value: 'unpaid', label: 'Unpaid' },
       { value: 'paid', label: 'Paid' },
@@ -77,7 +64,7 @@ const Bills = () => {
       <Select
         options={options}
         value={options.find(option => option.value === value)}
-        onChange={(e: any) => onChangeHandler(e.value)}
+        // onChange={(e: any) => onChangeHandler(e.value)}
       />
     );
   };
@@ -91,7 +78,7 @@ const Bills = () => {
     return (
       <Select
         options={options}
-        value={options.find(option => option.value === value)}
+        // value={options.find(option => option.value === value)}
       />
     );
   };
@@ -110,7 +97,7 @@ const Bills = () => {
             <ColumnDefinition
               id="user_status"
               title="Your Payment Status"
-              customComponent={enhancedWithRowData(userPaymentSelect)}
+              customComponent={enhancedWithRowData(UserPaymentSelect)}
             />
             <ColumnDefinition
               id="bill_status"

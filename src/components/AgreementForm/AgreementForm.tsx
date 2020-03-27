@@ -92,18 +92,20 @@ const AgreementForm = () => {
 
   const submitForm = (values: FormikValues, actions: any) => {
     const {
-      currUser: { household: householdID }
+      currUser: { household: householdID, id: userID, house: houseID }
     } = state;
     // console.log("hello agreementId", agreementID);
     // console.log("hi form values", values);
 
     submitAgreement({
       formVals: values,
+      userID,
+      houseID,
       householdID,
       agreementID,
       isComplete: true,
       previewDetails: { house, landlord, household, agreementMeta }
-    }).then(link => {
+    }).then((link: any) => {
       console.log("hi link", link);
       updateState((prev: any) => ({ ...prev, agreementLink: link }));
       actions.setSubmitting(false);

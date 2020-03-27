@@ -84,7 +84,10 @@ const Signatures = (props: any) => {
       </FieldArray>
 
       <Box as="footer" my={10}>
-        <PrevNextNav before="/agreement/bills/utilities">
+        <Button isLoading={formIsSubmitting} loadingText="Generating Preview" type="submit">
+          Save &amp; Preview Agreement
+        </Button>
+        {/* <PrevNextNav before="/agreement/bills/utilities">
           {valuesChanged ? (
             <Button isLoading={formIsSubmitting} loadingText="Generating Preview" type="submit">
               Save &amp; Preview Agreement
@@ -94,7 +97,7 @@ const Signatures = (props: any) => {
               Preview Agreement
             </Button>
           )}
-        </PrevNextNav>
+        </PrevNextNav> */}
       </Box>
     </Box>
   );

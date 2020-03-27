@@ -43,7 +43,6 @@ const saveAgreement = ({
 
   if (isComplete) {
     const htmlString = ReactDOMServer.renderToStaticMarkup(<Preview {...previewProps} />);
-    console.log("hello???", isComplete, htmlString);
     dataToSend = { ...dataWithoutHTML, html_string: htmlString };
   } else {
     dataToSend = dataWithoutHTML;

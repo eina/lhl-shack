@@ -1,11 +1,23 @@
 import React, { useContext, useEffect } from "react";
 import axios from "axios";
 import { BrowserRouter, Switch, Route, useLocation, Link } from "react-router-dom";
-import { ThemeProvider, CSSReset, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerBody, Box, Heading, useDisclosure, Button } from "@chakra-ui/core";
+import {
+  ThemeProvider,
+  CSSReset,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  DrawerBody,
+  Box,
+  Heading,
+  useDisclosure,
+  Button
+} from "@chakra-ui/core";
 import { Global } from "@emotion/core";
 import customTheme from "./chakra/customTheme";
 
-import './App.scss';
+import "./App.scss";
 
 import { displayFullName } from "./helpers/functions";
 import { AppContext, AppProvider } from "./Store";
@@ -37,24 +49,17 @@ import Bills from "./pages/Bills";
 // };
 
 const AppContent = () => {
-  const {
-    state,
-    updateState
-  }: { state: any; updateState: any } = useContext(AppContext);
+  const { state, updateState }: { state: any; updateState: any } = useContext(AppContext);
   const { pathname: currentPath } = useLocation();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const isHouseholdOrAgreementForm =
-                             currentPath.startsWith("/create-household") ||
-                             currentPath.startsWith("/agreement");
+    currentPath.startsWith("/create-household") || currentPath.startsWith("/agreement");
   useEffect(() => {
     const getUserData = () => {
       axios.get("/api/users/1").then(user => {
         updateState({
           currUser: user.data,
-          fullName: displayFullName(
-            user.data.first_name,
-            user.data.last_name
-          )
+          fullName: displayFullName(user.data.first_name, user.data.last_name)
         });
       });
     };
@@ -163,7 +168,7 @@ const App = () => {
       <Global
         styles={`      
         h1, h2, h3, h4, h5, h5 {
-          margin-bottom: 0.65em;
+          margin-bottom: 0.45em;
         }
         main p {
           margin-bottom: 0.5em;

@@ -17,7 +17,7 @@ const billShape = {
 const initialValues = {
   leaseDates: {
     start_date: moment(),
-    end_date: moment()
+    end_date: moment().add(1, 'y')
   },
   roommates: [
     // { first_name: "Roommate", last_name: "One", email: "roomie1@email.com", phone: "6041234567" }

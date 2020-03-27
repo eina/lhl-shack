@@ -1,18 +1,10 @@
 import React, { useContext, useEffect } from "react";
 import axios from "axios";
-import { BrowserRouter, Switch, Route, useLocation, Link } from "react-router-dom";
+import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
 import {
   ThemeProvider,
   CSSReset,
-  Drawer,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  DrawerBody,
   Box,
-  Heading,
-  Button,
-  Flex,
   useDisclosure,
 } from "@chakra-ui/core";
 import { Global } from "@emotion/core";

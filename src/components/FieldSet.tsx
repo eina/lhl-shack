@@ -16,7 +16,7 @@ import {
 
 type FieldSetConfig = {
   name: string;
-  label: string;
+  label?: string;
   type: string;
   isReadOnly?: any;
   disabled?: any;
@@ -63,7 +63,7 @@ const FieldSet = ({ label, type, value, ...props }: FieldSetConfig) => {
         </Checkbox>
       ) : (
         <>
-          <FormLabel htmlFor={field.name}>{label}</FormLabel>
+          {label && <FormLabel htmlFor={field.name}>{label}</FormLabel>}
           <InputGroup>
             {props.inputGroup && props.inputGroup.left ? <InputLeft /> : null}
             <Input

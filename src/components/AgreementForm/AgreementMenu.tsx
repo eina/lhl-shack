@@ -4,7 +4,7 @@ import { Box, ListItem, List, Divider } from "@chakra-ui/core";
 
 const AgreementMenu = () => {
   return (
-    <Box fontSize="xl">
+    <Box as="nav" fontSize="xl">
       <List>
         <ListItem>
           <Link to="/">Back to Dashboard</Link>

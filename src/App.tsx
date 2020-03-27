@@ -25,6 +25,8 @@ import { AppContext, AppProvider } from "./Store";
 
 import AppLoading from "./components/AppLoading";
 import AppHeader from "./components/AppHeader";
+import AppLogo from "./components/AppLogo";
+import AppMenuDrawer from "./components/AppMenuDrawer";
 import MainMenu from "./components/MainMenu";
 
 import Home from "./pages/Home";
@@ -83,55 +85,18 @@ const AppContent = () => {
         bg="gray.50"
         minH="100vh"
       >
-        <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
-          <DrawerOverlay />
-          <DrawerContent>
-            <DrawerCloseButton />
-            <Heading
-              as="h1"
-              size="lg"
-              fontFamily="logo"
-              fontSize="6xl"
-              fontWeight="black"
-              px="1em"
-              py="10"
-              mb={0}
-            >
-              <Link to="/">
-                <Box as="span" color="brand">
-                  shack
-                </Box>
-              </Link>
-            </Heading>
-            <DrawerBody>{isHouseholdOrAgreementForm ? <AgreementMenu /> : <MainMenu />}</DrawerBody>
-          </DrawerContent>
-        </Drawer>
+        <AppMenuDrawer drawerIsOpen={isOpen} drawerClose={onClose}>
+          {isHouseholdOrAgreementForm ? <AgreementMenu /> : <MainMenu />}
+        </AppMenuDrawer>
 
         <Box className="container">
           <Box as="aside" className="side-nav" bg="white" minH="100vh">
-            <Heading
-              as="h1"
-              size="lg"
-              fontFamily="logo"
-              fontSize="6xl"
-              fontWeight="black"
-              px="1em"
-              py="10"
-              mb={0}
-            >
-              <Link to="/">
-                <Box as="span" color="brand">
-                  shack
-                </Box>
-              </Link>
-            </Heading>
+            <AppLogo />
             {isHouseholdOrAgreementForm ? <AgreementMenu /> : <MainMenu />}
           </Box>
 
-          {/* <Box bg="gray.50" pr="8em" pl="3em" pb="5em" minH="100vh"> */}
           <Box w="100%" className="main-content">
-          
-            <AppHeader {...state} drawerOpen={onOpen}/>
+            <AppHeader {...state} drawerOpen={onOpen} />
             <Box as="main">
               {isHouseholdOrAgreementForm ? (
                 // Agreement Form

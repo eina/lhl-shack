@@ -77,28 +77,25 @@ const Household = () => {
     });
 
     //get roomies
-    axios.get(`/api/households?house_id=${currUser.house}`).then((tenants: any) => {
-      const usersId = tenants.data.map((tenant: any) => tenant.user_id);
-      return usersId;
-    })
-    .then((usersId: any) => {
-      console.log("Here is usersId: ", usersId);
-      const promisesArray: any = [];
-      usersId.forEach((userId: any) => {
-        promisesArray.push(axios.get(`/api/users/${userId}`));
+    axios
+      .get(`/api/households?house_id=${currUser.house}`)
+      .then((tenants: any) => {
+        const usersId = tenants.data.map((tenant: any) => tenant.user_id);
+        return usersId;
+      })
+      .then((usersId: any) => {
+        const promisesArray: any = [];
+        usersId.forEach((userId: any) => {
+          promisesArray.push(axios.get(`/api/users/${userId}`));
+        });
+        return Promise.all(promisesArray);
+      })
+      .then(usersPromises => {
+        usersPromises.forEach((user: any) => {
+          setRoomies((prev: any) => [...prev, user.data]);
+        });
       });
-      console.log("here promises arrray! ", promisesArray);
-      return Promise.all(promisesArray);
-    })
-    .then(usersPromises => {
-      console.log("here is userspromises: ", usersPromises);
-      usersPromises.forEach((user: any) => {
-        setRoomies((prev: any) => [...prev, user.data]);
-      });
-    });
-}, [currUser.household]);
-
-
+  }, [currUser.household]);
 
   return (
     house && (
@@ -106,11 +103,10 @@ const Household = () => {
         <dl>
           <Heading as="h3">Household</Heading>
         </dl>
-        <Divider />
         <dd>{house.address}</dd>
+        <Divider />
+        <Heading as="h3">My Landlord</Heading>
         <dl>
-          <Heading as="h3">My Landlord</Heading>
-          <Divider />
           <dd>
             <b>Landlord:</b> {landlord.first_name} {landlord.last_name}
           </dd>
@@ -125,9 +121,9 @@ const Household = () => {
           </dd>
         </dl>
         <div>
-          <Heading as="h3">Roommates</Heading>
           <Divider />
-          <SimpleGrid columns={2} spacing={5}>
+          <Heading as="h3">Roommates</Heading>
+          <SimpleGrid columns={2} spacing={2}>
             {roomies.map((roomie: any) => (
               <div key={roomie.id}>
                 <Avatar src={roomie.avatar} />

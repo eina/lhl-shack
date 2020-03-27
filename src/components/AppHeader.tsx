@@ -1,6 +1,7 @@
 import React from "react";
-import { Link } from 'react-router-dom';
-import { Flex, Button, Icon, useDisclosure } from "@chakra-ui/core";
+import { Link } from "react-router-dom";
+import { Flex, Button, Box } from "@chakra-ui/core";
+import { FiMenu, FiEdit3 } from "react-icons/fi";
 
 type AppHeadProps = {
   currUser: any;
@@ -11,10 +12,17 @@ type AppHeadProps = {
 const AppHeader = ({ currUser, fullName, drawerOpen }: AppHeadProps) => {
   return (
     <Flex as="nav" align="center" justify="space-between" py="64px">
-      <Link to="/agreement">Roommate Agreement Generator</Link>
+      <Link to="/agreement">
+        <Box as="span" fontWeight="bold" fontFamily="logo" fontSize="xl" color="brand">
+          Roommate Agreement
+        </Box>
+        <Box as={FiEdit3} d="inline" ml={1} stroke="brand" />
+      </Link>
       <Flex align="center">
         <Link to="/account">{fullName}</Link>
-        <Button onClick={drawerOpen} className="show-nav-btn" ml={3}>Nav</Button>
+        <Button onClick={drawerOpen} className="show-nav-btn" ml={3}>
+          <Box as={FiMenu} />
+        </Button>
       </Flex>
     </Flex>
   );

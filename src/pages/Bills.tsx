@@ -15,8 +15,9 @@ const Bills = () => {
   const [bills, setBills] = useState([]);
   const { currUser } = state;
   useEffect(() => {
+    console.log("hi", { house_id: currUser.house, user_id: currUser.id });
     if (currUser) {
-      axios.get('/api/bills', { params: { household_id: currUser.household, user_id: currUser.id } })
+      axios.get('/api/bills', { params: { house_id: currUser.house, user_id: currUser.id } })
         .then(vals => setBills(vals.data));
     }
   }, [currUser]);

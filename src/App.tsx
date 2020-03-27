@@ -41,7 +41,7 @@ const AppContent = () => {
     currentPath.startsWith("/create-household") || currentPath.startsWith("/agreement");
   useEffect(() => {
     const getUserData = () => {
-      axios.get("/api/users/2").then(user => {
+      axios.get("/api/users/1").then(user => {
         updateState({
           currUser: user.data,
           fullName: displayFullName(user.data.first_name, user.data.last_name)

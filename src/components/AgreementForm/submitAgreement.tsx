@@ -11,6 +11,8 @@ type AgreementProps = {
   formVals: FormikValues;
   householdID: string | number;
   agreementID: string;
+  houseID: string;
+  userID: number;
   isComplete: boolean;
   formattedHousekeeping?: any;
   previewDetails?: any;
@@ -39,14 +41,14 @@ const saveAgreement = ({
     ...previewDetails
   };
 
-  if (isComplete) {
-    const htmlString = ReactDOMServer.renderToStaticMarkup(<Preview {...previewProps} />);
-    dataToSend = { ...dataWithoutHTML, html_string: htmlString };
-  } else {
-    dataToSend = dataWithoutHTML;
-  }
+  // if (isComplete) {
+  //   const htmlString = ReactDOMServer.renderToStaticMarkup(<Preview {...previewProps} />);
+  //   dataToSend = { ...dataWithoutHTML, html_string: htmlString };
+  // } else {
+  //   dataToSend = dataWithoutHTML;
+  // }
 
-  // dataToSend = dataWithoutHTML;
+  dataToSend = dataWithoutHTML;
 
   const agreementRequest = agreementID
     ? axios.patch(`/api/agreements/${agreementID}`, dataToSend)
@@ -57,10 +59,12 @@ const saveAgreement = ({
 
 type SavingProps = {
   formVals: any;
+  currUserID?: number;
+  houseID?: string;
   householdID?: any;
   usersIDs?: any;
 };
-const saveUsers = ({ formVals }: SavingProps) => {
+const saveUsers = ({ formVals, currUserID, houseID }: SavingProps) => {
   // save the users
   // check if the users exist first
   const usersPromiseArray = formVals.roommates.map((roomie: any) =>
@@ -68,6 +72,16 @@ const saveUsers = ({ formVals }: SavingProps) => {
     axios.get(`/api/users?email=${roomie.email}`)
   );
   return Promise.all(usersPromiseArray).then(usersData => {
+    const saveUserHousehold = (userID: number) => {
+      return axios.get('/api/households', { params: { user_id: userID, house_id: houseID } })
+        .then(householdUsers => {
+          if (!householdUsers.data.length) {
+            axios.post('/api/households', { user_id: userID, house_id: houseID, ...formVals.leaseDates, is_active: true, housekeeping: JSON.stringify(formVals.housekeeping)});
+          } else {
+            axios.patch(`/api/households/${householdUsers.data[0].id}`, { user_id: userID, house_id: houseID, ...formVals.leaseDates, is_active: true, housekeeping: JSON.stringify(formVals.housekeeping) });
+          }
+        });
+    };
     return usersData.map((user: any, index: number) => {
       // if user doesn't exist
       if (user.data.length === 0) {
@@ -77,6 +91,7 @@ const saveUsers = ({ formVals }: SavingProps) => {
             password: uuidV4()
           })
           .then(createdUser => {
+            saveUserHousehold(createdUser.data.id);
             return createdUser.data.id;
           });
       } else {
@@ -85,6 +100,7 @@ const saveUsers = ({ formVals }: SavingProps) => {
             ...formVals.roommates[index]
           })
           .then(editedUser => {
+            saveUserHousehold(editedUser.data.id);
             return editedUser.data.id;
           });
       }
@@ -115,13 +131,13 @@ const saveBills = ({ formVals, householdID, usersIDs }: SavingProps) => {
           // check if bill exists for the user or not
           // console.log(houseBillPerUser.data, userID);
           if (!houseBillPerUser.data.length) {
-            console.log(`creating ${bill.bill_uuid} for ${userID}`);
+            // console.log(`creating ${bill.bill_uuid} for ${userID}`);
             return axios.post("/api/bills/", {
               ...billToSend,
               user_id: userID
             });
           } else {
-            console.log(`updating (!?!) ${bill.bill_uuid} for ${userID}`);
+            // console.log(`updating (!?!) ${bill.bill_uuid} for ${userID}`);
             // loop through the created bills with that bill uuidhouseBillPerUser.data
             return houseBillPerUser.data.map((billToUpdate: any) => {
               return axios.patch(`/api/bills/${billToUpdate.id}`, {
@@ -139,6 +155,8 @@ const submitAgreement = ({
   formVals,
   householdID,
   agreementID,
+  userID,
+  houseID,
   isComplete,
   previewDetails
 }: AgreementProps) => {
@@ -154,6 +172,8 @@ const submitAgreement = ({
     formVals: formattedValues,
     householdID,
     agreementID,
+    userID,
+    houseID,
     isComplete,
     formattedHousekeeping: formatHousekeepingToHTML(housekeeping),
     previewDetails
@@ -168,9 +188,9 @@ const submitAgreement = ({
       // only save the other things when submitting from the agreement form (isComplete == true)
       if (isComplete) {
         // save the users
-        return saveUsers({ formVals })
+        return saveUsers({ formVals: formattedValues, currUserID: userID, houseID })
           .then(users => Promise.all(users)) // grab users id
-          .then(usersIDs => saveBills({ formVals, householdID, usersIDs }))
+          .then(usersIDs => saveBills({ formVals: formattedValues, householdID, usersIDs }))
           .then(() => agreementLink); // save the bills
       } else {
         return vals.data;

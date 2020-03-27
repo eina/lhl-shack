@@ -57,7 +57,7 @@ const Roommates = () => {
       </FieldArray>
 
       <Box as="footer" my={10}>
-        <PrevNextNav before="/agreement/landlord" after="/agreement/bills/rent" />
+        <PrevNextNav before="/agreement/lease" after="/agreement/bills/rent" />
       </Box>
     </Box>
   );

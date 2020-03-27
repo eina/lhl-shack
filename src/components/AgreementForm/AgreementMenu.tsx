@@ -25,6 +25,9 @@ const AgreementMenu = () => {
           <Link to="/agreement/household">House Information</Link>
         </ListItem> */}
         <ListItem>
+          <Link to="/agreement/lease">Lease Dates</Link>
+        </ListItem>
+        <ListItem>
           <Link to="/agreement/roommates">Roommates</Link>
         </ListItem>
         <ListItem>

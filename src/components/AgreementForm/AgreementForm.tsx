@@ -14,6 +14,7 @@ import FormLeavePrompt from "./FormLeavePrompt";
 import AppLoading from "../AppLoading";
 
 import Title from "./Title";
+import LeaseDates from "./LeaseDates";
 import Roommates from "./Roommates";
 import Housekeeping from "./Housekeeping";
 import BillsUtilities from "./BillsUtilities";
@@ -92,18 +93,17 @@ const AgreementForm = () => {
 
   const submitForm = (values: FormikValues, actions: any) => {
     const {
-      currUser: { household: householdID }
+      currUser: { household: householdID, id: userID, house: houseID }
     } = state;
-    // console.log("hello agreementId", agreementID);
-    // console.log("hi form values", values);
-
     submitAgreement({
       formVals: values,
+      userID,
+      houseID,
       householdID,
       agreementID,
       isComplete: true,
       previewDetails: { house, landlord, household, agreementMeta }
-    }).then(link => {
+    }).then((link: any) => {
       console.log("hi link", link);
       updateState((prev: any) => ({ ...prev, agreementLink: link }));
       actions.setSubmitting(false);
@@ -134,6 +134,7 @@ const AgreementForm = () => {
         isSubmitting
       }: FormikProps<any>) => (
         <form onSubmit={handleSubmit}>
+          <p>{JSON.stringify(errors)}</p>
           <NavigationPrompt
             when={(_, next) => {
               // if initialValues === values --> you can navigate away cause nothing changed
@@ -163,8 +164,8 @@ const AgreementForm = () => {
               <Redirect from="/agreement" to="/agreement/title" exact />
               {/* <Route path="/agreement/landlord" component={Landlord} />
             <Route path="/agreement/household" component={Household} /> */}
+              <Route path="/agreement/lease" component={LeaseDates} />
               <Route path="/agreement/roommates" component={Roommates} />
-              <Redirect from="/agreement/bills" to="/agreement/bills/rent" exact />
               <Route path="/agreement/bills">
                 <BillsUtilities
                   values={values}

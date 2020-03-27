@@ -97,7 +97,7 @@ const Bills = () => {
             <ColumnDefinition
               id="user_status"
               title="Your Payment Status"
-              customComponent={enhancedWithRowData(UserPaymentSelect)}
+              customComponent={UserPaymentSelect}
             />
             <ColumnDefinition
               id="bill_status"

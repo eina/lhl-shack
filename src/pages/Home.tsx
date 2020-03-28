@@ -72,32 +72,23 @@ const Home = () => {
 
   useEffect(() => {
     axios.get(`/api/households/${currUser.household}`).then(household => {
-      const { housekeeping: { weekdayAM, weekdayPM, weekendAM, weekendPM  } } = household.data;
-      const currentDay = new Date();
-      const numDayOfWeek = moment(currentDay).isoWeekday();
-      const returnRange = (start: string, end: string) => {
-        const currentDay = new Date();
-        const startSplit = start.split(":").map((x: any) => x * 1);
-        const endSplit = end.split(":").map((x: any) => x * 1);
-        return {
-          start: moment(currentDay).hour(startSplit[0]).minute(startSplit[1] ? startSplit[1] : 0),
-          end: moment(currentDay).day(1).hour(endSplit[0]).minute(endSplit[1] ? endSplit[1] : 0) };
-      };
+      // if (household && household.data) {
+      //   const { housekeeping: { weekdayAM, weekdayPM, weekendAM, weekendPM } } = household.data;
+      //   const currentDay = new Date();
+      //   const numDayOfWeek = moment(currentDay).isoWeekday();
+      //   const currentHour = moment(currentDay).hour();
 
-      if (numDayOfWeek < 6) {
-        // weekday
-        const weekdayRange = returnRange(weekdayAM, weekdayPM);
-        const weekDay = moment(currentDay).hour(weekdayAM).minute(0);
-        
-        // quietTimeObj = { active:  }
-      } else {
-        // weekend
-      }
-      const weekdayRange = returnRange(weekdayPM, weekdayAM);
-      console.log(weekdayPM, weekdayAM);
-      console.log('aaaa/?', weekdayRange.start);
-      // console.log(moment().isBetween(weekdayRange.start, weekdayRange.end));
-      // setQuietTime(prev => ({ ...prev, weekday, weekend}));
+      //   console.log(weekdayPM, currentHour);
+      //   if (numDayOfWeek < 6) {
+      //     // weekday
+
+
+      //     // quietTimeObj = { active:  }
+      //   } else {
+      //     // weekend
+      //   }
+      // }
+
     });
   }, []);
 

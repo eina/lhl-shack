@@ -1,15 +1,19 @@
 import React, { useContext, useEffect } from "react";
 import axios from "axios";
-import { BrowserRouter, Switch, Route, useLocation, Link } from "react-router-dom";
-import { ThemeProvider, CSSReset, Grid, Box, Heading } from "@chakra-ui/core";
+import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
+import { ThemeProvider, CSSReset, Box, useDisclosure } from "@chakra-ui/core";
 import { Global } from "@emotion/core";
 import customTheme from "./chakra/customTheme";
+
+import "./App.scss";
 
 import { displayFullName } from "./helpers/functions";
 import { AppContext, AppProvider } from "./Store";
 
 import AppLoading from "./components/AppLoading";
 import AppHeader from "./components/AppHeader";
+import AppLogo from "./components/AppLogo";
+import AppMenuDrawer from "./components/AppMenuDrawer";
 import MainMenu from "./components/MainMenu";
 
 import Home from "./pages/Home";
@@ -22,6 +26,7 @@ import Household from "./pages/Household";
 import Resources from "./pages/Resources";
 import Housekeeping from "./pages/Housekeeping";
 import Bills from "./pages/Bills";
+import PreviousHousehold from "./pages/PreviousHousehold";
 
 // test data
 // const currUser = {
@@ -37,6 +42,7 @@ import Bills from "./pages/Bills";
 const AppContent = () => {
   const { state, updateState }: { state: any; updateState: any } = useContext(AppContext);
   const { pathname: currentPath } = useLocation();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const isHouseholdOrAgreementForm =
     currentPath.startsWith("/create-household") || currentPath.startsWith("/agreement");
   useEffect(() => {
@@ -64,30 +70,22 @@ const AppContent = () => {
         lineHeight="tall"
         fontSize="lg"
         boxSizing="border-box"
-        color="gray.900"
+        bg="gray.50"
+        minH="100vh"
+        letterSpacing="wide"
       >
-        <Grid templateColumns="1fr 4fr" className="container">
-          <Box as="aside" px="4em">
-            <Heading
-              as="h1"
-              size="lg"
-              fontFamily="logo"
-              fontSize="6xl"
-              fontWeight="black"
-              py="10"
-              mb={0}
-            >
-              <Link to="/">
-                <Box as="span" color="brand">
-                  shack
-                </Box>
-              </Link>
-            </Heading>
+        <AppMenuDrawer drawerIsOpen={isOpen} drawerClose={onClose}>
+          {isHouseholdOrAgreementForm ? <AgreementMenu /> : <MainMenu />}
+        </AppMenuDrawer>
+
+        <Box className="container">
+          <Box as="aside" className="side-nav" bg="white" minH="100vh">
+            <AppLogo />
             {isHouseholdOrAgreementForm ? <AgreementMenu /> : <MainMenu />}
           </Box>
 
-          <Box bg="gray.50" pr="8em" pl="3em" pb="5em" minH="100vh">
-            <AppHeader {...state} />
+          <Box w="100%" className="main-content">
+            <AppHeader {...state} drawerOpen={onOpen} />
             <Box as="main">
               {isHouseholdOrAgreementForm ? (
                 // Agreement Form
@@ -100,7 +98,8 @@ const AppContent = () => {
                 <Switch>
                   <Route path="/" exact component={Home} />
                   <Route path="/test" component={Test} />
-                  <Route path="/household" component={Household} />
+                  <Route path="/household" component={Household} exact/>
+                  <Route path="/household/previous" component={PreviousHousehold} />
                   <Route path="/bills" component={Bills} />
                   <Route path="/housekeeping" component={Housekeeping} />
                   <Route path="/resources" component={Resources} />
@@ -109,7 +108,7 @@ const AppContent = () => {
               )}
             </Box>
           </Box>
-        </Grid>
+        </Box>
       </Box>
     );
   } else {
@@ -125,7 +124,7 @@ const App = () => {
       <Global
         styles={`      
         h1, h2, h3, h4, h5, h5 {
-          margin-bottom: 0.65em;
+          margin-bottom: 0.45em;
         }
         main p {
           margin-bottom: 0.5em;

@@ -1,0 +1,25 @@
+.dashboard-box {
+  padding: 1.5em;
+  border-radius: 1em;
+  position: relative;
+  margin-bottom: 1em;
+
+  &.hero-box {
+    padding: 2.5em;
+  }
+}
+
+.person-on-laptop {
+  display: none;
+  height: auto;
+
+  @media (min-width: 1710px) {
+    display: block;
+    width: 50%;
+    margin-top: -200px;
+  }
+}
+
+// pure-react-carousel
+.carousel {
+}

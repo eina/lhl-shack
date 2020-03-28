@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Formik } from "formik";
-
 import { Heading, Button, Alert, AlertIcon, AlertDescription, CloseButton } from "@chakra-ui/core";
+
+import { AppContext } from '../Store';
 
 import FieldSet from "../components/FieldSet";
 
@@ -27,12 +28,13 @@ const Account = () => {
   const formStatusDefault = { visible: false, success: true, message: "" };
   const [account, setAccount] = useState<User>(defaultValues);
   const [formAlert, setFormAlert] = useState(formStatusDefault);
+  const { state: { currUser } }: { state: any } = useContext(AppContext);
 
   useEffect(() => {
-    axios.get("/api/users/1").then(vals => {
+    axios.get(`/api/users/${currUser.id}`).then(vals => {
       setAccount(vals.data);
     });
-  }, []);
+  }, [currUser]);
 
   const submitHandler = (values: any, actions: any) => {
     const { id, ...result } = values;

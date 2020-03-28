@@ -146,70 +146,71 @@ const AgreementPreview = (props: any) => {
         </Text>
       </Box>
 
-      {guestPolicy && (
+      {guestPolicy ? (
         <Box as="section" {...sectionProps}>
           <Heading as="h2">Guest Policy</Heading>
           <div dangerouslySetInnerHTML={{ __html: guestPolicy }} />
         </Box>
-      )}
+      ) : null}
 
-      {spacesPolicy && (
+      {spacesPolicy ? (
         <Box as="section" {...sectionProps}>
           <Heading as="h2">Spaces Policy</Heading>
           <div dangerouslySetInnerHTML={{ __html: spacesPolicy }} />
         </Box>
-      )}
+      ) : null}
 
-      {roomsPolicy && (
+      {roomsPolicy ? (
         <Box as="section" {...sectionProps}>
           <Heading as="h2">Rooms Policy</Heading>
           <div dangerouslySetInnerHTML={{ __html: roomsPolicy }} />
         </Box>
-      )}
+      ) : null}
 
-      {choresPolicy && (
+      {choresPolicy ? (
         <Box as="section" {...sectionProps}>
           <Heading as="h2">Chores Policy</Heading>
           <div dangerouslySetInnerHTML={{ __html: choresPolicy }} />
         </Box>
-      )}
+      ) : null}
 
-      {vacationPolicy && (
+      {vacationPolicy ? (
         <Box as="section" {...sectionProps}>
           <Heading as="h2">Vacation Policy</Heading>
           <div dangerouslySetInnerHTML={{ __html: vacationPolicy }} />
         </Box>
-      )}
+      ) : null}
 
-      {personalItemsPolicy && (
+      {personalItemsPolicy ? (
         <Box as="section" {...sectionProps}>
           <Heading as="h2">Personal Items Policy</Heading>
           <div dangerouslySetInnerHTML={{ __html: personalItemsPolicy }} />
         </Box>
-      )}
+      ) : null}
 
-      {smokingPolicy && (
+      {smokingPolicy ? (
         <Box as="section" {...sectionProps}>
           <Heading as="h2">Smoking Policy</Heading>
           <div dangerouslySetInnerHTML={{ __html: smokingPolicy }} />
         </Box>
-      )}
+      ) : null}
 
-      {messagesPolicy && (
+      {messagesPolicy ? (
         <Box as="section" {...sectionProps}>
           <Heading as="h2">Messages Policy</Heading>
           <div dangerouslySetInnerHTML={{ __html: messagesPolicy }} />
         </Box>
-      )}
+      ) : null}
 
-      {petsPolicy && (
+      {petsPolicy ? (
         <Box as="section" {...sectionProps}>
           <Heading as="h2">Pets Policy</Heading>
           <div dangerouslySetInnerHTML={{ __html: petsPolicy }} />
         </Box>
-      )}
+      ) : null}
 
       <Box as="section" {...sectionProps}>
+        <Heading as="h2">Acknowledgement</Heading>
         <Text>
           Each of us has received a copy of and read our Tenancy Agreement. (Note that your landlord
           is required by law to provide each tenant with a copy of the Tenancy Agreement.)
@@ -219,13 +220,11 @@ const AgreementPreview = (props: any) => {
           provisions and terms.
         </Text>
 
-        <List>
+        <List as="ol" styleType="decimal">
           {signatures.map((roomie: any, index: number) => (
             <ListItem key={index}>
-              <Text>
-                {roomie.fullName} digitally signed this agreement on{" "}
-                {moment(roomie.date).format(momentFormat)}
-              </Text>
+              {roomie.fullName} digitally signed this agreement on{" "}
+              {moment(roomie.date).format(momentFormat)} as <em>{signatures[index].fullName}</em>.
             </ListItem>
           ))}
         </List>

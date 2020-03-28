@@ -17,7 +17,7 @@ const LeaseDates = () => {
       <FormikDateRange
         label="Lease Dates"
         name="leaseDates"
-        stateName="household.leaseDates"
+        stateName="leaseDates"
         stateValue={values.leaseDates}
         onChange={setFieldValue}
         error={householdErrors}

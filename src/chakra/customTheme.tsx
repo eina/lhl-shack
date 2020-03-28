@@ -5,6 +5,7 @@ import "typeface-montserrat";
 
 export default {
   ...theme,
+  breakpoints: ["30em", "48em", "64em", "80em"],
   fonts: {
     ...theme.fonts,
     body: "Roboto, sans-serif",
@@ -110,18 +111,18 @@ export default {
       800: "#007a70",
       900: "#004842"
     },
-    purple: {
-      50: "#fbf8fe",
-      100: "#f1ebfb",
-      200: "#e8dcf8",
-      300: "#ddccf5",
-      400: "#d1baf1",
-      500: "#c4a6ed",
-      600: "#b48ee8",
-      700: "#a172e3",
-      800: "#864adb",
-      900: "#4c00b8"
-    },
+    // purple: {
+    //   50: "#fbf8fe",
+    //   100: "#f1ebfb",
+    //   200: "#e8dcf8",
+    //   300: "#ddccf5",
+    //   400: "#d1baf1",
+    //   500: "#c4a6ed",
+    //   600: "#b48ee8",
+    //   700: "#a172e3",
+    //   800: "#864adb",
+    //   900: "#4c00b8"
+    // },
     pink: {
       50: "#fef8fb",
       100: "#fbe9f3",
@@ -133,6 +134,18 @@ export default {
       700: "#dd57a5",
       800: "#cf0d7e",
       900: "#7f004a"
+    },
+    indigo: {
+      50: "#f9f9fe",
+      100: "#ebedfb",
+      200: "#dddff8",
+      300: "#cdd1f5",
+      400: "#bcc0f2",
+      500: "#a9aeee",
+      600: "#929ae9",
+      700: "#7780e4",
+      800: "#5e65b4",
+      900: "#373b6a"
     }
   }
 };

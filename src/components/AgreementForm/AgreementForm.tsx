@@ -20,7 +20,7 @@ import Housekeeping from "./Housekeeping";
 import BillsUtilities from "./BillsUtilities";
 import Signatures from "./Signatures";
 import Preview from "./AgreementPreview";
-import { Box } from "@chakra-ui/core";
+import { Link as ChakraLink, Alert, AlertIcon, AlertTitle, AlertDescription } from "@chakra-ui/core";
 
 const AgreementForm = () => {
   const { state, updateState }: { state: any; updateState: any } = useContext(AppContext);
@@ -29,11 +29,13 @@ const AgreementForm = () => {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [agreementMeta, setAgreementMeta] = useState({ created_at: null, updated_at: null});
   const history = useHistory();
+  const { currUser } = state;
 
   useEffect(() => {
     const getHouseholdDetails = (currUser: any) => {
       axios.get(`/api/agreements/${currUser.household}`).then(agreement => {
         setAgreementMeta({ created_at: agreement.data.created_at, updated_at: agreement.data.updated_at });
+        updateState((prev: any) => ({ ...prev, agreementLink: agreement.data.pdf_link }));
         // use agreement values as initial values if they exist
         const formValues =
           agreement.data && agreement.data.form_values ? agreement.data.form_values : null;
@@ -44,8 +46,7 @@ const AgreementForm = () => {
       });
     };
 
-    if (state.currUser && !agreementID) {
-      const { currUser } = state;
+    if (currUser && !agreementID) {
       const { first_name, last_name, phone_number, email } = currUser;
       setInitialVals((prev: any) => ({
         ...prev,
@@ -55,13 +56,9 @@ const AgreementForm = () => {
         ]
       }));
 
-      getHouseholdDetails(state.currUser);
+      getHouseholdDetails(currUser);
     }
-
-    // grab household information
-
-    // grab house information
-  }, [state.currUser, agreementID, updateState]);
+  }, [currUser, agreementID, updateState]);
 
   useEffect(() => {
     if (state.currUser && state.currUser.landlord) {
@@ -104,7 +101,6 @@ const AgreementForm = () => {
       isComplete: true,
       previewDetails: { house, landlord, household, agreementMeta }
     }).then((link: any) => {
-      console.log("hi link", link);
       updateState((prev: any) => ({ ...prev, agreementLink: link }));
       actions.setSubmitting(false);
       setSubmitSuccess(true);
@@ -134,6 +130,17 @@ const AgreementForm = () => {
         isSubmitting
       }: FormikProps<any>) => (
         <form onSubmit={handleSubmit}>
+          {state.agreementLink ? (
+            <Alert status="info" mb={8}>
+              <AlertIcon />
+              <AlertTitle mr={2}>Agreement PDF Generated!</AlertTitle>
+              <AlertDescription>
+                <ChakraLink href={`https://${state.agreementLink}`} target="_blank" rel="noopener">
+                  Click here to check it out.
+                </ChakraLink>
+              </AlertDescription>
+            </Alert>
+          ) : null}
           <NavigationPrompt
             when={(_, next) => {
               // if initialValues === values --> you can navigate away cause nothing changed
@@ -141,8 +148,8 @@ const AgreementForm = () => {
               // const goToPreview = next.pathname.startsWith("/agreement")
               return (
                 !submitSuccess &&
-                  valuesChanged &&
-                  (!next || !next.pathname.startsWith("/agreement"))
+                valuesChanged &&
+                (!next || !next.pathname.startsWith("/agreement"))
               );
             }}
           >
@@ -157,45 +164,45 @@ const AgreementForm = () => {
               />
             )}
           </NavigationPrompt>
-          <Box maxW="80%">
-            <Switch>
-              <Route path="/agreement/title" component={Title} />
-              <Redirect from="/agreement" to="/agreement/title" exact />
-              {/* <Route path="/agreement/landlord" component={Landlord} />
+          <Switch>
+            <Route path="/agreement/title" component={Title} />
+            <Redirect from="/agreement" to="/agreement/title" exact />
+            {/* <Route path="/agreement/landlord" component={Landlord} />
             <Route path="/agreement/household" component={Household} /> */}
-              <Route path="/agreement/lease" component={LeaseDates} />
-              <Route path="/agreement/roommates" component={Roommates} />
-              <Route path="/agreement/bills">
-                <BillsUtilities
-                  values={values}
-                  setFieldValue={setFieldValue}
-                  handleBlur={handleBlur}
-                  errors={errors}
-                  touched={touched}
-                />
-              </Route>
-              <Route path="/agreement/housekeeping">
-                <Housekeeping
-                  values={values}
-                  setFieldValue={setFieldValue}
-                  handleBlur={handleBlur}
-                  errors={errors}
-                  touched={touched}
-                />
-              </Route>
-              <Route path="/agreement/signatures">
-                <Signatures
-                  formIsSubmitting={isSubmitting}
-                  initialValues={initialValues}
-                  values={values}
-                  setFieldValue={setFieldValue}
-                  handleBlur={handleBlur}
-                  errors={errors}
-                  touched={touched}
-                />
-              </Route>
-              <Route path="/agreement/preview">
-                {house && landlord && household && (
+            <Route path="/agreement/lease" component={LeaseDates} />
+            <Route path="/agreement/roommates" component={Roommates} />
+            <Route path="/agreement/bills">
+              <BillsUtilities
+                values={values}
+                setFieldValue={setFieldValue}
+                handleBlur={handleBlur}
+                errors={errors}
+                touched={touched}
+              />
+            </Route>
+            <Route path="/agreement/housekeeping">
+              <Housekeeping
+                values={values}
+                setFieldValue={setFieldValue}
+                handleBlur={handleBlur}
+                errors={errors}
+                touched={touched}
+              />
+            </Route>
+            <Route path="/agreement/signatures">
+              <Signatures
+                formIsSubmitting={isSubmitting}
+                initialValues={initialValues}
+                values={values}
+                setFieldValue={setFieldValue}
+                handleBlur={handleBlur}
+                errors={errors}
+                touched={touched}
+              />
+            </Route>
+            <Route path="/agreement/preview">
+              {house && landlord && household && (
+                <>
                   <Preview
                     {...values}
                     agreementID={agreementID}
@@ -205,10 +212,10 @@ const AgreementForm = () => {
                     household={household}
                     {...agreementMeta}
                   />
-                )}
-              </Route>
-            </Switch>
-          </Box>
+                </>
+              )}
+            </Route>
+          </Switch>
         </form>
       )}
     </Formik>

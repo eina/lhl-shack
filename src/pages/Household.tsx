@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useHistory } from "react-router-dom";
 import axios from 'axios';
-
-import { Box, Heading, Text, Flex, Avatar, Link, SimpleGrid, Icon, Grid } from '@chakra-ui/core';
+import { Box, Heading, Text, Flex, Avatar, Button, Link as ChakraLink } from '@chakra-ui/core';
 
 import { AppContext } from '../Store';
 
@@ -57,8 +57,18 @@ const landlordDefaultValues = {
 
 const roomieInitialValues: any = [];
 
+export const FlexDLItem = ({ title, value }: { title: string; value: any }) => (
+  <Flex>
+    <Text as="dt" fontWeight="semibold" mr={1}>
+      {title}:
+    </Text>
+    <Text as="dd">{value}</Text>
+  </Flex>
+);
+
 const Household = () => {
   const { state }: { state: any } = useContext(AppContext);
+  const history = useHistory();
   const [house, setHouse] = useState<House>(houseDefaultValues);
   const [landlord, setLandlord] = useState<Landlord>(landlordDefaultValues);
   const [roomies, setRoomies] = useState(roomieInitialValues);
@@ -68,7 +78,6 @@ const Household = () => {
   useEffect(() => {
     //get house info
     axios.get(`api/houses/${currUser.house}`).then(vals => {
-      console.log("hi", vals.data);
       setHouse(vals.data);
     });
 
@@ -96,22 +105,18 @@ const Household = () => {
           setRoomies((prev: any) => [...prev, user.data]);
         });
       });
-  }, [currUser.household]);
-
-  const FlexDLItem = ({ title, value }: { title: string; value: any }) => (
-    <Flex>
-      <Text as="dt" fontWeight="semibold" mr={1}>{title}:</Text>
-      <Text as="dd">{value}</Text>
-    </Flex>
-  );
+  }, [currUser.household, currUser.house, currUser.landlord]);
 
   return (
     house && (
       <Box>
         <Box as="section" mb={8}>
-          <Heading as="h3" fontSize="3xl">
-            House
-          </Heading>
+          <Flex align="center" mb={5}>
+            <Heading as="h3" fontSize="3xl" mb={0}>
+              House
+            </Heading>
+            <Button onClick={() => history.push("/household/previous")} ml={3}>Previous Households</Button>
+          </Flex>
 
           <dl>
             <FlexDLItem title="Address" value={house.address} />
@@ -139,7 +144,7 @@ const Household = () => {
           <Heading as="h3" fontSize="3xl">
             Roommates
           </Heading>
-          <Grid templateColumns="repeat(3, 1fr)" gridGap={10}>
+          <Box className="res-three-grid">
             {roomies.map((roomie: any) => (
               <Flex key={roomie.id} align="center" bg="white" p={6} rounded="lg">
                 <Avatar name={`${roomie.first_name} ${roomie.last_name}`} size="xl" />
@@ -148,13 +153,17 @@ const Household = () => {
                   <FlexDLItem title="Name" value={`${roomie.first_name} ${roomie.last_name}`} />
                   <FlexDLItem
                     title="Phone"
-                    value={<Link href={`tel: roomie.phone_number`}>{roomie.phone_number}</Link>}
+                    value={
+                      <ChakraLink href={`tel: roomie.phone_number`}>
+                        {roomie.phone_number}
+                      </ChakraLink>
+                    }
                   />
                   <FlexDLItem title="Email" value={roomie.email} />
                 </Box>
               </Flex>
             ))}
-          </Grid>
+          </Box>
         </Box>
       </Box>
     )

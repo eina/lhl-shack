@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 const householdInitialValues = {
   landlord: {
     first_name: "test",

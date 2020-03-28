@@ -75,12 +75,14 @@ const Bills = (props: any) => {
                       label="Bill Name"
                       isReadOnly={index < 2}
                     />
-                    <FieldSet
-                      type="text"
-                      name={`bills.${index}.bill_uuid`}
-                      label="Bill ID"
-                      isReadOnly={true}
-                    />
+                    <Box d="none">
+                      <FieldSet
+                        type="text"
+                        name={`bills.${index}.bill_uuid`}
+                        label="Bill ID"
+                        isReadOnly={true}
+                      />
+                    </Box>
                     <FieldSet
                       type="number"
                       name={`bills.${index}.total_amount`}

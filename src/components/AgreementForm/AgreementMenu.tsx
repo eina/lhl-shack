@@ -4,7 +4,7 @@ import { Box, ListItem, List, Divider } from "@chakra-ui/core";
 
 const AgreementMenu = () => {
   return (
-    <Box fontSize="xl">
+    <Box as="nav" fontSize="xl">
       <List>
         <ListItem>
           <Link to="/">Back to Dashboard</Link>
@@ -17,7 +17,7 @@ const AgreementMenu = () => {
         </ListItem>
       </List>
       <Divider />
-      <List as="ol" styleType="decimal">
+      <List>
         {/* <ListItem>
           <Link to="/agreement/landlord">Landlord Information</Link>
         </ListItem>

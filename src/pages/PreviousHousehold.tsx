@@ -66,7 +66,7 @@ const PreviousHousehold = () => {
       {pastHouseholdData
         .filter(pastPlace => pastPlace.user_id === currUser.id)
         .map((pastPlace, index) => (
-          <Box as="dl" key={index} mb={3} bg="white" p="1.25em" borderRadius="1em">
+          <Box as="dl" key={index} mb={4} borderWidth="1px" p="1.25em" borderRadius="1em">
             <FlexDLItem title="Address" value={pastPlace.address} />
             <FlexDLItem
               title="Lease Period"

@@ -16,7 +16,7 @@ import {
 
 type FieldSetConfig = {
   name: string;
-  label: string;
+  label?: string;
   type: string;
   isReadOnly?: any;
   disabled?: any;
@@ -50,6 +50,7 @@ const FieldSet = ({ label, type, value, ...props }: FieldSetConfig) => {
       isInvalid={meta.touched && meta.error ? true : false}
       isDisabled={props.disabled !== undefined ? props.disabled : false}
       mb={3}
+      maxW="80%"
     >
       {/* <p>{value}</p> */}
       {type === "checkbox" ? (
@@ -63,7 +64,7 @@ const FieldSet = ({ label, type, value, ...props }: FieldSetConfig) => {
         </Checkbox>
       ) : (
         <>
-          <FormLabel htmlFor={field.name}>{label}</FormLabel>
+          {label && <FormLabel htmlFor={field.name}>{label}</FormLabel>}
           <InputGroup>
             {props.inputGroup && props.inputGroup.left ? <InputLeft /> : null}
             <Input

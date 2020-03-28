@@ -17,6 +17,10 @@
 // TableHeadingCellAscending: 'griddle-heading-ascending',
 // TableHeadingCellDescending: 'griddle-heading-descending',
 
+.griddle-container {
+  overflow-x: auto;
+}
+
 .griddle-table {
   width: 100%;
 }

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React from "react";
-import { Box, Heading } from "@chakra-ui/core";
+import { Box, Heading, Flex } from "@chakra-ui/core";
 
 import FieldSet from "../FieldSet";
 import RichEditor from "../RichEditor/RichEditor";
@@ -52,30 +52,50 @@ const Housekeeping = (props: any) => {
       <Heading as="h3" fontSize="2xl">
         Quiet Times
       </Heading>
-      <FieldSet
-        type="number"
-        label="We agree that quiet time will be from (PM)"
-        name="housekeeping.weekdayPM"
-        inputGroup={{ right: { addOn: "PM" } }}
-      />
-      <FieldSet
-        type="number"
-        label="to (AM) during the week, and from"
-        name="housekeeping.weekdayAM"
-        inputGroup={{ right: { addOn: "AM" } }}
-      />
-      <FieldSet
-        type="number"
-        label="PM until"
-        name="housekeeping.weekendPM"
-        inputGroup={{ right: { addOn: "PM" } }}
-      />
-      <FieldSet
-        type="number"
-        label="AM on weekends and holidays."
-        name="housekeeping.weekendAM"
-        inputGroup={{ right: { addOn: "AM" } }}
-      />
+      <Flex align="center" flexWrap="wrap">
+        <Box as="span" mr={2}>
+          We agree that quiet time will be from
+        </Box>
+        <FieldSet
+          type="number"
+          name="housekeeping.weekdayPM"
+          inputGroup={{ right: { addOn: "PM" } }}
+        />
+      </Flex>
+      <Flex align="center" flexWrap="wrap">
+        <Box as="span" mr={2}>
+          to
+        </Box>
+        <FieldSet
+          type="number"
+          name="housekeeping.weekdayAM"
+          inputGroup={{ right: { addOn: "AM" } }}
+        />
+        <Box ml={2}>during the week,</Box>
+      </Flex>
+      <Flex align="center" flexWrap="wrap">
+        <Box as="span" mr={2}>
+          and from{" "}
+        </Box>
+        <FieldSet
+          type="number"
+          name="housekeeping.weekendPM"
+          inputGroup={{ right: { addOn: "PM" } }}
+        />
+      </Flex>
+      <Flex align="center" flexWrap="wrap">
+        <Box as="span" mr={2}>
+          until
+        </Box>
+        <FieldSet
+          type="number"
+          name="housekeeping.weekendAM"
+          inputGroup={{ right: { addOn: "AM" } }}
+        />
+        <Box as="span" ml={2}>
+          on weekends and holidays.
+        </Box>
+      </Flex>
 
       <Heading as="h3" fontSize="2xl" mt={6}>
         Private and Shared Spaces

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import axios from 'axios';
-import { Box, Heading, Text, Flex, Avatar, Grid, Link as ChakraLink } from '@chakra-ui/core';
+import { Box, Heading, Text, Flex, Avatar, Button, Link as ChakraLink } from '@chakra-ui/core';
 
 import { AppContext } from '../Store';
 
@@ -68,6 +68,7 @@ export const FlexDLItem = ({ title, value }: { title: string; value: any }) => (
 
 const Household = () => {
   const { state }: { state: any } = useContext(AppContext);
+  const history = useHistory();
   const [house, setHouse] = useState<House>(houseDefaultValues);
   const [landlord, setLandlord] = useState<Landlord>(landlordDefaultValues);
   const [roomies, setRoomies] = useState(roomieInitialValues);
@@ -77,7 +78,6 @@ const Household = () => {
   useEffect(() => {
     //get house info
     axios.get(`api/houses/${currUser.house}`).then(vals => {
-      console.log("hi", vals.data);
       setHouse(vals.data);
     });
 
@@ -105,7 +105,7 @@ const Household = () => {
           setRoomies((prev: any) => [...prev, user.data]);
         });
       });
-  }, [currUser.household]);
+  }, [currUser.household, currUser.house, currUser.landlord]);
 
   return (
     house && (
@@ -115,7 +115,7 @@ const Household = () => {
             <Heading as="h3" fontSize="3xl" mb={0}>
               House
             </Heading>
-            <Link to="/household/previous">Previous Households</Link>
+            <Button onClick={() => history.push("/household/previous")} ml={3}>Previous Households</Button>
           </Flex>
 
           <dl>
@@ -144,7 +144,7 @@ const Household = () => {
           <Heading as="h3" fontSize="3xl">
             Roommates
           </Heading>
-          <Grid templateColumns="repeat(3, 1fr)" gridGap={10}>
+          <Box className="res-three-grid">
             {roomies.map((roomie: any) => (
               <Flex key={roomie.id} align="center" bg="white" p={6} rounded="lg">
                 <Avatar name={`${roomie.first_name} ${roomie.last_name}`} size="xl" />
@@ -153,13 +153,17 @@ const Household = () => {
                   <FlexDLItem title="Name" value={`${roomie.first_name} ${roomie.last_name}`} />
                   <FlexDLItem
                     title="Phone"
-                    value={<ChakraLink href={`tel: roomie.phone_number`}>{roomie.phone_number}</ChakraLink>}
+                    value={
+                      <ChakraLink href={`tel: roomie.phone_number`}>
+                        {roomie.phone_number}
+                      </ChakraLink>
+                    }
                   />
                   <FlexDLItem title="Email" value={roomie.email} />
                 </Box>
               </Flex>
             ))}
-          </Grid>
+          </Box>
         </Box>
       </Box>
     )

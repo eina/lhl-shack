@@ -57,6 +57,15 @@ const landlordDefaultValues = {
 
 const roomieInitialValues: any = [];
 
+export const FlexDLItem = ({ title, value }: { title: string; value: any }) => (
+  <Flex>
+    <Text as="dt" fontWeight="semibold" mr={1}>
+      {title}:
+    </Text>
+    <Text as="dd">{value}</Text>
+  </Flex>
+);
+
 const Household = () => {
   const { state }: { state: any } = useContext(AppContext);
   const [house, setHouse] = useState<House>(houseDefaultValues);
@@ -97,13 +106,6 @@ const Household = () => {
         });
       });
   }, [currUser.household]);
-
-  const FlexDLItem = ({ title, value }: { title: string; value: any }) => (
-    <Flex>
-      <Text as="dt" fontWeight="semibold" mr={1}>{title}:</Text>
-      <Text as="dd">{value}</Text>
-    </Flex>
-  );
 
   return (
     house && (

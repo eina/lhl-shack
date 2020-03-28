@@ -1,4 +1,6 @@
-import React, { useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import moment from 'moment';
+import axios from 'axios';
 import { Heading, Box, Flex, Text, Image, Divider, Button } from "@chakra-ui/core";
 import Clock from "react-live-clock";
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from "pure-react-carousel";
@@ -65,6 +67,39 @@ const AnnouncementsCarousel = () => (
 
 const Home = () => {
   const { state } = useContext(AppContext);
+  const { currUser }: any = state;
+  const [quietTime, setQuietTime ] = useState({ active: false, endTime: null });
+
+  useEffect(() => {
+    axios.get(`/api/households/${currUser.household}`).then(household => {
+      const { housekeeping: { weekdayAM, weekdayPM, weekendAM, weekendPM  } } = household.data;
+      const currentDay = new Date();
+      const numDayOfWeek = moment(currentDay).isoWeekday();
+      const returnRange = (start: string, end: string) => {
+        const currentDay = new Date();
+        const startSplit = start.split(":").map((x: any) => x * 1);
+        const endSplit = end.split(":").map((x: any) => x * 1);
+        return {
+          start: moment(currentDay).hour(startSplit[0]).minute(startSplit[1] ? startSplit[1] : 0),
+          end: moment(currentDay).day(1).hour(endSplit[0]).minute(endSplit[1] ? endSplit[1] : 0) };
+      };
+
+      if (numDayOfWeek < 6) {
+        // weekday
+        const weekdayRange = returnRange(weekdayAM, weekdayPM);
+        const weekDay = moment(currentDay).hour(weekdayAM).minute(0);
+        
+        // quietTimeObj = { active:  }
+      } else {
+        // weekend
+      }
+      const weekdayRange = returnRange(weekdayPM, weekdayAM);
+      console.log(weekdayPM, weekdayAM);
+      console.log('aaaa/?', weekdayRange.start);
+      // console.log(moment().isBetween(weekdayRange.start, weekdayRange.end));
+      // setQuietTime(prev => ({ ...prev, weekday, weekend}));
+    });
+  }, []);
 
   return (
     <>
@@ -76,9 +111,7 @@ const Home = () => {
         justifyContent="space-between"
       >
         <Box>
-          <Text fontFamily="montserrat" fontWeight="bold" fontSize="4xl" lineHeight="shorter">
-            Welcome back, Andy!
-          </Text>
+          <Text fontFamily="montserrat" fontWeight="bold" fontSize="4xl" lineHeight="shorter">Welcome back, {currUser.first_name}!</Text>
           <Text>Something something about something here.</Text>
         </Box>
 

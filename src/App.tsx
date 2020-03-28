@@ -101,8 +101,8 @@ const AppContent = () => {
                 <Switch>
                   <Route path="/" exact component={Home} />
                   <Route path="/test" component={Test} />
-                  <Route path="/household" component={Household} />
-                  <Route path="/previoushousehold" component={PreviousHousehold} />
+                  <Route path="/household" component={Household} exact/>
+                  <Route path="/household/previous" component={PreviousHousehold} />
                   <Route path="/bills" component={Bills} />
                   <Route path="/housekeeping" component={Housekeeping} />
                   <Route path="/resources" component={Resources} />

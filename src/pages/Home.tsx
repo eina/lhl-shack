@@ -51,8 +51,16 @@ const Home = () => {
         <Text>Quiet time has started. It will end at 8 AM.</Text>
       </Box>
 
-      <Box bg="cyan.300" color="cyan.900" className="dashboard-box">
-        <Heading>Announcements</Heading>
+      <Box bg="pink.200" className="dashboard-box">
+        <Heading as="p" fontSize="3xl">
+          Bills
+        </Heading>
+      </Box>
+
+      <Box bg="cyan.200" color="cyan.900" className="dashboard-box">
+        <Heading as="p" fontSize="3xl">
+          Announcements
+        </Heading>
 
         <CarouselProvider
           naturalSlideWidth={100}
@@ -63,7 +71,7 @@ const Home = () => {
           <Slider>
             <Slide index={0}>
               <Box>
-                <Text fontFamily="montserrat" fontWeight="bold" fontSize="xl" lineHeight="shorter">
+                <Text fontFamily="montserrat" fontWeight="bold" fontSize="lg" lineHeight="shorter">
                   New garbage days!
                 </Text>
                 <Text>
@@ -86,18 +94,25 @@ const Home = () => {
             <Slide index={2}>I am the third Slide.</Slide>
           </Slider>
           <Flex justify="space-between">
-            <ButtonBack>Back</ButtonBack>
-            <ButtonNext>Next</ButtonNext>
+            <Button
+              as={ButtonBack}
+              bg="cyan.700"
+              _hover={{ bg: "cyan.800" }}
+              _focus={{ bg: "cyan.800" }}
+            >
+              Back
+            </Button>
+            <Button
+              as={ButtonNext}
+              bg="cyan.700"
+              _hover={{ bg: "cyan.800" }}
+              _focus={{ bg: "cyan.800" }}
+            >
+              Next
+            </Button>
           </Flex>
         </CarouselProvider>
       </Box>
-      {/* <Box w="25%" bg="teal.300">
-          Announcements
-      </Box>
-      <Box w="65%" bg="red.500">
-          Landlord Contact
-      </Box>
-      <Box>Upcoming Bills</Box> */}
     </>
   );
 };

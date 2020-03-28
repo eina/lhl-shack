@@ -20,7 +20,7 @@ import Housekeeping from "./Housekeeping";
 import BillsUtilities from "./BillsUtilities";
 import Signatures from "./Signatures";
 import Preview from "./AgreementPreview";
-import { Box, Link as ChakraLink, Alert, AlertIcon, AlertTitle, AlertDescription, CloseButton } from "@chakra-ui/core";
+import { Link as ChakraLink, Alert, AlertIcon, AlertTitle, AlertDescription } from "@chakra-ui/core";
 
 const AgreementForm = () => {
   const { state, updateState }: { state: any; updateState: any } = useContext(AppContext);
@@ -29,6 +29,7 @@ const AgreementForm = () => {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [agreementMeta, setAgreementMeta] = useState({ created_at: null, updated_at: null});
   const history = useHistory();
+  const { currUser } = state;
 
   useEffect(() => {
     const getHouseholdDetails = (currUser: any) => {
@@ -45,8 +46,7 @@ const AgreementForm = () => {
       });
     };
 
-    if (state.currUser && !agreementID) {
-      const { currUser } = state;
+    if (currUser && !agreementID) {
       const { first_name, last_name, phone_number, email } = currUser;
       setInitialVals((prev: any) => ({
         ...prev,
@@ -56,13 +56,9 @@ const AgreementForm = () => {
         ]
       }));
 
-      getHouseholdDetails(state.currUser);
+      getHouseholdDetails(currUser);
     }
-
-    // grab household information
-
-    // grab house information
-  }, [state.currUser, agreementID, updateState]);
+  }, [currUser, agreementID, updateState]);
 
   useEffect(() => {
     if (state.currUser && state.currUser.landlord) {

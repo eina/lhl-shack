@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
-import { Box, Heading, Text, Flex, Avatar, Link, SimpleGrid, Icon, Grid } from '@chakra-ui/core';
+import { Box, Heading, Text, Flex, Avatar, Link } from '@chakra-ui/core';
 
 import { AppContext } from '../Store';
 
@@ -95,7 +95,7 @@ const Household = () => {
           setRoomies((prev: any) => [...prev, user.data]);
         });
       });
-  }, [currUser.household]);
+  }, [currUser.household, currUser.house, currUser.landlord]);
 
   const FlexDLItem = ({ title, value }: { title: string; value: any }) => (
     <Flex>

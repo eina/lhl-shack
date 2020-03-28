@@ -52,9 +52,10 @@ const Home = () => {
       </Box>
 
       <Box bg="pink.200" className="dashboard-box">
-        <Heading as="p" fontSize="3xl">
+        <Heading as="p" fontSize="3xl" color="gray.900">
           Bills
         </Heading>
+        <Text>Rent is due in 5 days. (Mark as paid?)</Text>
       </Box>
 
       <Box bg="cyan.200" color="cyan.900" className="dashboard-box">

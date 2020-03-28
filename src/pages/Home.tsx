@@ -49,11 +49,14 @@ const Home = () => {
         </Text>
         <Text>Quiet time has started. It will end at 8 AM.</Text>
       </Box>
+
+      <Box bg="indigo.500" color="white" className="dashboard-box">
+        <Text fontFamily="montserrat" fontWeight="bold" fontSize="3xl" lineHeight="shorter">
+          Announcements
+        </Text>
+      </Box>
       {/* <Box w="25%" bg="teal.300">
           Announcements
-      </Box>
-      <Box w="45%" bg="pink.500">
-          Is it quiet time yet
       </Box>
       <Box w="65%" bg="red.500">
           Landlord Contact

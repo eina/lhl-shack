@@ -68,7 +68,6 @@ const Household = () => {
   useEffect(() => {
     //get house info
     axios.get(`api/houses/${currUser.house}`).then(vals => {
-      console.log("hi", vals.data);
       setHouse(vals.data);
     });
 

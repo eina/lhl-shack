@@ -1,0 +1,1 @@
+<a href="https://iconscout.com/illustrations/man" target="_blank">Man Thinking while doing work in laptop Illustration</a> by <a href="https://iconscout.com/contributors/delesign" target="_blank">Delesign Graphics</a>

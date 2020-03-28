@@ -76,6 +76,7 @@ const AppContent = () => {
         boxSizing="border-box"
         bg="gray.50"
         minH="100vh"
+        letterSpacing="wide"
       >
         <AppMenuDrawer drawerIsOpen={isOpen} drawerClose={onClose}>
           {isHouseholdOrAgreementForm ? <AgreementMenu /> : <MainMenu />}

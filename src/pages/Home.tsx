@@ -1,26 +1,37 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Heading } from "@chakra-ui/core";
+import React, { useContext } from "react";
+import { Heading, Box, Flex, Text } from "@chakra-ui/core";
+import './Dashboard.scss';
+import manWithLaptop from '../assets/person-on-laptop.png';
 
-// import { AppContext } from "../context/appContext";
-// import axios from "axios";
+import { AppContext } from '../Store';
 
 const Home = () => {
-  // const [state, setState] = useContext(AppContext);
-  // const [testData, setTestData] = useState({});
-  // useEffect(() => {
-  //   axios.get("/api/landlords/1").then(vals => setTestData(vals.data));
-  // }, []);
-
+  const { state } = useContext(AppContext);
+  
   // console.log(state);
 
   return (
     <>
-      <Heading as="h1">Home</Heading>
-      <p>Dashboard components here</p>
-      <h2>Connect to API</h2>
-      {/* This is connected to <code>api/landlords/1</code>. Make sure to run the Rails server on
-      Vagrant if you don't see any JSON below
-      <pre>{JSON.stringify(testData)}</pre> */}
+      <Box w="75%" bg="brand" color="white" className="dashboard-box" d="flex" justifyContent="space-between">
+        <Box>
+          <Text fontFamily="montserrat" fontWeight="bold" fontSize="3xl">
+            Welcome back, Andy!
+          </Text>
+          <Text>Something something about something here.</Text>
+        </Box>
+
+        <img src={manWithLaptop} className="person-on-laptop" />
+      </Box>
+      {/* <Box w="25%" bg="teal.300">
+          Announcements
+      </Box>
+      <Box w="45%" bg="pink.500">
+          Is it quiet time yet
+      </Box>
+      <Box w="65%" bg="red.500">
+          Landlord Contact
+      </Box>
+      <Box>Upcoming Bills</Box> */}
     </>
   );
 };

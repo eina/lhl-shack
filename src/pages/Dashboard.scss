@@ -1,7 +1,11 @@
 .dashboard-box {
-  padding: 2.5em;
+  padding: 1.5em;
   border-radius: 1em;
   position: relative;
+
+  &.hero-box {
+    padding: 2.5em;
+  }
 }
 
 .person-on-laptop {
@@ -10,7 +14,7 @@
 
   @media (min-width: 1710px) {
     display: block;
-    width: 60%;
+    width: 50%;
     margin-top: -200px;
   }
 }

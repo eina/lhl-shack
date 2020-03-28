@@ -18,3 +18,30 @@
     margin-top: -200px;
   }
 }
+
+// pure-react-carousel
+.carousel {
+  &__next-button,
+  &__back-button {
+    border-radius: 0.25rem;
+    font-weight: 600;
+    display: inline-flex;
+    appearance: none;
+    align-items: center;
+    justify-content: center;
+    transition: all 250ms;
+    user-select: none;
+    position: relative;
+    white-space: nowrap;
+    vertical-align: middle;
+    line-height: 1.2;
+    outline: none;
+    height: 2.5rem;
+    min-width: 2.5rem;
+    font-size: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: #004842;
+    color: #fff;
+  }
+}

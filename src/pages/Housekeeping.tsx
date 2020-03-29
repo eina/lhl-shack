@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { Box, Heading, Divider } from '@chakra-ui/core';
+import { Box, Heading, Divider, Spinner } from '@chakra-ui/core';
 import { Editor } from 'draft-js';
 
 import { AppContext } from '../Store';
@@ -27,7 +27,7 @@ const Housekeeping = () => {
   };
 
   return (
-    housekeeping && (
+    !housekeeping ? <Spinner /> : (
       <>
         <Heading as="h1">Housekeeping</Heading>
 

@@ -73,7 +73,7 @@ const Household = () => {
   const [landlord, setLandlord] = useState<Landlord>(landlordDefaultValues);
   const [roomies, setRoomies] = useState(roomieInitialValues);
   const { currUser } = state;
-  console.log(state);
+  // console.log(state);
 
   useEffect(() => {
     //get house info
@@ -87,18 +87,12 @@ const Household = () => {
     });
 
     //get roomies
-    axios
-      .get(`/api/households?house_id=${currUser.house}`)
-      .then((tenants: any) => {
-        const usersId = tenants.data.map((tenant: any) => tenant.user_id);
-        return usersId;
-      })
-      .then((usersId: any) => {
-        const promisesArray: any = [];
-        usersId.forEach((userId: any) => {
-          promisesArray.push(axios.get(`/api/users/${userId}`));
-        });
-        return Promise.all(promisesArray);
+    axios.get(`/api/renters?household_id=${currUser.household}`)
+      .then((tenants: any) => tenants.data.map((tenant: any) => tenant.user_id)) // return an array with user ids only
+      .then(usersId => {
+        // return an array of Promises
+        const userPromisesArray = usersId.map((id: number) => axios.get(`/api/users/${id}`));
+        return Promise.all(userPromisesArray);
       })
       .then(usersPromises => {
         usersPromises.forEach((user: any) => {
@@ -106,6 +100,7 @@ const Household = () => {
         });
       });
   }, [currUser.household, currUser.house, currUser.landlord]);
+
 
   return (
     house && (
@@ -140,7 +135,7 @@ const Household = () => {
           </dl>
         </Box>
 
-        <Box as="section" mb={8}>
+        {roomies.length && (<Box as="section" mb={8}>
           <Heading as="h3" fontSize="3xl">
             Roommates
           </Heading>
@@ -164,7 +159,9 @@ const Household = () => {
               </Flex>
             ))}
           </Box>
-        </Box>
+        </Box>)
+        }
+
       </Box>
     )
   );

@@ -63,12 +63,12 @@ nav {
   padding-bottom: 3em;
   // padding: 0 3em 1em 2em;
 
-  // @media (min-width: 992px) {
-  //   padding-left: 5em;
-  // }
+  @media (min-width: 1024px) {
+    padding-left: 5em;
+  }
 
   @media (min-width: 1280px) {
-    padding-left: 5em;
+    padding-left: 7em;
   }
 
   // h1,

@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
-import { isWeekend } from "date-fns";
 import axios from "axios";
+import { Link } from 'react-router-dom';
+import { isWeekend, format as datefnsFormat, formatDistanceToNow } from "date-fns";
 import { Heading, Box, Flex, Text } from "@chakra-ui/core";
 
 import { AppContext } from "../Store";
@@ -14,6 +15,7 @@ const Home = () => {
   const { state } = useContext(AppContext);
   const { currUser }: any = state;
   const [quietTime, setQuietTime] = useState({ active: false, startTime: "", endTime: ""});
+  const [billDueSoon, setBillDueSoon] = useState<any>({});
 
   useEffect(() => {
     axios.get(`/api/households/${currUser.household}`).then(household => {
@@ -27,6 +29,17 @@ const Home = () => {
       }
     });
   }, [currUser.household]);
+
+  useEffect(() => {
+    const { id, household } = currUser;
+    axios.get('/api/bills', {
+      params: { date_to_check: datefnsFormat(new Date(), "yyyy-MM-dd"), user_id: id, household_id: household }
+    }).then(bills => {
+      if (bills.data.length) {
+        setBillDueSoon(bills.data[0]);
+      }
+    });
+  }, []);
 
   return (
     <>
@@ -48,10 +61,17 @@ const Home = () => {
       <Flex flexDirection={["column", "column", "row-reverse"]}>
         <Flex flexDirection={"column"}>
           <Box className="dashboard-box" bg="white">
-            <Heading as="p" fontSize="3xl" color="red.700">
-            Bills
-            </Heading>
-            <Text>Rent is due in 5 days. (Mark as paid?)</Text>
+            { billDueSoon.due_date ? (
+              <>
+                <Heading as="p" fontSize="3xl" color="red.700">{billDueSoon.name}</Heading>
+                <Text>is due {formatDistanceToNow(new Date(billDueSoon.due_date), { addSuffix: true })}. <Link to="/bills">Mark as paid?</Link></Text>
+              </>
+            ) : (
+              <>
+                <Heading as="p" fontSize="3xl" color="red.700">No bills due soon!</Heading>
+                <Text>Nice! <Link to="/bills">Check out all your upcoming bills?</Link></Text>
+              </>
+            )}
           </Box>
 
           <QuietTime {...quietTime} />

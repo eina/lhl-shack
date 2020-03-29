@@ -65,6 +65,33 @@ const AnnouncementsCarousel = () => (
   </CarouselProvider>
 );
 
+const QuietTime = () => {
+  {/* change blue to orange depending on time */ }
+  return (
+    <Box
+      bg="blue.100"
+      className="dashboard-box"
+      d="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      mr={[0, 0, "1em"]}
+    >
+      <Text
+        fontFamily="montserrat"
+        fontWeight="bold"
+        fontSize="6xl"
+        color="blue.900"
+        lineHeight="shorter"
+        className="dashboard-clock"
+      >
+        <Clock format={"h:mm A"} ticking={true} timezone={"US/Pacific"} />
+      </Text>
+      <Text>Quiet time has started. It will end at 8 AM.</Text>
+    </Box>
+  );
+};
+
 const Home = () => {
   const { state } = useContext(AppContext);
   const { currUser }: any = state;
@@ -72,22 +99,15 @@ const Home = () => {
 
   useEffect(() => {
     axios.get(`/api/households/${currUser.household}`).then(household => {
-      // if (household && household.data) {
-      //   const { housekeeping: { weekdayAM, weekdayPM, weekendAM, weekendPM } } = household.data;
-      //   const currentDay = new Date();
-      //   const numDayOfWeek = moment(currentDay).isoWeekday();
-      //   const currentHour = moment(currentDay).hour();
+      if (household && household.data) {
+        const { housekeeping: { weekdayAM, weekdayPM, weekendAM, weekendPM } } = household.data;
+        const currentDay = new Date();
+        const numDayOfWeek = moment(currentDay).isoWeekday();
+        const currentHour = moment(currentDay).hour();
+        const weekdayPMSplit = weekdayPM.split(':');
 
-      //   console.log(weekdayPM, currentHour);
-      //   if (numDayOfWeek < 6) {
-      //     // weekday
-
-
-      //     // quietTimeObj = { active:  }
-      //   } else {
-      //     // weekend
-      //   }
-      // }
+        console.log((weekdayPMSplit[0] * 1) + 12, currentHour);
+      }
 
     });
   }, []);
@@ -109,28 +129,7 @@ const Home = () => {
         {/* <Image src={manWithLaptop} className="person-on-laptop" /> */}
       </Box>
       <Flex flexDirection={["column", "column", "row"]}>
-        {/* change blue to orange depending on time */}
-        <Box
-          bg="blue.100"
-          className="dashboard-box"
-          d="flex"
-          flexDirection="column"
-          alignItems="center"
-          justifyContent="center"
-          mr={[0, 0, "1em"]}
-        >
-          <Text
-            fontFamily="montserrat"
-            fontWeight="bold"
-            fontSize="6xl"
-            color="blue.900"
-            lineHeight="shorter"
-            className="dashboard-clock"
-          >
-            <Clock format={"h:mm A"} ticking={true} timezone={"US/Pacific"} />
-          </Text>
-          <Text>Quiet time has started. It will end at 8 AM.</Text>
-        </Box>
+        <QuietTime />
 
         <Box className="dashboard-box" w={["100%", "100%", "80%"]} bg="white">
           <Heading as="p" fontSize="3xl" color="red.700">

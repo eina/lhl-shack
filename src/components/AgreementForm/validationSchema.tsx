@@ -6,6 +6,7 @@ const postalRegex = /^.*[ABCEGHJKLMNPRSTVXY][0-9][A-Z]\s?[0-9][A-Z][0-9].*$/gim;
 // validates North American phone numbers
 // https://www.oreilly.com/library/view/regular-expressions-cookbook/9781449327453/ch04s02.html
 const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+const stringTimeRegex = /^(0?[1-9]|1[0-2]):[0-5][0-9]$/;
 
 /* string/message helpers */
 const requiredMsg = "This field is required";
@@ -29,6 +30,7 @@ const yupReactSelect = object().shape({
   value: string().required(requiredMsg)
 });
 const yupCheckbox = boolean().oneOf([true], "Field must be checked");
+const yupStringTime = string().matches(stringTimeRegex, "Please enter a valid time (hh:mm) in the 12-hour format");
 
 export const landlord = object().shape({
   first_name: yupName.required(requiredMsg),
@@ -108,10 +110,10 @@ export default object().shape({
     })
   ),
   housekeeping: object().shape({
-    weekdayPM: yupName.required(requiredMsg),
-    weekdayAM: yupName.required(requiredMsg),
-    weekendPM: yupName.required(requiredMsg),
-    weekendAM: yupName.required(requiredMsg),
+    weekdayPM: yupStringTime.required(requiredMsg),
+    weekdayAM: yupStringTime.required(requiredMsg),
+    weekendPM: yupStringTime.required(requiredMsg),
+    weekendAM: yupStringTime.required(requiredMsg),
     guestPolicy: object().required(requiredMsg),
     spacesPolicy: object().required(requiredMsg),
     roomsPolicy: object().required(requiredMsg),

@@ -7,7 +7,7 @@ import Griddle, {
   RowDefinition,
   ColumnDefinition,
 } from 'griddle-react';
-import { Heading, Box, useToast } from '@chakra-ui/core';
+import { Heading, Box, Spinner, useToast } from '@chakra-ui/core';
 import { AppContext } from '../Store';
 
 import './Bills.scss';
@@ -131,7 +131,7 @@ const Bills = () => {
   return (
     <div>
       <Heading as="h1">Bills</Heading>
-      {bills.length && (
+      {!bills.length ? <Spinner /> : (
         <Box className="griddle-container">
           <Griddle
             data={bills}

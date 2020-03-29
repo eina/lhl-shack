@@ -185,7 +185,6 @@ const submitAgreement = ({
   })
     .then(agreementData => {
       agreementLink = agreementData.data.pdf_link;
-      console.log('housekeeping how do you look like', formattedValues.housekeeping);
       return axios.patch(`/api/households/${householdID}`, {
         housekeeping: JSON.stringify(formattedValues.housekeeping)
       });

@@ -93,3 +93,15 @@ nav {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+.brand-link {
+  color: #4e958f;
+  font-weight: 500;
+  // color: #7780e4;
+  text-decoration: underline;
+
+  &:hover,
+  &:focus {
+    color: #244542;
+  }
+}

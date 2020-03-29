@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Box, Button, Heading, Grid, Text } from "@chakra-ui/core";
 import { FieldArray } from "formik";
 
+import { brandButton } from '../../chakra/customTheme';
 import { FormikSingleDatePicker } from "../FormikDates";
 import { displayFullName } from "../../helpers/functions";
 import FieldSet from "../FieldSet";
@@ -75,6 +76,7 @@ const Signatures = (props: any) => {
               <Button
                 type="button"
                 onClick={() => arrayHelpers.push({ fullName: "", agreed: false, date: moment() })}
+                {...brandButton}
               >
                 Add Signature
               </Button>
@@ -84,20 +86,20 @@ const Signatures = (props: any) => {
       </FieldArray>
 
       <Box as="footer" my={10}>
-        <Button isLoading={formIsSubmitting} loadingText="Generating Preview" type="submit">
+        {/* <Button isLoading={formIsSubmitting} loadingText="Generating Preview" type="submit">
           Save &amp; Preview Agreement
-        </Button>
-        {/* <PrevNextNav before="/agreement/bills/utilities">
+        </Button> */}
+        <PrevNextNav before="/agreement/bills/utilities">
           {valuesChanged ? (
-            <Button isLoading={formIsSubmitting} loadingText="Generating Preview" type="submit">
+            <Button isLoading={formIsSubmitting} loadingText="Generating Preview" type="submit" {...brandButton}>
               Save &amp; Preview Agreement
             </Button>
           ) : (
-            <Button type="button" onClick={() => history.push("/agreement/preview")}>
+            <Button type="button" onClick={() => history.push("/agreement/preview")} {...brandButton}>
               Preview Agreement
             </Button>
           )}
-        </PrevNextNav> */}
+        </PrevNextNav>
       </Box>
     </Box>
   );

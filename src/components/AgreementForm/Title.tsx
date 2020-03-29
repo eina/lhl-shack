@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { Box, Button, Heading, Link, Text } from "@chakra-ui/core";
+import { brandButton } from '../../chakra/customTheme';
 
 const Title = () => {
   const history = useHistory();
@@ -23,13 +24,13 @@ const Title = () => {
         with others, and to make your roomie life less stressful.
       </Text>
       <Text>
-        Please visit <Link href="http//www.tenants.bc.ca">www.tenants.bc.ca</Link> to inform
+        Please visit <Link href="http//www.tenants.bc.ca" className="brand-link">www.tenants.bc.ca</Link> to inform
         yourself about tenants&rsquo; rights and obligations in Britsh Columbia before discussing and
         agreeing to terms with any roommates.
       </Text>
 
       <Box as="footer" my={10}>
-        <Button onClick={() => history.push('/agreement/lease')}>Start Roommate Agreement Form</Button>
+        <Button onClick={() => history.push('/agreement/lease')} {...brandButton}>Start Roommate Agreement Form</Button>
       </Box>
     </Box>
   );

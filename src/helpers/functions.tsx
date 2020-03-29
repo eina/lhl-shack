@@ -1,7 +1,7 @@
 import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import { draftJSKeys } from "./data";
-import { set, isWeekend, isBefore, isAfter, addDays } from "date-fns";
+import { set, isWeekend } from "date-fns";
 
 export const displayFullName = (firstName: string, lastName: string) => {
   return `${firstName} ${lastName}`;
@@ -12,11 +12,11 @@ export const displayFullName = (firstName: string, lastName: string) => {
  * (date-fns dependent)
  * @param timeString String "hh:mm"
  */
-export const generateTime = (timeString: any) => {
+export const generateTime = (timeString: any, pm = false) => {
   const timeStringSplit = timeString.split(":");
 
   return set(new Date(), {
-    hours: timeStringSplit[0] * 1 + 12,
+    hours: pm ? timeStringSplit[0] * 1 + 12 : timeStringSplit[0] * 1,
     minutes: timeStringSplit[1],
     seconds: 0
   });
@@ -38,15 +38,17 @@ export const isItQuietHours = (
 ) => {
   const currentDay = new Date();
   const isItAWeekend = isWeekend(currentDay);
-  const weekdayStart = generateTime(weekdayPM);
-  const weekdayEnd = addDays(generateTime(weekdayAM), 1);
-  const weekendStart = generateTime(weekendPM);
-  const weekendEnd = addDays(generateTime(weekendAM), 1);
+  // const weekdayStart = generateTime(weekdayPM, true);
+  // const weekdayEnd = generateTime(weekdayAM);
+  // const weekendStart = generateTime(weekendPM, true);
+  // const weekendEnd = generateTime(weekendAM);
 
   if (isItAWeekend) {
-    return isAfter(currentDay, weekendStart) && isBefore(currentDay, weekendEnd);
+    // console.log({ start: weekendStart, end: weekendEnd });
+    return true;
+    // return isWithinInterval(new Date(), { start: weekendStart, end: weekendEnd });
   } else {
-    return isAfter(currentDay, weekdayStart) && isBefore(currentDay, weekdayEnd);
+    // return isWithinInterval(new Date(), { start: weekdayStart, end: weekdayEnd });
   }
 };
 

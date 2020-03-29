@@ -5,7 +5,7 @@ import { isWeekend, format as datefnsFormat, formatDistanceToNow } from "date-fn
 import { Heading, Box, Flex, Text } from "@chakra-ui/core";
 
 import { AppContext } from "../Store";
-import { isItQuietHours } from "../helpers/functions";
+// import { isItQuietHours } from "../helpers/functions";
 import MessageCarousel from '../components/Dashboard/MessageCarousel';
 import QuietTime from '../components/Dashboard/QuietTime';
 
@@ -14,8 +14,9 @@ import "./Dashboard.scss";
 const Home = () => {
   const { state } = useContext(AppContext);
   const { currUser }: any = state;
-  const [quietTime, setQuietTime] = useState({ active: false, startTime: "", endTime: ""});
+  const [quietTime, setQuietTime] = useState<any>({ active: false, startTime: "", endTime: ""});
   const [billDueSoon, setBillDueSoon] = useState<any>({});
+  const [messages, setMessages] = useState<any>([]);
 
   useEffect(() => {
     axios.get(`/api/households/${currUser.household}`).then(household => {
@@ -23,7 +24,9 @@ const Home = () => {
         const {
           housekeeping: { weekdayAM, weekdayPM, weekendAM, weekendPM }
         } = household.data;
-        setQuietTime({ active: isItQuietHours(weekdayAM, weekdayPM, weekendAM, weekendPM),
+        setQuietTime({
+          active: true,
+          // active: isItQuietHours(weekdayAM, weekdayPM, weekendAM, weekendPM),
           startTime: isWeekend(new Date()) ? weekendPM : weekdayPM,
           endTime: isWeekend(new Date()) ? weekendAM : weekdayAM });
       }
@@ -39,6 +42,16 @@ const Home = () => {
         setBillDueSoon(bills.data[0]);
       }
     });
+  }, [currUser]);
+
+  useEffect(() => {
+    const { household } = currUser;
+    axios.get('/api/messages', { params: { household_id: household, limit_by: 3 } })
+      .then(messages => {
+        if (messages.data.length) {
+          setMessages(messages.data);
+        }
+      });
   }, [currUser]);
 
   return (
@@ -64,12 +77,12 @@ const Home = () => {
             { billDueSoon.due_date ? (
               <>
                 <Heading as="p" fontSize="3xl" color="red.700">{billDueSoon.name}</Heading>
-                <Text>is due <strong>{formatDistanceToNow(new Date(billDueSoon.due_date), { addSuffix: true })}</strong>. <Link to="/bills">Mark as paid?</Link></Text>
+                <Text>is due <strong>{formatDistanceToNow(new Date(billDueSoon.due_date), { addSuffix: true })}</strong>. <Link to="/bills" className="brand-link">Mark as paid?</Link></Text>
               </>
             ) : (
               <>
                 <Heading as="p" fontSize="3xl" color="red.700">No bills due soon!</Heading>
-                <Text>Nice! <Link to="/bills">Check out all your upcoming bills?</Link></Text>
+                <Text>Nice! <Link to="/bills" className="brand-link">Check out all your upcoming bills?</Link></Text>
               </>
             )}
           </Box>
@@ -81,8 +94,8 @@ const Home = () => {
           <Heading as="p" fontSize="3xl">
           Messages
           </Heading>
-
-          <MessageCarousel />
+          
+          {messages.length ? <MessageCarousel messages={messages} /> : <Text>No messages yet! <Link to="messages" className="brand-link">Why not add a new one?</Link></Text>}
         </Box>
       </Flex>
     </>

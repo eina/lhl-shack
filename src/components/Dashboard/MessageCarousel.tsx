@@ -1,9 +1,12 @@
 import React from "react";
-import { Box, Flex, Text, Divider, Button } from "@chakra-ui/core";
+import { formatDistance } from 'date-fns';
+import { Flex, Text, Divider, Button } from "@chakra-ui/core";
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
 
-const AnnouncementsCarousel = () => (
+import { brandButton } from '../../chakra/customTheme';
+
+const AnnouncementsCarousel = (props: any) => (
   <CarouselProvider
     naturalSlideWidth={80}
     naturalSlideHeight={125}
@@ -11,45 +14,28 @@ const AnnouncementsCarousel = () => (
     isIntrinsicHeight={true}
   >
     <Slider>
-      <Slide index={0}>
-        <Box>
-          <Text fontFamily="montserrat" fontWeight="bold" fontSize="lg" lineHeight="shorter">
-            New garbage days!
-          </Text>
-          <Text>
-            Toffee tiramisu sweet. Cookie chocolate bar candy toffee brownie halvah lemon drops
-            chocolate jelly. Jujubes toffee lemon drops cupcake gingerbread chocolate.
-          </Text>
-          <ul>
-            <li>Brownie jelly oat cake</li>
-            <li>
-              tootsie roll donut cheesecake tootsie roll croissant sweet. Chupa chups chocolate
-              brownie cheesecake macaroon tart pudding cupcake brownie. Liquorice wafer croissant.
-            </li>
-          </ul>
+      {props.messages.map((message: any, index: number) => (
+        <Slide index={index} key={index}>
+          {message.message_title ? (<Text fontFamily="montserrat" fontWeight="bold" fontSize="lg" lineHeight="shorter">
+            {message.message_title}
+          </Text>) : null }
+          <Text>{message.message_text}</Text>
           <Divider borderColor="indigo.700" />
-          <Text>Posted on Wednesday, March 25th, 8:00 PM</Text>
-        </Box>
-      </Slide>
-      <Slide index={1}>I am the second Slide.</Slide>
-      <Slide index={2}>I am the third Slide.</Slide>
+          <Text fontSize="sm">Posted by {message.author} {formatDistance(new Date(message.created_at), new Date(), { addSuffix: true })}</Text>
+        </Slide>
+      ))}
+
     </Slider>
-    <Flex justify="space-between">
+    <Flex justify="space-between" mt={5}>
       <Button
         as={ButtonBack}
-        bg="brand"
-        color="white"
-        _hover={{ bg: "indigo.800" }}
-        _focus={{ bg: "indigo.800" }}
+        {...brandButton}
       >
         Back
       </Button>
       <Button
         as={ButtonNext}
-        bg="brand"
-        color="white"
-        _hover={{ bg: "indigo.800" }}
-        _focus={{ bg: "indigo.800" }}
+        {...brandButton}
       >
         Next
       </Button>

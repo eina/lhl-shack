@@ -4,7 +4,9 @@ import * as dateFns from 'date-fns';
 import { Heading, Box, Textarea, FormControl, Button, Text, Divider } from '@chakra-ui/core';
 import { Formik, useField, FormikValues } from 'formik';
 
+import { brandButton } from '../chakra/customTheme';
 import { AppContext } from '../Store';
+import FieldSet from '../components/FieldSet';
 
 const FormikTextArea = (props: any) => {
   const { name } = props;
@@ -34,7 +36,7 @@ const Messages = () => {
   }, [currUser]);
 
   const handleSubmitMessage = (values: FormikValues, actions: any) => {
-    axios.post('/api/messages', { household_id: currUser.household, author: state.fullName, message_text: values.message }).then(addedMessage => {
+    axios.post('/api/messages', { household_id: currUser.household, author: state.fullName, message_title: values.title, message_text: values.message }).then(addedMessage => {
       actions.setSubmitting(false);
       actions.resetForm();
       setMessages((prev: any) => {
@@ -50,16 +52,20 @@ const Messages = () => {
         <Formik initialValues={{ message: ''}} onSubmit={(values, actions) => handleSubmitMessage(values, actions)}>
           {({values, handleSubmit, isSubmitting}) => (
             <form onSubmit={handleSubmit}>
+              <FieldSet type="text" name="title" placeholder="Dinner idea!" />
               <FormikTextArea name="message" placeholder="We should have pizza for dinner!" />
-              <Button type="submit" isDisabled={values.message ? false : true} isLoading={isSubmitting} loadingText="Adding Message">Add Message</Button>
+              <Button type="submit" isDisabled={values.message ? false : true} isLoading={isSubmitting} loadingText="Adding Message" {...brandButton}>Add Message</Button>
             </form>
           )}
         </Formik>
       </Box>
-      <Box as="section">
+      <Box as="section" mr="1em">
         <Heading as="h1" fontSize="2xl">Household Messages</Heading>
         {messages.reverse().map((message: any, index: number) => (
           <Box as="article" key={index} px={4} py={5} mb={3} borderWidth="1px" borderRadius="1em">
+            {message.message_title ? (<Text fontFamily="montserrat" fontWeight="bold" fontSize="lg" lineHeight="shorter">
+              {message.message_title}
+            </Text>) : null}
             <Text mb={4}>{message.message_text}</Text>
             <Divider />
             <Text fontSize="sm">Posted by {message.author} {dateFns.formatDistance(new Date(message.created_at), new Date(), { addSuffix: true })}</Text>

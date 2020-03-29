@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Flex, Button, Box } from "@chakra-ui/core";
 import { FiMenu, FiEdit3 } from "react-icons/fi";
+import { brandButton } from '../chakra/customTheme';
 
 type AppHeadProps = {
   currUser: any;
@@ -19,8 +20,8 @@ const AppHeader = ({ currUser, fullName, drawerOpen }: AppHeadProps) => {
         <Box as={FiEdit3} d="inline" ml={1} stroke="brand" />
       </Link>
       <Flex align="center">
-        <Link to="/account">{fullName}</Link>
-        <Button onClick={drawerOpen} className="show-nav-btn" ml={3}>
+        <Link to="/account" className="brand-link">{fullName}</Link>
+        <Button onClick={drawerOpen} className="show-nav-btn" ml={3} {...brandButton}>
           <Box as={FiMenu} />
         </Button>
       </Flex>

@@ -3,6 +3,13 @@ import "typeface-roboto";
 import "typeface-nunito";
 import "typeface-montserrat";
 
+export const brandButton = {
+  bg: 'brand',
+  color: 'white',
+  _hover: { bg: "indigo.800" },
+  _focus:  { bg: "indigo.800" }
+};
+
 export default {
   ...theme,
   breakpoints: ["30em", "48em", "64em", "80em"],

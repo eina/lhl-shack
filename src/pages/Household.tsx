@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Box, Heading, Text, Flex, Avatar, Button, Link as ChakraLink } from '@chakra-ui/core';
 
 import { AppContext } from '../Store';
+import { brandButton } from '../chakra/customTheme';
 
 interface House {
   id: number;
@@ -110,7 +111,7 @@ const Household = () => {
             <Heading as="h3" fontSize="3xl" mb={0}>
               House
             </Heading>
-            <Button onClick={() => history.push("/household/previous")} ml={3}>Previous Households</Button>
+            <Button onClick={() => history.push("/household/previous")} ml={3} {...brandButton}>Previous Households</Button>
           </Flex>
 
           <dl>

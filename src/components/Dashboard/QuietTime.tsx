@@ -4,7 +4,6 @@ import { Box, Text } from "@chakra-ui/core";
 import Clock from "react-live-clock";
 const QuietTime = ({ active, startTime, endTime }: { active: boolean; startTime: string; endTime: string }) => {
   // change block color from blue to orange depending
-
   return (
     <Box
       bg={active ? "blue.100" : "orange.100"}

@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { isWeekend } from "date-fns";
 import axios from "axios";
 import { Heading, Box, Flex, Text, Divider, Button } from "@chakra-ui/core";
 import Clock from "react-live-clock";
@@ -64,13 +65,12 @@ const AnnouncementsCarousel = () => (
   </CarouselProvider>
 );
 
-const QuietTime = ({ active }: { active: boolean }) => {
-  {
-    /* change blue to orange depending on time */
-  }
+const QuietTime = ({ active, startTime, endTime }: { active: boolean; startTime: string; endTime: string }) => {
+  // change block color from blue to orange depending
+  
   return (
     <Box
-      bg={active ? "blue.100" : "orange:100"}
+      bg={active ? "blue.100" : "orange.100"}
       className="dashboard-box"
       d="flex"
       flexDirection="column"
@@ -82,13 +82,13 @@ const QuietTime = ({ active }: { active: boolean }) => {
         fontFamily="montserrat"
         fontWeight="bold"
         fontSize="6xl"
-        color="blue.900"
+        color={active ? "blue.900" : "orange.900"}
         lineHeight="shorter"
         className="dashboard-clock"
       >
         <Clock format={"h:mm A"} ticking={true} timezone={"US/Pacific"} />
       </Text>
-      <Text>Quiet time has started. It will end at 8 AM.</Text>
+      {active ? <Text>Quiet time has started. It will end at {endTime} AM.</Text> : <Text>Quiet time will start at {startTime} PM. </Text>}
     </Box>
   );
 };
@@ -96,7 +96,7 @@ const QuietTime = ({ active }: { active: boolean }) => {
 const Home = () => {
   const { state } = useContext(AppContext);
   const { currUser }: any = state;
-  const [quietTime, setQuietTime] = useState(false);
+  const [quietTime, setQuietTime] = useState({ active: false, startTime: "", endTime: ""});
 
   useEffect(() => {
     axios.get(`/api/households/${currUser.household}`).then(household => {
@@ -104,7 +104,9 @@ const Home = () => {
         const {
           housekeeping: { weekdayAM, weekdayPM, weekendAM, weekendPM }
         } = household.data;
-        setQuietTime(isItQuietHours(weekdayAM, weekdayPM, weekendAM, weekendPM));
+        setQuietTime({ active: isItQuietHours(weekdayAM, weekdayPM, weekendAM, weekendPM),
+          startTime: isWeekend(new Date()) ? weekendPM : weekdayPM,
+          endTime: isWeekend(new Date()) ? weekendAM : weekdayAM });
       }
     });
   }, [currUser.household]);
@@ -128,7 +130,7 @@ const Home = () => {
         {/* <Image src={manWithLaptop} className="person-on-laptop" /> */}
       </Box>
       <Flex flexDirection={["column", "column", "row"]}>
-        <QuietTime active={quietTime} />
+        <QuietTime {...quietTime} />
 
         <Box className="dashboard-box" w={["100%", "100%", "80%"]} bg="white">
           <Heading as="p" fontSize="3xl" color="red.700">

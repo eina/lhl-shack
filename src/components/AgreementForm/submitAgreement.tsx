@@ -44,6 +44,7 @@ const saveAgreement = ({
   if (isComplete) {
     const htmlString = ReactDOMServer.renderToStaticMarkup(<Preview {...previewProps} />);
     dataToSend = { ...dataWithoutHTML, html_string: htmlString };
+    console.log('complete agreement!', htmlString);
   } else {
     dataToSend = dataWithoutHTML;
   }
@@ -64,7 +65,7 @@ type SavingProps = {
   householdID?: any;
   usersIDs?: any;
 };
-const saveUsers = ({ formVals, currUserID, houseID }: SavingProps) => {
+const saveUsers = ({ formVals, currUserID, houseID, householdID }: SavingProps) => {
   // save the users
   // check if the users exist first
   const usersPromiseArray = formVals.roommates.map((roomie: any) =>
@@ -72,14 +73,16 @@ const saveUsers = ({ formVals, currUserID, houseID }: SavingProps) => {
     axios.get(`/api/users?email=${roomie.email}`)
   );
   return Promise.all(usersPromiseArray).then(usersData => {
-    const saveUserHousehold = (userID: number) => {
-      return axios.get('/api/households', { params: { user_id: userID, house_id: houseID } })
-        .then(householdUsers => {
-          if (!householdUsers.data.length) {
-            axios.post('/api/households', { user_id: userID, house_id: houseID, ...formVals.leaseDates, is_active: true, housekeeping: JSON.stringify(formVals.housekeeping)});
-          } else {
-            axios.patch(`/api/households/${householdUsers.data[0].id}`, { user_id: userID, house_id: houseID, ...formVals.leaseDates, is_active: true, housekeeping: JSON.stringify(formVals.housekeeping) });
+    const saveUserAsRenter = (userID: number) => {
+      const renterDetails = { user_id: userID, household_id: householdID };
+      // if user is not in household
+      return axios.get('/api/renters', { params: renterDetails })
+        .then(userRentDetails => {
+          if (!userRentDetails.data.length) {
+            console.log('put user in the household through renters', renterDetails);
+            axios.post('/api/renters', renterDetails);
           }
+          // console.log('user rent thing', userRentDetails.data);
         });
     };
     return usersData.map((user: any, index: number) => {
@@ -91,7 +94,7 @@ const saveUsers = ({ formVals, currUserID, houseID }: SavingProps) => {
             password: uuidV4()
           })
           .then(createdUser => {
-            saveUserHousehold(createdUser.data.id);
+            saveUserAsRenter(createdUser.data.id);
             return createdUser.data.id;
           });
       } else {
@@ -100,7 +103,7 @@ const saveUsers = ({ formVals, currUserID, houseID }: SavingProps) => {
             ...formVals.roommates[index]
           })
           .then(editedUser => {
-            saveUserHousehold(editedUser.data.id);
+            saveUserAsRenter(editedUser.data.id);
             return editedUser.data.id;
           });
       }
@@ -190,10 +193,10 @@ const submitAgreement = ({
       // only save the other things when submitting from the agreement form (isComplete == true)
       if (isComplete) {
         // save the users
-        return saveUsers({ formVals: formattedValues, currUserID: userID, houseID })
-          .then(users => Promise.all(users)) // grab users id
-          .then(usersIDs => saveBills({ formVals: formattedValues, householdID, usersIDs }))
-          .then(() => agreementLink); // save the bills
+        return saveUsers({ formVals: formattedValues, currUserID: userID, houseID, householdID });
+        // .then(users => Promise.all(users)) // grab users id
+        // .then(usersIDs => saveBills({ formVals: formattedValues, householdID, usersIDs }))
+        // .then(() => agreementLink); // save the bills
       } else {
         return vals.data;
       }

@@ -26,7 +26,7 @@ export const FormikDateRange = (props: FormikDateProps) => {
   const { stateName, stateValue, onChange, label, name } = props;
 
   const handleDatesChange = ({ startDate, endDate }: DateProps) => {
-    console.log("ahhh", { stateName, startDate, endDate });
+    // console.log("ahhh", { stateName, startDate, endDate });
     onChange(`${stateName}.start_date`, startDate);
     onChange(`${stateName}.end_date`, endDate);
   };

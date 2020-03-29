@@ -1,9 +1,55 @@
 import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import { draftJSKeys } from "./data";
+import { set, isWeekend } from "date-fns";
 
 export const displayFullName = (firstName: string, lastName: string) => {
   return `${firstName} ${lastName}`;
+};
+
+/**
+ * Creates a new Date object from a time string
+ * (date-fns dependent)
+ * @param timeString String "hh:mm"
+ */
+export const generateTime = (timeString: any, pm = false) => {
+  const timeStringSplit = timeString.split(":");
+
+  return set(new Date(), {
+    hours: pm ? timeStringSplit[0] * 1 + 12 : timeStringSplit[0] * 1,
+    minutes: timeStringSplit[1],
+    seconds: 0
+  });
+};
+
+/**
+ * (date-fns dependent) Compares a start date and an end date to check if it's quiet hours
+ * PM is the start time, AM is the end time (day added for comparison)
+ * @param weekdayAM String hh:mm
+ * @param weekdayPM String hh:mm
+ * @param weekendAM String hh:mm
+ * @param weekendPM String hh:mm
+ */
+export const isItQuietHours = (
+  weekdayAM: string,
+  weekdayPM: string,
+  weekendAM: string,
+  weekendPM: string
+) => {
+  const currentDay = new Date();
+  const isItAWeekend = isWeekend(currentDay);
+  // const weekdayStart = generateTime(weekdayPM, true);
+  // const weekdayEnd = generateTime(weekdayAM);
+  // const weekendStart = generateTime(weekendPM, true);
+  // const weekendEnd = generateTime(weekendAM);
+
+  if (isItAWeekend) {
+    // console.log({ start: weekendStart, end: weekendEnd });
+    return true;
+    // return isWithinInterval(new Date(), { start: weekendStart, end: weekendEnd });
+  } else {
+    // return isWithinInterval(new Date(), { start: weekdayStart, end: weekdayEnd });
+  }
 };
 
 /**

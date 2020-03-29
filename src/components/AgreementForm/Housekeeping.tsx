@@ -60,6 +60,7 @@ const Housekeeping = (props: any) => {
           type="number"
           name="housekeeping.weekdayPM"
           inputGroup={{ right: { addOn: "PM" } }}
+          placeholder="hh:mm"
         />
       </Flex>
       <Flex align="center" flexWrap="wrap">
@@ -70,17 +71,19 @@ const Housekeeping = (props: any) => {
           type="number"
           name="housekeeping.weekdayAM"
           inputGroup={{ right: { addOn: "AM" } }}
+          placeholder="hh:mm"
         />
         <Box ml={2}>during the week,</Box>
       </Flex>
       <Flex align="center" flexWrap="wrap">
         <Box as="span" mr={2}>
-          and from{" "}
+          and from
         </Box>
         <FieldSet
           type="number"
           name="housekeeping.weekendPM"
           inputGroup={{ right: { addOn: "PM" } }}
+          placeholder="hh:mm"
         />
       </Flex>
       <Flex align="center" flexWrap="wrap">
@@ -91,6 +94,7 @@ const Housekeeping = (props: any) => {
           type="number"
           name="housekeeping.weekendAM"
           inputGroup={{ right: { addOn: "AM" } }}
+          placeholder="hh:mm"
         />
         <Box as="span" ml={2}>
           on weekends and holidays.

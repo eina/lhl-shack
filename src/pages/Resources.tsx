@@ -37,7 +37,7 @@ const Resources = () => {
               tenancy matters.
             </p>
             <Link
-              color="teal.500"
+              className="brand-link"
               href="https://wiki.clicklaw.bc.ca/index.php/Tenant_Survival_Guide"
               isExternal
             >
@@ -49,7 +49,7 @@ const Resources = () => {
               Act to help tenants navigate the details of the Act.
             </p>
             <Link
-              color="teal.500"
+              className="brand-link"
               href="http://tenantrights.ca/facts/british-columbia"
               isExternal
             >

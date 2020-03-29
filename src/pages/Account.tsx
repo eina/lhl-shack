@@ -3,6 +3,7 @@ import axios from "axios";
 import { Formik } from "formik";
 import { Heading, Button, Alert, AlertIcon, AlertDescription, CloseButton } from "@chakra-ui/core";
 
+import { brandButton } from '../chakra/customTheme';
 import { AppContext } from '../Store';
 
 import FieldSet from "../components/FieldSet";
@@ -86,7 +87,7 @@ const Account = () => {
               <FieldSet type="text" label="Email" name="email" />
               {/* <FieldSet type="text" label="password" name="password" /> */}
               {props.errors.last_name && <div id="feedback">{props.errors.last_name}</div>}
-              <Button type="submit" variantColor="pink">
+              <Button type="submit" {...brandButton}>
                 Save
               </Button>
             </form>

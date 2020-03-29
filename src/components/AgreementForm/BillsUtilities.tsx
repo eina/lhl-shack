@@ -6,6 +6,7 @@ import { FieldArray } from "formik";
 import { Box, Button, Heading, Text, Grid, Flex } from "@chakra-ui/core";
 
 import { AppContext } from '../../Store';
+import { brandButton } from '../../chakra/customTheme';
 import { billInterval } from "../../helpers/data";
 import FieldSet from "../FieldSet";
 import { FormikSingleDatePicker } from "../FormikDates";
@@ -62,6 +63,7 @@ const Bills = (props: any) => {
                     {arr.length > 2 && index > 1 && (
                       <Button
                         type="button"
+                        {...brandButton}
                         onClick={() =>
                           deleteBill({ arrayRemove: arrayHelpers.remove, index, bill })
                         }
@@ -147,6 +149,7 @@ const Bills = (props: any) => {
             </Box>
             <Button
               type="button"
+              {...brandButton}
               onClick={() =>
                 arrayHelpers.push({
                   name: "",

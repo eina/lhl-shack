@@ -2,6 +2,7 @@ import React from "react";
 import { FieldArray, useFormikContext } from "formik";
 import { Box, Button, Heading, Text, Grid } from "@chakra-ui/core";
 
+import { brandButton } from '../../chakra/customTheme';
 import { FormValues } from "../../interfaces";
 import FieldSet from "../FieldSet";
 import PrevNextNav from './PrevNextNav';
@@ -49,6 +50,7 @@ const Roommates = () => {
                   phone_number: ""
                 })
               }
+              {...brandButton}
             >
               Add Roommate
             </Button>

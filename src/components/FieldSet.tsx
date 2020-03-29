@@ -23,6 +23,7 @@ type FieldSetConfig = {
   value?: any;
   formHelper?: string;
   inputGroup?: any;
+  placeholder?: any;
 };
 
 const FieldSet = ({ label, type, value, ...props }: FieldSetConfig) => {

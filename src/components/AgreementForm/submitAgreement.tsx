@@ -44,7 +44,7 @@ const saveAgreement = ({
   if (isComplete) {
     const htmlString = ReactDOMServer.renderToStaticMarkup(<Preview {...previewProps} />);
     dataToSend = { ...dataWithoutHTML, html_string: htmlString };
-    console.log('complete agreement!', htmlString);
+    // console.log('complete agreement!', htmlString);
   } else {
     dataToSend = dataWithoutHTML;
   }
@@ -185,18 +185,19 @@ const submitAgreement = ({
   })
     .then(agreementData => {
       agreementLink = agreementData.data.pdf_link;
+      console.log('housekeeping how do you look like', formattedValues.housekeeping);
       return axios.patch(`/api/households/${householdID}`, {
-        housekeeping: JSON.stringify(formVals.housekeeping)
+        housekeeping: JSON.stringify(formattedValues.housekeeping)
       });
     })
     .then(vals => {
       // only save the other things when submitting from the agreement form (isComplete == true)
       if (isComplete) {
         // save the users
-        return saveUsers({ formVals: formattedValues, currUserID: userID, houseID, householdID });
-        // .then(users => Promise.all(users)) // grab users id
-        // .then(usersIDs => saveBills({ formVals: formattedValues, householdID, usersIDs }))
-        // .then(() => agreementLink); // save the bills
+        return saveUsers({ formVals: formattedValues, currUserID: userID, houseID, householdID })
+          .then(users => Promise.all(users)) // grab users id
+          .then(usersIDs => saveBills({ formVals: formattedValues, householdID, usersIDs }))
+          .then(() => agreementLink); // save the bills
       } else {
         return vals.data;
       }

@@ -39,7 +39,7 @@ const Home = () => {
         setBillDueSoon(bills.data[0]);
       }
     });
-  }, []);
+  }, [currUser]);
 
   return (
     <>
@@ -64,7 +64,7 @@ const Home = () => {
             { billDueSoon.due_date ? (
               <>
                 <Heading as="p" fontSize="3xl" color="red.700">{billDueSoon.name}</Heading>
-                <Text>is due {formatDistanceToNow(new Date(billDueSoon.due_date), { addSuffix: true })}. <Link to="/bills">Mark as paid?</Link></Text>
+                <Text>is due <strong>{formatDistanceToNow(new Date(billDueSoon.due_date), { addSuffix: true })}</strong>. <Link to="/bills">Mark as paid?</Link></Text>
               </>
             ) : (
               <>
@@ -79,7 +79,7 @@ const Home = () => {
 
         <Box color="cyan.900" className="dashboard-box" w={["100%", "100%", "70%"]}>
           <Heading as="p" fontSize="3xl">
-          Announcements
+          Messages
           </Heading>
 
           <MessageCarousel />

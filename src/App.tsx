@@ -27,6 +27,7 @@ import Resources from "./pages/Resources";
 import Housekeeping from "./pages/Housekeeping";
 import Bills from "./pages/Bills";
 import PreviousHousehold from "./pages/PreviousHousehold";
+import Messages from './pages/Messages';
 
 // test data
 // const currUser = {
@@ -102,6 +103,7 @@ const AppContent = () => {
                   <Route path="/household/previous" component={PreviousHousehold} />
                   <Route path="/bills" component={Bills} />
                   <Route path="/housekeeping" component={Housekeeping} />
+                  <Route path="/messages" component={Messages} />
                   <Route path="/resources" component={Resources} />
                   <Route path="/account" component={Account} />
                 </Switch>

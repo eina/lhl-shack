@@ -1,9 +1,53 @@
 import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import { draftJSKeys } from "./data";
+import { set, isWeekend, isBefore, isAfter, addDays } from "date-fns";
 
 export const displayFullName = (firstName: string, lastName: string) => {
   return `${firstName} ${lastName}`;
+};
+
+/**
+ * Creates a new Date object from a time string
+ * (date-fns dependent)
+ * @param timeString String "hh:mm"
+ */
+export const generateTime = (timeString: any) => {
+  const timeStringSplit = timeString.split(":");
+
+  return set(new Date(), {
+    hours: timeStringSplit[0] * 1 + 12,
+    minutes: timeStringSplit[1],
+    seconds: 0
+  });
+};
+
+/**
+ * (date-fns dependent) Compares a start date and an end date to check if it's quiet hours
+ * PM is the start time, AM is the end time (day added for comparison)
+ * @param weekdayAM String hh:mm
+ * @param weekdayPM String hh:mm
+ * @param weekendAM String hh:mm
+ * @param weekendPM String hh:mm
+ */
+export const isItQuietHours = (
+  weekdayAM: string,
+  weekdayPM: string,
+  weekendAM: string,
+  weekendPM: string
+) => {
+  const currentDay = new Date();
+  const isItAWeekend = isWeekend(currentDay);
+  const weekdayStart = generateTime(weekdayPM);
+  const weekdayEnd = addDays(generateTime(weekdayAM), 1);
+  const weekendStart = generateTime(weekendPM);
+  const weekendEnd = addDays(generateTime(weekendAM), 1);
+
+  if (isItAWeekend) {
+    return isAfter(currentDay, weekendStart) && isBefore(currentDay, weekendEnd);
+  } else {
+    return isAfter(currentDay, weekdayStart) && isBefore(currentDay, weekdayEnd);
+  }
 };
 
 /**

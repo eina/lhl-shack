@@ -43,30 +43,28 @@ const Home = () => {
           </Text>
           <Text>Something something about something here.</Text>
         </Box>
-
-        {/* <Image src={manWithLaptop} className="person-on-laptop" /> */}
       </Box>
-      <Flex flexDirection={["column", "column", "row"]}>
-        <QuietTime {...quietTime} />
 
-        <Box className="dashboard-box" w={["100%", "100%", "80%"]} bg="white">
-          <Heading as="p" fontSize="3xl" color="red.700">
+      <Flex flexDirection={["column", "column", "row-reverse"]}>
+        <Flex flexDirection={"column"}>
+          <Box className="dashboard-box" bg="white">
+            <Heading as="p" fontSize="3xl" color="red.700">
             Bills
+            </Heading>
+            <Text>Rent is due in 5 days. (Mark as paid?)</Text>
+          </Box>
+
+          <QuietTime {...quietTime} />
+        </Flex>
+
+        <Box color="cyan.900" className="dashboard-box" w={["100%", "100%", "70%"]}>
+          <Heading as="p" fontSize="3xl">
+          Announcements
           </Heading>
-          <Text>Rent is due in 5 days. (Mark as paid?)</Text>
-          <Text>Rent is due in 5 days. (Mark as paid?)</Text>
-          <Text>Rent is due in 5 days. (Mark as paid?)</Text>
-          <Text>Rent is due in 5 days. (Mark as paid?)</Text>
+
+          <MessageCarousel />
         </Box>
       </Flex>
-
-      <Box color="cyan.900" className="dashboard-box" w={["100%", "100%", "60%"]}>
-        <Heading as="p" fontSize="3xl">
-          Announcements
-        </Heading>
-
-        <MessageCarousel />
-      </Box>
     </>
   );
 };

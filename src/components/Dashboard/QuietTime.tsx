@@ -13,7 +13,7 @@ const QuietTime = ({ active, startTime, endTime }: { active: boolean; startTime:
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      mr={[0, 0, "1em"]}
+      // mr={[0, 0, "1em"]}
     >
       <Text
         fontFamily="montserrat"

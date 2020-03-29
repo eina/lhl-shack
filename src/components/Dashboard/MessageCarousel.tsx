@@ -5,7 +5,7 @@ import "pure-react-carousel/dist/react-carousel.es.css";
 
 const AnnouncementsCarousel = () => (
   <CarouselProvider
-    naturalSlideWidth={100}
+    naturalSlideWidth={80}
     naturalSlideHeight={125}
     totalSlides={3}
     isIntrinsicHeight={true}

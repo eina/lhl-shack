@@ -140,7 +140,7 @@ const AgreementPreview = (props: any) => {
           no roommates are puttingthe tenancy at risk by violating them.
         </Text>
         <Text>
-          We agree that “quiet time” will be from <strong>{weekdayPM} pm</strong> until{" "}
+          We agree that &ldquo;quiet time&rdquo; will be from <strong>{weekdayPM} pm</strong> until{" "}
           <strong>{weekdayAM} am</strong> during the week, and from <strong>{weekendPM} pm</strong>{" "}
           until <strong>{weekendAM} am</strong> on weekends and holidays.
         </Text>

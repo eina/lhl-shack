@@ -67,7 +67,7 @@ const Home = () => {
           <Text fontFamily="montserrat" fontWeight="bold" fontSize="4xl" lineHeight="shorter">
             Welcome back, {currUser.first_name}!
           </Text>
-          <Text>Something something about something here.</Text>
+          <Text>Did you know that shack is also mobile-frinedly? Try us out at your device browser of choice!</Text>
         </Box>
       </Box>
 

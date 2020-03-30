@@ -20,7 +20,7 @@ const Home = () => {
 
   useEffect(() => {
     axios.get(`/api/households/${currUser.household}`).then(household => {
-      if (household && household.data) {
+      if (household && household.data && household.data.housekeeping) {
         const {
           housekeeping: { weekdayAM, weekdayPM, weekendAM, weekendPM }
         } = household.data;
@@ -87,7 +87,7 @@ const Home = () => {
             )}
           </Box>
 
-          <QuietTime {...quietTime} />
+          {quietTime && <QuietTime {...quietTime} />}
         </Flex>
 
         <Box color="cyan.900" className="dashboard-box" w={["100%", "100%", "70%"]}>

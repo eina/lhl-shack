@@ -45,9 +45,10 @@ export const isItQuietHours = (
 
   if (isItAWeekend) {
     // console.log({ start: weekendStart, end: weekendEnd });
-    return true;
+    return false;
     // return isWithinInterval(new Date(), { start: weekendStart, end: weekendEnd });
   } else {
+    return false;
     // return isWithinInterval(new Date(), { start: weekdayStart, end: weekdayEnd });
   }
 };

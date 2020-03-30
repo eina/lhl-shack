@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { Box, Heading, Divider, Spinner } from '@chakra-ui/core';
+import { Link } from 'react-router-dom';
+import { Box, Heading, Divider, Text } from '@chakra-ui/core';
 import { Editor } from 'draft-js';
 
 import { AppContext } from '../Store';
@@ -27,7 +28,7 @@ const Housekeeping = () => {
   };
 
   return (
-    !housekeeping ? <Spinner /> : (
+    !housekeeping ? <Text>No housekeeping policies for this household yet. <Link to="/agreement" className="brand-link">Head to the Roommate Agreement Generator to set these up?</Link></Text> : (
       <>
         <Heading as="h1">Housekeeping</Heading>
 

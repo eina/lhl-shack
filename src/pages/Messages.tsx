@@ -61,7 +61,7 @@ const Messages = () => {
       </Box>
       <Box as="section" mr="1em">
         <Heading as="h1" fontSize="2xl">Household Messages</Heading>
-        {messages.reverse().map((message: any, index: number) => (
+        {!messages.length ? <Text color="gray.600">None yet!</Text> : messages.reverse().map((message: any, index: number) => (
           <Box as="article" key={index} px={4} py={5} mb={3} borderWidth="1px" borderRadius="1em">
             {message.message_title ? (<Text fontFamily="montserrat" fontWeight="bold" fontSize="lg" lineHeight="shorter">
               {message.message_title}

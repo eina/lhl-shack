@@ -15,14 +15,11 @@ const MainMenu = () => {
         <ListItem>
           <Link to="/bills">Bills</Link>
         </ListItem>
-        {/* <ListItem>
-          <Link to="/test">Test</Link>
-        </ListItem> */}
-        {/* <ListItem>
-          <Link to="/agreement">Roommate Agreement Generator</Link>
-        </ListItem> */}
         <ListItem>
           <Link to="/housekeeping">Housekeeping</Link>
+        </ListItem>
+        <ListItem>
+          <Link to="/messages">Messages</Link>
         </ListItem>
         <ListItem>
           <Link to="/resources">Resources</Link>

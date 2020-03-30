@@ -10,7 +10,7 @@ const AnnouncementsCarousel = (props: any) => (
   <CarouselProvider
     naturalSlideWidth={80}
     naturalSlideHeight={125}
-    totalSlides={3}
+    totalSlides={props.messages.length}
     isIntrinsicHeight={true}
   >
     <Slider>
@@ -26,7 +26,7 @@ const AnnouncementsCarousel = (props: any) => (
       ))}
 
     </Slider>
-    <Flex justify="space-between" mt={5}>
+    {props.messages.length > 1 ? (<Flex justify="space-between" mt={5}>
       <Button
         as={ButtonBack}
         {...brandButton}
@@ -39,7 +39,7 @@ const AnnouncementsCarousel = (props: any) => (
       >
         Next
       </Button>
-    </Flex>
+    </Flex>) : null}
   </CarouselProvider>
 );
 

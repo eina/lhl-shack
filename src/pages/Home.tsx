@@ -25,8 +25,8 @@ const Home = () => {
           housekeeping: { weekdayAM, weekdayPM, weekendAM, weekendPM }
         } = household.data;
         setQuietTime({
-          active: true,
-          // active: isItQuietHours(weekdayAM, weekdayPM, weekendAM, weekendPM),
+          // SWITCH HERE
+          active: false,
           startTime: isWeekend(new Date()) ? weekendPM : weekdayPM,
           endTime: isWeekend(new Date()) ? weekendAM : weekdayAM });
       }

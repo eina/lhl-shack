@@ -44,7 +44,7 @@ const AgreementPreview = (props: any) => {
         <Text>Last updated on: {moment(updated_at).format(updateFormat)}</Text>
       )}
       <Box as="section" {...sectionProps}>
-        <Heading as="h2">Roommates</Heading>
+        <Heading as="h2" fontSize="2xl">Roommates</Heading>
         <Text>
           <strong>This agreement is entered into by:</strong>
         </Text>
@@ -72,7 +72,7 @@ const AgreementPreview = (props: any) => {
       </Box>
 
       <Box as="section" {...sectionProps}>
-        <Heading as="h2">Landlord Contact Information</Heading>
+        <Heading as="h2" fontSize="2xl">Landlord Contact Information</Heading>
         <List>
           <ListItem>
             {landlord.first_name} {landlord.last_name}
@@ -85,7 +85,7 @@ const AgreementPreview = (props: any) => {
       </Box>
 
       <Box as="section" {...sectionProps}>
-        <Heading as="h2">Rent</Heading>
+        <Heading as="h2" fontSize="2xl">Rent</Heading>
 
         <Text>We agree that the our rent obligations will be apportioned as follows:</Text>
         <List>
@@ -98,7 +98,7 @@ const AgreementPreview = (props: any) => {
       </Box>
 
       <Box as="section" {...sectionProps}>
-        <Heading as="h2">Security Deposit</Heading>
+        <Heading as="h2" fontSize="2xl">Security Deposit</Heading>
         <Text>
           We agree that the our security deposit obligations will be apportioned as follows:
         </Text>
@@ -114,10 +114,10 @@ const AgreementPreview = (props: any) => {
 
       {utilities.length ? (
         <Box as="section" {...sectionProps}>
-          <Heading as="h2">Other Charges</Heading>
+          <Heading as="h2" fontSize="2xl">Other Charges</Heading>
           {utilities.map((utility: any, index: any) => (
             <Box key={index} {...sectionProps}>
-              <Heading as="h3">{utility.name}</Heading>
+              <Heading as="h3" fontSize="xl">{utility.name}</Heading>
               <List>
                 <ListItem>Total amount: ${utility.total_amount}</ListItem>
                 <ListItem>Roommate amount: ${utility.user_amount}</ListItem>
@@ -132,7 +132,7 @@ const AgreementPreview = (props: any) => {
       ) : null}
 
       <Box as="section" {...sectionProps}>
-        <Heading as="h2">Noise</Heading>
+        <Heading as="h2" fontSize="2xl">Noise</Heading>
         <Text>
           Early morning or late night noise can have a significant effect on a living
           arrangementbetween roommates. It is important to think about what restrictions on noise
@@ -148,69 +148,69 @@ const AgreementPreview = (props: any) => {
 
       {guestPolicy ? (
         <Box as="section" {...sectionProps}>
-          <Heading as="h2">Guest Policy</Heading>
+          <Heading as="h2" fontSize="2xl">Guest Policy</Heading>
           <div dangerouslySetInnerHTML={{ __html: guestPolicy }} />
         </Box>
       ) : null}
 
       {spacesPolicy ? (
         <Box as="section" {...sectionProps}>
-          <Heading as="h2">Spaces Policy</Heading>
+          <Heading as="h2" fontSize="2xl">Spaces Policy</Heading>
           <div dangerouslySetInnerHTML={{ __html: spacesPolicy }} />
         </Box>
       ) : null}
 
       {roomsPolicy ? (
         <Box as="section" {...sectionProps}>
-          <Heading as="h2">Rooms Policy</Heading>
+          <Heading as="h2" fontSize="2xl">Rooms Policy</Heading>
           <div dangerouslySetInnerHTML={{ __html: roomsPolicy }} />
         </Box>
       ) : null}
 
       {choresPolicy ? (
         <Box as="section" {...sectionProps}>
-          <Heading as="h2">Chores Policy</Heading>
+          <Heading as="h2" fontSize="2xl">Chores Policy</Heading>
           <div dangerouslySetInnerHTML={{ __html: choresPolicy }} />
         </Box>
       ) : null}
 
       {vacationPolicy ? (
         <Box as="section" {...sectionProps}>
-          <Heading as="h2">Vacation Policy</Heading>
+          <Heading as="h2" fontSize="2xl">Vacation Policy</Heading>
           <div dangerouslySetInnerHTML={{ __html: vacationPolicy }} />
         </Box>
       ) : null}
 
       {personalItemsPolicy ? (
         <Box as="section" {...sectionProps}>
-          <Heading as="h2">Personal Items Policy</Heading>
+          <Heading as="h2" fontSize="2xl">Personal Items Policy</Heading>
           <div dangerouslySetInnerHTML={{ __html: personalItemsPolicy }} />
         </Box>
       ) : null}
 
       {smokingPolicy ? (
         <Box as="section" {...sectionProps}>
-          <Heading as="h2">Smoking Policy</Heading>
+          <Heading as="h2" fontSize="2xl">Smoking Policy</Heading>
           <div dangerouslySetInnerHTML={{ __html: smokingPolicy }} />
         </Box>
       ) : null}
 
       {messagesPolicy ? (
         <Box as="section" {...sectionProps}>
-          <Heading as="h2">Messages Policy</Heading>
+          <Heading as="h2" fontSize="2xl">Messages Policy</Heading>
           <div dangerouslySetInnerHTML={{ __html: messagesPolicy }} />
         </Box>
       ) : null}
 
       {petsPolicy ? (
         <Box as="section" {...sectionProps}>
-          <Heading as="h2">Pets Policy</Heading>
+          <Heading as="h2" fontSize="2xl">Pets Policy</Heading>
           <div dangerouslySetInnerHTML={{ __html: petsPolicy }} />
         </Box>
       ) : null}
 
       <Box as="section" {...sectionProps}>
-        <Heading as="h2">Acknowledgement</Heading>
+        <Heading as="h2" fontSize="2xl">Acknowledgement</Heading>
         <Text>
           Each of us has received a copy of and read our Tenancy Agreement. (Note that your landlord
           is required by law to provide each tenant with a copy of the Tenancy Agreement.)
@@ -223,8 +223,7 @@ const AgreementPreview = (props: any) => {
         <List as="ol" styleType="decimal">
           {signatures.map((roomie: any, index: number) => (
             <ListItem key={index}>
-              {roomie.fullName} digitally signed this agreement on{" "}
-              {moment(roomie.date).format(momentFormat)} as <em>{signatures[index].fullName}</em>.
+              {roomie.fullName} digitally signed this agreement on {moment(roomie.date).format(momentFormat)} as <em>{signatures[index].fullName}</em>.
             </ListItem>
           ))}
         </List>

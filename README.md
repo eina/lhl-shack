@@ -19,7 +19,7 @@ Walkthrough of Roommate Agreement Form
 
 ## Installation
 
-1. Download, install and run the API
+1. Download, install and run the API ([instructions](https://github.com/thelittleblacksmith/lhl-shack-api))
 2. Download/clone this repository
 3. `cd` into the directory and run `npm install`
 4. Once packages are installed, run `npm start`

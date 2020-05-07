@@ -4,11 +4,11 @@ import { useHistory } from "react-router-dom";
 import { Box, Button, Heading, Grid, Text } from "@chakra-ui/core";
 import { FieldArray } from "formik";
 
-import { brandButton } from '../../chakra/customTheme';
+import { brandButton } from "../../chakra/customTheme";
 import { FormikSingleDatePicker } from "../FormikDates";
 import { displayFullName } from "../../helpers/functions";
 import FieldSet from "../FieldSet";
-import PrevNextNav from './PrevNextNav';
+import PrevNextNav from "./PrevNextNav";
 
 const Signatures = (props: any) => {
   const { initialValues, values, setFieldValue, errors, touched, formIsSubmitting } = props;
@@ -55,7 +55,7 @@ const Signatures = (props: any) => {
                         touched.signatures[index].date
                       }
                     />
-                    
+
                     <FieldSet
                       type="text"
                       name={`signatures.${index}.fullName`}
@@ -86,7 +86,12 @@ const Signatures = (props: any) => {
       </FieldArray>
 
       <Box as="footer" my={10}>
-        <Button isLoading={formIsSubmitting} loadingText="Generating Preview" type="submit">
+        <Button
+          isLoading={formIsSubmitting}
+          loadingText="Generating Preview"
+          type="submit"
+          {...brandButton}
+        >
           Save &amp; Preview Agreement
         </Button>
         {/* <PrevNextNav before="/agreement/bills/utilities">

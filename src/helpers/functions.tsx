@@ -48,6 +48,7 @@ export const isItQuietHours = (
     return true;
     // return isWithinInterval(new Date(), { start: weekendStart, end: weekendEnd });
   } else {
+    return true;
     // return isWithinInterval(new Date(), { start: weekdayStart, end: weekdayEnd });
   }
 };

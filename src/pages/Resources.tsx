@@ -72,7 +72,7 @@ const Resources = () => {
               to letter regarding loss of quiet enjoyment.
             </p>
             <Link
-              color="teal.500"
+              className="brand-link"
               href="http://tenants.bc.ca/template-letters/"
               isExternal
             >
@@ -96,13 +96,13 @@ const Resources = () => {
             </p>
             <ul>
               <li>
-                <Link color="teal.500" href="http://www.povnet.org" isExternal>
+                <Link className="brand-link" href="http://www.povnet.org" isExternal>
                   PovNet <Icon name="external-link" mx="2px" />
                 </Link>
               </li>
               <li>
                 <Link
-                  color="teal.500"
+                  className="brand-link"
                   href="http://www.accessprobono.ca/residential-tenancy-program"
                   isExternal
                 >
@@ -110,7 +110,7 @@ const Resources = () => {
                 </Link>
               </li>
               <li>
-                <Link color="teal.500" href="http://www.bchrc.net/" isExternal>
+                <Link className="brand-link" href="http://www.bchrc.net/" isExternal>
                   BC Human Rights Clinic
                   <Icon name="external-link" mx="2px" />
                 </Link>
@@ -133,7 +133,7 @@ const Resources = () => {
               obligations and duties.
             </p>
             <Link
-              color="teal.500"
+              className="brand-link"
               href="http://tenants.bc.ca/renting-it-right/"
               isExternal
             >
@@ -156,7 +156,7 @@ const Resources = () => {
               landlords and housing.
             </p>
             <Link
-              color="teal.500"
+              className="brand-link"
               href="http://tenants.bc.ca/tenant-infoline/"
               isExternal
             >

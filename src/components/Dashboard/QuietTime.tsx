@@ -3,6 +3,7 @@ import { Box, Text } from "@chakra-ui/core";
 
 import Clock from "react-live-clock";
 const QuietTime = ({ active, startTime, endTime }: { active: boolean; startTime: string; endTime: string }) => {
+  console.log('what is start time', { active, startTime, endTime});
   // change block color from blue to orange depending
   return (
     <Box
@@ -24,7 +25,8 @@ const QuietTime = ({ active, startTime, endTime }: { active: boolean; startTime:
       >
         <Clock format={"h:mm A"} ticking={true} timezone={"US/Pacific"} />
       </Text>
-      {active ? <Text>Quiet time has started. It will end at {endTime} AM.</Text> : <Text>Quiet time will start at {startTime} PM. </Text>}
+      {endTime && startTime ? active ? <Text>Quiet time has started. It will end at {endTime} AM.</Text> : <Text>Quiet time will start at {startTime} PM. </Text> : null}
+      
     </Box>
   );
 };

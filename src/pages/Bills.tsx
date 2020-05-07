@@ -1,4 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import axios from 'axios';
 import Select from 'react-select';
@@ -7,7 +8,7 @@ import Griddle, {
   RowDefinition,
   ColumnDefinition,
 } from 'griddle-react';
-import { Heading, Box, Spinner, useToast } from '@chakra-ui/core';
+import { Heading, Box, Text, useToast } from '@chakra-ui/core';
 import { AppContext } from '../Store';
 
 import './Bills.scss';
@@ -131,7 +132,7 @@ const Bills = () => {
   return (
     <div>
       <Heading as="h1">Bills</Heading>
-      {!bills.length ? <Spinner /> : (
+      {!bills.length ? <Text>No bills for this household. <Link to="/agreement" className="brand-link">Add a new one?</Link></Text> : (
         <Box className="griddle-container">
           <Griddle
             data={bills}

@@ -38,11 +38,13 @@ const Bills = (props: any) => {
         })
         .then(billsPromises => Promise.all(billsPromises))
         .then(deletedBills => {
-          if (deletedBills.length === numRoommates) {
-            return arrayRemove(index);
-          } else {
-            throw new Error('Error deleting');
-          }
+          console.log('what is this', deletedBills);
+          return arrayRemove(index);
+          // if (deletedBills.length === numRoommates) {
+          //   return arrayRemove(index);
+          // } else {
+          //   throw new Error('Error deleting');
+          // }
         });
     } else {
       arrayRemove(index);

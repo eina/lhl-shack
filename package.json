@@ -31,7 +31,7 @@
     "formik": "^2.1.4",
     "griddle-react": "^1.13.1",
     "http-proxy-middleware": "^1.0.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "node-sass": "^4.13.1",
     "pure-react-carousel": "^1.26.0",
     "react": "^16.13.0",
